@@ -38,10 +38,10 @@ public class SecurityInterceptor implements HandlerInterceptor {
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             // 获取方法上的注解
-            RequiredPermission requiredPermission = handlerMethod.getMethod().getAnnotation(RequiredPermission.class);
+            RequiredPermissions requiredPermission = handlerMethod.getMethod().getAnnotation(RequiredPermissions.class);
             // 如果方法上的注解为空 则获取类的注解
             if (requiredPermission == null) {
-                requiredPermission = handlerMethod.getMethod().getDeclaringClass().getAnnotation(RequiredPermission.class);
+                requiredPermission = handlerMethod.getMethod().getDeclaringClass().getAnnotation(RequiredPermissions.class);
             }
             // 如果标记了注解，则判断权限
             if (requiredPermission != null && !StringUtils.isEmpty(requiredPermission.value())) {
