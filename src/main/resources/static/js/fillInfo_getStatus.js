@@ -24,7 +24,9 @@ window.requestByCode = function(code) {
             data: {
                 "code": code
             },
-            success: window.requestUserTokenCallBack,
+            success: function(data) {
+                window.requestUserTokenCallBack(data)
+            },
         }
     )
 };
@@ -44,7 +46,6 @@ window.requestByCookie = function(cookie) {
     )
 };
 window.requestUserTokenCallBack = function(data) {
-    data = $.parseJSON(data);
     if (data.user_id_token != null && data.user.user_id_token != "") {
         setCookie("user_id_token", data.user_id_token, 7);
     }
