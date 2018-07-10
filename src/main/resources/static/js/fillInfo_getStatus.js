@@ -24,9 +24,7 @@ window.requestByCode = function(code) {
             data: {
                 "code": code
             },
-            success: function(data) {
-                window.requestUserTokenCallBack(data)
-            },
+            success: window.requestUserTokenCallBack,
         }
     )
 };
@@ -46,7 +44,7 @@ window.requestByCookie = function(cookie) {
     )
 };
 window.requestUserTokenCallBack = function(data) {
-    if (data.user_id_token != null && data.user.user_id_token != "") {
+    if (data.user_id_token != null && data.user_id_token != "") {
         setCookie("user_id_token", data.user_id_token, 7);
     }
     if (data.status != null && data.status != "") {
@@ -82,7 +80,7 @@ if (url != "") {
         requestParameter[requestParameterString[i].split("=")[0]] = unescape(requestParameterString[i].split("=")[1]);
     }
 }
-window.requestUserTokenCallBack("{\"status\": \"unapplied\"}");
+window.requestUserTokenCallBack({"status": "unapplied", "user_id_token": "123456"});
 
 var user_id_token = getCookie("user_id_token");
 if (user_id_token != null && user_id_token != "") {

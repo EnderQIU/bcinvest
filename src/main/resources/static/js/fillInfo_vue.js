@@ -140,7 +140,7 @@ var basic_info = new Vue({
     },
     methods: {
         showMore: function() {
-            this.show = true;
+            this.show_more = true;
         },
         submitInfo() {
             isFinished = true;
