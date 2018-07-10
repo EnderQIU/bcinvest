@@ -11,11 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class CitiUtil {
     // 得到AccessToken
-    @Value("${cn.enderqiu.citi.clientId}")
-    private static String clientId;
+    private static String clientId = "92c684d7-e3b2-468f-ad34-afeedc941858";
 
-    @Value("${cn.enderqiu.citi.clientSecret}")
-    private static String clientSecret;
+    private static String clientSecret = "S3kL6yG1aS1lI6qC7mQ1cI5xN3dJ7sS5yG2iL2bF2uT7tJ6vW6";
 
     /**
      * @param code
@@ -28,12 +26,12 @@ public class CitiUtil {
 
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
 
-        String grant_info= "grant_type=client_credentials";
+        String grant_info= "grant_type=authorization_code";
         String code_info="code="+code;
         String redirect_info="redirect_uri=https://www.baidu.com";
         RequestBody body=RequestBody.create(mediaType,grant_info+"&"+code_info+"&"+redirect_info);
 
-        String s=clientId+":"+clientSecret;
+        String s="92c684d7-e3b2-468f-ad34-afeedc941858:S3kL6yG1aS1lI6qC7mQ1cI5xN3dJ7sS5yG2iL2bF2uT7tJ6vW6";
         String auth=Base64.getEncoder().encodeToString(s.getBytes());
         Request request = new Request.Builder()
                 .url("https://sandbox.apihub.citi.com/gcb/api/authCode/oauth2/token/au/gcb")
@@ -58,7 +56,7 @@ public class CitiUtil {
      */
     public static JSONObject getCustomerInfo(String accessToken)throws Exception{
         OkHttpClient client = new OkHttpClient();
-        String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
+        String uuid = UUID.randomUUID().toString().trim();
         String auth = "Bearer"+" "+accessToken;
 
 

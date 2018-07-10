@@ -14,6 +14,7 @@ public class WebMVCConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(securityInterceptor()).excludePathPatterns("/static/*")
+                .excludePathPatterns("swagger-ui.html*")
                 .excludePathPatterns("/error").addPathPatterns("/**");
     }
 }

@@ -17,9 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
-@EnableSwagger2
-@EnableWebMvc
-@ComponentScan("cn.enderqiu.bcinvest")
+//@EnableSwagger2
+//@EnableWebMvc
+//@ComponentScan("cn.enderqiu.bcinvestrebuild")
 public class SwaggerConfig {
     @Bean
     public Docket api(){

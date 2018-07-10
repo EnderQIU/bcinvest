@@ -1,6 +1,8 @@
 package cn.enderqiu.bcinvestrebuild.service.contract;
 
 import cn.enderqiu.bcinvestrebuild.entity.dto.CompanyUserDTO;
+import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserStatusVO;
+import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserVO;
 
 public interface CompanyUserService {
     /**
@@ -9,4 +11,12 @@ public interface CompanyUserService {
      * @return 企业用户信息对象
      */
     CompanyUserDTO findUserByToken(String token);
+    CompanyUserStatusVO code2InnerToken(String code);
+
+    CompanyUserStatusVO getUserStatus(String token);
+
+
+    CompanyUserStatusVO saveCompanyData(String token, CompanyUserDTO dto);
+
+    CompanyUserVO getUserData(String token);
 }

@@ -1,12 +1,41 @@
 package cn.enderqiu.bcinvestrebuild.entity.dto;
 
-public class CompanyUserDTO {
+import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserVO;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
+public class CompanyUserDTO extends CompanyUserVO {
+
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    @ApiModelProperty("用户id")
     private int companyUserId;
 
+    private String telephoneNumber;
+
+    public String getTelephoneNumber() {
+        return telephoneNumber;
+    }
+
+    public void setTelephoneNumber(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
+    }
+
+    @ApiModelProperty("用户名")
     private String userName;
 
     private String userAvatarUrl;
 
+    @ApiModelProperty("唯一标识符")
     private String token;
 
     public String getUserName() {
