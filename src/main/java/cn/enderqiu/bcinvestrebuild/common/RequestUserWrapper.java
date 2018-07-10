@@ -26,7 +26,7 @@ public class RequestUserWrapper extends HttpServletRequestWrapper {
         return companyUserDTO;
     }
 
-    public void setCompanyUserDTO(CompanyUserDTO companyuserDTO) {
+    public void setCompanyUserDTO(CompanyUserDTO companyUserDTO) {
         this.companyUserDTO = companyUserDTO;
     }
 

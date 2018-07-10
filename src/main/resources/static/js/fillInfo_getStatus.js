@@ -19,7 +19,7 @@ window.requestByCode = function(code) {
     $.ajax(
         {
             url:"/user/company/status",
-            async: true,
+            async: false,
             type: "POST",
             data: {
                 "code": code
@@ -32,9 +32,9 @@ window.requestByCookie = function(cookie) {
     $.ajax(
         {
             url:"/user/company/status",
-            async: true,
+            async: false,
             type: "GET",
-            data: {
+            headers: {
                 "user_id_token": cookie
             },
             success: function(data) {
@@ -80,7 +80,7 @@ if (url != "") {
         requestParameter[requestParameterString[i].split("=")[0]] = unescape(requestParameterString[i].split("=")[1]);
     }
 }
-window.requestUserTokenCallBack({"status": "unapplied", "user_id_token": "123456"});
+// window.requestUserTokenCallBack({"status": "unapplied", "user_id_token": "123456"});
 
 var user_id_token = getCookie("user_id_token");
 if (user_id_token != null && user_id_token != "") {

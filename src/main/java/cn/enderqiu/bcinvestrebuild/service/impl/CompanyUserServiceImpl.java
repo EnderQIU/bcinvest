@@ -15,18 +15,13 @@ import java.util.UUID;
 
 @Service
 public class CompanyUserServiceImpl implements CompanyUserService {
-    private CompanyUserDTO dto;
 
     @Autowired
     private CompanyUserMapper mapper;
 
     @Override
     public CompanyUserDTO findUserByToken(String token) {
-        if (dto != null)
-            return dto;
-
-        dto = mapper.findUserByToken(token);
-        return dto;
+        return mapper.findUserByToken(token);
     }
 
 
@@ -50,7 +45,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         catch (Exception e) {
             token = createNewCompanyUserByOnlyEmail(onlyEmail);
         }
-        dto = findUserByToken(token);
+        CompanyUserDTO dto = findUserByToken(token);
         vo = new CompanyUserStatusVO(statusToString(dto.getStatus()), token);
 
         return vo;
@@ -87,7 +82,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 
     @Override
     public CompanyUserStatusVO getUserStatus(String token) {
-        dto = findUserByToken(token);
+        CompanyUserDTO dto = findUserByToken(token);
         String status = statusToString(dto.getStatus());
 
         return new CompanyUserStatusVO(status, token);
