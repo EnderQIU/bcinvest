@@ -2,8 +2,8 @@ package cn.enderqiu.bcinvestrebuild.common;
 
 import cn.enderqiu.bcinvestrebuild.entity.dto.BankUserDTO;
 import cn.enderqiu.bcinvestrebuild.entity.dto.CompanyUserDTO;
-import cn.enderqiu.bcinvestrebuild.service.contract.BankUserService;
-import cn.enderqiu.bcinvestrebuild.service.contract.CompanyUserService;
+import cn.enderqiu.bcinvestrebuild.service.BankUserService;
+import cn.enderqiu.bcinvestrebuild.service.CompanyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 

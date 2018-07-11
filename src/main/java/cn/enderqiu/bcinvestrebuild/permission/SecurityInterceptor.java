@@ -2,7 +2,7 @@ package cn.enderqiu.bcinvestrebuild.permission;
 
 import cn.enderqiu.bcinvestrebuild.entity.dto.BankUserDTO;
 import cn.enderqiu.bcinvestrebuild.entity.dto.CompanyUserDTO;
-import cn.enderqiu.bcinvestrebuild.service.contract.CompanyUserService;
+import cn.enderqiu.bcinvestrebuild.service.CompanyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;

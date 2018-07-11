@@ -1,13 +1,11 @@
-package cn.enderqiu.bcinvestrebuild.service.impl;
+package cn.enderqiu.bcinvestrebuild.service;
 
 import cn.enderqiu.bcinvestrebuild.entity.dto.BankUserDTO;
-import cn.enderqiu.bcinvestrebuild.service.contract.BankUserService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BankUserServiceImpl implements BankUserService {
+public class BankUserService {
 
-    @Override
     public BankUserDTO findUserByToken(String token) {
         return null;
     }

@@ -1,11 +1,9 @@
-package cn.enderqiu.bcinvestrebuild.service.impl;
+package cn.enderqiu.bcinvestrebuild.service;
 
 import cn.enderqiu.bcinvestrebuild.entity.dto.CompanyUserDTO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserStatusVO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserVO;
 import cn.enderqiu.bcinvestrebuild.mapper.CompanyUserMapper;
-import cn.enderqiu.bcinvestrebuild.mapper.Mapper;
-import cn.enderqiu.bcinvestrebuild.service.contract.CompanyUserService;
 import cn.enderqiu.bcinvestrebuild.util.CitiUtil;
 import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +16,15 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
-public class CompanyUserServiceImpl implements CompanyUserService {
+public class CompanyUserService extends BaseService{
 
     @Autowired
-    private CompanyUserMapper mapper;
+    private CompanyUserMapper CompanyUserMapper;
 
-    @Autowired
-    private Mapper map;
-
-    @Override
     public CompanyUserDTO findUserByToken(String token) {
-        return mapper.findUserByToken(token);
+        return CompanyUserMapper.findUserByToken(token);
     }
 
-    @Override
     public CompanyUserStatusVO code2InnerToken(String code) {
         CompanyUserStatusVO vo;
         String accessToken;
@@ -46,7 +39,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 
         String token;
         try {
-            token = mapper.findTokenByOnlyEmail(onlyEmail).getToken();
+            token = CompanyUserMapper.findTokenByOnlyEmail(onlyEmail).getToken();
         }
         catch (Exception e) {
             token = createNewCompanyUserByOnlyEmail(onlyEmail);
@@ -59,7 +52,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 
     private String createNewCompanyUserByOnlyEmail(String onlyEmail) {
         String token = UUID.randomUUID().toString();
-        mapper.createUserByTokenAndEmail(token, onlyEmail);
+        CompanyUserMapper.createUserByTokenAndEmail(token, onlyEmail);
         return token;
     }
 
@@ -86,7 +79,6 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         return "process_failed";
     }
 
-    @Override
     public CompanyUserStatusVO getUserStatus(String token) {
         CompanyUserDTO dto = findUserByToken(token);
         String status = statusToString(dto.getStatus());
@@ -95,18 +87,16 @@ public class CompanyUserServiceImpl implements CompanyUserService {
     }
 
 
-    @Override
     public CompanyUserStatusVO saveCompanyData(String token, CompanyUserDTO dto) {
         if (dto.getUserName() != null)
-            mapper.changeUserNameByToken(token, dto.getUserName());
+            CompanyUserMapper.changeUserNameByToken(token, dto.getUserName());
         if (dto.getTelephoneNumber() != null)
-            mapper.changeTeleNumByToken(token, dto.getTelephoneNumber());
-        mapper.changeStatusByToken(token, 1);
+            CompanyUserMapper.changeTeleNumByToken(token, dto.getTelephoneNumber());
+        CompanyUserMapper.changeStatusByToken(token, 1);
 
         return new CompanyUserStatusVO(statusToString(dto.getStatus()), token);
     }
 
-    @Override
     public CompanyUserVO getUserData(String token) {
         return findUserByToken(token);
     }

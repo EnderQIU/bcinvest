@@ -5,7 +5,7 @@ import cn.enderqiu.bcinvestrebuild.entity.dto.CompanyUserDTO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserStatusVO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
-import cn.enderqiu.bcinvestrebuild.service.contract.CompanyUserService;
+import cn.enderqiu.bcinvestrebuild.service.CompanyUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

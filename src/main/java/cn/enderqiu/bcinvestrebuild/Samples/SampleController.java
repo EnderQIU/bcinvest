@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 public class SampleController extends BaseController {
     @Autowired //记得标注，否则service不会有值
-    private SampleService service; //SampleService is an interface
+    private SampleService service;
 
 
     @RequestMapping(value = "/sample", method = RequestMethod.POST)
@@ -38,7 +38,7 @@ public class SampleController extends BaseController {
                     dataType = "<类型名，一般是String>"
             )
     })
-    String sampleSamplePOST(String source) {
+    SampleVO sampleSamplePOST(String source) {
         //尽量直接传递，可以做一点包装，这里体现了Controller和Service的分离
         //Controller的工作仅仅是路由，实际工作由Service完成
         return service.sampleSamplePOST(source);

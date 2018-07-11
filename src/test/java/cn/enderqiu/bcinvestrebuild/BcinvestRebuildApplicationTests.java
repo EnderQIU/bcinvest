@@ -1,6 +1,6 @@
 package cn.enderqiu.bcinvestrebuild;
 
-import cn.enderqiu.bcinvestrebuild.service.impl.BaseImpl;
+import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BcinvestRebuildApplicationTests extends BaseImpl {
+public class BcinvestRebuildApplicationTests extends BaseService {
 
     @Test
     public void contextLoads() {
