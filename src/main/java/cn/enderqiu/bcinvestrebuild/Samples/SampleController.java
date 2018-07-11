@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+//自己写的应该放到/controller中
 @RestController
 @RequestMapping("/sample")
 /* 这里是指 通过这个类处理的所有请求都会有的请求URL的开头部分
