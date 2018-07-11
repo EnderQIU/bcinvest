@@ -17,21 +17,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
-//@EnableSwagger2
-//@EnableWebMvc
-//@ComponentScan("cn.enderqiu.bcinvestrebuild")
+@EnableSwagger2
+@ComponentScan("cn.enderqiu.bcinvestrebuild")
 public class SwaggerConfig {
     @Bean
     public Docket api(){
         // 添加 header 参数
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
-        tokenPar.name("user_id_token").description("口令").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name("Authorization").description("认证口令").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.regex("/*"))
+                .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(pars)
                 .apiInfo(apiInfo());
