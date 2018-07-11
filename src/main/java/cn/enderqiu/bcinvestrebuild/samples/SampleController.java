@@ -1,4 +1,4 @@
-package cn.enderqiu.bcinvestrebuild.Samples;
+package cn.enderqiu.bcinvestrebuild.samples;
 
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-//自己写的应该放到/controller中
+//自己写的应该放到app包自己所属的包中
+/* 每个人在app包建一个新的属于自己的包
+ * 自己负责的包括Controller, Service, VO都放在这个自己的地方中
+ * 分离开发，不需要依赖别人的部分
+ */
 @RestController
 @RequestMapping("/sample")
 /* 这里是指 通过这个类处理的所有请求都会有的请求URL的开头部分
