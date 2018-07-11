@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface CompanyUserMapper {
-    @Select("select * from CompanyUser where token=#{token}")
+    @Select("select * from Company where Token=#{token}")
     @Results({
-            @Result(property ="companyUserId",column="CompanyUserId"),
+            @Result(property ="companyUserId",column="AccountNum"),
             @Result(property = "userName",column = "LocalName"),
             @Result(property = "status",column = "Status"),
             @Result(property = "token",column = "Token")
