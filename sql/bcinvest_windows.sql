@@ -35,7 +35,7 @@ CREATE TABLE `Company` (
   `EmailAddress` varchar(128) UNIQUE,
   `Token` varchar(128) UNIQUE,
   `Credit` bigint(20),
-  `Status` int(11),
+  `Status` VARCHAR(128) NULL DEFAULT "unapplied" CHECK (VALUE IN ("unapplied", "checking", "unpassed", "passed")),
  #`company` varchar(128) Default null,
   PRIMARY KEY (`AccountNum`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -252,6 +252,7 @@ CREATE TABLE `Credit`(
   )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `Protocol`;
 CREATE TABLE IF NOT EXISTS `Protocol` (
   `ProtocolId` INT(11) NOT NULL,
   `GurantyId` INT(11) NOT NULL,

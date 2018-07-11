@@ -22,10 +22,11 @@ public interface CompanyUserMapper {
     @Results({@Result(property = "token", column = "Token")})
     TokenResponseVO findTokenByOnlyEmail(String onlyEmail);
 
-    @Insert("INSERT INTO Company (EmailAddress, Token, Status) VALUES (#{onlyEmail}, " +
-            "#{token}, 0)")
-    int createUserByTokenAndEmail(@Param("token") String token, @Param("onlyEmail") String
-            onlyEmail);
+    @Insert("INSERT INTO Company (AccountNum, EmailAddress, Token) VALUES (#{id}, #{onlyEmail}, " +
+            "#{token})")
+    int createUserByTokenAndEmail(@Param("id")String id, @Param("token") String token, @Param
+            ("onlyEmail")
+            String onlyEmail);
 
     @Update("UPDATE Company SET Name = #{userName} WHERE Token = #{token}")
     int changeUserNameByToken(@Param("token") String token, @Param("userName") String userName);
