@@ -13,6 +13,7 @@ CREATE TABLE `Authorization` (
   `Name` varchar(128),
   `Type` int(11),
   `AccountNum` varchar(128),
+  `Token` varchar(128) UNIQUE,
   `Password` varchar(128),
   PRIMARY KEY (`AccountNum`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -34,6 +35,7 @@ CREATE TABLE `Company` (
   `EmailAddress` varchar(128) UNIQUE,
   `Token` varchar(128) UNIQUE,
   `Credit` bigint(20),
+  `Status` int(11),
  #`company` varchar(128) Default null,
   PRIMARY KEY (`AccountNum`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

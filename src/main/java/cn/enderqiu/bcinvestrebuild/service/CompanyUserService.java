@@ -5,6 +5,7 @@ import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserStatusVO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserVO;
 import cn.enderqiu.bcinvestrebuild.mapper.CompanyUserMapper;
 import cn.enderqiu.bcinvestrebuild.util.CitiUtil;
+import cn.enderqiu.bcinvestrebuild.util.EnumUtil;
 import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class CompanyUserService extends BaseService{
             token = createNewCompanyUserByOnlyEmail(onlyEmail);
         }
         CompanyUserDTO dto = findUserByToken(token);
-        vo = new CompanyUserStatusVO(statusToString(dto.getStatus()), token);
+        vo = new CompanyUserStatusVO(EnumUtil.statusToString(dto.getStatus()), token);
 
         return vo;
     }
@@ -65,23 +66,9 @@ public class CompanyUserService extends BaseService{
         return CitiUtil.getAccessToken(code);
     }
 
-    private String statusToString(int status) {
-        switch (status){
-            case 0:
-                return "unapplied";
-            case 1:
-                return "checking";
-            case 2:
-                return "unpassed";
-            case 3:
-                return "passed";
-        }
-        return "process_failed";
-    }
-
     public CompanyUserStatusVO getUserStatus(String token) {
         CompanyUserDTO dto = findUserByToken(token);
-        String status = statusToString(dto.getStatus());
+        String status = EnumUtil.statusToString(dto.getStatus());
 
         return new CompanyUserStatusVO(status, token);
     }
@@ -91,10 +78,10 @@ public class CompanyUserService extends BaseService{
         if (dto.getUserName() != null)
             CompanyUserMapper.changeUserNameByToken(token, dto.getUserName());
         if (dto.getTelephoneNumber() != null)
-            CompanyUserMapper.changeTeleNumByToken(token, dto.getTelephoneNumber());
+            CompanyUserMapper.changeTelNumByToken(token, dto.getTelephoneNumber());
         CompanyUserMapper.changeStatusByToken(token, 1);
 
-        return new CompanyUserStatusVO(statusToString(dto.getStatus()), token);
+        return new CompanyUserStatusVO(EnumUtil.statusToString(dto.getStatus()), token);
     }
 
     public CompanyUserVO getUserData(String token) {
