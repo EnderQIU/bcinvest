@@ -28,30 +28,8 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 
     @Override
     public CompanyUserDTO findUserByToken(String token) {
-        tryNewDataBase();
         return mapper.findUserByToken(token);
     }
-
-    private void tryNewDataBase() {
-        map.INSERT("INSERT INTO CompanyUser (Status) VALUES (1);");
-        showAllCompanyUser();
-        map.UPDATE("UPDATE CompanyUser SET Token = 1, Credit = 100 WHERE Status = 1;");
-        showAllCompanyUser();
-        map.DELETE("DELETE FROM CompanyUser WHERE Status = 1;");
-        showAllCompanyUser();
-    }
-
-    private void showAllCompanyUser() {
-        List<Map<String, Object>> sl = map.SELECT("SELECT * FROM CompanyUser;");
-        Logger logger = Logger.getLogger("CompanyUserServiceImpl.class");
-        for (Map<String, Object> m:sl) {
-            for (String key : m.keySet()) {
-                logger.info("\t" + key + ": " + m.get(key));
-            }
-            logger.info("");
-        }
-    }
-
 
     @Override
     public CompanyUserStatusVO code2InnerToken(String code) {
