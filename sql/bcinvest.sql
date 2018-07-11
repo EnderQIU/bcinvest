@@ -131,6 +131,7 @@ CREATE TABLE `Guaranty`(
   `ScopeOfRight` int(11),
   `OwnerName` varchar(128),
   `ReportId` int(11),
+  `Type` VARCHAR(32) DEFAULT 'House',
   `EvaluateValue` int(11),
   `Name` varchar(128),
   CONSTRAINT `guaranty_fk_company` FOREIGN KEY (`AccountNum`) REFERENCES `Company` (`AccountNum`),
