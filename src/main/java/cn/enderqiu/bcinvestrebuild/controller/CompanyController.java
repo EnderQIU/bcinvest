@@ -33,7 +33,7 @@ public class CompanyController extends BaseController {
     }
 
     @RequestMapping(value = "status", method = RequestMethod.GET)
-    CompanyUserStatusVO getUserStatus(){
+    CompanyUserStatusVO getUserStatus() {
         return service.getUserStatus(getCompanyUserDTO().getToken());
     }
 

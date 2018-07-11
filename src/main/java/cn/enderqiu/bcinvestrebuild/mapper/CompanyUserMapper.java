@@ -5,6 +5,9 @@ import cn.enderqiu.bcinvestrebuild.entity.vo.TokenResponseVO;
 import org.apache.ibatis.annotations.*;
 import org.mybatis.spring.annotation.MapperScan;
 
+import java.util.List;
+import java.util.Map;
+
 public interface CompanyUserMapper {
     @Select("select * from CompanyUser where token=#{token}")
     @Results({
@@ -33,4 +36,8 @@ public interface CompanyUserMapper {
 
     @Update("UPDATE CompanyUser SET Status = #{status} WHERE Token = #{token}")
     int changeStatusByToken(@Param("token") String token, @Param("status") int status);
+
+//    @Select("${sentence}")
+//    @ResultType(java.util.HashMap.class)
+//    List<Map<String,Object>> tryGetAllBySentence(@Param("sentence")String sentence);
 }
