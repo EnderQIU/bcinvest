@@ -2,6 +2,7 @@
 # Date: 2018-07-08 10:25:39
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
+USE bcinvest;
 
 #
 # Structure for table "authorization"
