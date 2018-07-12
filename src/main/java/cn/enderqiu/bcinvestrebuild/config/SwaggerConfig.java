@@ -26,7 +26,7 @@ public class SwaggerConfig {
         // 添加 header 参数
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
-        tokenPar.name("Authorization").description("认证口令").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name("user_id_token").description("认证口令").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
