@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Service
 public class CompanyUserService extends BaseService{
@@ -65,6 +66,8 @@ public class CompanyUserService extends BaseService{
     public CompanyUserStatusVO getUserStatus(String token) {
         CompanyUserDTO dto = findUserByToken(token);
         String status = dto.getStatus();
+        Logger logger = Logger.getLogger("CompanyUserService.class");
+        logger.info("Token: " + token + "Status: " + status);
 
         return new CompanyUserStatusVO(status, token);
     }

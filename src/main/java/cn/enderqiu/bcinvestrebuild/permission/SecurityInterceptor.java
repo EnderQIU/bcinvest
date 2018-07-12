@@ -1,5 +1,6 @@
 package cn.enderqiu.bcinvestrebuild.permission;
 
+import cn.enderqiu.bcinvestrebuild.common.RequestUserWrapper;
 import cn.enderqiu.bcinvestrebuild.entity.dto.BankUserDTO;
 import cn.enderqiu.bcinvestrebuild.entity.dto.CompanyUserDTO;
 import cn.enderqiu.bcinvestrebuild.service.CompanyUserService;
@@ -46,8 +47,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
             // 如果标记了注解，则判断权限
             if (requiredPermission != null && !StringUtils.isEmpty(requiredPermission.value())) {
                 // 数据库中获取该用户的权限信息 并判断是否有权限
-                CompanyUserDTO companyUserDTO = (CompanyUserDTO) request.getAttribute("companyUserDTO");
-                BankUserDTO bankUserDTO = (BankUserDTO) request.getAttribute("bankUserDTO");
+                CompanyUserDTO companyUserDTO = ((RequestUserWrapper)request).getCompanyUserDTO();
+                BankUserDTO bankUserDTO = ((RequestUserWrapper)request).getBankUserDTO();
                 if (companyUserDTO != null){
                     return requiredPermission.value().contains("company");
                 }else if (bankUserDTO != null){

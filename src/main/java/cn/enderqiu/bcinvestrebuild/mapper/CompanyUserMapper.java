@@ -11,7 +11,7 @@ import java.util.Map;
 public interface CompanyUserMapper {
     @Select("select * from Company where Token=#{token}")
     @Results({
-            @Result(property ="companyUserId",column="AccountNum"),
+            @Result(property ="accountNum",column="AccountNum"),
             @Result(property = "userName",column = "Name"),
             @Result(property = "status",column = "Status"),
             @Result(property = "token",column = "Token")

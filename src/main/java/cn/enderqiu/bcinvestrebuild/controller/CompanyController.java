@@ -1,6 +1,6 @@
 package cn.enderqiu.bcinvestrebuild.controller;
 
-
+import cn.enderqiu.bcinvestrebuild.controller.BaseController;
 import cn.enderqiu.bcinvestrebuild.entity.dto.CompanyUserDTO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserStatusVO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserVO;
@@ -78,4 +78,4 @@ public class CompanyController extends BaseController {
         return service.getUserData(getCompanyUserDTO().getToken());
     }
 
-} //end inner class CompanyController
+} //end inner class cn.enderqiu.bcinvestrebuild.controller.CompanyController

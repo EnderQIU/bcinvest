@@ -19,21 +19,21 @@ public class BcinvestRebuildApplicationTests extends BaseService {
 
 //        testEnum();
 
-//        tryNewDataBase();
+        tryNewDataBase();
 
     }
 
     private void tryNewDataBase() {
-        mapper.INSERT("INSERT INTO CompanyUser (Status) VALUES (1);");
+        mapper.INSERT("INSERT INTO Company (AccountNum, Status) VALUES ('123456456', 'passed');");
         showAllCompanyUser();
-        mapper.UPDATE("UPDATE CompanyUser SET Token = 1, Credit = 100 WHERE Status = 1;");
+        mapper.UPDATE("UPDATE Company SET Credit = 100 WHERE Status = 'passed';");
         showAllCompanyUser();
-        mapper.DELETE("DELETE FROM CompanyUser WHERE Status = 1;");
+        mapper.DELETE("DELETE FROM Company WHERE Status = 'passed';");
         showAllCompanyUser();
     }
 
     private void showAllCompanyUser() {
-        List<Map<String, Object>> sl = mapper.SELECT("SELECT * FROM CompanyUser;");
+        List<Map<String, Object>> sl = mapper.SELECT("SELECT * FROM Company;");
         Logger logger = Logger.getLogger("CompanyUserServiceImpl.class");
         for (Map<String, Object> m:sl) {
             for (String key : m.keySet()) {
