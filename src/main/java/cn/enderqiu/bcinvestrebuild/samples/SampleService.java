@@ -42,9 +42,12 @@ public class SampleService extends BaseService {
         int pageEndIndex = 0;
 //        pageStartIndex = <n> * (page - 1);
 //        pageEndIndex = pageStartIndex + <n>;
+
+        //记得必须要有ORDER BY，否则会有可能重复
         List<Map<String, Object>> list = mapper.SELECT(
                 "SELECT ... ORDER BY ... LIMIT "+ pageStartIndex + ", " + pageEndIndex);
         List<SampleVO> lvo = new ArrayList<>();
+
         for (Map<String, Object> map:list) {
             SampleVO vo = new SampleVO();
             vo.setSampleInt((int)map.get("SampleInt"));
