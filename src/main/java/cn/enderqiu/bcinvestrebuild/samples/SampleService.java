@@ -1,12 +1,8 @@
 package cn.enderqiu.bcinvestrebuild.samples;
 
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
-import cn.enderqiu.bcinvestrebuild.util.MapExtracter;
 import org.springframework.stereotype.Service;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
