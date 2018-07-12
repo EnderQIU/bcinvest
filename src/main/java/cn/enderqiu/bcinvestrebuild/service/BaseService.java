@@ -28,6 +28,7 @@ public class BaseService {
         }
     }
 
+    //如果不支持无参构造函数则不能使用
     protected <T> List<T> getVOListByResult(List<Map<String, Object>> from, Class<T> tClass) {
         List<T> list = new ArrayList<>();
         for (Map<String, Object> map:from) {
