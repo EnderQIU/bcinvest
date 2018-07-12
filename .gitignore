@@ -114,4 +114,7 @@ buildNumber.properties
 src/main/resources/config/application-dev.properties
 src/main/resources/config/JooqConfig.xml
 
+# git_stats
+git_stats/*
+
 # End of https://www.gitignore.io/api/macos,maven,java-web,intellij+all
