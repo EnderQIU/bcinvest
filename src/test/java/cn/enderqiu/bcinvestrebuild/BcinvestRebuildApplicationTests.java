@@ -1,11 +1,17 @@
 package cn.enderqiu.bcinvestrebuild;
 
+import cn.enderqiu.bcinvestrebuild.samples.SampleVO;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
+import cn.enderqiu.bcinvestrebuild.util.MapExtracter;
+import com.sun.javafx.collections.MappingChange;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -16,6 +22,23 @@ public class BcinvestRebuildApplicationTests extends BaseService {
 
     @Test
     public void contextLoads() {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("SampleString", "testString");
+        map.put("SampleInt", 100);
+        SampleVO vo = new SampleVO();
+        try {
+            MapExtracter.extract(vo, map);
+        } catch (IntrospectionException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(vo.getSampleInt());
+        System.out.println(vo.getSampleString());
 
 //        testEnum();
 
