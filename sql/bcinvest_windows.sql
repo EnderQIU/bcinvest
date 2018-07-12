@@ -245,7 +245,8 @@ CREATE TABLE `Credit`(
   `ReportId` int(11),
   `Type` tinyint(1),
   PRIMARY KEY(`AccountNum`,`GuarantyId`,`ReportId`),
-  CONSTRAINT `credit_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`)
+  CONSTRAINT `credit_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`),
+  CONSTRAINT credit_fk_company FOREIGN KEY (AccountNum) REFERENCES Company (AccountNum)
 
    
 
