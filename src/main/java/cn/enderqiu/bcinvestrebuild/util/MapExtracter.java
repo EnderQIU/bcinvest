@@ -11,7 +11,7 @@ public class MapExtracter {
     public static <T> void extract(T t, Map<String, Object> map) throws IntrospectionException,
             InvocationTargetException, IllegalAccessException {
         for (String s:map.keySet()) {
-            s = s.substring(0, 1).toUpperCase() + s.substring(1, s.length());
+            s = s.substring(0, 1).toLowerCase() + s.substring(1, s.length());
             PropertyDescriptor descriptor = new PropertyDescriptor(s, t.getClass());
             Method setter = descriptor.getWriteMethod();
             setter.invoke(map.get(s));
