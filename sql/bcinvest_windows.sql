@@ -110,13 +110,13 @@ CREATE TABLE `FundamentalCertificate` (
 
 DROP TABLE IF EXISTS `Report`;
 CREATE TABLE `Report` (
-  `AuthName` varchar(128),
-  `ReportId` int(11),
+  `AccountNum` varchar(128),
+  `ReportId` int(11) AUTO_INCREMENT,
   `Date` datetime,
   `Duration` varchar(128),
   PRIMARY KEY (`ReportId`),
-  KEY `AuthName` (`AuthName`),
-  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`AuthName`) REFERENCES `Authorization` (`AccountNum`)
+  KEY `AuthName` (`AccountNum`),
+  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`AccountNum`) REFERENCES `Authorization` (`AccountNum`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -128,7 +128,7 @@ CREATE TABLE `Report` (
 
 DROP table if EXISTS `Guaranty`;
 CREATE TABLE `Guaranty`(
-  `GuarantyId` int(11),
+  `GuarantyId` int(11) AUTO_INCREMENT,
   `AccountNum` varchar(128),
   `State` int(11),
   `ScopeOfRight` int(11),
@@ -246,18 +246,17 @@ CREATE TABLE `Credit`(
   `Type` tinyint(1),
   PRIMARY KEY(`AccountNum`,`GuarantyId`,`ReportId`),
   CONSTRAINT `credit_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`),
-  CONSTRAINT credit_fk_company FOREIGN KEY (AccountNum) REFERENCES Company (AccountNum)
-
-   
-
-  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `credit_fk_company` FOREIGN KEY (`AccountNum`) REFERENCES `Company` (`AccountNum`),
+  CONSTRAINT `credit_fk_report` FOREIGN KEY (`ReportId`) REFERENCES `Report` (`ReportId`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `Protocol`;
 CREATE TABLE IF NOT EXISTS `Protocol` (
-  `ProtocolId` INT(11) NOT NULL,
+  `ProtocolId` INT(11) NOT NULL AUTO_INCREMENT,
   `GurantyId` INT(11) NOT NULL,
   `StartDate` DATE NOT NULL,
+  `Duration` VARCHAR(128) NOT NULL,
   `EndDate` DATE NOT NULL,
   `Message` MEDIUMTEXT NULL,
   `Condition` VARCHAR(45) NULL,
