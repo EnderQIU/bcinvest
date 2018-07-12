@@ -18,7 +18,7 @@ public class CompanyUserDTO extends CompanyUserVO {
     }
 
     @ApiModelProperty("用户id")
-    private int companyUserId;
+    private String accountNum;
 
     private String telephoneNumber;
 
@@ -62,11 +62,11 @@ public class CompanyUserDTO extends CompanyUserVO {
         this.token = token;
     }
 
-    public int getCompanyUserId() {
-        return companyUserId;
+    public String getAccountNum() {
+        return accountNum;
     }
 
-    public void setCompanyUserId(int companyUserId) {
-        this.companyUserId = companyUserId;
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 }
