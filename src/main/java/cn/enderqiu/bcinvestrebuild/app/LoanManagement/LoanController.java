@@ -1,13 +1,11 @@
-package cn.enderqiu.bcinvestrebuild.controller.LoanManagement;
+package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
 
 /**
  * Created by EvanChoo on 7/11/18.
  */
 
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
-import cn.enderqiu.bcinvestrebuild.entity.vo.LoanManagement.LoanVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
-import cn.enderqiu.bcinvestrebuild.service.LoanManagement.LoanService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

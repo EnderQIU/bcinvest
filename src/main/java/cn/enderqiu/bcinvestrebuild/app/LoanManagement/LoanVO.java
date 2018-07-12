@@ -1,4 +1,4 @@
-package cn.enderqiu.bcinvestrebuild.entity.vo.LoanManagement;
+package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
 
 /**
  * Created by EvanChoo on 7/11/18.
