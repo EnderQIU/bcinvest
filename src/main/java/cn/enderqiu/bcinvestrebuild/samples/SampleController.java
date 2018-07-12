@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 //自己写的应该放到app包自己所属的包中
 /* 每个人在app包建一个新的属于自己的包
  * 自己负责的包括Controller, Service, VO都放在这个自己的地方中
@@ -47,5 +49,12 @@ public class SampleController extends BaseController {
         //尽量直接传递，可以做一点包装，这里体现了Controller和Service的分离
         //Controller的工作仅仅是路由，实际工作由Service完成
         return service.sampleSamplePOST(source);
+    }
+
+    //这里不需要参数所以没有注解@ApiImplicitParams
+    @RequestMapping(value = "/returnList", method = RequestMethod.GET)
+    List<SampleVO> sampleReturnList() {
+        //可以直接return list
+        return service.sampleReturnList();
     }
 }

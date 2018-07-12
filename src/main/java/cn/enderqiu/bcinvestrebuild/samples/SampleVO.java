@@ -10,9 +10,9 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel
 public class SampleVO {
-    @ApiModelProperty("例子用的String类数据")
+    @ApiModelProperty(value = "例子用的String类数据", required = true)
     private String sampleString;
-    @ApiModelProperty("例子用的int类型数据")
+    @ApiModelProperty(value = "例子用的int类型数据", required = true) //记得需要的一定要写上required = true
     private int sampleInt;
 
     //记得写上getter和setter
