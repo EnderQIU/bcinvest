@@ -17,7 +17,9 @@ public class BcinvestRebuildApplicationTests extends BaseService {
     @Test
     public void contextLoads() {
 
-        tryNewDataBase();
+//        testEnum();
+
+//        tryNewDataBase();
 
     }
 

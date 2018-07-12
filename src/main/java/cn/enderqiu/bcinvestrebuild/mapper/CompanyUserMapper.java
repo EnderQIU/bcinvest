@@ -12,29 +12,30 @@ public interface CompanyUserMapper {
     @Select("select * from Company where Token=#{token}")
     @Results({
             @Result(property ="companyUserId",column="AccountNum"),
-            @Result(property = "userName",column = "LocalName"),
+            @Result(property = "userName",column = "Name"),
             @Result(property = "status",column = "Status"),
             @Result(property = "token",column = "Token")
     })
-    CompanyUserDTO findUserByToken(String token);
+    CompanyUserDTO findUserByToken(@Param("token") String token);
 
-    @Select("select token from CompanyUser where EmailAddress=#{onlyEmail}")
+    @Select("SELECT Token FROM Company WHERE EmailAddress = #{onlyEmail}")
     @Results({@Result(property = "token", column = "Token")})
     TokenResponseVO findTokenByOnlyEmail(String onlyEmail);
 
-    @Insert("INSERT INTO CompanyUser (EmailAddress, Token, Status) VALUES (#{onlyEmail}, " +
-            "#{token}, 0)")
-    int createUserByTokenAndEmail(@Param("token") String token, @Param("onlyEmail") String
-            onlyEmail);
+    @Insert("INSERT INTO Company (AccountNum, EmailAddress, Token) VALUES (#{id}, #{onlyEmail}, " +
+            "#{token})")
+    int createUserByTokenAndEmail(@Param("id")String id, @Param("token") String token, @Param
+            ("onlyEmail")
+            String onlyEmail);
 
-    @Update("UPDATE CompanyUser SET UserName = #{userName} WHERE Token = #{token}")
+    @Update("UPDATE Company SET Name = #{userName} WHERE Token = #{token}")
     int changeUserNameByToken(@Param("token") String token, @Param("userName") String userName);
 
-    @Update("UPDATE CompanyUser SET TelephoneNumber = #{telephoneNumber} WHERE Token = #{token}")
-    int changeTeleNumByToken(@Param("token") String token, @Param("telephoneNumber") String
+    @Update("UPDATE Company SET TelNum = #{telephoneNumber} WHERE Token = #{token}")
+    int changeTelNumByToken(@Param("token") String token, @Param("telephoneNumber") String
             telephoneNumber);
 
-    @Update("UPDATE CompanyUser SET Status = #{status} WHERE Token = #{token}")
+    @Update("UPDATE Company SET Status = #{status} WHERE Token = #{token}")
     int changeStatusByToken(@Param("token") String token, @Param("status") int status);
 
 //    @Select("${sentence}")

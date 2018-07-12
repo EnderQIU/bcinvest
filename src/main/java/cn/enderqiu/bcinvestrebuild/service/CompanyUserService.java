@@ -5,15 +5,11 @@ import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserStatusVO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserVO;
 import cn.enderqiu.bcinvestrebuild.mapper.CompanyUserMapper;
 import cn.enderqiu.bcinvestrebuild.util.CitiUtil;
-import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.rmi.CORBA.Util;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
 public class CompanyUserService extends BaseService{
@@ -45,14 +41,15 @@ public class CompanyUserService extends BaseService{
             token = createNewCompanyUserByOnlyEmail(onlyEmail);
         }
         CompanyUserDTO dto = findUserByToken(token);
-        vo = new CompanyUserStatusVO(statusToString(dto.getStatus()), token);
+        vo = new CompanyUserStatusVO(dto.getStatus(), token);
 
         return vo;
     }
 
     private String createNewCompanyUserByOnlyEmail(String onlyEmail) {
         String token = UUID.randomUUID().toString();
-        CompanyUserMapper.createUserByTokenAndEmail(token, onlyEmail);
+        String id = UUID.randomUUID().toString();
+        CompanyUserMapper.createUserByTokenAndEmail(id, token, onlyEmail);
         return token;
     }
 
@@ -65,23 +62,9 @@ public class CompanyUserService extends BaseService{
         return CitiUtil.getAccessToken(code);
     }
 
-    private String statusToString(int status) {
-        switch (status){
-            case 0:
-                return "unapplied";
-            case 1:
-                return "checking";
-            case 2:
-                return "unpassed";
-            case 3:
-                return "passed";
-        }
-        return "process_failed";
-    }
-
     public CompanyUserStatusVO getUserStatus(String token) {
         CompanyUserDTO dto = findUserByToken(token);
-        String status = statusToString(dto.getStatus());
+        String status = dto.getStatus();
 
         return new CompanyUserStatusVO(status, token);
     }
@@ -91,10 +74,10 @@ public class CompanyUserService extends BaseService{
         if (dto.getUserName() != null)
             CompanyUserMapper.changeUserNameByToken(token, dto.getUserName());
         if (dto.getTelephoneNumber() != null)
-            CompanyUserMapper.changeTeleNumByToken(token, dto.getTelephoneNumber());
+            CompanyUserMapper.changeTelNumByToken(token, dto.getTelephoneNumber());
         CompanyUserMapper.changeStatusByToken(token, 1);
 
-        return new CompanyUserStatusVO(statusToString(dto.getStatus()), token);
+        return new CompanyUserStatusVO(dto.getStatus(), token);
     }
 
     public CompanyUserVO getUserData(String token) {
