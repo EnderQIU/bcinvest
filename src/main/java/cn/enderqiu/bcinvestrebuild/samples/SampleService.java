@@ -35,4 +35,22 @@ public class SampleService extends BaseService {
         }
         return lvo;
     }
+
+    //规定一页包含<n>条数据
+    public List<SampleVO> samplePages(String paramNeeded, int page) {
+        int pageStartIndex = 0;
+        int pageEndIndex = 0;
+//        pageStartIndex = <n> * (page - 1);
+//        pageEndIndex = pageStartIndex + <n>;
+        List<Map<String, Object>> list = mapper.SELECT(
+                "SELECT ... ORDER BY ... LIMIT "+ pageStartIndex + ", " + pageEndIndex);
+        List<SampleVO> lvo = new ArrayList<>();
+        for (Map<String, Object> map:list) {
+            SampleVO vo = new SampleVO();
+            vo.setSampleInt((int)map.get("SampleInt"));
+            vo.setSampleString((String)map.get("SampleString"));
+            lvo.add(vo);
+        }
+        return lvo;
+    }
 }

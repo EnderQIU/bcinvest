@@ -57,4 +57,26 @@ public class SampleController extends BaseController {
         //可以直接return list
         return service.sampleReturnList();
     }
+
+    //分页机制下一次不返回那么多数据的例子
+    //同时是有多个参数的时候的例子
+    @RequestMapping(value = "/dividePages", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "paramNeeded",
+                    required = true,
+                    value = "<其他必须要的参数>",
+                    dataType = "String"
+            ),
+            //有多个参数就有多个@ApiImplicitParam
+            @ApiImplicitParam(
+                    name = "page",
+                    required = true,
+                    value = "第几页，一页包含<n>条数据",
+                    dataType = "int"
+            )
+    })
+    List<SampleVO> samplePages(String paramNeeded, int page) {
+        return service.samplePages(paramNeeded, page);
+    }
 }
