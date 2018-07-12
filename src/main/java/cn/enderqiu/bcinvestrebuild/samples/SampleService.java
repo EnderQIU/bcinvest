@@ -13,7 +13,7 @@ import java.util.Map;
  */
 /* VO可以含有多余的字段名
  * 但是一定要含有和map内列名完全相同的字段和相应的getter, setter
- * 首字母大小写可以随意
+ * 字段首字母大小写可以随意
  * 否则会报错
  */
 @Service
@@ -22,8 +22,11 @@ public class SampleService extends BaseService {
         //进行数据库操作
         List<Map<String, Object>> list = mapper.SELECT("数据库语句");
         Map<String, Object> map = list.get(0);
+
+        //自动填充VO
         SampleVO vo = new SampleVO();
         extract(vo, map);
+
         return vo;
     }
 
