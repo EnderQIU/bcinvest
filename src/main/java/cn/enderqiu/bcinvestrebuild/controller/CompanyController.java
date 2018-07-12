@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user/company")
 @Api("企业注册登录信息")
-@RequiredPermissions("company")
 public class CompanyController extends BaseController {
     @Autowired //自动装载Impl对象
     private CompanyUserService service;
@@ -32,11 +31,13 @@ public class CompanyController extends BaseController {
         return service.code2InnerToken(code);
     }
 
+    @RequiredPermissions("company")
     @RequestMapping(value = "status", method = RequestMethod.GET)
     CompanyUserStatusVO getUserStatus() {
         return service.getUserStatus(getCompanyUserDTO().getToken());
     }
 
+    @RequiredPermissions("company")
     @RequestMapping(value = "authorize", method = RequestMethod.POST)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "LocalName", required = true,
@@ -53,6 +54,7 @@ public class CompanyController extends BaseController {
         return service.saveCompanyData(getCompanyUserDTO().getToken(), dto);
     }
 
+    @RequiredPermissions("company")
     @RequestMapping(value = "info", method = RequestMethod.PUT)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "LocalName", required = false,
@@ -70,6 +72,7 @@ public class CompanyController extends BaseController {
         return service.saveCompanyData(getCompanyUserDTO().getToken(), dto);
     }
 
+    @RequiredPermissions("company")
     @RequestMapping(value = "info", method = RequestMethod.GET)
     CompanyUserVO getUserData() {
         return service.getUserData(getCompanyUserDTO().getToken());
