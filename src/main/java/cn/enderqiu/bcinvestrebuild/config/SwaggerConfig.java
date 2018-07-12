@@ -2,6 +2,7 @@ package cn.enderqiu.bcinvestrebuild.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -17,8 +18,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
+@Configuration
 @EnableSwagger2
-@ComponentScan("cn.enderqiu.bcinvestrebuild")
 public class SwaggerConfig {
     @Bean
     public Docket api(){
