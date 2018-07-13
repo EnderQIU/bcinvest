@@ -23,7 +23,7 @@ public class LoanService extends BaseService
 
         String sql = "SELECT * " +
                      "FROM Guaranty " +
-                     "WHERE AccountNum = "+AccountNum+" AND State = 4 " +
+                     "WHERE AccountNum = \'"+AccountNum+"\' AND State = 4 " +
                      "ORDER BY GuarantyId ASC " +
                      "LIMIT "+resultStartIndex+", 20";
 
@@ -75,7 +75,7 @@ public class LoanService extends BaseService
     private String token2AccountNum(String user_id_token) {
         String sql = "SELECT AccountNum" +
                      "FROM Company" +
-                     "WHERE Token = "+user_id_token;
+                     "WHERE Token = \'"+user_id_token+"\'";
 
         List<Map<String, Object>> list = mapper.SELECT(sql);
 

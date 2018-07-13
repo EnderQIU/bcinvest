@@ -21,15 +21,14 @@ import java.util.List;
 @RequestMapping("user/loanManagement")
 @Api("贷款管理")
 @RequiredPermissions("company")
-public class LoanController extends BaseController
-{
+public class LoanController extends BaseController {
     @Autowired
     private LoanService loanService;
 
     @RequestMapping(value="/loanRequestedButNotPassed", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(
-                paramType = "query",
+                paramType = "form",
                 name = "user_id_token",
                 required = true,
                 value = "用户的标识符",
