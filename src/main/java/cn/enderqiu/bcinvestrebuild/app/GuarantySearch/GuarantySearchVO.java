@@ -1,11 +1,13 @@
 package cn.enderqiu.bcinvestrebuild.app.GuarantySearch;
 
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Created by EvanChoo on 7/13/18.
  */
+@ApiModel
 public class GuarantySearchVO {
     @ApiModelProperty(value = "抵押物ID", required = true)
     private int GuarantyId;

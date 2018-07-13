@@ -41,7 +41,6 @@ public class GuarantySearchService extends BaseService{
 
         for(Map<String, Object> item : list) {
             GuarantySearchVO searchVO = new GuarantySearchVO();
-            //???: question: extract是直接给成员变量赋值还是调用的setter，调用setter才可以完成DTO到VO的转化
             extract(searchVO, item);
             voList.add(searchVO);
         }

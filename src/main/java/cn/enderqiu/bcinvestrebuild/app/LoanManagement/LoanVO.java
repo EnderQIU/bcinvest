@@ -1,11 +1,12 @@
 package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Created by EvanChoo on 7/11/18.
  */
-
+@ApiModel
 public class LoanVO {
     /*
      * GuarantyId-抵押物ID

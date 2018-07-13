@@ -1,10 +1,12 @@
 package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Created by EvanChoo on 7/13/18.
  */
+@ApiModel
 public class LoanDetailVO {
     /*
      *GuarantyId, g.AccountNum AS CompanyAccount, State, ScopeOfRight, OwnerName, g.ReportId AS ReportId, g.Type AS GuarantyType, EvaluateValue, g.Name AS GuarantyName, r.AccountNum AS AuthAccount, Date, Duration, a.Name AS AuthName
