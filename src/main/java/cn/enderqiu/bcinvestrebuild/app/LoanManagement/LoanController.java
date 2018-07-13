@@ -5,6 +5,7 @@ package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
  */
 
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
+import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -77,7 +78,7 @@ public class LoanController extends BaseController
                     dataType = "int"
             )
     })
-    boolean cancleLoanRequest(String user_id_token, int guarantyId) {
+    BaseResponseVO cancleLoanRequest(String user_id_token, int guarantyId) {
         return loanService.cancleLoanRequest(user_id_token, guarantyId);
     }
 }

@@ -4,6 +4,7 @@ package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
  * Created by EvanChoo on 7/11/18.
  */
 
+import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import org.springframework.stereotype.Service;
 
@@ -66,9 +67,9 @@ public class LoanService extends BaseService
         return vo;
     }
 
-    public boolean cancleLoanRequest(String user_id_token, int guarantyId) {
+    public BaseResponseVO cancleLoanRequest(String user_id_token, int guarantyId) {
         //todo: implement this
-        return false;
+        return null;
     }
 
     private String token2AccountNum(String user_id_token) {
