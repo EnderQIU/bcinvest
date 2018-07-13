@@ -4,7 +4,6 @@ package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
  * Created by EvanChoo on 7/11/18.
  */
 
-import cn.enderqiu.bcinvestrebuild.app.LoanManagement.LoanVO;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import org.springframework.stereotype.Service;
 
@@ -29,27 +28,47 @@ public class LoanService extends BaseService
 
         List<Map<String, Object>> list = mapper.SELECT(sql);
 
+        if(list.isEmpty())
+            return null;
+
         List<LoanVO> result = new ArrayList<>();
 
         for(Map<String, Object> map : list) {
             LoanVO vo = new LoanVO();
-            /*vo.setGuarantyId((int)map.get("GuarantyId"));
+            vo.setGuarantyId((int)map.get("GuarantyId"));
             vo.setScopeOfRight((int)map.get("ScopeOfRight"));
             vo.setOwnerName((String)map.get("OwnerName"));
             vo.setEvaluateValue((int)map.get("EvaluateValue"));
-            vo.setName((String)map.get("Name"));*/
-            extract(vo, map);
+            vo.setName((String)map.get("Name"));
+            //extract(vo, map);
             result.add(vo);
         }
 
         return result;
     }
 
-    public LoanVO getMortgageDetail(int guarantyId) {
-        String sql = "SELECT * " +
-                "FROM Guaranty g join " +
-                "WHERE Account ";
-        return null;
+    public LoanDetailVO getMortgageDetail(int guarantyId) {
+        String sql = "SELECT GuarantyId, g.AccountNum AS CompanyAccount, State, ScopeOfRight, OwnerName, g.ReportId AS ReportId, g.Type AS GuarantyType, EvaluateValue, g.Name AS GuarantyName, r.AccountNum AS AuthAccount, Date, Duration, a.Name AS AuthName " +
+                     "FROM Guaranty g join Report r on g.ReportId=r.ReportId join Authorization a on r.AccountNum=a.AccountNum " +
+                     "WHERE g.GuarantyId="+guarantyId+" AND g.State=4";
+
+        List<Map<String, Object>> list = mapper.SELECT(sql);
+
+        //如果sql执行失败，那么list为空，返回null；前端可以通过这个来判断失败
+        if(list.isEmpty()) {
+            return null;
+        }
+
+        LoanDetailVO vo = new LoanDetailVO();
+
+        extract(vo, list.get(0));
+
+        return vo;
+    }
+
+    public boolean cancleLoanRequest(String user_id_token, int guarantyId) {
+        //todo: implement this
+        return false;
     }
 
     private String token2AccountNum(String user_id_token) {

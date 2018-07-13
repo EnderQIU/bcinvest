@@ -27,16 +27,18 @@ public class LoanController extends BaseController
 
     @RequestMapping(value="/loanRequestedButNotPassed", method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query",
+            @ApiImplicitParam(
+                paramType = "query",
                 name = "user_id_token",
                 required = true,
                 value = "用户的标识符",
                 dataType = "String"
             ),
-            @ApiImplicitParam(paramType = "query",
+            @ApiImplicitParam(
+                paramType = "query",
                 name = "pageIndex",
                 required = true,
-                value = "页面的页数，一页有20行",
+                value = "页面的页数，一页有20行；如果查找失败会返回null",
                 dataType = "int"
             )
     })
@@ -50,11 +52,32 @@ public class LoanController extends BaseController
                     paramType = "query",
                     name = "guarantyId",
                     required = true,
-                    value = "抵押物的id",
+                    value = "抵押物的id，如果查找失败会返回null",
                     dataType = "int"
             )
     })
-    LoanVO getMortgageDetail(int guarantyId) {
+    LoanDetailVO getMortgageDetail(int guarantyId) {
         return loanService.getMortgageDetail(guarantyId);
+    }
+
+    @RequestMapping(value="/cancleLoanRequest", method = RequestMethod.PUT)
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    paramType = "form",
+                    name = "user_id_token",
+                    required = true,
+                    value = "用户的标识符",
+                    dataType = "String"
+            ),
+            @ApiImplicitParam(
+                paramType = "form",
+                    name = "guarantyId",
+                    required = true,
+                    value = "抵押物的id，如果执行失败会返回false",
+                    dataType = "int"
+            )
+    })
+    boolean cancleLoanRequest(String user_id_token, int guarantyId) {
+        return loanService.cancleLoanRequest(user_id_token, guarantyId);
     }
 }

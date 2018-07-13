@@ -56,11 +56,11 @@ public class LoanVO {
         switch (scopeOfRight)
         {
             case 0:
-                this.ScopeOfRight = "Part";
+                this.ScopeOfRight = "部分";
                 break;
 
             case 1:
-                this.ScopeOfRight = "Whole";
+                this.ScopeOfRight = "整体";
                 break;
         }
     }
