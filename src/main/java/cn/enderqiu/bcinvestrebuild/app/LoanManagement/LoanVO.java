@@ -1,5 +1,7 @@
 package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Created by EvanChoo on 7/11/18.
  */
@@ -12,10 +14,15 @@ public class LoanVO {
      * EvaluateValue-抵押物估值／抵押值
      * Name-抵押物名称
      */
+    @ApiModelProperty(value = "抵押物ID", required = true)
     private int GuarantyId = -1;
+    @ApiModelProperty(value = "抵押物权力范围", required = true)
     private String ScopeOfRight = "null";
+    @ApiModelProperty(value = "抵押物所有者姓名", required = true)
     private String OwnerName = "null";
+    @ApiModelProperty(value = "抵押物估值", required = true)
     private int EvaluateValue = -1;
+    @ApiModelProperty(value = "抵押物名称", required = true)
     private String Name = "null";
 
     //getters

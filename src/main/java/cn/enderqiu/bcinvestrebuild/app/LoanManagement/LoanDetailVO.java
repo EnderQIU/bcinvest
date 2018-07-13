@@ -1,5 +1,7 @@
 package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Created by EvanChoo on 7/13/18.
  */
@@ -7,18 +9,31 @@ public class LoanDetailVO {
     /*
      *GuarantyId, g.AccountNum AS CompanyAccount, State, ScopeOfRight, OwnerName, g.ReportId AS ReportId, g.Type AS GuarantyType, EvaluateValue, g.Name AS GuarantyName, r.AccountNum AS AuthAccount, Date, Duration, a.Name AS AuthName
      */
+    @ApiModelProperty(value = "抵押物ID", required = true)
     private int GuarantyId;
+    @ApiModelProperty(value = "公司AccountNum", required = true)
     private String CompanyAccount;
+    @ApiModelProperty(value = "抵押物状态", required = true)
     private String State;
+    @ApiModelProperty(value = "权利范围", required = true)
     private String ScopeOfRight;
+    @ApiModelProperty(value = "所有者名字", required = true)
     private String OwnerName;
+    @ApiModelProperty(value = "抵押物鉴定书ID", required = true)
     private int ReportId;
+    @ApiModelProperty(value = "抵押物类型", required = true)
     private String GuarantyType;
+    @ApiModelProperty(value = "抵押物估值", required = true)
     private int EvaluateValue;
+    @ApiModelProperty(value = "抵押物名称", required = true)
     private String GuarantyName;
+    @ApiModelProperty(value = "鉴定机构AccountNum", required = true)
     private String AuthAccount;
+    @ApiModelProperty(value = "审核通过日期", required = true)
     private String Date;
+    @ApiModelProperty(value = "审核有效期", required = true)
     private String Duration;
+    @ApiModelProperty(value = "鉴定机构名称", required = true)
     private String AuthName;
 
     //getters
