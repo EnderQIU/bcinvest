@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <script src="js/JQuery.js"></script>
+    <script type="text/javascript" src="js/fillInfo_getStatus.js"></script>
+    
+    <script src="js/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/fillinfo.css">
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+    <div id="basic-info" v-if="status">
+
+            <div class="fill_info_head">
+                    <h1 class="fill_info_head_title">企业信息完善</h1>
+                    <a class="fill_info_head_log_out" href="">登出</a>
+                </div>
+                <div>
+                    <div v-if="status == 'unapplied' || status == 'unpassed'">
+                        <div class="fill_info_basic_info">
+                            <div class="basic_info_left">
+                                <div class="info_item" v-for="item in str_left" v-if="info_item_list[item].type=='text_input'">
+                                    <input class="item_text_input" v-model="info_item_list[item].bindData" v-bind:placeholder="info_item_list[item].placeholder"/>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-if="info_item_list[item].need">{{ info_item_list[item].label_text }}*&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-else>{{ info_item_list[item].label_text }}&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                </div>
+                                <div class="info_item" v-else-if="info_item_list[item].type=='radio_input'">
+                                    <div class="item_radio_container">
+                                        <div>{{ info_item_list[item].radioText.true }}<input type="radio" v-bind:name="info_item_list[item].radioName" v-bind:value="info_item_list[item].radioValue.true" v-model="info_item_list[item].bindData"/></div>
+                                        <div>{{ info_item_list[item].radioText.false }}<input type="radio" v-bind:name="info_item_list[item].radioName" v-bind:value="info_item_list[item].radioValue.false" v-model="info_item_list[item].bindData"/></div>
+                                    </div>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-if="info_item_list[item].need">{{ info_item_list[item].label_text }}*&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-else>{{ info_item_list[item].label_text }}&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                </div>
+                                <div class="info_item" v-else-if="info_item_list[item].type=='select_input'">
+                                    <select class="item_select_input" v-model="info_item_list[item].bindData">
+                                        <option v-for="choice_item in info_item_list[item].choices">{{ choice_item }}</option>
+                                    </select>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-if="info_item_list[item].need">{{ info_item_list[item].label_text }}*&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-else>{{ info_item_list[item].label_text }}&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                </div>
+                            </div>
+                            <div class="basic_info_right">
+                                <div class="info_item" v-for="item in str_right" v-if="info_item_list[item].type=='text_input'">
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-if="info_item_list[item].need">{{ info_item_list[item].label_text }}*&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-else>{{ info_item_list[item].label_text }}&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <input class="item_input item_text_input" v-model="info_item_list[item].bindData" v-bind:placeholder="info_item_list[item].placeholder"/>
+                                </div>
+                                <div class="info_item" v-else-if="info_item_list[item].type=='radio_input'">
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-if="info_item_list[item].need">{{ info_item_list[item].label_text }}*&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-else>{{ info_item_list[item].label_text }}&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <div class="item_input item_radio_container">
+                                        <div>{{ info_item_list[item].radioText.true }}<input type="radio" v-bind:name="info_item_list[item].radioName" v-bind:value="info_item_list[item].radioValue.true" v-model="info_item_list[item].bindData"/></div>
+                                        <div>{{ info_item_list[item].radioText.false }}<input type="radio" v-bind:name="info_item_list[item].radioName" v-bind:value="info_item_list[item].radioValue.false" v-model="info_item_list[item].bindData"/></div>
+                                    </div>
+                                </div>
+                                <div class="info_item" v-else-if="info_item_list[item].type=='select_input'">
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-if="info_item_list[item].need">{{ info_item_list[item].label_text }}*&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-else>{{ info_item_list[item].label_text }}&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <select class="item_input item_select_input" v-model="info_item_list[item].bindData">
+                                        <option v-for="choice_item in info_item_list[item].choices">{{ choice_item }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button v-if="!show_more" class="show_more_button" v-on:click="showMore">
+                            显示更多
+                            </button>
+                            <div v-else>
+                                <hr>
+                                more to see.
+                            </div>
+                        </div>
+                        <button id="submit_info" v-on:click="submitInfo">
+                            ✔
+                        </button>
+                    </div>
+                    <div v-else-if="status == 'checking'" class="checking_container">
+                        <img src="images/verifying.png" class="checking_icon">
+                        <h3>审核中，请耐心等待...</h3>
+                    </div>
+                </div>
+    </div>
+    <script type="text/javascript" src="js/fillInfo_vue.js"></script>
+</body>
+
+</html>
