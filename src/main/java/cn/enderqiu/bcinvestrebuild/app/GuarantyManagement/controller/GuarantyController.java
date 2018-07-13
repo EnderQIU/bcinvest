@@ -34,7 +34,7 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "query", name = "page", value = "当前页面数",
                     required = true,  dataType = "int"),
     })
-    List<GuarantyVO> getTBCGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(user_id_token,2,page); }
+    List<GuarantyVO> getTBCGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(getCompanyUserDTO().getToken(),2,page); }
     @RequestMapping(value = "/unqualifiedGuaranty", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
@@ -42,9 +42,9 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "query", name = "page", value = "当前页面数",
                     required = true,  dataType = "int"),
     })
-    List<GuarantyVO> getUnqualifiedGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(user_id_token,1,page); }
+    List<GuarantyVO> getUnqualifiedGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(getCompanyUserDTO().getToken(),1,page); }
 
-    @RequestMapping(value = "/toBC", method = RequestMethod.PUT)
+    @RequestMapping(value = "/toBC", method = RequestMethod.POST)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
@@ -115,9 +115,9 @@ public class GuarantyController extends BaseController{
                     required = true,  dataType = "int"),
     })
     List<GuarantyVO> getEvaluationState(String user_id_token,int page) {
-        List<GuarantyVO> evaluatingGuaranty = service.findGuarantiesByState(user_id_token,0,page);
-        List<GuarantyVO> unqualifiedGuaranty = service.findGuarantiesByState(user_id_token,1,page);
-        List<GuarantyVO> TBCGuaranty = service.findGuarantiesByState(user_id_token,2,page);
+        List<GuarantyVO> evaluatingGuaranty = service.findGuarantiesByState(getCompanyUserDTO().getToken(),0,page);
+        List<GuarantyVO> unqualifiedGuaranty = service.findGuarantiesByState(getCompanyUserDTO().getToken(),1,page);
+        List<GuarantyVO> TBCGuaranty = service.findGuarantiesByState(getCompanyUserDTO().getToken(),2,page);
         List<GuarantyVO> all = new ArrayList<>();
         all.addAll(evaluatingGuaranty);
         all.addAll(unqualifiedGuaranty);
@@ -137,24 +137,20 @@ public class GuarantyController extends BaseController{
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "form", name = "name", value = "名称",
                     required = true,  dataType = "String"),
-            @ApiImplicitParam(paramType = "form", name = "evaluateValue", value = "评估价值",
-                    required = true,  dataType = "int"),
             @ApiImplicitParam(paramType = "form", name = "scopeOfRight", value = "权利范围",
                     required = true,  dataType = "int"),
             @ApiImplicitParam(paramType = "form", name = "ownerName", value = "所有者名称",
                     required = true,  dataType = "String"),
     })
-    int applyEvaluationForHouse(String user_id_token,String addr,String housingCertificatedId,String zip,String name,int evaluateValue,int scopeOfRight,String ownerName) {
+    int applyEvaluationForHouse(String user_id_token,String addr,String housingCertificatedId,String zip,String name,int scopeOfRight,String ownerName) {
         HouseVO houseVO = new HouseVO();
         houseVO.setAddr(addr);
         houseVO.setHousingCertificatedId(housingCertificatedId);
         houseVO.setZip(zip);
         houseVO.setName(name);
-        houseVO.setEvaluateValue(evaluateValue);
         houseVO.setOwnerName(ownerName);
         houseVO.setScopeOfRight(scopeOfRight);
-        service.createHouse(getCompanyUserDTO().getToken(),houseVO);
-        return 0;
+        return service.createHouse(getCompanyUserDTO().getToken(),houseVO);
     }
     @RequestMapping(value = "/applyMachineEvaluation", method = RequestMethod.POST)
     @ApiImplicitParams({
@@ -168,24 +164,20 @@ public class GuarantyController extends BaseController{
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "form", name = "name", value = "名称",
                     required = true,  dataType = "String"),
-            @ApiImplicitParam(paramType = "form", name = "evaluateValue", value = "评估价值",
-                    required = true,  dataType = "int"),
             @ApiImplicitParam(paramType = "form", name = "scopeOfRight", value = "权利范围",
                     required = true,  dataType = "int"),
             @ApiImplicitParam(paramType = "form", name = "ownerName", value = "所有者名称",
                     required = true,  dataType = "String"),
     })
-    int applyEvaluationForMachine(String user_id_token,int usedDays,String model,String producer,String name,int evaluateValue,int scopeOfRight,String ownerName) {
+    int applyEvaluationForMachine(String user_id_token,int usedDays,String model,String producer,String name,int scopeOfRight,String ownerName) {
         MachineVO machineVO = new MachineVO();
         machineVO.setUsedDays(usedDays);
         machineVO.setModel(model);
         machineVO.setProducer(producer);
         machineVO.setName(name);
-        machineVO.setEvaluateValue(evaluateValue);
         machineVO.setOwnerName(ownerName);
         machineVO.setScopeOfRight(scopeOfRight);
-        service.createMachine(user_id_token,machineVO);
-        return 0;
+        return service.createMachine(getCompanyUserDTO().getToken(),machineVO);
     }
     @RequestMapping(value = "/applyLandEvaluation", method = RequestMethod.POST)
     @ApiImplicitParams({
@@ -197,22 +189,18 @@ public class GuarantyController extends BaseController{
                     required = true,  dataType = "int"),
             @ApiImplicitParam(paramType = "form", name = "name", value = "名称",
                     required = true,  dataType = "String"),
-            @ApiImplicitParam(paramType = "form", name = "evaluateValue", value = "评估价值",
-                    required = true,  dataType = "int"),
             @ApiImplicitParam(paramType = "form", name = "scopeOfRight", value = "权利范围",
                     required = true,  dataType = "int"),
             @ApiImplicitParam(paramType = "form", name = "ownerName", value = "所有者名称",
                     required = true,  dataType = "String"),
     })
-    int applyEvaluationForLand(String user_id_token,int area,String addr,String name,int evaluateValue,int scopeOfRight,String ownerName) {
+    int applyEvaluationForLand(String user_id_token,int area,String addr,String name,int scopeOfRight,String ownerName) {
         LandVO landVO = new LandVO();
         landVO.setAddr(addr);
         landVO.setArea(area);
         landVO.setName(name);
-        landVO.setEvaluateValue(evaluateValue);
         landVO.setOwnerName(ownerName);
         landVO.setScopeOfRight(scopeOfRight);
-        service.createLand(user_id_token,landVO);
-        return 0;
+        return service.createLand(getCompanyUserDTO().getToken(),landVO);
     }
 }

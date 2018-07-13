@@ -8,13 +8,13 @@ public class LandVO extends GuarantyVO{
     @ApiModelProperty(value = "地址" ,required = true)
     private String addr;
     @ApiModelProperty(value = "面积" ,required = true)
-    private int area;
+    private long area;
 
-    public void setArea(int area) {
+    public void setArea(long area) {
         this.area = area;
     }
 
-    public int getArea() {
+    public long getArea() {
         return area;
     }
 
