@@ -29,7 +29,7 @@ public class GuarantyController extends BaseController{
 
     @RequestMapping(value = "/TBCGuaranty", method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "user_id_token", value = "用户唯一标识符",
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "query", name = "page", value = "当前页面数",
                     required = true,  dataType = "int"),
@@ -37,7 +37,7 @@ public class GuarantyController extends BaseController{
     List<GuarantyVO> getTBCGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(user_id_token,2,page); }
     @RequestMapping(value = "/unqualifiedGuaranty", method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "user_id_token", value = "用户唯一标识符",
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "query", name = "page", value = "当前页面数",
                     required = true,  dataType = "int"),
@@ -47,69 +47,69 @@ public class GuarantyController extends BaseController{
     @RequestMapping(value = "/toBC", method = RequestMethod.PUT)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "String"),
+                    required = true,  dataType = "int"),
     })
-    int putGuarantyToBC(String guarantyId) {
+    int putGuarantyToBC(int guarantyId) {
         return service.putGuarantyToBC(guarantyId);
     }
 
     @RequestMapping(value = "/downBC", method = RequestMethod.DELETE)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "String"),
+                    required = true,  dataType = "int"),
     })
-    int downBC(String guarantyId) {
+    int downBC(int guarantyId) {
         return service.deleteGuaranty(guarantyId);
     }
 
     @RequestMapping(value = "/abandon", method = RequestMethod.DELETE)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "String"),
+                    required = true,  dataType = "int"),
     })
-    int abandonGuaranty(String guarantyId) {
+    int abandonGuaranty(int guarantyId) {
         return service.deleteGuaranty(guarantyId);
     }
 
     @RequestMapping(value = "/houseDetail", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "String"),
+                    required = true,  dataType = "int"),
     })
-    HouseVO getHouseDetail(String guarantyId) {
+    HouseVO getHouseDetail(int guarantyId) {
         return service.findHouse(guarantyId);
     }
 
     @RequestMapping(value = "/landDetail", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "String"),
+                    required = true,  dataType = "int"),
     })
-    LandVO getLandDetail(String guarantyId) {
+    LandVO getLandDetail(int guarantyId) {
         return service.findLand(guarantyId);
     }
 
     @RequestMapping(value = "/machineDetail", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "String"),
+                    required = true,  dataType = "int"),
     })
-    MachineVO getMachineDetail(String guarantyId) {
+    MachineVO getMachineDetail(int guarantyId) {
         return service.findMachine(guarantyId);
     }
 
     @RequestMapping(value = "/reappraise", method = RequestMethod.DELETE)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "String"),
+                    required = true,  dataType = "int"),
     })
-    int reappraiseGuaranty(String guarantyId) {
+    int reappraiseGuaranty(int guarantyId) {
         return service.deleteGuaranty(guarantyId);
     }
 
     @RequestMapping(value = "/evaluationState", method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "user_id_token", value = "用户唯一标识符",
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "query", name = "page", value = "当前页面数",
                     required = true,  dataType = "int"),
@@ -127,7 +127,7 @@ public class GuarantyController extends BaseController{
 
     @RequestMapping(value = "/applyHouseEvaluation", method = RequestMethod.POST)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "user_id_token", value = "用户唯一标识符",
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "form", name = "addr", value = "地址",
                     required = true,  dataType = "String"),
@@ -153,12 +153,12 @@ public class GuarantyController extends BaseController{
         houseVO.setEvaluateValue(evaluateValue);
         houseVO.setOwnerName(ownerName);
         houseVO.setScopeOfRight(scopeOfRight);
-        service.createHouse(user_id_token,houseVO);
+        service.createHouse(getCompanyUserDTO().getToken(),houseVO);
         return 0;
     }
     @RequestMapping(value = "/applyMachineEvaluation", method = RequestMethod.POST)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "user_id_token", value = "用户唯一标识符",
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "form", name = "usedDays", value = "使用天数",
                     required = true,  dataType = "int"),
@@ -189,7 +189,7 @@ public class GuarantyController extends BaseController{
     }
     @RequestMapping(value = "/applyLandEvaluation", method = RequestMethod.POST)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "user_id_token", value = "用户唯一标识符",
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "form", name = "addr", value = "地址",
                     required = true,  dataType = "String"),

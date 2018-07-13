@@ -53,6 +53,9 @@ public class SecurityInterceptor implements HandlerInterceptor {
                     return requiredPermission.value().contains("company");
                 }else if (bankUserDTO != null){
                     String userType = bankUserDTO.getUserType();
+                    if (userType == null){
+                        return false;
+                    }
                     return requiredPermission.value().contains(userType);
                 }
                 return false;

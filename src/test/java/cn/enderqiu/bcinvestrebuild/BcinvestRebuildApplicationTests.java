@@ -23,27 +23,37 @@ public class BcinvestRebuildApplicationTests extends BaseService {
     @Test
     public void contextLoads() {
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("SampleString", "testString");
-        map.put("SampleInt", 100);
-        SampleVO vo = new SampleVO();
-        try {
-            MapExtracter.extract(vo, map);
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("SampleString", "testString");
+//        map.put("SampleInt", 100);
+//        SampleVO vo = new SampleVO();
+//        try {
+//            MapExtracter.extract(vo, map);
+//        } catch (IntrospectionException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
 
-        System.out.println(vo.getSampleInt());
-        System.out.println(vo.getSampleString());
+//        System.out.println(vo.getSampleInt());
+//        System.out.println(vo.getSampleString());
 
 //        testEnum();
 
-        tryNewDataBase();
+        testEmptyDatabase();
 
+//        tryNewDataBase();
+
+    }
+
+    private void testEmptyDatabase() {
+        List l = mapper.SELECT("SELECT * FROM credit");
+        if (l == null)
+            System.out.println("l is null");
+        else
+            System.out.println("length of l is zero");
     }
 
     private void tryNewDataBase() {
