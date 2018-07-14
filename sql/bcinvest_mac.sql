@@ -134,7 +134,7 @@ CREATE TABLE `Guaranty`(
   `ScopeOfRight` int(11),
   `OwnerName` varchar(128),
   `ReportId` int(11),
-  `Type` VARCHAR(32) DEFAULT 'House',
+  `Type` int(11) DEFAULT '0',
   `EvaluateValue` int(11),
   `Name` varchar(128),
   CONSTRAINT `guaranty_fk_company` FOREIGN KEY (`AccountNum`) REFERENCES `Company` (`AccountNum`),
@@ -157,7 +157,7 @@ CREATE TABLE `Machine` (
   PRIMARY KEY (`GuarantyId`),
   #KEY `reportId` (`reportId`),
   #CONSTRAINT `machine_ibfk_1` FOREIGN KEY (`reportId`) REFERENCES `report` (`reportId`),
-  CONSTRAINT `machine_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`)
+  CONSTRAINT `machine_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -177,7 +177,7 @@ CREATE TABLE `Land` (
   PRIMARY KEY (`GuarantyId`),
   #KEY `reportId` (`reportId`),
   #CONSTRAINT `land_ibfk_1` FOREIGN KEY (`reportId`) REFERENCES `report` (`reportId`),
-  CONSTRAINT `land_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`)
+  CONSTRAINT `land_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -199,7 +199,7 @@ CREATE TABLE `House` (
   PRIMARY KEY (`GuarantyId`),
   #KEY `reportId` (`reportId`),
   #CONSTRAINT `house_ibfk_1` FOREIGN KEY (`reportId`) REFERENCES `report` (`reportId`),
-  CONSTRAINT `house_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`)
+  CONSTRAINT `house_fk_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `Guaranty` (`GuarantyId`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
