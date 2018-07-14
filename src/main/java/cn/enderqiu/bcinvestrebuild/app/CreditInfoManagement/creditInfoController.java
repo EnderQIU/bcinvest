@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("user/credit")
 @Api("查看企业用户信用记录 ")
-@RequiredPermissions("企业，银行")
+@RequiredPermissions("company，bank")
 
 public class creditInfoController extends BaseController {
     @Autowired

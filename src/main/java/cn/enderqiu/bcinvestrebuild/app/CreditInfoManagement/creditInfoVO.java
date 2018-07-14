@@ -52,7 +52,7 @@ public class creditInfoVO {
     public String getType() {
         return Type;
     }
-    public creditInfoVO(String accountId, String guarantyId, String reportId, String type,String duetime
+    public creditInfoVO(String accountId, String guarantyId, String reportId, String type,String duetime,String gurantyName
                         )
     {
         AccountId=accountId;
@@ -60,6 +60,6 @@ public class creditInfoVO {
         ReportId=reportId;
         Type=type;
         DueTime=duetime;
-
+        GurantyName=gurantyName;
     }
 }
