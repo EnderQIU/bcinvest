@@ -62,19 +62,50 @@ public class LoanService extends BaseService
 
         LoanDetailVO vo = new LoanDetailVO();
 
-        extract(vo, list.get(0));
+        //extract(vo, list.get(0));
+
+        Map<String, Object> map = list.get(0);
+
+        vo.setGuarantyId((int)map.get("GuarantyId"));
+        vo.setCompanyAccount((String)map.get("CompanyAccount"));
+        vo.setState((int)map.get("State"));
+        vo.setScopeOfRight((int)map.get("ScopeOfRight"));
+        vo.setOwnerName((String)map.get("OwnerName"));
+        vo.setReportId((int)map.get("ReportId"));
+        vo.setGuarantyType(Integer.parseInt(map.get("GuarantyType").toString()));
+        vo.setEvaluateValue((int)map.get("EvaluateValue"));
+        vo.setGuarantyName((String)map.get("GuarantyName"));
+        vo.setAuthAccount((String)map.get("AuthAccount"));
+        vo.setDate(map.get("Date").toString());
+        vo.setDuration((String)map.get("Duration"));
+        vo.setAuthName((String)map.get("AuthName"));
 
         return vo;
     }
 
     public BaseResponseVO cancleLoanRequest(String user_id_token, int guarantyId) {
-        //todo: implement this
-        return null;
+        String accountNum = token2AccountNum(user_id_token);
+
+        String sql = "UPDATE Guaranty " +
+                     "SET State = 3 " +
+                     "WHERE GuarantyId = "+guarantyId+" AND State = 4 AND AccountNum = \'"+accountNum+"\'";
+
+        int affectedRows = mapper.UPDATE(sql);
+
+        BaseResponseVO vo = new BaseResponseVO();
+
+        if(affectedRows==1){
+            vo.setMessage("OK");
+        } else {
+            vo.setMessage("Error");
+        }
+
+        return vo;
     }
 
     private String token2AccountNum(String user_id_token) {
-        String sql = "SELECT AccountNum" +
-                     "FROM Company" +
+        String sql = "SELECT AccountNum " +
+                     "FROM Company " +
                      "WHERE Token = \'"+user_id_token+"\'";
 
         List<Map<String, Object>> list = mapper.SELECT(sql);

@@ -41,7 +41,12 @@ public class GuarantySearchService extends BaseService{
 
         for(Map<String, Object> item : list) {
             GuarantySearchVO searchVO = new GuarantySearchVO();
-            extract(searchVO, item);
+            //extract(searchVO, item);
+            searchVO.setGuarantyId((int)item.get("GuarantyId"));
+            searchVO.setScopeOfRight((int)item.get("ScopeOfRight"));
+            searchVO.setOwnerName((String)item.get("OwnerName"));
+            searchVO.setEvaluateValue((int)item.get("EvaluateValue"));
+            searchVO.setName((String)item.get("Name"));
             voList.add(searchVO);
         }
 
@@ -49,8 +54,8 @@ public class GuarantySearchService extends BaseService{
     }
 
     private String token2AccountNum(String user_id_token) {
-        String sql = "SELECT AccountNum" +
-                "FROM Company" +
+        String sql = "SELECT AccountNum " +
+                "FROM Company " +
                 "WHERE Token = \'"+user_id_token+"\'";
 
         List<Map<String, Object>> list = mapper.SELECT(sql);

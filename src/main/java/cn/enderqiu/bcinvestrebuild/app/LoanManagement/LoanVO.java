@@ -16,47 +16,47 @@ public class LoanVO {
      * Name-抵押物名称
      */
     @ApiModelProperty(value = "抵押物ID", required = true)
-    private int GuarantyId = -1;
+    private int guarantyId = -1;
     @ApiModelProperty(value = "抵押物权力范围", required = true)
-    private String ScopeOfRight = "null";
+    private String scopeOfRight = "null";
     @ApiModelProperty(value = "抵押物所有者姓名", required = true)
-    private String OwnerName = "null";
+    private String ownerName = "null";
     @ApiModelProperty(value = "抵押物估值", required = true)
-    private int EvaluateValue = -1;
+    private int evaluateValue = -1;
     @ApiModelProperty(value = "抵押物名称", required = true)
-    private String Name = "null";
+    private String name = "null";
 
     //getters
     public int getGuarantyId()
     {
-        return GuarantyId;
+        return this.guarantyId;
     }
 
     public String getScopeOfRight()
     {
-        return ScopeOfRight;
+        return this.scopeOfRight;
     }
 
     public String getOwnerName()
     {
-        return OwnerName;
+        return this.ownerName;
     }
 
     public int getEvaluateValue()
     {
-        return EvaluateValue;
+        return this.evaluateValue;
     }
 
     public String getName()
     {
-        return Name;
+        return this.name;
     }
 
     //setters
 
     public void setGuarantyId(int guarantyId)
     {
-        GuarantyId = guarantyId;
+        this.guarantyId = guarantyId;
     }
 
     public void setScopeOfRight(int scopeOfRight)
@@ -64,27 +64,27 @@ public class LoanVO {
         switch (scopeOfRight)
         {
             case 0:
-                this.ScopeOfRight = "部分";
+                this.scopeOfRight = "部分";
                 break;
 
             case 1:
-                this.ScopeOfRight = "整体";
+                this.scopeOfRight = "整体";
                 break;
         }
     }
 
     public void setOwnerName(String ownerName)
     {
-        OwnerName = ownerName;
+        this.ownerName = ownerName;
     }
 
     public void setEvaluateValue(int evaluateValue)
     {
-        EvaluateValue = evaluateValue;
+        this.evaluateValue = evaluateValue;
     }
 
     public void setName(String name)
     {
-        Name = name;
+        this.name = name;
     }
 }

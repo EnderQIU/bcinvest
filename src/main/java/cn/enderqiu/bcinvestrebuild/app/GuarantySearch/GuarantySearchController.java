@@ -29,35 +29,28 @@ public class GuarantySearchController extends BaseController {
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(
-                    paramType = "form",
-                    name = "user_id_token",
-                    required = true,
-                    value = "用户的标识符",
-                    dataType = "String"
-            ),
-            @ApiImplicitParam(
                     paramType = "query",
                     name = "guarantyType",
-                    required = true,
+                    required = false,
                     value = "抵押物类型, 如果没有就发送null给后台;房产，土地，机器",
                     dataType = "String"
             ),
             @ApiImplicitParam(
                     paramType = "query",
                     name = "guarantyName",
-                    required = true,
+                    required = false,
                     value = "抵押物名称, 如果没有就返回null给后台",
                     dataType = "String"
             ),
             @ApiImplicitParam(
                     paramType = "query",
                     name = "guarantyState",
-                    required = true,
+                    required = false,
                     value = "抵押物状态，如果选择所有状态的抵押物则向后台发送-1",
                     dataType = "int"
             )
     })
-    List<GuarantySearchVO> searchGuaranty(String user_id_token, String guarantyType, String guarantyName, int guarantyState) {
-        return guarantySearchService.searchGuanranty(user_id_token, guarantyType, guarantyName, guarantyState);
+    List<GuarantySearchVO> searchGuaranty(String guarantyType, String guarantyName, int guarantyState) {
+        return guarantySearchService.searchGuanranty(getCompanyUserDTO().getToken(), guarantyType, guarantyName, guarantyState);
     }
 }

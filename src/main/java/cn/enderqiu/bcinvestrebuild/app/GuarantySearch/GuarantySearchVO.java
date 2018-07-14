@@ -1,6 +1,5 @@
 package cn.enderqiu.bcinvestrebuild.app.GuarantySearch;
 
-import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -10,47 +9,47 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel
 public class GuarantySearchVO {
     @ApiModelProperty(value = "抵押物ID", required = true)
-    private int GuarantyId;
+    private int guarantyId;
     @ApiModelProperty(value = "抵押物权力范围", required = true)
-    private String ScopeOfRight;
+    private String scopeOfRight;
     @ApiModelProperty(value = "抵押物所有者姓名", required = true)
-    private String OwnerName;
+    private String ownerName;
     @ApiModelProperty(value = "抵押物估值", required = true)
-    private int EvaluateValue;
+    private int evaluateValue;
     @ApiModelProperty(value = "抵押物名称", required = true)
-    private String Name;
+    private String name;
 
     //getters
     public int getGuarantyId()
     {
-        return GuarantyId;
+        return guarantyId;
     }
 
     public String getScopeOfRight()
     {
-        return ScopeOfRight;
+        return scopeOfRight;
     }
 
     public String getOwnerName()
     {
-        return OwnerName;
+        return ownerName;
     }
 
     public int getEvaluateValue()
     {
-        return EvaluateValue;
+        return evaluateValue;
     }
 
     public String getName()
     {
-        return Name;
+        return name;
     }
 
     //setters
 
     public void setGuarantyId(int guarantyId)
     {
-        GuarantyId = guarantyId;
+        this.guarantyId = guarantyId;
     }
 
     public void setScopeOfRight(int scopeOfRight)
@@ -58,27 +57,27 @@ public class GuarantySearchVO {
         switch (scopeOfRight)
         {
             case 0:
-                this.ScopeOfRight = "部分";
+                this.scopeOfRight = "部分";
                 break;
 
             case 1:
-                this.ScopeOfRight = "整体";
+                this.scopeOfRight = "整体";
                 break;
         }
     }
 
     public void setOwnerName(String ownerName)
     {
-        OwnerName = ownerName;
+        this.ownerName = ownerName;
     }
 
     public void setEvaluateValue(int evaluateValue)
     {
-        EvaluateValue = evaluateValue;
+        this.evaluateValue = evaluateValue;
     }
 
     public void setName(String name)
     {
-        Name = name;
+        this.name = name;
     }
 }
