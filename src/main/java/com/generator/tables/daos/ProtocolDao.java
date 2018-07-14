@@ -80,6 +80,13 @@ public class ProtocolDao extends DAOImpl<ProtocolRecord, com.generator.tables.po
     }
 
     /**
+     * Fetch records that have <code>Duration IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Protocol> fetchByDuration(String... values) {
+        return fetch(Protocol.PROTOCOL.DURATION, values);
+    }
+
+    /**
      * Fetch records that have <code>EndDate IN (values)</code>
      */
     public List<com.generator.tables.pojos.Protocol> fetchByEnddate(LocalDate... values) {
