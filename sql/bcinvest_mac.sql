@@ -1,6 +1,4 @@
-﻿CREATE DATABASE `bcinvest` /*!40100 DEFAULT CHARACTER SET utf8 */
-
-CREATE TABLE `AccessToken` (
+﻿CREATE TABLE `AccessToken` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(128) DEFAULT NULL,
   `expire_time` varchar(45) DEFAULT NULL,
@@ -10,11 +8,17 @@ CREATE TABLE `AccessToken` (
 
 CREATE TABLE `Authority` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) DEFAULT NULL,
-  `type` varchar(128) DEFAULT NULL COMMENT 'Bank or authority',
-  `token` varchar(45) DEFAULT NULL,
+  `token` varchar(128) DEFAULT NULL,
   `username` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `BankOperator` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `token` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
@@ -45,9 +49,16 @@ CREATE TABLE `Guaranty` (
   `right_scope` varchar(45) DEFAULT NULL,
   `owner_name` varchar(45) DEFAULT NULL,
   `report_id` varchar(45) DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL COMMENT 'Machine,home,land',
   `evaluate_value` int(11) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
+  `producer` varchar(45) DEFAULT NULL COMMENT 'machine',
+  `model` varchar(45) DEFAULT NULL COMMENT 'Machine',
+  `used_days` int(11) DEFAULT NULL COMMENT 'machine',
+  `address` varchar(45) DEFAULT NULL COMMENT 'Land,home',
+  `area` varchar(45) DEFAULT NULL COMMENT 'area',
+  `zip` varchar(45) DEFAULT NULL COMMENT 'Home',
+  `lock` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
@@ -58,8 +69,9 @@ CREATE TABLE `Protocol` (
   `create_time` datetime DEFAULT NULL,
   `duration` varchar(45) DEFAULT NULL,
   `end_time` varchar(45) DEFAULT NULL,
-  `message` varchar(45) DEFAULT NULL,
+  `content` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
+  `lock` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
@@ -70,3 +82,4 @@ CREATE TABLE `Report` (
   `duration` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
