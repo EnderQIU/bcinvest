@@ -4,7 +4,7 @@
         <driver>com.mysql.jdbc.Driver</driver>
         <url>jdbc:mysql://localhost:3306/bcinvest?useSSL=false</url>
         <user>root</user>
-        <password>your_password</password>
+        <password>123456789Aa.</password>
     </jdbc>
     <generator>
         <!-- 代码生成器 -->

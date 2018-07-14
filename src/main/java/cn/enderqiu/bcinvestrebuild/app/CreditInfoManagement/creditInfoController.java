@@ -21,22 +21,22 @@ import java.util.List;
 public class creditInfoController extends BaseController {
     @Autowired
     private cn.enderqiu.bcinvestrebuild.app.CreditInfoManagement.creditInfoService creditInfoService;
-    @RequestMapping(value = "/credit", method = RequestMethod.POST)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "<header>",
-                    /* 来源分为form, header, query
-                     * 分别对应 表单，请求头， 请求体
-                     */
-                    name = "companyID", //和参数列表的参数名对应
-                    required = true, //如果不可或缺填写true，否则可以不写这一栏或者写false
-                    value = "企业的ID",
-                    dataType = "String"
-            )
-    })
+    @RequestMapping(value = "/creditList", method = RequestMethod.POST)
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(paramType = "header",
+//                    /* 来源分为form, header, query
+//                     * 分别对应 表单，请求头， 请求体
+//                     */
+//                    name = "user_id_token", //和参数列表的参数名对应
+//                    required = true, //如果不可或缺填写true，否则可以不写这一栏或者写false
+//                    value = "用户唯一标识符",
+//                    dataType = "String"
+//            )
+//    })
 
-    List<creditInfoVO> creditInfoPost(String companyID)
+    List<creditInfoVO> creditInfoPost()
     {
-    return creditInfoService.getCompanyCredit(companyID);
+    return creditInfoService.getCompanyCredit(getCompanyUserDTO().getToken());
     }
     @RequestMapping(value = "/dividePages", method = RequestMethod.POST)
     @ApiImplicitParams({

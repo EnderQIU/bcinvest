@@ -9,6 +9,7 @@ public class creditInfoVO {
     private String DueTime;
     private String LastPaidTime;
     private String Type;
+
     public void setAccountId(String accountId)
     {
         AccountId=accountId;
@@ -54,11 +55,14 @@ public class creditInfoVO {
     public String getType() {
         return Type;
     }
-    public creditInfoVO(String accountId, String guarantyId, String reportId, String type)
+    public creditInfoVO(String accountId, String guarantyId, String reportId, String type,String duetime,String LastPaidtime
+                        )
     {
         AccountId=accountId;
         GuarantyId=guarantyId;
         ReportId=reportId;
         Type=type;
+        DueTime=duetime;
+        LastPaidTime=LastPaidtime;
     }
 }
