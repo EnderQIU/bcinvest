@@ -20,40 +20,6 @@ public class CompanyRequestService extends BaseService{
         return accountNum;
     }
 
-    public int deleteGuaranty(int guarantyId){
-        String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
-        return mapper.DELETE(sqlSentence);
-    }
-    public HouseVO findHouse(int guarantyId){
-        String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
-        String sqlSentence2 = "SELECT * FROM house WHERE guarantyId = "+guarantyId+";";
-        Map<String, Object> result1 = mapper.SELECT(sqlSentence1).get(0);
-        Map<String, Object> result2 = mapper.SELECT(sqlSentence2).get(0);
-        HouseVO houseVO = new HouseVO();
-        extract(houseVO,result1);
-        extract(houseVO,result2);
-        return houseVO;
-    }
-    public LandVO findLand(int guarantyId){
-        String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
-        String sqlSentence2 = "SELECT * FROM land WHERE guarantyId = "+guarantyId+";";
-        Map<String, Object> result1 = mapper.SELECT(sqlSentence1).get(0);
-        Map<String, Object> result2 = mapper.SELECT(sqlSentence2).get(0);
-        LandVO landVO = new LandVO();
-        extract(landVO,result1);
-        extract(landVO,result2);
-        return landVO;
-    }
-    public MachineVO findMachine(int guarantyId){
-        String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
-        String sqlSentence2 = "SELECT * FROM machine WHERE guarantyId = "+guarantyId+";";
-        Map<String, Object> result1 = mapper.SELECT(sqlSentence1).get(0);
-        Map<String, Object> result2 = mapper.SELECT(sqlSentence2).get(0);
-        MachineVO machineVO = new MachineVO();
-        extract(machineVO,result1);
-        extract(machineVO,result2);
-        return machineVO;
-    }
     public GuarantyVO findGuaranty(int guarantyId){
         String sqlSentence = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
         Map<String, Object> result = mapper.SELECT(sqlSentence).get(0);

@@ -24,6 +24,7 @@ import java.util.List;
 public class CompanyRequestController extends BaseController{
     @Autowired
     private CompanyRequestService service;
+    private GuarantyManagementService guarantyManagementService;
     @RequestMapping(value = "/guaranties", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
@@ -38,8 +39,6 @@ public class CompanyRequestController extends BaseController{
         return all; }
     @RequestMapping(value = "/maxPage", method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
-                    required = true,  dataType = "String"),
     })
     MaxPageVO getMaxPage(int[] states) {
         return service.findMaxPage(states); }
@@ -69,7 +68,7 @@ public class CompanyRequestController extends BaseController{
                     required = true,  dataType = "int"),
     })
     HouseVO getHouseDetail(int guarantyId) {
-        return service.findHouse(guarantyId);
+        return guarantyManagementService.findHouse(guarantyId);
     }
 
     @RequestMapping(value = "/landDetail", method = RequestMethod.GET)
@@ -78,7 +77,7 @@ public class CompanyRequestController extends BaseController{
                     required = true,  dataType = "int"),
     })
     LandVO getLandDetail(int guarantyId) {
-        return service.findLand(guarantyId);
+        return guarantyManagementService.findLand(guarantyId);
     }
 
     @RequestMapping(value = "/machineDetail", method = RequestMethod.GET)
@@ -87,7 +86,7 @@ public class CompanyRequestController extends BaseController{
                     required = true,  dataType = "int"),
     })
     MachineVO getMachineDetail(int guarantyId) {
-        return service.findMachine(guarantyId);
+        return guarantyManagementService.findMachine(guarantyId);
     }
 
 }
