@@ -267,3 +267,12 @@ CREATE TABLE IF NOT EXISTS `Protocol` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
+
+CREATE TABLE `Message` (
+  `id` int(11) NOT NULL,
+  `content` varchar(45) DEFAULT NULL,
+  `fromUserNum` varchar(128) DEFAULT NULL,
+  `toUserNum` varchar(128) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

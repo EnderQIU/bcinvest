@@ -14,6 +14,7 @@ import com.generator.tables.Guaranty;
 import com.generator.tables.House;
 import com.generator.tables.Land;
 import com.generator.tables.Machine;
+import com.generator.tables.Message;
 import com.generator.tables.Protocol;
 import com.generator.tables.Report;
 import com.generator.tables.Securitiesinformation;
@@ -83,6 +84,11 @@ public class Tables {
      * The table <code>bcinvest.Machine</code>.
      */
     public static final Machine MACHINE = com.generator.tables.Machine.MACHINE;
+
+    /**
+     * The table <code>bcinvest.Message</code>.
+     */
+    public static final Message MESSAGE = com.generator.tables.Message.MESSAGE;
 
     /**
      * The table <code>bcinvest.Protocol</code>.

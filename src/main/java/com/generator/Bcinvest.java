@@ -14,6 +14,7 @@ import com.generator.tables.Guaranty;
 import com.generator.tables.House;
 import com.generator.tables.Land;
 import com.generator.tables.Machine;
+import com.generator.tables.Message;
 import com.generator.tables.Protocol;
 import com.generator.tables.Report;
 import com.generator.tables.Securitiesinformation;
@@ -42,7 +43,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Bcinvest extends SchemaImpl {
 
-    private static final long serialVersionUID = 596801201;
+    private static final long serialVersionUID = 1460898802;
 
     /**
      * The reference instance of <code>bcinvest</code>
@@ -100,6 +101,11 @@ public class Bcinvest extends SchemaImpl {
     public final Machine MACHINE = com.generator.tables.Machine.MACHINE;
 
     /**
+     * The table <code>bcinvest.Message</code>.
+     */
+    public final Message MESSAGE = com.generator.tables.Message.MESSAGE;
+
+    /**
      * The table <code>bcinvest.Protocol</code>.
      */
     public final Protocol PROTOCOL = com.generator.tables.Protocol.PROTOCOL;
@@ -149,6 +155,7 @@ public class Bcinvest extends SchemaImpl {
             House.HOUSE,
             Land.LAND,
             Machine.MACHINE,
+            Message.MESSAGE,
             Protocol.PROTOCOL,
             Report.REPORT,
             Securitiesinformation.SECURITIESINFORMATION);

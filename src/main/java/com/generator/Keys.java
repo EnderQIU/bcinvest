@@ -14,6 +14,7 @@ import com.generator.tables.Guaranty;
 import com.generator.tables.House;
 import com.generator.tables.Land;
 import com.generator.tables.Machine;
+import com.generator.tables.Message;
 import com.generator.tables.Protocol;
 import com.generator.tables.Report;
 import com.generator.tables.Securitiesinformation;
@@ -27,6 +28,7 @@ import com.generator.tables.records.GuarantyRecord;
 import com.generator.tables.records.HouseRecord;
 import com.generator.tables.records.LandRecord;
 import com.generator.tables.records.MachineRecord;
+import com.generator.tables.records.MessageRecord;
 import com.generator.tables.records.ProtocolRecord;
 import com.generator.tables.records.ReportRecord;
 import com.generator.tables.records.SecuritiesinformationRecord;
@@ -34,6 +36,7 @@ import com.generator.tables.records.SecuritiesinformationRecord;
 import javax.annotation.Generated;
 
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
 
@@ -56,6 +59,9 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<GuarantyRecord, Integer> IDENTITY_GUARANTY = Identities0.IDENTITY_GUARANTY;
+    public static final Identity<ProtocolRecord, Integer> IDENTITY_PROTOCOL = Identities0.IDENTITY_PROTOCOL;
+    public static final Identity<ReportRecord, Integer> IDENTITY_REPORT = Identities0.IDENTITY_REPORT;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
@@ -73,6 +79,7 @@ public class Keys {
     public static final UniqueKey<HouseRecord> KEY_HOUSE_PRIMARY = UniqueKeys0.KEY_HOUSE_PRIMARY;
     public static final UniqueKey<LandRecord> KEY_LAND_PRIMARY = UniqueKeys0.KEY_LAND_PRIMARY;
     public static final UniqueKey<MachineRecord> KEY_MACHINE_PRIMARY = UniqueKeys0.KEY_MACHINE_PRIMARY;
+    public static final UniqueKey<MessageRecord> KEY_MESSAGE_PRIMARY = UniqueKeys0.KEY_MESSAGE_PRIMARY;
     public static final UniqueKey<ProtocolRecord> KEY_PROTOCOL_PRIMARY = UniqueKeys0.KEY_PROTOCOL_PRIMARY;
     public static final UniqueKey<ReportRecord> KEY_REPORT_PRIMARY = UniqueKeys0.KEY_REPORT_PRIMARY;
     public static final UniqueKey<SecuritiesinformationRecord> KEY_SECURITIESINFORMATION_PRIMARY = UniqueKeys0.KEY_SECURITIESINFORMATION_PRIMARY;
@@ -85,6 +92,7 @@ public class Keys {
     public static final ForeignKey<CompanyaddressRecord, CompanyRecord> COMPANYADDRESS_IBFK_1 = ForeignKeys0.COMPANYADDRESS_IBFK_1;
     public static final ForeignKey<CreditRecord, CompanyRecord> CREDIT_FK_COMPANY = ForeignKeys0.CREDIT_FK_COMPANY;
     public static final ForeignKey<CreditRecord, GuarantyRecord> CREDIT_FK_GUARANTY = ForeignKeys0.CREDIT_FK_GUARANTY;
+    public static final ForeignKey<CreditRecord, ReportRecord> CREDIT_FK_REPORT = ForeignKeys0.CREDIT_FK_REPORT;
     public static final ForeignKey<FundamentalcertificateRecord, CompanyRecord> FUNDAMENTALCERTIFICATE_IBFK_1 = ForeignKeys0.FUNDAMENTALCERTIFICATE_IBFK_1;
     public static final ForeignKey<GuarantyRecord, CompanyRecord> GUARANTY_FK_COMPANY = ForeignKeys0.GUARANTY_FK_COMPANY;
     public static final ForeignKey<GuarantyRecord, ReportRecord> GUARANTY_FK_REPORT = ForeignKeys0.GUARANTY_FK_REPORT;
@@ -99,6 +107,12 @@ public class Keys {
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
+    private static class Identities0 {
+        public static Identity<GuarantyRecord, Integer> IDENTITY_GUARANTY = Internal.createIdentity(Guaranty.GUARANTY, Guaranty.GUARANTY.GUARANTYID);
+        public static Identity<ProtocolRecord, Integer> IDENTITY_PROTOCOL = Internal.createIdentity(Protocol.PROTOCOL, Protocol.PROTOCOL.PROTOCOLID);
+        public static Identity<ReportRecord, Integer> IDENTITY_REPORT = Internal.createIdentity(Report.REPORT, Report.REPORT.REPORTID);
+    }
+
     private static class UniqueKeys0 {
         public static final UniqueKey<AuthorizationRecord> KEY_AUTHORIZATION_PRIMARY = Internal.createUniqueKey(Authorization.AUTHORIZATION, "KEY_Authorization_PRIMARY", Authorization.AUTHORIZATION.ACCOUNTNUM);
         public static final UniqueKey<AuthorizationRecord> KEY_AUTHORIZATION_TOKEN = Internal.createUniqueKey(Authorization.AUTHORIZATION, "KEY_Authorization_Token", Authorization.AUTHORIZATION.TOKEN);
@@ -112,6 +126,7 @@ public class Keys {
         public static final UniqueKey<HouseRecord> KEY_HOUSE_PRIMARY = Internal.createUniqueKey(House.HOUSE, "KEY_House_PRIMARY", House.HOUSE.GUARANTYID);
         public static final UniqueKey<LandRecord> KEY_LAND_PRIMARY = Internal.createUniqueKey(Land.LAND, "KEY_Land_PRIMARY", Land.LAND.GUARANTYID);
         public static final UniqueKey<MachineRecord> KEY_MACHINE_PRIMARY = Internal.createUniqueKey(Machine.MACHINE, "KEY_Machine_PRIMARY", Machine.MACHINE.GUARANTYID);
+        public static final UniqueKey<MessageRecord> KEY_MESSAGE_PRIMARY = Internal.createUniqueKey(Message.MESSAGE, "KEY_Message_PRIMARY", Message.MESSAGE.ID);
         public static final UniqueKey<ProtocolRecord> KEY_PROTOCOL_PRIMARY = Internal.createUniqueKey(Protocol.PROTOCOL, "KEY_Protocol_PRIMARY", Protocol.PROTOCOL.PROTOCOLID);
         public static final UniqueKey<ReportRecord> KEY_REPORT_PRIMARY = Internal.createUniqueKey(Report.REPORT, "KEY_Report_PRIMARY", Report.REPORT.REPORTID);
         public static final UniqueKey<SecuritiesinformationRecord> KEY_SECURITIESINFORMATION_PRIMARY = Internal.createUniqueKey(Securitiesinformation.SECURITIESINFORMATION, "KEY_Securitiesinformation_PRIMARY", Securitiesinformation.SECURITIESINFORMATION.ACCOUNTNUM);
@@ -122,6 +137,7 @@ public class Keys {
         public static final ForeignKey<CompanyaddressRecord, CompanyRecord> COMPANYADDRESS_IBFK_1 = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Companyaddress.COMPANYADDRESS, "companyaddress_ibfk_1", Companyaddress.COMPANYADDRESS.ACCOUNTNUM);
         public static final ForeignKey<CreditRecord, CompanyRecord> CREDIT_FK_COMPANY = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Credit.CREDIT, "credit_fk_company", Credit.CREDIT.ACCOUNTNUM);
         public static final ForeignKey<CreditRecord, GuarantyRecord> CREDIT_FK_GUARANTY = Internal.createForeignKey(com.generator.Keys.KEY_GUARANTY_PRIMARY, Credit.CREDIT, "credit_fk_guaranty", Credit.CREDIT.GUARANTYID);
+        public static final ForeignKey<CreditRecord, ReportRecord> CREDIT_FK_REPORT = Internal.createForeignKey(com.generator.Keys.KEY_REPORT_PRIMARY, Credit.CREDIT, "credit_fk_report", Credit.CREDIT.REPORTID);
         public static final ForeignKey<FundamentalcertificateRecord, CompanyRecord> FUNDAMENTALCERTIFICATE_IBFK_1 = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Fundamentalcertificate.FUNDAMENTALCERTIFICATE, "fundamentalcertificate_ibfk_1", Fundamentalcertificate.FUNDAMENTALCERTIFICATE.ACCOUNTNUM);
         public static final ForeignKey<GuarantyRecord, CompanyRecord> GUARANTY_FK_COMPANY = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Guaranty.GUARANTY, "guaranty_fk_company", Guaranty.GUARANTY.ACCOUNTNUM);
         public static final ForeignKey<GuarantyRecord, ReportRecord> GUARANTY_FK_REPORT = Internal.createForeignKey(com.generator.Keys.KEY_REPORT_PRIMARY, Guaranty.GUARANTY, "guaranty_fk_report", Guaranty.GUARANTY.REPORTID);
@@ -129,7 +145,7 @@ public class Keys {
         public static final ForeignKey<LandRecord, GuarantyRecord> LAND_FK_GUARANTY = Internal.createForeignKey(com.generator.Keys.KEY_GUARANTY_PRIMARY, Land.LAND, "land_fk_guaranty", Land.LAND.GUARANTYID);
         public static final ForeignKey<MachineRecord, GuarantyRecord> MACHINE_FK_GUARANTY = Internal.createForeignKey(com.generator.Keys.KEY_GUARANTY_PRIMARY, Machine.MACHINE, "machine_fk_guaranty", Machine.MACHINE.GUARANTYID);
         public static final ForeignKey<ProtocolRecord, GuarantyRecord> FK_PROTOCOL_TO_GURANTY = Internal.createForeignKey(com.generator.Keys.KEY_GUARANTY_PRIMARY, Protocol.PROTOCOL, "fk_protocol_to_guranty", Protocol.PROTOCOL.GURANTYID);
-        public static final ForeignKey<ReportRecord, AuthorizationRecord> REPORT_IBFK_1 = Internal.createForeignKey(com.generator.Keys.KEY_AUTHORIZATION_PRIMARY, Report.REPORT, "report_ibfk_1", Report.REPORT.AUTHNAME);
+        public static final ForeignKey<ReportRecord, AuthorizationRecord> REPORT_IBFK_1 = Internal.createForeignKey(com.generator.Keys.KEY_AUTHORIZATION_PRIMARY, Report.REPORT, "report_ibfk_1", Report.REPORT.ACCOUNTNUM);
         public static final ForeignKey<SecuritiesinformationRecord, CompanyRecord> SECURITIESINFORMATION_IBFK_1 = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Securitiesinformation.SECURITIESINFORMATION, "securitiesinformation_ibfk_1", Securitiesinformation.SECURITIESINFORMATION.ACCOUNTNUM);
     }
 }
