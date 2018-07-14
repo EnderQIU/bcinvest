@@ -66,6 +66,17 @@ public class GuarantyManagementService extends BaseService{
         List<GuarantyVO> Guaranties = getVOListByResult(results,GuarantyVO.class);
         return Guaranties;
     }
+    public int findMaxPage(String user_id_token,int stateNum){
+        String accountNum = TokenToAccountNum(user_id_token);
+        String sqlSentence = "SELECT COUNT(*) FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+" ORDER BY accountNum;";
+        List<Map<String,Object>> results = mapper.SELECT(sqlSentence);
+        int maxPage = 0;
+        int count = Integer.parseInt(results.get(0).get("COUNT(*)").toString());
+        if(count>0){
+            maxPage = count/21+1;
+        }
+        return maxPage;
+    }
     public int createGuaranty(String user_id_token,GuarantyVO guarantyVO,int type){
         String accountNum = TokenToAccountNum(user_id_token);
         String sqlSentence1 = "INSERT INTO guaranty(GuarantyId,AccountNum,State,ScopeOfRight,OwnerName,Type,Name) VALUES("+
