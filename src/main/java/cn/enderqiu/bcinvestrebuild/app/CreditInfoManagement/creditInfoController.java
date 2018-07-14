@@ -21,7 +21,7 @@ import java.util.List;
 public class creditInfoController extends BaseController {
     @Autowired
     private cn.enderqiu.bcinvestrebuild.app.CreditInfoManagement.creditInfoService creditInfoService;
-    @RequestMapping(value = "/creditList", method = RequestMethod.POST)
+    @RequestMapping(value = "/creditList", method = RequestMethod.GET)
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(paramType = "header",
 //                    /* 来源分为form, header, query

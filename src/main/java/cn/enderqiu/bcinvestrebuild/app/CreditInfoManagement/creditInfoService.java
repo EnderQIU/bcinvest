@@ -27,7 +27,7 @@ public class creditInfoService extends BaseService {
 
     for(Map<String, Object> m:creditinfo)
     {
-        String accountid= " ",reportId =" ",guarantyId =" ",type =" ",duetime=" ",lastPaidTime=" ";
+        String accountid= " ",reportId =" ",guarantyId =" ",type =" ",duetime=" ";
         for(String key: m.keySet()) {
 
 
@@ -40,7 +40,7 @@ public class creditInfoService extends BaseService {
 
 
         }
-        creditInfoVO cinfo=new creditInfoVO(accountid,guarantyId,reportId,type,duetime,lastPaidTime);
+        creditInfoVO cinfo=new creditInfoVO(accountid,guarantyId,reportId,type,duetime);
         cinfoList.add(cinfo);
     }
 

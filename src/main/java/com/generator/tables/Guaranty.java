@@ -16,6 +16,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -39,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guaranty extends TableImpl<GuarantyRecord> {
 
-    private static final long serialVersionUID = 2032831474;
+    private static final long serialVersionUID = -399636541;
 
     /**
      * The reference instance of <code>bcinvest.Guaranty</code>
@@ -57,7 +58,7 @@ public class Guaranty extends TableImpl<GuarantyRecord> {
     /**
      * The column <code>bcinvest.Guaranty.GuarantyId</code>.
      */
-    public final TableField<GuarantyRecord, Integer> GUARANTYID = createField("GuarantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<GuarantyRecord, Integer> GUARANTYID = createField("GuarantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>bcinvest.Guaranty.AccountNum</code>.
@@ -87,7 +88,7 @@ public class Guaranty extends TableImpl<GuarantyRecord> {
     /**
      * The column <code>bcinvest.Guaranty.Type</code>.
      */
-    public final TableField<GuarantyRecord, String> TYPE = createField("Type", org.jooq.impl.SQLDataType.VARCHAR(32).defaultValue(org.jooq.impl.DSL.inline("House", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<GuarantyRecord, Integer> TYPE = createField("Type", org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>bcinvest.Guaranty.EvaluateValue</code>.
@@ -142,6 +143,14 @@ public class Guaranty extends TableImpl<GuarantyRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.GUARANTY_GUARANTY_FK_COMPANY, Indexes.GUARANTY_GUARANTY_FK_REPORT, Indexes.GUARANTY_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<GuarantyRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_GUARANTY;
     }
 
     /**

@@ -7,7 +7,7 @@ public class creditInfoVO {
     //交易状态：逾期或在期限内归还
     private String GurantyName;
     private String DueTime;
-    private String LastPaidTime;
+
     private String Type;
 
     public void setAccountId(String accountId)
@@ -45,9 +45,6 @@ public class creditInfoVO {
         return DueTime;
     }
 
-    public String getLastPaidTime() {
-        return LastPaidTime;
-    }
 
     public String getGurantyName() {
         return GurantyName;
@@ -55,7 +52,7 @@ public class creditInfoVO {
     public String getType() {
         return Type;
     }
-    public creditInfoVO(String accountId, String guarantyId, String reportId, String type,String duetime,String LastPaidtime
+    public creditInfoVO(String accountId, String guarantyId, String reportId, String type,String duetime
                         )
     {
         AccountId=accountId;
@@ -63,6 +60,6 @@ public class creditInfoVO {
         ReportId=reportId;
         Type=type;
         DueTime=duetime;
-        LastPaidTime=LastPaidtime;
+
     }
 }

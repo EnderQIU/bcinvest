@@ -17,6 +17,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -40,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Report extends TableImpl<ReportRecord> {
 
-    private static final long serialVersionUID = 927325858;
+    private static final long serialVersionUID = -532358922;
 
     /**
      * The reference instance of <code>bcinvest.Report</code>
@@ -56,14 +57,14 @@ public class Report extends TableImpl<ReportRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Report.AuthName</code>.
+     * The column <code>bcinvest.Report.AccountNum</code>.
      */
-    public final TableField<ReportRecord, String> AUTHNAME = createField("AuthName", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<ReportRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>bcinvest.Report.ReportId</code>.
      */
-    public final TableField<ReportRecord, Integer> REPORTID = createField("ReportId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ReportRecord, Integer> REPORTID = createField("ReportId", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>bcinvest.Report.Date</code>.
@@ -117,7 +118,15 @@ public class Report extends TableImpl<ReportRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.REPORT_AUTHNAME, Indexes.REPORT_PRIMARY);
+        return Arrays.<Index>asList(Indexes.REPORT_ACCOUNTNUM, Indexes.REPORT_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<ReportRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_REPORT;
     }
 
     /**
