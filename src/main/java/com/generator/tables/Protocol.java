@@ -9,14 +9,13 @@ import com.generator.Indexes;
 import com.generator.Keys;
 import com.generator.tables.records.ProtocolRecord;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Generated;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -40,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Protocol extends TableImpl<ProtocolRecord> {
 
-    private static final long serialVersionUID = 563760872;
+    private static final long serialVersionUID = 630534663;
 
     /**
      * The reference instance of <code>bcinvest.Protocol</code>
@@ -56,34 +55,49 @@ public class Protocol extends TableImpl<ProtocolRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Protocol.ProtocolId</code>.
+     * The column <code>bcinvest.Protocol.id</code>.
      */
-    public final TableField<ProtocolRecord, Integer> PROTOCOLID = createField("ProtocolId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ProtocolRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.GurantyId</code>.
+     * The column <code>bcinvest.Protocol.company_id</code>.
      */
-    public final TableField<ProtocolRecord, Integer> GURANTYID = createField("GurantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ProtocolRecord, String> COMPANY_ID = createField("company_id", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.StartDate</code>.
+     * The column <code>bcinvest.Protocol.guaranty_id</code>.
      */
-    public final TableField<ProtocolRecord, LocalDate> STARTDATE = createField("StartDate", org.jooq.impl.SQLDataType.LOCALDATE.nullable(false), this, "");
+    public final TableField<ProtocolRecord, String> GUARANTY_ID = createField("guaranty_id", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.EndDate</code>.
+     * The column <code>bcinvest.Protocol.create_time</code>.
      */
-    public final TableField<ProtocolRecord, LocalDate> ENDDATE = createField("EndDate", org.jooq.impl.SQLDataType.LOCALDATE.nullable(false), this, "");
+    public final TableField<ProtocolRecord, LocalDateTime> CREATE_TIME = createField("create_time", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.Message</code>.
+     * The column <code>bcinvest.Protocol.duration</code>.
      */
-    public final TableField<ProtocolRecord, String> MESSAGE = createField("Message", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<ProtocolRecord, String> DURATION = createField("duration", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.Condition</code>.
+     * The column <code>bcinvest.Protocol.end_time</code>.
      */
-    public final TableField<ProtocolRecord, String> CONDITION = createField("Condition", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+    public final TableField<ProtocolRecord, String> END_TIME = createField("end_time", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * The column <code>bcinvest.Protocol.content</code>.
+     */
+    public final TableField<ProtocolRecord, String> CONTENT = createField("content", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * The column <code>bcinvest.Protocol.status</code>.
+     */
+    public final TableField<ProtocolRecord, String> STATUS = createField("status", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * The column <code>bcinvest.Protocol.lock</code>.
+     */
+    public final TableField<ProtocolRecord, Byte> LOCK = createField("lock", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
     /**
      * Create a <code>bcinvest.Protocol</code> table reference
@@ -127,7 +141,7 @@ public class Protocol extends TableImpl<ProtocolRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.PROTOCOL_FK_PROTOCOL_TO_GURANTY, Indexes.PROTOCOL_PRIMARY);
+        return Arrays.<Index>asList(Indexes.PROTOCOL_PRIMARY);
     }
 
     /**
@@ -144,14 +158,6 @@ public class Protocol extends TableImpl<ProtocolRecord> {
     @Override
     public List<UniqueKey<ProtocolRecord>> getKeys() {
         return Arrays.<UniqueKey<ProtocolRecord>>asList(Keys.KEY_PROTOCOL_PRIMARY);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<ForeignKey<ProtocolRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ProtocolRecord, ?>>asList(Keys.FK_PROTOCOL_TO_GURANTY);
     }
 
     /**

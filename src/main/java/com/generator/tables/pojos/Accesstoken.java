@@ -5,7 +5,6 @@ package com.generator.tables.pojos;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.annotation.Generated;
 
@@ -23,61 +22,74 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Accesstoken implements Serializable {
 
-    private static final long serialVersionUID = 1944171897;
+    private static final long serialVersionUID = -1547911304;
 
-    private String        accesstoken;
-    private LocalDateTime expirytime;
-    private String        accountnum;
+    private Integer id;
+    private String  value;
+    private String  expireTime;
+    private String  companyId;
 
     public Accesstoken() {}
 
     public Accesstoken(Accesstoken value) {
-        this.accesstoken = value.accesstoken;
-        this.expirytime = value.expirytime;
-        this.accountnum = value.accountnum;
+        this.id = value.id;
+        this.value = value.value;
+        this.expireTime = value.expireTime;
+        this.companyId = value.companyId;
     }
 
     public Accesstoken(
-        String        accesstoken,
-        LocalDateTime expirytime,
-        String        accountnum
+        Integer id,
+        String  value,
+        String  expireTime,
+        String  companyId
     ) {
-        this.accesstoken = accesstoken;
-        this.expirytime = expirytime;
-        this.accountnum = accountnum;
+        this.id = id;
+        this.value = value;
+        this.expireTime = expireTime;
+        this.companyId = companyId;
     }
 
-    public String getAccesstoken() {
-        return this.accesstoken;
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setAccesstoken(String accesstoken) {
-        this.accesstoken = accesstoken;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public LocalDateTime getExpirytime() {
-        return this.expirytime;
+    public String getValue() {
+        return this.value;
     }
 
-    public void setExpirytime(LocalDateTime expirytime) {
-        this.expirytime = expirytime;
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public String getAccountnum() {
-        return this.accountnum;
+    public String getExpireTime() {
+        return this.expireTime;
     }
 
-    public void setAccountnum(String accountnum) {
-        this.accountnum = accountnum;
+    public void setExpireTime(String expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    public String getCompanyId() {
+        return this.companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Accesstoken (");
 
-        sb.append(accesstoken);
-        sb.append(", ").append(expirytime);
-        sb.append(", ").append(accountnum);
+        sb.append(id);
+        sb.append(", ").append(value);
+        sb.append(", ").append(expireTime);
+        sb.append(", ").append(companyId);
 
         sb.append(")");
         return sb.toString();

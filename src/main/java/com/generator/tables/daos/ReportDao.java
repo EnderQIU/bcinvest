@@ -48,39 +48,39 @@ public class ReportDao extends DAOImpl<ReportRecord, com.generator.tables.pojos.
      */
     @Override
     protected Integer getId(com.generator.tables.pojos.Report object) {
-        return object.getReportid();
+        return object.getId();
     }
 
     /**
-     * Fetch records that have <code>AuthName IN (values)</code>
+     * Fetch records that have <code>id IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Report> fetchByAuthname(String... values) {
-        return fetch(Report.REPORT.AUTHNAME, values);
+    public List<com.generator.tables.pojos.Report> fetchById(Integer... values) {
+        return fetch(Report.REPORT.ID, values);
     }
 
     /**
-     * Fetch records that have <code>ReportId IN (values)</code>
+     * Fetch a unique record that has <code>id = value</code>
      */
-    public List<com.generator.tables.pojos.Report> fetchByReportid(Integer... values) {
-        return fetch(Report.REPORT.REPORTID, values);
+    public com.generator.tables.pojos.Report fetchOneById(Integer value) {
+        return fetchOne(Report.REPORT.ID, value);
     }
 
     /**
-     * Fetch a unique record that has <code>ReportId = value</code>
+     * Fetch records that have <code>company_id IN (values)</code>
      */
-    public com.generator.tables.pojos.Report fetchOneByReportid(Integer value) {
-        return fetchOne(Report.REPORT.REPORTID, value);
+    public List<com.generator.tables.pojos.Report> fetchByCompanyId(String... values) {
+        return fetch(Report.REPORT.COMPANY_ID, values);
     }
 
     /**
-     * Fetch records that have <code>Date IN (values)</code>
+     * Fetch records that have <code>create_date IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Report> fetchByDate(LocalDateTime... values) {
-        return fetch(Report.REPORT.DATE, values);
+    public List<com.generator.tables.pojos.Report> fetchByCreateDate(LocalDateTime... values) {
+        return fetch(Report.REPORT.CREATE_DATE, values);
     }
 
     /**
-     * Fetch records that have <code>Duration IN (values)</code>
+     * Fetch records that have <code>duration IN (values)</code>
      */
     public List<com.generator.tables.pojos.Report> fetchByDuration(String... values) {
         return fetch(Report.REPORT.DURATION, values);

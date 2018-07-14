@@ -5,18 +5,12 @@ package com.generator;
 
 
 import com.generator.tables.Accesstoken;
-import com.generator.tables.Authorization;
+import com.generator.tables.Authority;
+import com.generator.tables.Bankoperator;
 import com.generator.tables.Company;
-import com.generator.tables.Companyaddress;
-import com.generator.tables.Credit;
-import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
-import com.generator.tables.House;
-import com.generator.tables.Land;
-import com.generator.tables.Machine;
 import com.generator.tables.Protocol;
 import com.generator.tables.Report;
-import com.generator.tables.Securitiesinformation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +36,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Bcinvest extends SchemaImpl {
 
-    private static final long serialVersionUID = 596801201;
+    private static final long serialVersionUID = -1986262471;
 
     /**
      * The reference instance of <code>bcinvest</code>
@@ -50,14 +44,19 @@ public class Bcinvest extends SchemaImpl {
     public static final Bcinvest BCINVEST = new Bcinvest();
 
     /**
-     * The table <code>bcinvest.Accesstoken</code>.
+     * The table <code>bcinvest.AccessToken</code>.
      */
     public final Accesstoken ACCESSTOKEN = com.generator.tables.Accesstoken.ACCESSTOKEN;
 
     /**
-     * The table <code>bcinvest.Authorization</code>.
+     * The table <code>bcinvest.Authority</code>.
      */
-    public final Authorization AUTHORIZATION = com.generator.tables.Authorization.AUTHORIZATION;
+    public final Authority AUTHORITY = com.generator.tables.Authority.AUTHORITY;
+
+    /**
+     * The table <code>bcinvest.BankOperator</code>.
+     */
+    public final Bankoperator BANKOPERATOR = com.generator.tables.Bankoperator.BANKOPERATOR;
 
     /**
      * The table <code>bcinvest.Company</code>.
@@ -65,39 +64,9 @@ public class Bcinvest extends SchemaImpl {
     public final Company COMPANY = com.generator.tables.Company.COMPANY;
 
     /**
-     * The table <code>bcinvest.CompanyAddress</code>.
-     */
-    public final Companyaddress COMPANYADDRESS = com.generator.tables.Companyaddress.COMPANYADDRESS;
-
-    /**
-     * The table <code>bcinvest.Credit</code>.
-     */
-    public final Credit CREDIT = com.generator.tables.Credit.CREDIT;
-
-    /**
-     * The table <code>bcinvest.FundamentalCertificate</code>.
-     */
-    public final Fundamentalcertificate FUNDAMENTALCERTIFICATE = com.generator.tables.Fundamentalcertificate.FUNDAMENTALCERTIFICATE;
-
-    /**
      * The table <code>bcinvest.Guaranty</code>.
      */
     public final Guaranty GUARANTY = com.generator.tables.Guaranty.GUARANTY;
-
-    /**
-     * The table <code>bcinvest.House</code>.
-     */
-    public final House HOUSE = com.generator.tables.House.HOUSE;
-
-    /**
-     * The table <code>bcinvest.Land</code>.
-     */
-    public final Land LAND = com.generator.tables.Land.LAND;
-
-    /**
-     * The table <code>bcinvest.Machine</code>.
-     */
-    public final Machine MACHINE = com.generator.tables.Machine.MACHINE;
 
     /**
      * The table <code>bcinvest.Protocol</code>.
@@ -108,11 +77,6 @@ public class Bcinvest extends SchemaImpl {
      * The table <code>bcinvest.Report</code>.
      */
     public final Report REPORT = com.generator.tables.Report.REPORT;
-
-    /**
-     * The table <code>bcinvest.Securitiesinformation</code>.
-     */
-    public final Securitiesinformation SECURITIESINFORMATION = com.generator.tables.Securitiesinformation.SECURITIESINFORMATION;
 
     /**
      * No further instances allowed
@@ -140,17 +104,11 @@ public class Bcinvest extends SchemaImpl {
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Accesstoken.ACCESSTOKEN,
-            Authorization.AUTHORIZATION,
+            Authority.AUTHORITY,
+            Bankoperator.BANKOPERATOR,
             Company.COMPANY,
-            Companyaddress.COMPANYADDRESS,
-            Credit.CREDIT,
-            Fundamentalcertificate.FUNDAMENTALCERTIFICATE,
             Guaranty.GUARANTY,
-            House.HOUSE,
-            Land.LAND,
-            Machine.MACHINE,
             Protocol.PROTOCOL,
-            Report.REPORT,
-            Securitiesinformation.SECURITIESINFORMATION);
+            Report.REPORT);
     }
 }

@@ -34,7 +34,6 @@ public class WebMVCConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:static/")
                 .addResourceLocations("classpath:resources/")
-//                .addResourceLocations("file:static/")
                 .addResourceLocations("classpath:resources/static/")
                 .addResourceLocations("classpath:/public")
                 .addResourceLocations("classpath:/META-INF/resources");

@@ -5,7 +5,7 @@ package com.generator.tables.pojos;
 
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.annotation.Generated;
 
@@ -23,100 +23,139 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Protocol implements Serializable {
 
-    private static final long serialVersionUID = 1324133363;
+    private static final long serialVersionUID = 868344593;
 
-    private Integer   protocolid;
-    private Integer   gurantyid;
-    private LocalDate startdate;
-    private LocalDate enddate;
-    private String    message;
-    private String    condition;
+    private Integer       id;
+    private String        companyId;
+    private String        guarantyId;
+    private LocalDateTime createTime;
+    private String        duration;
+    private String        endTime;
+    private String        content;
+    private String        status;
+    private Byte          lock;
 
     public Protocol() {}
 
     public Protocol(Protocol value) {
-        this.protocolid = value.protocolid;
-        this.gurantyid = value.gurantyid;
-        this.startdate = value.startdate;
-        this.enddate = value.enddate;
-        this.message = value.message;
-        this.condition = value.condition;
+        this.id = value.id;
+        this.companyId = value.companyId;
+        this.guarantyId = value.guarantyId;
+        this.createTime = value.createTime;
+        this.duration = value.duration;
+        this.endTime = value.endTime;
+        this.content = value.content;
+        this.status = value.status;
+        this.lock = value.lock;
     }
 
     public Protocol(
-        Integer   protocolid,
-        Integer   gurantyid,
-        LocalDate startdate,
-        LocalDate enddate,
-        String    message,
-        String    condition
+        Integer       id,
+        String        companyId,
+        String        guarantyId,
+        LocalDateTime createTime,
+        String        duration,
+        String        endTime,
+        String        content,
+        String        status,
+        Byte          lock
     ) {
-        this.protocolid = protocolid;
-        this.gurantyid = gurantyid;
-        this.startdate = startdate;
-        this.enddate = enddate;
-        this.message = message;
-        this.condition = condition;
+        this.id = id;
+        this.companyId = companyId;
+        this.guarantyId = guarantyId;
+        this.createTime = createTime;
+        this.duration = duration;
+        this.endTime = endTime;
+        this.content = content;
+        this.status = status;
+        this.lock = lock;
     }
 
-    public Integer getProtocolid() {
-        return this.protocolid;
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setProtocolid(Integer protocolid) {
-        this.protocolid = protocolid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getGurantyid() {
-        return this.gurantyid;
+    public String getCompanyId() {
+        return this.companyId;
     }
 
-    public void setGurantyid(Integer gurantyid) {
-        this.gurantyid = gurantyid;
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
-    public LocalDate getStartdate() {
-        return this.startdate;
+    public String getGuarantyId() {
+        return this.guarantyId;
     }
 
-    public void setStartdate(LocalDate startdate) {
-        this.startdate = startdate;
+    public void setGuarantyId(String guarantyId) {
+        this.guarantyId = guarantyId;
     }
 
-    public LocalDate getEnddate() {
-        return this.enddate;
+    public LocalDateTime getCreateTime() {
+        return this.createTime;
     }
 
-    public void setEnddate(LocalDate enddate) {
-        this.enddate = enddate;
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
-    public String getMessage() {
-        return this.message;
+    public String getDuration() {
+        return this.duration;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
-    public String getCondition() {
-        return this.condition;
+    public String getEndTime() {
+        return this.endTime;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getContent() {
+        return this.content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Byte getLock() {
+        return this.lock;
+    }
+
+    public void setLock(Byte lock) {
+        this.lock = lock;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Protocol (");
 
-        sb.append(protocolid);
-        sb.append(", ").append(gurantyid);
-        sb.append(", ").append(startdate);
-        sb.append(", ").append(enddate);
-        sb.append(", ").append(message);
-        sb.append(", ").append(condition);
+        sb.append(id);
+        sb.append(", ").append(companyId);
+        sb.append(", ").append(guarantyId);
+        sb.append(", ").append(createTime);
+        sb.append(", ").append(duration);
+        sb.append(", ").append(endTime);
+        sb.append(", ").append(content);
+        sb.append(", ").append(status);
+        sb.append(", ").append(lock);
 
         sb.append(")");
         return sb.toString();

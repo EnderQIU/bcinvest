@@ -9,19 +9,19 @@ import com.generator.Indexes;
 import com.generator.Keys;
 import com.generator.tables.records.AccesstokenRecord;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Generated;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 
@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Accesstoken extends TableImpl<AccesstokenRecord> {
 
-    private static final long serialVersionUID = 1419860333;
+    private static final long serialVersionUID = 64034407;
 
     /**
-     * The reference instance of <code>bcinvest.Accesstoken</code>
+     * The reference instance of <code>bcinvest.AccessToken</code>
      */
     public static final Accesstoken ACCESSTOKEN = new Accesstoken();
 
@@ -55,36 +55,41 @@ public class Accesstoken extends TableImpl<AccesstokenRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Accesstoken.AccessToken</code>.
+     * The column <code>bcinvest.AccessToken.id</code>.
      */
-    public final TableField<AccesstokenRecord, String> ACCESSTOKEN_ = createField("AccessToken", org.jooq.impl.SQLDataType.VARCHAR(512), this, "");
+    public final TableField<AccesstokenRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>bcinvest.Accesstoken.ExpiryTime</code>.
+     * The column <code>bcinvest.AccessToken.value</code>.
      */
-    public final TableField<AccesstokenRecord, LocalDateTime> EXPIRYTIME = createField("ExpiryTime", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
+    public final TableField<AccesstokenRecord, String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.Accesstoken.AccountNum</code>.
+     * The column <code>bcinvest.AccessToken.expire_time</code>.
      */
-    public final TableField<AccesstokenRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<AccesstokenRecord, String> EXPIRE_TIME = createField("expire_time", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * Create a <code>bcinvest.Accesstoken</code> table reference
+     * The column <code>bcinvest.AccessToken.company_id</code>.
+     */
+    public final TableField<AccesstokenRecord, String> COMPANY_ID = createField("company_id", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * Create a <code>bcinvest.AccessToken</code> table reference
      */
     public Accesstoken() {
-        this(DSL.name("Accesstoken"), null);
+        this(DSL.name("AccessToken"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Accesstoken</code> table reference
+     * Create an aliased <code>bcinvest.AccessToken</code> table reference
      */
     public Accesstoken(String alias) {
         this(DSL.name(alias), ACCESSTOKEN);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Accesstoken</code> table reference
+     * Create an aliased <code>bcinvest.AccessToken</code> table reference
      */
     public Accesstoken(Name alias) {
         this(alias, ACCESSTOKEN);
@@ -111,15 +116,31 @@ public class Accesstoken extends TableImpl<AccesstokenRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.ACCESSTOKEN_ACCOUNTNUM);
+        return Arrays.<Index>asList(Indexes.ACCESSTOKEN_PRIMARY);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<ForeignKey<AccesstokenRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<AccesstokenRecord, ?>>asList(Keys.ACCESSTOKEN_IBFK_1);
+    public Identity<AccesstokenRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_ACCESSTOKEN;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UniqueKey<AccesstokenRecord> getPrimaryKey() {
+        return Keys.KEY_ACCESSTOKEN_PRIMARY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<UniqueKey<AccesstokenRecord>> getKeys() {
+        return Arrays.<UniqueKey<AccesstokenRecord>>asList(Keys.KEY_ACCESSTOKEN_PRIMARY);
     }
 
     /**

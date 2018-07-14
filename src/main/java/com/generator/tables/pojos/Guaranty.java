@@ -22,100 +22,128 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guaranty implements Serializable {
 
-    private static final long serialVersionUID = 327756691;
+    private static final long serialVersionUID = -1149594914;
 
-    private Integer guarantyid;
-    private String  accountnum;
-    private Integer state;
-    private Integer scopeofright;
-    private String  ownername;
-    private Integer reportid;
+    private Integer id;
+    private String  companyId;
+    private String  state;
+    private String  rightScope;
+    private String  ownerName;
+    private String  reportId;
     private String  type;
-    private Integer evaluatevalue;
+    private Integer evaluateValue;
     private String  name;
+    private String  producer;
+    private String  model;
+    private Integer usedDays;
+    private String  address;
+    private String  area;
+    private String  zip;
+    private Byte    lock;
 
     public Guaranty() {}
 
     public Guaranty(Guaranty value) {
-        this.guarantyid = value.guarantyid;
-        this.accountnum = value.accountnum;
+        this.id = value.id;
+        this.companyId = value.companyId;
         this.state = value.state;
-        this.scopeofright = value.scopeofright;
-        this.ownername = value.ownername;
-        this.reportid = value.reportid;
+        this.rightScope = value.rightScope;
+        this.ownerName = value.ownerName;
+        this.reportId = value.reportId;
         this.type = value.type;
-        this.evaluatevalue = value.evaluatevalue;
+        this.evaluateValue = value.evaluateValue;
         this.name = value.name;
+        this.producer = value.producer;
+        this.model = value.model;
+        this.usedDays = value.usedDays;
+        this.address = value.address;
+        this.area = value.area;
+        this.zip = value.zip;
+        this.lock = value.lock;
     }
 
     public Guaranty(
-        Integer guarantyid,
-        String  accountnum,
-        Integer state,
-        Integer scopeofright,
-        String  ownername,
-        Integer reportid,
+        Integer id,
+        String  companyId,
+        String  state,
+        String  rightScope,
+        String  ownerName,
+        String  reportId,
         String  type,
-        Integer evaluatevalue,
-        String  name
+        Integer evaluateValue,
+        String  name,
+        String  producer,
+        String  model,
+        Integer usedDays,
+        String  address,
+        String  area,
+        String  zip,
+        Byte    lock
     ) {
-        this.guarantyid = guarantyid;
-        this.accountnum = accountnum;
+        this.id = id;
+        this.companyId = companyId;
         this.state = state;
-        this.scopeofright = scopeofright;
-        this.ownername = ownername;
-        this.reportid = reportid;
+        this.rightScope = rightScope;
+        this.ownerName = ownerName;
+        this.reportId = reportId;
         this.type = type;
-        this.evaluatevalue = evaluatevalue;
+        this.evaluateValue = evaluateValue;
         this.name = name;
+        this.producer = producer;
+        this.model = model;
+        this.usedDays = usedDays;
+        this.address = address;
+        this.area = area;
+        this.zip = zip;
+        this.lock = lock;
     }
 
-    public Integer getGuarantyid() {
-        return this.guarantyid;
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setGuarantyid(Integer guarantyid) {
-        this.guarantyid = guarantyid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getAccountnum() {
-        return this.accountnum;
+    public String getCompanyId() {
+        return this.companyId;
     }
 
-    public void setAccountnum(String accountnum) {
-        this.accountnum = accountnum;
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
-    public Integer getState() {
+    public String getState() {
         return this.state;
     }
 
-    public void setState(Integer state) {
+    public void setState(String state) {
         this.state = state;
     }
 
-    public Integer getScopeofright() {
-        return this.scopeofright;
+    public String getRightScope() {
+        return this.rightScope;
     }
 
-    public void setScopeofright(Integer scopeofright) {
-        this.scopeofright = scopeofright;
+    public void setRightScope(String rightScope) {
+        this.rightScope = rightScope;
     }
 
-    public String getOwnername() {
-        return this.ownername;
+    public String getOwnerName() {
+        return this.ownerName;
     }
 
-    public void setOwnername(String ownername) {
-        this.ownername = ownername;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
-    public Integer getReportid() {
-        return this.reportid;
+    public String getReportId() {
+        return this.reportId;
     }
 
-    public void setReportid(Integer reportid) {
-        this.reportid = reportid;
+    public void setReportId(String reportId) {
+        this.reportId = reportId;
     }
 
     public String getType() {
@@ -126,12 +154,12 @@ public class Guaranty implements Serializable {
         this.type = type;
     }
 
-    public Integer getEvaluatevalue() {
-        return this.evaluatevalue;
+    public Integer getEvaluateValue() {
+        return this.evaluateValue;
     }
 
-    public void setEvaluatevalue(Integer evaluatevalue) {
-        this.evaluatevalue = evaluatevalue;
+    public void setEvaluateValue(Integer evaluateValue) {
+        this.evaluateValue = evaluateValue;
     }
 
     public String getName() {
@@ -142,19 +170,82 @@ public class Guaranty implements Serializable {
         this.name = name;
     }
 
+    public String getProducer() {
+        return this.producer;
+    }
+
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+    public String getModel() {
+        return this.model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Integer getUsedDays() {
+        return this.usedDays;
+    }
+
+    public void setUsedDays(Integer usedDays) {
+        this.usedDays = usedDays;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getArea() {
+        return this.area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getZip() {
+        return this.zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public Byte getLock() {
+        return this.lock;
+    }
+
+    public void setLock(Byte lock) {
+        this.lock = lock;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Guaranty (");
 
-        sb.append(guarantyid);
-        sb.append(", ").append(accountnum);
+        sb.append(id);
+        sb.append(", ").append(companyId);
         sb.append(", ").append(state);
-        sb.append(", ").append(scopeofright);
-        sb.append(", ").append(ownername);
-        sb.append(", ").append(reportid);
+        sb.append(", ").append(rightScope);
+        sb.append(", ").append(ownerName);
+        sb.append(", ").append(reportId);
         sb.append(", ").append(type);
-        sb.append(", ").append(evaluatevalue);
+        sb.append(", ").append(evaluateValue);
         sb.append(", ").append(name);
+        sb.append(", ").append(producer);
+        sb.append(", ").append(model);
+        sb.append(", ").append(usedDays);
+        sb.append(", ").append(address);
+        sb.append(", ").append(area);
+        sb.append(", ").append(zip);
+        sb.append(", ").append(lock);
 
         sb.append(")");
         return sb.toString();

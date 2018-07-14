@@ -5,6 +5,7 @@ package com.generator.tables.pojos;
 
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.annotation.Generated;
 
@@ -22,52 +23,84 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Company implements Serializable {
 
-    private static final long serialVersionUID = 1414780153;
+    private static final long serialVersionUID = -933646911;
 
-    private String accountnum;
-    private String name;
-    private String telnum;
-    private String emailaddress;
-    private String token;
-    private Long   credit;
-    private String status;
+    private Integer       id;
+    private String        name;
+    private String        phoneNumber;
+    private String        email;
+    private String        token;
+    private Integer       credit;
+    private String        status;
+    private String        address;
+    private String        businessLicenseCode;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private String        businessRegistrationCode;
+    private String        industry;
+    private String        registedCapital;
+    private String        operationType;
 
     public Company() {}
 
     public Company(Company value) {
-        this.accountnum = value.accountnum;
+        this.id = value.id;
         this.name = value.name;
-        this.telnum = value.telnum;
-        this.emailaddress = value.emailaddress;
+        this.phoneNumber = value.phoneNumber;
+        this.email = value.email;
         this.token = value.token;
         this.credit = value.credit;
         this.status = value.status;
+        this.address = value.address;
+        this.businessLicenseCode = value.businessLicenseCode;
+        this.startDate = value.startDate;
+        this.endDate = value.endDate;
+        this.businessRegistrationCode = value.businessRegistrationCode;
+        this.industry = value.industry;
+        this.registedCapital = value.registedCapital;
+        this.operationType = value.operationType;
     }
 
     public Company(
-        String accountnum,
-        String name,
-        String telnum,
-        String emailaddress,
-        String token,
-        Long   credit,
-        String status
+        Integer       id,
+        String        name,
+        String        phoneNumber,
+        String        email,
+        String        token,
+        Integer       credit,
+        String        status,
+        String        address,
+        String        businessLicenseCode,
+        LocalDateTime startDate,
+        LocalDateTime endDate,
+        String        businessRegistrationCode,
+        String        industry,
+        String        registedCapital,
+        String        operationType
     ) {
-        this.accountnum = accountnum;
+        this.id = id;
         this.name = name;
-        this.telnum = telnum;
-        this.emailaddress = emailaddress;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.token = token;
         this.credit = credit;
         this.status = status;
+        this.address = address;
+        this.businessLicenseCode = businessLicenseCode;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.businessRegistrationCode = businessRegistrationCode;
+        this.industry = industry;
+        this.registedCapital = registedCapital;
+        this.operationType = operationType;
     }
 
-    public String getAccountnum() {
-        return this.accountnum;
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setAccountnum(String accountnum) {
-        this.accountnum = accountnum;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -78,20 +111,20 @@ public class Company implements Serializable {
         this.name = name;
     }
 
-    public String getTelnum() {
-        return this.telnum;
+    public String getPhoneNumber() {
+        return this.phoneNumber;
     }
 
-    public void setTelnum(String telnum) {
-        this.telnum = telnum;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getEmailaddress() {
-        return this.emailaddress;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setEmailaddress(String emailaddress) {
-        this.emailaddress = emailaddress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getToken() {
@@ -102,11 +135,11 @@ public class Company implements Serializable {
         this.token = token;
     }
 
-    public Long getCredit() {
+    public Integer getCredit() {
         return this.credit;
     }
 
-    public void setCredit(Long credit) {
+    public void setCredit(Integer credit) {
         this.credit = credit;
     }
 
@@ -118,17 +151,89 @@ public class Company implements Serializable {
         this.status = status;
     }
 
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getBusinessLicenseCode() {
+        return this.businessLicenseCode;
+    }
+
+    public void setBusinessLicenseCode(String businessLicenseCode) {
+        this.businessLicenseCode = businessLicenseCode;
+    }
+
+    public LocalDateTime getStartDate() {
+        return this.startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return this.endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getBusinessRegistrationCode() {
+        return this.businessRegistrationCode;
+    }
+
+    public void setBusinessRegistrationCode(String businessRegistrationCode) {
+        this.businessRegistrationCode = businessRegistrationCode;
+    }
+
+    public String getIndustry() {
+        return this.industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public String getRegistedCapital() {
+        return this.registedCapital;
+    }
+
+    public void setRegistedCapital(String registedCapital) {
+        this.registedCapital = registedCapital;
+    }
+
+    public String getOperationType() {
+        return this.operationType;
+    }
+
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Company (");
 
-        sb.append(accountnum);
+        sb.append(id);
         sb.append(", ").append(name);
-        sb.append(", ").append(telnum);
-        sb.append(", ").append(emailaddress);
+        sb.append(", ").append(phoneNumber);
+        sb.append(", ").append(email);
         sb.append(", ").append(token);
         sb.append(", ").append(credit);
         sb.append(", ").append(status);
+        sb.append(", ").append(address);
+        sb.append(", ").append(businessLicenseCode);
+        sb.append(", ").append(startDate);
+        sb.append(", ").append(endDate);
+        sb.append(", ").append(businessRegistrationCode);
+        sb.append(", ").append(industry);
+        sb.append(", ").append(registedCapital);
+        sb.append(", ").append(operationType);
 
         sb.append(")");
         return sb.toString();

@@ -47,76 +47,125 @@ public class GuarantyDao extends DAOImpl<GuarantyRecord, com.generator.tables.po
      */
     @Override
     protected Integer getId(com.generator.tables.pojos.Guaranty object) {
-        return object.getGuarantyid();
+        return object.getId();
     }
 
     /**
-     * Fetch records that have <code>GuarantyId IN (values)</code>
+     * Fetch records that have <code>id IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Guaranty> fetchByGuarantyid(Integer... values) {
-        return fetch(Guaranty.GUARANTY.GUARANTYID, values);
+    public List<com.generator.tables.pojos.Guaranty> fetchById(Integer... values) {
+        return fetch(Guaranty.GUARANTY.ID, values);
     }
 
     /**
-     * Fetch a unique record that has <code>GuarantyId = value</code>
+     * Fetch a unique record that has <code>id = value</code>
      */
-    public com.generator.tables.pojos.Guaranty fetchOneByGuarantyid(Integer value) {
-        return fetchOne(Guaranty.GUARANTY.GUARANTYID, value);
+    public com.generator.tables.pojos.Guaranty fetchOneById(Integer value) {
+        return fetchOne(Guaranty.GUARANTY.ID, value);
     }
 
     /**
-     * Fetch records that have <code>AccountNum IN (values)</code>
+     * Fetch records that have <code>company_id IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Guaranty> fetchByAccountnum(String... values) {
-        return fetch(Guaranty.GUARANTY.ACCOUNTNUM, values);
+    public List<com.generator.tables.pojos.Guaranty> fetchByCompanyId(String... values) {
+        return fetch(Guaranty.GUARANTY.COMPANY_ID, values);
     }
 
     /**
-     * Fetch records that have <code>State IN (values)</code>
+     * Fetch records that have <code>state IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Guaranty> fetchByState(Integer... values) {
+    public List<com.generator.tables.pojos.Guaranty> fetchByState(String... values) {
         return fetch(Guaranty.GUARANTY.STATE, values);
     }
 
     /**
-     * Fetch records that have <code>ScopeOfRight IN (values)</code>
+     * Fetch records that have <code>right_scope IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Guaranty> fetchByScopeofright(Integer... values) {
-        return fetch(Guaranty.GUARANTY.SCOPEOFRIGHT, values);
+    public List<com.generator.tables.pojos.Guaranty> fetchByRightScope(String... values) {
+        return fetch(Guaranty.GUARANTY.RIGHT_SCOPE, values);
     }
 
     /**
-     * Fetch records that have <code>OwnerName IN (values)</code>
+     * Fetch records that have <code>owner_name IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Guaranty> fetchByOwnername(String... values) {
-        return fetch(Guaranty.GUARANTY.OWNERNAME, values);
+    public List<com.generator.tables.pojos.Guaranty> fetchByOwnerName(String... values) {
+        return fetch(Guaranty.GUARANTY.OWNER_NAME, values);
     }
 
     /**
-     * Fetch records that have <code>ReportId IN (values)</code>
+     * Fetch records that have <code>report_id IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Guaranty> fetchByReportid(Integer... values) {
-        return fetch(Guaranty.GUARANTY.REPORTID, values);
+    public List<com.generator.tables.pojos.Guaranty> fetchByReportId(String... values) {
+        return fetch(Guaranty.GUARANTY.REPORT_ID, values);
     }
 
     /**
-     * Fetch records that have <code>Type IN (values)</code>
+     * Fetch records that have <code>type IN (values)</code>
      */
     public List<com.generator.tables.pojos.Guaranty> fetchByType(String... values) {
         return fetch(Guaranty.GUARANTY.TYPE, values);
     }
 
     /**
-     * Fetch records that have <code>EvaluateValue IN (values)</code>
+     * Fetch records that have <code>evaluate_value IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Guaranty> fetchByEvaluatevalue(Integer... values) {
-        return fetch(Guaranty.GUARANTY.EVALUATEVALUE, values);
+    public List<com.generator.tables.pojos.Guaranty> fetchByEvaluateValue(Integer... values) {
+        return fetch(Guaranty.GUARANTY.EVALUATE_VALUE, values);
     }
 
     /**
-     * Fetch records that have <code>Name IN (values)</code>
+     * Fetch records that have <code>name IN (values)</code>
      */
     public List<com.generator.tables.pojos.Guaranty> fetchByName(String... values) {
         return fetch(Guaranty.GUARANTY.NAME, values);
+    }
+
+    /**
+     * Fetch records that have <code>producer IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByProducer(String... values) {
+        return fetch(Guaranty.GUARANTY.PRODUCER, values);
+    }
+
+    /**
+     * Fetch records that have <code>model IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByModel(String... values) {
+        return fetch(Guaranty.GUARANTY.MODEL, values);
+    }
+
+    /**
+     * Fetch records that have <code>used_days IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByUsedDays(Integer... values) {
+        return fetch(Guaranty.GUARANTY.USED_DAYS, values);
+    }
+
+    /**
+     * Fetch records that have <code>address IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByAddress(String... values) {
+        return fetch(Guaranty.GUARANTY.ADDRESS, values);
+    }
+
+    /**
+     * Fetch records that have <code>area IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByArea(String... values) {
+        return fetch(Guaranty.GUARANTY.AREA, values);
+    }
+
+    /**
+     * Fetch records that have <code>zip IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByZip(String... values) {
+        return fetch(Guaranty.GUARANTY.ZIP, values);
+    }
+
+    /**
+     * Fetch records that have <code>lock IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByLock(Byte... values) {
+        return fetch(Guaranty.GUARANTY.LOCK, values);
     }
 }

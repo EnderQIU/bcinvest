@@ -5,18 +5,12 @@ package com.generator;
 
 
 import com.generator.tables.Accesstoken;
-import com.generator.tables.Authorization;
+import com.generator.tables.Authority;
+import com.generator.tables.Bankoperator;
 import com.generator.tables.Company;
-import com.generator.tables.Companyaddress;
-import com.generator.tables.Credit;
-import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
-import com.generator.tables.House;
-import com.generator.tables.Land;
-import com.generator.tables.Machine;
 import com.generator.tables.Protocol;
 import com.generator.tables.Report;
-import com.generator.tables.Securitiesinformation;
 
 import javax.annotation.Generated;
 
@@ -35,14 +29,19 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>bcinvest.Accesstoken</code>.
+     * The table <code>bcinvest.AccessToken</code>.
      */
     public static final Accesstoken ACCESSTOKEN = com.generator.tables.Accesstoken.ACCESSTOKEN;
 
     /**
-     * The table <code>bcinvest.Authorization</code>.
+     * The table <code>bcinvest.Authority</code>.
      */
-    public static final Authorization AUTHORIZATION = com.generator.tables.Authorization.AUTHORIZATION;
+    public static final Authority AUTHORITY = com.generator.tables.Authority.AUTHORITY;
+
+    /**
+     * The table <code>bcinvest.BankOperator</code>.
+     */
+    public static final Bankoperator BANKOPERATOR = com.generator.tables.Bankoperator.BANKOPERATOR;
 
     /**
      * The table <code>bcinvest.Company</code>.
@@ -50,39 +49,9 @@ public class Tables {
     public static final Company COMPANY = com.generator.tables.Company.COMPANY;
 
     /**
-     * The table <code>bcinvest.CompanyAddress</code>.
-     */
-    public static final Companyaddress COMPANYADDRESS = com.generator.tables.Companyaddress.COMPANYADDRESS;
-
-    /**
-     * The table <code>bcinvest.Credit</code>.
-     */
-    public static final Credit CREDIT = com.generator.tables.Credit.CREDIT;
-
-    /**
-     * The table <code>bcinvest.FundamentalCertificate</code>.
-     */
-    public static final Fundamentalcertificate FUNDAMENTALCERTIFICATE = com.generator.tables.Fundamentalcertificate.FUNDAMENTALCERTIFICATE;
-
-    /**
      * The table <code>bcinvest.Guaranty</code>.
      */
     public static final Guaranty GUARANTY = com.generator.tables.Guaranty.GUARANTY;
-
-    /**
-     * The table <code>bcinvest.House</code>.
-     */
-    public static final House HOUSE = com.generator.tables.House.HOUSE;
-
-    /**
-     * The table <code>bcinvest.Land</code>.
-     */
-    public static final Land LAND = com.generator.tables.Land.LAND;
-
-    /**
-     * The table <code>bcinvest.Machine</code>.
-     */
-    public static final Machine MACHINE = com.generator.tables.Machine.MACHINE;
 
     /**
      * The table <code>bcinvest.Protocol</code>.
@@ -93,9 +62,4 @@ public class Tables {
      * The table <code>bcinvest.Report</code>.
      */
     public static final Report REPORT = com.generator.tables.Report.REPORT;
-
-    /**
-     * The table <code>bcinvest.Securitiesinformation</code>.
-     */
-    public static final Securitiesinformation SECURITIESINFORMATION = com.generator.tables.Securitiesinformation.SECURITIESINFORMATION;
 }

@@ -23,56 +23,56 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Report implements Serializable {
 
-    private static final long serialVersionUID = 1241850845;
+    private static final long serialVersionUID = -150785864;
 
-    private String        authname;
-    private Integer       reportid;
-    private LocalDateTime date;
+    private Integer       id;
+    private String        companyId;
+    private LocalDateTime createDate;
     private String        duration;
 
     public Report() {}
 
     public Report(Report value) {
-        this.authname = value.authname;
-        this.reportid = value.reportid;
-        this.date = value.date;
+        this.id = value.id;
+        this.companyId = value.companyId;
+        this.createDate = value.createDate;
         this.duration = value.duration;
     }
 
     public Report(
-        String        authname,
-        Integer       reportid,
-        LocalDateTime date,
+        Integer       id,
+        String        companyId,
+        LocalDateTime createDate,
         String        duration
     ) {
-        this.authname = authname;
-        this.reportid = reportid;
-        this.date = date;
+        this.id = id;
+        this.companyId = companyId;
+        this.createDate = createDate;
         this.duration = duration;
     }
 
-    public String getAuthname() {
-        return this.authname;
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setAuthname(String authname) {
-        this.authname = authname;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getReportid() {
-        return this.reportid;
+    public String getCompanyId() {
+        return this.companyId;
     }
 
-    public void setReportid(Integer reportid) {
-        this.reportid = reportid;
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
-    public LocalDateTime getDate() {
-        return this.date;
+    public LocalDateTime getCreateDate() {
+        return this.createDate;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 
     public String getDuration() {
@@ -87,9 +87,9 @@ public class Report implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder("Report (");
 
-        sb.append(authname);
-        sb.append(", ").append(reportid);
-        sb.append(", ").append(date);
+        sb.append(id);
+        sb.append(", ").append(companyId);
+        sb.append(", ").append(createDate);
         sb.append(", ").append(duration);
 
         sb.append(")");

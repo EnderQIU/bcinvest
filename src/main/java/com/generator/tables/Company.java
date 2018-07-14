@@ -9,12 +9,14 @@ import com.generator.Indexes;
 import com.generator.Keys;
 import com.generator.tables.records.CompanyRecord;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -38,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Company extends TableImpl<CompanyRecord> {
 
-    private static final long serialVersionUID = -795978658;
+    private static final long serialVersionUID = 1162827729;
 
     /**
      * The reference instance of <code>bcinvest.Company</code>
@@ -54,39 +56,79 @@ public class Company extends TableImpl<CompanyRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Company.AccountNum</code>.
+     * The column <code>bcinvest.Company.id</code>.
      */
-    public final TableField<CompanyRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
+    public final TableField<CompanyRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>bcinvest.Company.Name</code>.
+     * The column <code>bcinvest.Company.name</code>.
      */
-    public final TableField<CompanyRecord, String> NAME = createField("Name", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<CompanyRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>bcinvest.Company.TelNum</code>.
+     * The column <code>bcinvest.Company.phone_number</code>.
      */
-    public final TableField<CompanyRecord, String> TELNUM = createField("TelNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<CompanyRecord, String> PHONE_NUMBER = createField("phone_number", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>bcinvest.Company.EmailAddress</code>.
+     * The column <code>bcinvest.Company.email</code>.
      */
-    public final TableField<CompanyRecord, String> EMAILADDRESS = createField("EmailAddress", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<CompanyRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>bcinvest.Company.Token</code>.
+     * The column <code>bcinvest.Company.token</code>.
      */
-    public final TableField<CompanyRecord, String> TOKEN = createField("Token", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<CompanyRecord, String> TOKEN = createField("token", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>bcinvest.Company.Credit</code>.
+     * The column <code>bcinvest.Company.credit</code>.
      */
-    public final TableField<CompanyRecord, Long> CREDIT = createField("Credit", org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<CompanyRecord, Integer> CREDIT = createField("credit", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.Company.Status</code>.
+     * The column <code>bcinvest.Company.status</code>. "unapplied", "checking", "unpassed", "passed"
      */
-    public final TableField<CompanyRecord, String> STATUS = createField("Status", org.jooq.impl.SQLDataType.VARCHAR(128).defaultValue(org.jooq.impl.DSL.inline("unapplied", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<CompanyRecord, String> STATUS = createField("status", org.jooq.impl.SQLDataType.VARCHAR(45), this, "\"unapplied\", \"checking\", \"unpassed\", \"passed\"");
+
+    /**
+     * The column <code>bcinvest.Company.address</code>.
+     */
+    public final TableField<CompanyRecord, String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * The column <code>bcinvest.Company.business_license_code</code>.
+     */
+    public final TableField<CompanyRecord, String> BUSINESS_LICENSE_CODE = createField("business_license_code", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * The column <code>bcinvest.Company.start_date</code>.
+     */
+    public final TableField<CompanyRecord, LocalDateTime> START_DATE = createField("start_date", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
+
+    /**
+     * The column <code>bcinvest.Company.end_date</code>.
+     */
+    public final TableField<CompanyRecord, LocalDateTime> END_DATE = createField("end_date", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
+
+    /**
+     * The column <code>bcinvest.Company.business_registration_code</code>.
+     */
+    public final TableField<CompanyRecord, String> BUSINESS_REGISTRATION_CODE = createField("business_registration_code", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * The column <code>bcinvest.Company.industry</code>.
+     */
+    public final TableField<CompanyRecord, String> INDUSTRY = createField("industry", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * The column <code>bcinvest.Company.registed_capital</code>.
+     */
+    public final TableField<CompanyRecord, String> REGISTED_CAPITAL = createField("registed_capital", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
+
+    /**
+     * The column <code>bcinvest.Company.operation_type</code>.
+     */
+    public final TableField<CompanyRecord, String> OPERATION_TYPE = createField("operation_type", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
      * Create a <code>bcinvest.Company</code> table reference
@@ -130,7 +172,15 @@ public class Company extends TableImpl<CompanyRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.COMPANY_EMAILADDRESS, Indexes.COMPANY_PRIMARY, Indexes.COMPANY_TOKEN);
+        return Arrays.<Index>asList(Indexes.COMPANY_EMAIL_UNIQUE, Indexes.COMPANY_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<CompanyRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_COMPANY;
     }
 
     /**
@@ -146,7 +196,7 @@ public class Company extends TableImpl<CompanyRecord> {
      */
     @Override
     public List<UniqueKey<CompanyRecord>> getKeys() {
-        return Arrays.<UniqueKey<CompanyRecord>>asList(Keys.KEY_COMPANY_PRIMARY, Keys.KEY_COMPANY_EMAILADDRESS, Keys.KEY_COMPANY_TOKEN);
+        return Arrays.<UniqueKey<CompanyRecord>>asList(Keys.KEY_COMPANY_PRIMARY, Keys.KEY_COMPANY_EMAIL_UNIQUE);
     }
 
     /**
