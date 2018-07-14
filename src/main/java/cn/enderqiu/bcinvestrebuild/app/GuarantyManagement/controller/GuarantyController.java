@@ -1,10 +1,7 @@
 package cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.controller;
 
-import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.HouseVO;
-import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.LandVO;
-import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.MachineVO;
+import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.*;
 import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.service.GuarantyManagementService;
-import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.GuarantyVO;
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
 import io.swagger.annotations.Api;
@@ -26,37 +23,27 @@ import java.util.List;
 public class GuarantyController extends BaseController{
     @Autowired
     private GuarantyManagementService service;
-
-    @RequestMapping(value = "/TBCGuaranty", method = RequestMethod.GET)
+    @RequestMapping(value = "/guaranties", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
             @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
                     required = true,  dataType = "int"),
     })
-
-    List<GuarantyVO> getTBCGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(getCompanyUserDTO().getToken(),2,page); }
-    @RequestMapping(value = "/TBCMaxPage", method = RequestMethod.GET)
+    List<GuarantyVO> getGuaranties(String user_id_token,int page,int[] states) {
+        List<GuarantyVO> all = new ArrayList<>();
+        for(int state:states){
+            List<GuarantyVO> guaranties = service.findGuarantiesByState(getCompanyUserDTO().getToken(),state,page);
+            all.addAll(guaranties);
+        }
+        return all; }
+    @RequestMapping(value = "/maxPage", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
     })
-    int getTBCMaxPage(String user_id_token) { return service.findMaxPage(getCompanyUserDTO().getToken(),2); }
-
-    @RequestMapping(value = "/unqualifiedGuaranty", method = RequestMethod.GET)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
-                    required = true,  dataType = "String"),
-            @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
-                    required = true,  dataType = "int"),
-    })
-    List<GuarantyVO> getUnqualifiedGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(getCompanyUserDTO().getToken(),1,page); }
-    @RequestMapping(value = "/unqualifiedMaxPage", method = RequestMethod.GET)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
-                    required = true,  dataType = "String"),
-    })
-    int getUnqualifiedMaxPage(String user_id_token) { return service.findMaxPage(getCompanyUserDTO().getToken(),1); }
+    MaxPageVO getMaxPage(String user_id_token,int[] states) {
+        return service.findMaxPage(getCompanyUserDTO().getToken(),states); }
     @RequestMapping(value = "/toBC", method = RequestMethod.POST)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
@@ -119,25 +106,6 @@ public class GuarantyController extends BaseController{
     int reappraiseGuaranty(int guarantyId) {
         return service.deleteGuaranty(guarantyId);
     }
-
-    @RequestMapping(value = "/evaluationState", method = RequestMethod.GET)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
-                    required = true,  dataType = "String"),
-            @ApiImplicitParam(paramType = "query", name = "page", value = "当前页面数",
-                    required = true,  dataType = "int"),
-    })
-    List<GuarantyVO> getEvaluationState(String user_id_token,int page) {
-        List<GuarantyVO> evaluatingGuaranty = service.findGuarantiesByState(getCompanyUserDTO().getToken(),0,page);
-        List<GuarantyVO> unqualifiedGuaranty = service.findGuarantiesByState(getCompanyUserDTO().getToken(),1,page);
-        List<GuarantyVO> TBCGuaranty = service.findGuarantiesByState(getCompanyUserDTO().getToken(),2,page);
-        List<GuarantyVO> all = new ArrayList<>();
-        all.addAll(evaluatingGuaranty);
-        all.addAll(unqualifiedGuaranty);
-        all.addAll(TBCGuaranty);
-        return all;
-    }
-
     @RequestMapping(value = "/applyHouseEvaluation", method = RequestMethod.POST)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
