@@ -3,7 +3,7 @@ package cn.enderqiu.bcinvestrebuild;
 import cn.enderqiu.bcinvestrebuild.samples.SampleVO;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import cn.enderqiu.bcinvestrebuild.util.MapExtracter;
-import com.sun.javafx.collections.MappingChange;
+//import com.sun.javafx.collections.MappingChange;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
