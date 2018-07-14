@@ -1,9 +1,6 @@
 package cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.service;
 
-import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.GuarantyVO;
-import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.HouseVO;
-import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.LandVO;
-import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.MachineVO;
+import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.*;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +62,26 @@ public class GuarantyManagementService extends BaseService{
         List<Map<String,Object>> results = mapper.SELECT(sqlSentence);
         List<GuarantyVO> Guaranties = getVOListByResult(results,GuarantyVO.class);
         return Guaranties;
+    }
+    public int findGuarantiesCount(String user_id_token,int stateNum){
+        String accountNum = TokenToAccountNum(user_id_token);
+        String sqlSentence = "SELECT COUNT(*) FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+" ORDER BY accountNum;";
+        List<Map<String,Object>> results = mapper.SELECT(sqlSentence);
+        int count = Integer.parseInt(results.get(0).get("COUNT(*)").toString());
+        return count;
+    }
+    public MaxPageVO findMaxPage(String user_id_token, int[] stateNums){
+        int count = 0;
+        int maxPage = 0;
+        for(int stateNum :stateNums){
+            count+=findGuarantiesCount(user_id_token,stateNum);
+        }
+        if(count>0){
+            maxPage = count/21+1;
+        }
+        MaxPageVO maxPageVO = new MaxPageVO();
+        maxPageVO.setMaxPage(maxPage);
+        return maxPageVO;
     }
     public int createGuaranty(String user_id_token,GuarantyVO guarantyVO,int type){
         String accountNum = TokenToAccountNum(user_id_token);
