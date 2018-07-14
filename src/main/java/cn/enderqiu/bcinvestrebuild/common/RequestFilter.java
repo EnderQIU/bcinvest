@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-@Order(1)
+@Order(2)
 @WebFilter(filterName = "authFilter", urlPatterns = "/*")
 public class RequestFilter implements Filter {
     @Autowired
