@@ -36,7 +36,7 @@ public class BcinvestRebuildApplicationTests extends BaseService {
 //        } catch (IllegalAccessException e) {
 //            e.printStackTrace();
 //        }
-
+//
 //        System.out.println(vo.getSampleInt());
 //        System.out.println(vo.getSampleString());
 
