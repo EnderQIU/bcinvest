@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Credit extends TableImpl<CreditRecord> {
 
-    private static final long serialVersionUID = -2097463056;
+    private static final long serialVersionUID = -2069581332;
 
     /**
      * The reference instance of <code>bcinvest.Credit</code>
@@ -116,7 +116,7 @@ public class Credit extends TableImpl<CreditRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.CREDIT_CREDIT_FK_GUARANTY, Indexes.CREDIT_PRIMARY);
+        return Arrays.<Index>asList(Indexes.CREDIT_CREDIT_FK_GUARANTY, Indexes.CREDIT_CREDIT_FK_REPORT, Indexes.CREDIT_PRIMARY);
     }
 
     /**
@@ -140,7 +140,7 @@ public class Credit extends TableImpl<CreditRecord> {
      */
     @Override
     public List<ForeignKey<CreditRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<CreditRecord, ?>>asList(Keys.CREDIT_FK_COMPANY, Keys.CREDIT_FK_GUARANTY);
+        return Arrays.<ForeignKey<CreditRecord, ?>>asList(Keys.CREDIT_FK_COMPANY, Keys.CREDIT_FK_GUARANTY, Keys.CREDIT_FK_REPORT);
     }
 
     /**

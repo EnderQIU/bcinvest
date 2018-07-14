@@ -30,19 +30,19 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReportRecord extends UpdatableRecordImpl<ReportRecord> implements Record4<String, Integer, LocalDateTime, String> {
 
-    private static final long serialVersionUID = 1408767535;
+    private static final long serialVersionUID = 1933907003;
 
     /**
-     * Setter for <code>bcinvest.Report.AuthName</code>.
+     * Setter for <code>bcinvest.Report.AccountNum</code>.
      */
-    public void setAuthname(String value) {
+    public void setAccountnum(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Report.AuthName</code>.
+     * Getter for <code>bcinvest.Report.AccountNum</code>.
      */
-    public String getAuthname() {
+    public String getAccountnum() {
         return (String) get(0);
     }
 
@@ -125,7 +125,7 @@ public class ReportRecord extends UpdatableRecordImpl<ReportRecord> implements R
      */
     @Override
     public Field<String> field1() {
-        return Report.REPORT.AUTHNAME;
+        return Report.REPORT.ACCOUNTNUM;
     }
 
     /**
@@ -157,7 +157,7 @@ public class ReportRecord extends UpdatableRecordImpl<ReportRecord> implements R
      */
     @Override
     public String component1() {
-        return getAuthname();
+        return getAccountnum();
     }
 
     /**
@@ -189,7 +189,7 @@ public class ReportRecord extends UpdatableRecordImpl<ReportRecord> implements R
      */
     @Override
     public String value1() {
-        return getAuthname();
+        return getAccountnum();
     }
 
     /**
@@ -221,7 +221,7 @@ public class ReportRecord extends UpdatableRecordImpl<ReportRecord> implements R
      */
     @Override
     public ReportRecord value1(String value) {
-        setAuthname(value);
+        setAccountnum(value);
         return this;
     }
 
@@ -278,10 +278,10 @@ public class ReportRecord extends UpdatableRecordImpl<ReportRecord> implements R
     /**
      * Create a detached, initialised ReportRecord
      */
-    public ReportRecord(String authname, Integer reportid, LocalDateTime date, String duration) {
+    public ReportRecord(String accountnum, Integer reportid, LocalDateTime date, String duration) {
         super(Report.REPORT);
 
-        set(0, authname);
+        set(0, accountnum);
         set(1, reportid);
         set(2, date);
         set(3, duration);

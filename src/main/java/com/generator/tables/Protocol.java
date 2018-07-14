@@ -17,6 +17,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -40,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Protocol extends TableImpl<ProtocolRecord> {
 
-    private static final long serialVersionUID = 563760872;
+    private static final long serialVersionUID = 728848519;
 
     /**
      * The reference instance of <code>bcinvest.Protocol</code>
@@ -58,7 +59,7 @@ public class Protocol extends TableImpl<ProtocolRecord> {
     /**
      * The column <code>bcinvest.Protocol.ProtocolId</code>.
      */
-    public final TableField<ProtocolRecord, Integer> PROTOCOLID = createField("ProtocolId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ProtocolRecord, Integer> PROTOCOLID = createField("ProtocolId", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>bcinvest.Protocol.GurantyId</code>.
@@ -69,6 +70,11 @@ public class Protocol extends TableImpl<ProtocolRecord> {
      * The column <code>bcinvest.Protocol.StartDate</code>.
      */
     public final TableField<ProtocolRecord, LocalDate> STARTDATE = createField("StartDate", org.jooq.impl.SQLDataType.LOCALDATE.nullable(false), this, "");
+
+    /**
+     * The column <code>bcinvest.Protocol.Duration</code>.
+     */
+    public final TableField<ProtocolRecord, String> DURATION = createField("Duration", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>bcinvest.Protocol.EndDate</code>.
@@ -128,6 +134,14 @@ public class Protocol extends TableImpl<ProtocolRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PROTOCOL_FK_PROTOCOL_TO_GURANTY, Indexes.PROTOCOL_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<ProtocolRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_PROTOCOL;
     }
 
     /**

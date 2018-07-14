@@ -22,7 +22,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guaranty implements Serializable {
 
-    private static final long serialVersionUID = 327756691;
+    private static final long serialVersionUID = -1824497759;
 
     private Integer guarantyid;
     private String  accountnum;
@@ -30,7 +30,7 @@ public class Guaranty implements Serializable {
     private Integer scopeofright;
     private String  ownername;
     private Integer reportid;
-    private String  type;
+    private Integer type;
     private Integer evaluatevalue;
     private String  name;
 
@@ -55,7 +55,7 @@ public class Guaranty implements Serializable {
         Integer scopeofright,
         String  ownername,
         Integer reportid,
-        String  type,
+        Integer type,
         Integer evaluatevalue,
         String  name
     ) {
@@ -118,11 +118,11 @@ public class Guaranty implements Serializable {
         this.reportid = reportid;
     }
 
-    public String getType() {
+    public Integer getType() {
         return this.type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

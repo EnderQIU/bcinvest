@@ -52,10 +52,10 @@ public class ReportDao extends DAOImpl<ReportRecord, com.generator.tables.pojos.
     }
 
     /**
-     * Fetch records that have <code>AuthName IN (values)</code>
+     * Fetch records that have <code>AccountNum IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Report> fetchByAuthname(String... values) {
-        return fetch(Report.REPORT.AUTHNAME, values);
+    public List<com.generator.tables.pojos.Report> fetchByAccountnum(String... values) {
+        return fetch(Report.REPORT.ACCOUNTNUM, values);
     }
 
     /**

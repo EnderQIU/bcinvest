@@ -102,7 +102,7 @@ public class GuarantyDao extends DAOImpl<GuarantyRecord, com.generator.tables.po
     /**
      * Fetch records that have <code>Type IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Guaranty> fetchByType(String... values) {
+    public List<com.generator.tables.pojos.Guaranty> fetchByType(Integer... values) {
         return fetch(Guaranty.GUARANTY.TYPE, values);
     }
 

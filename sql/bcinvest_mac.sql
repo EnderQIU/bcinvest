@@ -35,7 +35,8 @@ CREATE TABLE `Company` (
   `EmailAddress` varchar(128) UNIQUE,
   `Token` varchar(128) UNIQUE,
   `Credit` bigint(20),
-  `Status` VARCHAR(128) NULL DEFAULT "unapplied" CHECK (VALUE IN ("unapplied", "checking", "unpassed", "passed")),
+  `Status` VARCHAR(128) NULL DEFAULT "unapplied" CHECK (VALUE IN ("unapplied", "checking_1", "checking_2", "unpassed",
+  "passed")),
  #`company` varchar(128) Default null,
   PRIMARY KEY (`AccountNum`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -266,3 +267,12 @@ CREATE TABLE IF NOT EXISTS `Protocol` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
+
+CREATE TABLE `Message` (
+  `id` int(11) NOT NULL,
+  `content` varchar(45) DEFAULT NULL,
+  `fromUserNum` varchar(128) DEFAULT NULL,
+  `toUserNum` varchar(128) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
