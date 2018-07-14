@@ -1,30 +1,24 @@
-package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
+package cn.enderqiu.bcinvestrebuild.app.GuarantySearch;
 
+import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Created by EvanChoo on 7/11/18.
+ * Created by EvanChoo on 7/13/18.
  */
 @ApiModel
-public class LoanVO {
-    /*
-     * GuarantyId-抵押物ID
-     * ScopeOfRight-权利范围
-     * OwnerName-所有人姓名
-     * EvaluateValue-抵押物估值／抵押值
-     * Name-抵押物名称
-     */
+public class GuarantySearchVO {
     @ApiModelProperty(value = "抵押物ID", required = true)
-    private int GuarantyId = -1;
+    private int GuarantyId;
     @ApiModelProperty(value = "抵押物权力范围", required = true)
-    private String ScopeOfRight = "null";
+    private String ScopeOfRight;
     @ApiModelProperty(value = "抵押物所有者姓名", required = true)
-    private String OwnerName = "null";
+    private String OwnerName;
     @ApiModelProperty(value = "抵押物估值", required = true)
-    private int EvaluateValue = -1;
+    private int EvaluateValue;
     @ApiModelProperty(value = "抵押物名称", required = true)
-    private String Name = "null";
+    private String Name;
 
     //getters
     public int getGuarantyId()

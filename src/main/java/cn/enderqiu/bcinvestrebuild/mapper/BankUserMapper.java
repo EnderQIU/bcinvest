@@ -10,7 +10,7 @@ public interface BankUserMapper {
     @Results({
             @Result(property ="companyUserId",column="AccountNum"),
             @Result(property = "userName",column = "Name"),
-            @Result(property = "status",column = "Type"),
+            @Result(property = "userType",column = "Type"),
             @Result(property = "token",column = "Token")
     })
     BankUserDTO findUserByToken(String token);
