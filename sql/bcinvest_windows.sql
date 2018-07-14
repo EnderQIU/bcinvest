@@ -64,6 +64,7 @@ CREATE TABLE `Authorization` (
 
 LOCK TABLES `Authorization` WRITE;
 /*!40000 ALTER TABLE `Authorization` DISABLE KEYS */;
+INSERT INTO `Authorization` VALUES ('citibank',0,'1','123','123');
 /*!40000 ALTER TABLE `Authorization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,6 +95,7 @@ CREATE TABLE `Company` (
 
 LOCK TABLES `Company` WRITE;
 /*!40000 ALTER TABLE `Company` DISABLE KEYS */;
+INSERT INTO `Company` VALUES ('456','',NULL,'a@a.com','456',NULL,'unapplied');
 /*!40000 ALTER TABLE `Company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,7 +302,7 @@ DROP TABLE IF EXISTS `Message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Message` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(45) DEFAULT NULL,
   `fromUserNum` varchar(128) DEFAULT NULL,
   `toUserNum` varchar(128) DEFAULT NULL,
@@ -417,4 +419,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-14 19:31:22
+-- Dump completed on 2018-07-14 19:49:27

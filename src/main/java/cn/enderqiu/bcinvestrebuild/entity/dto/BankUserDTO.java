@@ -13,7 +13,7 @@ public class BankUserDTO {
 
     private String token;
 
-    private String userType;
+    private int userType;
 
     public String getName() {
         return name;
@@ -47,11 +47,11 @@ public class BankUserDTO {
         this.token = token;
     }
 
-    public String getUserType() {
+    public int getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(int userType) {
         this.userType = userType;
     }
 }
