@@ -31,19 +31,32 @@ public class GuarantyController extends BaseController{
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
-            @ApiImplicitParam(paramType = "query", name = "page", value = "当前页面数",
+            @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
                     required = true,  dataType = "int"),
     })
+
     List<GuarantyVO> getTBCGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(getCompanyUserDTO().getToken(),2,page); }
+    @RequestMapping(value = "/TBCMaxPage", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
+                    required = true,  dataType = "String"),
+    })
+    int getTBCMaxPage(String user_id_token) { return service.findMaxPage(getCompanyUserDTO().getToken(),2); }
+
     @RequestMapping(value = "/unqualifiedGuaranty", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
                     required = true,  dataType = "String"),
-            @ApiImplicitParam(paramType = "query", name = "page", value = "当前页面数",
+            @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
                     required = true,  dataType = "int"),
     })
     List<GuarantyVO> getUnqualifiedGuaranty(String user_id_token,int page) { return service.findGuarantiesByState(getCompanyUserDTO().getToken(),1,page); }
-
+    @RequestMapping(value = "/unqualifiedMaxPage", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
+                    required = true,  dataType = "String"),
+    })
+    int getUnqualifiedMaxPage(String user_id_token) { return service.findMaxPage(getCompanyUserDTO().getToken(),1); }
     @RequestMapping(value = "/toBC", method = RequestMethod.POST)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
@@ -203,4 +216,5 @@ public class GuarantyController extends BaseController{
         landVO.setScopeOfRight(scopeOfRight);
         return service.createLand(getCompanyUserDTO().getToken(),landVO);
     }
+
 }
