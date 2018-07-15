@@ -1,0 +1,11 @@
+executive包是存放所有执行逻辑的类的地方。
+
+其中的类都实现runnable，都支持从主线程中分立出来运行。
+
+LinkExecutive、CollectExecutive、QueryExecutive需要DTO辅助指定内容
+    但是DTO的内容可以继承自Entity。
+MineExecutive不需要传入参数。
+
+CollectExecutive因为是负责收集并且放入新的信息，本质上来说只用INSERT。
+需要指定的信息包括Data上的信息。
+
