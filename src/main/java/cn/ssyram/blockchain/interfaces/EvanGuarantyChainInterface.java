@@ -1,5 +1,8 @@
 package cn.ssyram.blockchain.interfaces;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by EvanChoo on 7/15/18.
  */
@@ -11,4 +14,18 @@ public interface EvanGuarantyChainInterface extends GuarantyChain {
      * @return 删除成功返回1，删除失败或者没有这个抵押物返回0
      */
     int deleteGuaranty(int guarantyId);
+
+    /**
+     * 查询公司credit
+     * @param accountNum
+     * @return 公司的信用数
+     */
+    List<Map<String, Object>> queryCompanyCredit(String accountNum);
+
+    /**
+     * 注销某个企业账号
+     * @param accountNum
+     * @return 删除成功返回1，删除失败或者没有这个公司返回0
+     */
+    int deleteCompany(String accountNum);
 }

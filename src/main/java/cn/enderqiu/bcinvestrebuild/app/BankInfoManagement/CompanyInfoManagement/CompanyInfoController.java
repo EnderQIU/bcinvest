@@ -1,9 +1,6 @@
 package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement;
 
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyCreditInfoVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyInfoDetailVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyInfoVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.GuarantyInfoVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.*;
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
@@ -14,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import sun.misc.Request;
 
 import java.util.List;
 
@@ -30,8 +28,22 @@ public class CompanyInfoController extends BaseController {
     private CompanyInfoService infoService;
 
     @RequestMapping(value = "/allCompanyInfo", method = RequestMethod.GET)
-    List<CompanyInfoVO> getAllCompanyInfo() {
-        return infoService.getAllCompanyInfo();
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "currentPage",
+                    required = true,
+                    value = "当前页面数量",
+                    dataType = "int"
+            )
+    })
+    List<CompanyInfoVO> getAllCompanyInfo(int currentPage) {
+        return infoService.getAllCompanyInfo(currentPage);
+    }
+
+    @RequestMapping(value = "/getMaxPage", method = RequestMethod.GET)
+    MaxPageVO getMaxPage() {
+        return infoService.getMaxPage();
     }
 
     @RequestMapping(value = "/allCompanyInfo/search", method = RequestMethod.GET)
@@ -63,10 +75,52 @@ public class CompanyInfoController extends BaseController {
                     required = false,
                     value = "模糊搜索的EmailAddress字段，如果用户没有填写应该发送null，不是\"null\"",
                     dataType = "String"
+            ),
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "currentPage",
+                    required = true,
+                    value = "当前页面数量",
+                    dataType = "int"
             )
     })
-    List<CompanyInfoVO> getSearchCompanyResult(String accountNum, String name, String telNum, String email) {
-        return infoService.getSearchCompanyResult(accountNum, name, telNum, email);
+    List<CompanyInfoVO> getSearchCompanyResult(String accountNum, String name, String telNum, String email, int currentPage) {
+        return infoService.getSearchCompanyResult(accountNum, name, telNum, email, currentPage);
+    }
+
+    @RequestMapping(value = "/allCompanyInfo/search/getMaxPage", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "accountNum",
+                    required = false,
+                    value = "模糊搜索的AccountNum字段，如果用户没有填，应该发送null，不是\"null\"",
+                    dataType = "String"
+            ),
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "name",
+                    required = false,
+                    value = "模糊搜索的Name字段，如果用户没有填写，应该发送null，不是\"null\"",
+                    dataType = "String"
+            ),
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "telNum",
+                    required = false,
+                    value = "模糊搜索的TelNul字段，如果用户没有填写应该发送null，不是\"null\"",
+                    dataType = "String"
+            ),
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "email",
+                    required = false,
+                    value = "模糊搜索的EmailAddress字段，如果用户没有填写应该发送null，不是\"null\"",
+                    dataType = "String"
+            )
+    })
+    MaxPageVO getSearchMaxPage(String accountNum, String name, String telNum, String email) {
+        return infoService.getSearchMaxPage(accountNum, name, telNum, email);
     }
 
     @RequestMapping(value = "/allCompanyInfo/companyDetail", method = RequestMethod.GET)
@@ -91,10 +145,31 @@ public class CompanyInfoController extends BaseController {
                     required = true,
                     value = "每次后台返回的用来填充所有公司列表的信息中包含了公司的AccountNum，需要存下来，在用户点击某一项来查看信用信息时传给后台",
                     dataType = "String"
+            ),
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "currentPage",
+                    required = true,
+                    value = "当前页面数量",
+                    dataType = "int"
             )
     })
-    CompanyCreditInfoVO getCreditInfo(String accountNum) {
-        return infoService.getCreditInfo(accountNum);
+    List<CompanyCreditInfoVO> getCreditInfo(String accountNum, int currentPage) {
+        return infoService.getCreditInfo(accountNum, currentPage);
+    }
+
+    @RequestMapping(value = "/allCompanyInfo/creditDetail/maxPage", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "accountNum",
+                    required = true,
+                    value = "每次后台返回的用来填充所有公司列表的信息中包含了公司的AccountNum，需要存下来，在用户点击某一项来查看信用信息时传给后台",
+                    dataType = "String"
+            )
+    })
+    MaxPageVO getCreditMaxPage(String accountNum) {
+        return infoService.getCreditMaxPage(accountNum);
     }
 
     @RequestMapping(value = "/allCompanyInfo/allGuaranty", method = RequestMethod.GET)
@@ -106,10 +181,31 @@ public class CompanyInfoController extends BaseController {
                     value = "每次后台返回的用来填充所有公司列表的信息中包含了公司的AccountNum，需要存下来，在用户点击某一项来查看所有抵押物时传给后台",
                     dataType = "String"
 
+            ),
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "currentPage",
+                    required = true,
+                    value = "当前页面数量",
+                    dataType = "int"
             )
     })
-    List<GuarantyInfoVO> getAllGuaranty(String accountNum) {
-        return infoService.getAllGuaranty(accountNum);
+    List<GuarantyInfoVO> getAllGuaranty(String accountNum, int currentPage) {
+        return infoService.getAllGuaranty(accountNum, currentPage);
+    }
+
+    @RequestMapping(value = "/allCompanyInfo/allGuaranty/maxPage", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "accountNum",
+                    required = true,
+                    value = "每次后台返回的用来填充所有公司列表的信息中包含了公司的AccountNum，需要存下来，在用户点击某一项来查看信用信息时传给后台",
+                    dataType = "String"
+            )
+    })
+    MaxPageVO getGuarantyMaxPage(String accountNum) {
+        return infoService.getGuarantyMaxPage(accountNum);
     }
 
     @RequestMapping(value = "/allCompanyInfo/cancleCompanyAccount", method = RequestMethod.PUT)
