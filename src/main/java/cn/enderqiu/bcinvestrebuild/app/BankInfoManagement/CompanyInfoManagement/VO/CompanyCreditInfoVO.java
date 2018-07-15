@@ -1,4 +1,4 @@
-package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO;
+package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO;
 
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 

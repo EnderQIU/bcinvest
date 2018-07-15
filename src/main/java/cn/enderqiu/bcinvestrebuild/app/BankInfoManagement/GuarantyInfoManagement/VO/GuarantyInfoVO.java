@@ -1,4 +1,4 @@
-package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO;
+package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.GuarantyInfoManagement.VO;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

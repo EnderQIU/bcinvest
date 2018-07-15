@@ -1,9 +1,9 @@
-package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement;
+package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement;
 
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO.CompanyCreditInfoVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO.CompanyInfoDetailVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO.CompanyInfoVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO.GuarantyInfoVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyCreditInfoVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyInfoDetailVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyInfoVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.GuarantyInfoVO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import org.springframework.stereotype.Service;
 
