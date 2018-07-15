@@ -127,23 +127,27 @@ public class LoanDetailVO {
                 break;
 
             case 2:
-                this.state = "待确认";
+                this.state = "合格";
                 break;
 
             case 3:
-                this.state = "可抵押";
+                this.state = "待确认";
                 break;
 
             case 4:
-                this.state = "已抵押未确认";
+                this.state = "可抵押";
                 break;
 
             case 5:
-                this.state = "已抵押已确认";
+                this.state = "申请抵押中";
                 break;
 
             case 6:
-                this.state = "贷款逾期";
+                this.state = "申请已通过";
+                break;
+
+            case 8:
+                this.state = "逾期";
                 break;
         }
     }

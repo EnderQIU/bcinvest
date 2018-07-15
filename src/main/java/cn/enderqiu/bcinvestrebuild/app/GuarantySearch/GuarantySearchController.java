@@ -33,8 +33,8 @@ public class GuarantySearchController extends BaseController {
                     paramType = "query",
                     name = "guarantyType",
                     required = false,
-                    value = "抵押物类型, 如果没有就发送null给后台;House，Land，Machine; 由于type在数据库中使用的是varchar，所以前台发送的时候一定要首字母大写",
-                    dataType = "String"
+                    value = "抵押物类型, 如果没有就发送-1给后台;",
+                    dataType = "int"
             ),
             @ApiImplicitParam(
                     paramType = "query",
@@ -51,7 +51,7 @@ public class GuarantySearchController extends BaseController {
                     dataType = "int"
             )
     })
-    List<GuarantySearchVO> searchGuaranty(String guarantyType, String guarantyName, int guarantyState) {
+    List<GuarantySearchVO> searchGuaranty(int guarantyType, String guarantyName, int guarantyState) {
         return guarantySearchService.searchGuanranty(getCompanyUserDTO().getToken(), guarantyType, guarantyName, guarantyState);
     }
 
@@ -62,7 +62,7 @@ public class GuarantySearchController extends BaseController {
                     name = "guarantyType",
                     required = false,
                     value = "抵押物类型, 如果没有就发送null给后台;House，Land，Machine; 由于type在数据库中使用的是varchar，所以前台发送的时候一定要首字母大写",
-                    dataType = "String"
+                    dataType = "int"
             ),
             @ApiImplicitParam(
                     paramType = "query",
@@ -79,7 +79,7 @@ public class GuarantySearchController extends BaseController {
                     dataType = "int"
             )
     })
-    MaxPageVO getMaxPage(String guarantyType, String guarantyName, int guarantyState) {
+    MaxPageVO getMaxPage(int guarantyType, String guarantyName, int guarantyState) {
         return guarantySearchService.getMaxPage(getCompanyUserDTO().getToken(), guarantyType, guarantyName, guarantyState);
     }
 }

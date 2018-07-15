@@ -1,9 +1,9 @@
-package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement;
+package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement;
 
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO.CompanyCreditInfoVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO.CompanyInfoDetailVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO.CompanyInfoVO;
-import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.Entity.VO.GuarantyInfoVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyCreditInfoVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyInfoDetailVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.CompanyInfoVO;
+import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.VO.GuarantyInfoVO;
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
@@ -20,8 +20,9 @@ import java.util.List;
 /**
  * Created by EvanChoo on 7/14/18.
  */
+
 @RestController
-@RequestMapping("/bank/infomanagement")
+@RequestMapping("/bank/infoManagement")
 @Api("银行业务－信息管理")
 @RequiredPermissions("bank")
 public class CompanyInfoController extends BaseController {
