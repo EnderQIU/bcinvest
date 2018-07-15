@@ -52,11 +52,14 @@ public class SecurityInterceptor implements HandlerInterceptor {
                 if (companyUserDTO != null){
                     return requiredPermission.value().contains("company");
                 }else if (bankUserDTO != null){
-                    String userType = bankUserDTO.getUserType();
-                    if (userType == null){
+                    int userType = bankUserDTO.getUserType();
+                    if (userType == 0){
+                        return requiredPermission.value().contains("bank");
+                    }else if (userType > 0){
+                        return requiredPermission.value().contains("authority");
+                    }else {
                         return false;
                     }
-                    return requiredPermission.value().contains(userType);
                 }
                 return false;
             }

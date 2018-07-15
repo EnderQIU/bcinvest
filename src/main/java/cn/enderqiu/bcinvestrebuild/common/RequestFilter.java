@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-@Order(1)
+@Order(2)
 @WebFilter(filterName = "authFilter", urlPatterns = "/*")
 public class RequestFilter implements Filter {
     @Autowired
@@ -42,15 +42,11 @@ public class RequestFilter implements Filter {
         AuthorizationRecord record = dsl.fetchOne(Authorization.AUTHORIZATION, Authorization.AUTHORIZATION.TOKEN.eq(request.getHeader("user_id_token")));
         BankUserDTO bankUserDTO = new BankUserDTO();
         if (record != null){
-            try {
-                PropertyUtils.copyProperties(bankUserDTO, record);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            bankUserDTO.setName(record.getName());
+            bankUserDTO.setAccountNum(record.getAccountnum());
+            bankUserDTO.setPassword(record.getPassword());
+            bankUserDTO.setToken(record.getToken());
+            bankUserDTO.setUserType(record.getType());
         }
 
         RequestUserWrapper requestUserWrapper = new RequestUserWrapper(request);

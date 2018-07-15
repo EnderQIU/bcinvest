@@ -2,6 +2,8 @@ package cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.service;
 
 import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.*;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
+import cn.ssyram.blockchain.impls.CCGuarantyChainInterfaceImpl;
+import cn.ssyram.blockchain.interfaces.CCGuarantyChainInerface;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.UUID;
 
 @Service
 public class GuarantyManagementService extends BaseService{
+    CCGuarantyChainInerface ccGuarantyChainInerface = new CCGuarantyChainInterfaceImpl();
     public String TokenToAccountNum(String token){
         String sqlSentence = "SELECT accountNum FROM company WHERE token = '"+token+"';";
         List<Map<String,Object>> result = mapper.SELECT(sqlSentence);
@@ -18,12 +21,18 @@ public class GuarantyManagementService extends BaseService{
         return accountNum;
     }
     public int putGuarantyToBC(int guarantyId){
-        String sqlSentence = "UPDATE guaranty SET state = '3' WHERE guarantyId = "+guarantyId+";";
-        return mapper.UPDATE(sqlSentence);
+        if(ccGuarantyChainInerface.insertGuaranty(guarantyId)>0){
+            String sqlSentence = "UPDATE guaranty SET state = '3' WHERE guarantyId = "+guarantyId+";";
+            return mapper.UPDATE(sqlSentence);
+        }
+        return 0;
     }
     public int deleteGuaranty(int guarantyId){
-        String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
-        return mapper.DELETE(sqlSentence);
+        if(ccGuarantyChainInerface.deleteGuaranty(guarantyId)>0){
+            String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
+            return mapper.DELETE(sqlSentence);
+        }
+        return 0;
     }
     public HouseVO findHouse(int guarantyId){
         String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
@@ -55,13 +64,36 @@ public class GuarantyManagementService extends BaseService{
         extract(machineVO,result2);
         return machineVO;
     }
+    public GuarantyVO findGuaranty(int guarantyId){
+        String sqlSentence = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
+        Map<String, Object> result = mapper.SELECT(sqlSentence).get(0);
+        GuarantyVO guarantyVO = new GuarantyVO();
+        extract(guarantyVO,result);
+        return guarantyVO;
+    }
     public List<GuarantyVO> findGuarantiesByState(String user_id_token,int stateNum,int page){
-        int pageStartIndex = (page-1)*20;
+        List<Map<String,Object>> results = null;
+        List<GuarantyVO> guaranties = new ArrayList<>();
         String accountNum = TokenToAccountNum(user_id_token);
-        String sqlSentence = "SELECT * FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+" ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
-        List<Map<String,Object>> results = mapper.SELECT(sqlSentence);
-        List<GuarantyVO> Guaranties = getVOListByResult(results,GuarantyVO.class);
-        return Guaranties;
+        switch(stateNum){
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                List<Map<String,Object>> guarantyIdList = ccGuarantyChainInerface.queryGuarantyIdByCompany(accountNum,stateNum);
+                for(Map<String,Object> m:guarantyIdList){
+                    int guarantyId = Integer.parseInt(m.get(0).toString());
+                    guaranties.add(findGuaranty(guarantyId));
+                }
+                break;
+            default:
+                int pageStartIndex = (page-1)*20;
+                String sqlSentence = "SELECT * FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+" ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
+                results = mapper.SELECT(sqlSentence);
+                guaranties = getVOListByResult(results,GuarantyVO.class);
+        }
+        return guaranties;
     }
     public int findGuarantiesCount(String user_id_token,int stateNum){
         String accountNum = TokenToAccountNum(user_id_token);
@@ -74,7 +106,17 @@ public class GuarantyManagementService extends BaseService{
         int count = 0;
         int maxPage = 0;
         for(int stateNum :stateNums){
-            count+=findGuarantiesCount(user_id_token,stateNum);
+            switch (stateNum){
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    String accountNum = TokenToAccountNum(user_id_token);
+                    count+=ccGuarantyChainInerface.queryGuarantyIdByCompany(accountNum,stateNum).size();break;
+                default:
+                    count+=findGuarantiesCount(user_id_token,stateNum);
+            }
         }
         if(count>0){
             maxPage = count/21+1;

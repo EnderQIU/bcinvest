@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user/guaranty")
 @Api("抵押物相关操作")
-@RequiredPermissions("company,bank,authority")
+@RequiredPermissions("company")
 
 public class GuarantyController extends BaseController{
     @Autowired
@@ -44,7 +44,7 @@ public class GuarantyController extends BaseController{
     })
     MaxPageVO getMaxPage(String user_id_token,int[] states) {
         return service.findMaxPage(getCompanyUserDTO().getToken(),states); }
-    @RequestMapping(value = "/toBC", method = RequestMethod.POST)
+    @RequestMapping(value = "/toBC", method = RequestMethod.PUT)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
