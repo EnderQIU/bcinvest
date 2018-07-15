@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `Protocol` (
   `GurantyId` INT(11) NOT NULL,
   `StartDate` DATE NOT NULL,
   `Duration` VARCHAR(128) NOT NULL,
-  `EndDate` DATE NOT NULL,
+  `EndDate` DATE,
   `Message` MEDIUMTEXT NULL,
   `Condition` VARCHAR(45) NULL,
   PRIMARY KEY (`ProtocolId`),

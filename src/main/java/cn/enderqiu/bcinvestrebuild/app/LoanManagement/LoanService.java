@@ -13,17 +13,20 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class LoanService extends BaseService
-{
+public class LoanService extends BaseService {
+    static int ITEM_PER_PAGE = 20;
+    static int onBCState = 4;
+    static int applyingState = 5;
+
     public List<LoanVO> getLoanRequestedButNotPassed(String user_id_token, int pageIndex) {
         String AccountNum = token2AccountNum(user_id_token);
 
-        int resultStartIndex = (pageIndex-1)*20;
+        int resultStartIndex = (pageIndex-1)*ITEM_PER_PAGE;
 
 
         String sql = "SELECT * " +
                      "FROM Guaranty " +
-                     "WHERE AccountNum = \'"+AccountNum+"\' AND State = 4 " +
+                     "WHERE AccountNum = \'"+AccountNum+"\' AND State = "+applyingState+" " +
                      "ORDER BY GuarantyId ASC " +
                      "LIMIT "+resultStartIndex+", 20";
 
@@ -48,10 +51,32 @@ public class LoanService extends BaseService
         return result;
     }
 
+    public MaxPageVO getMaxPage(String user_id_token) {
+        String AccountNum = token2AccountNum(user_id_token);
+
+        String sql = "SELECT * " +
+                     "FROM Guaranty " +
+                     "WHERE AccountNum = \'"+AccountNum+"\' AND State = "+applyingState+" ";
+
+        sql = "SELECT COUNT(*) AS Number " +
+              "FROM ("+sql+")a";
+
+        List<Map<String, Object>> list = mapper.SELECT(sql);
+
+        long number = (long)list.get(0).get("Number");
+
+        int maxPage = (int)Math.ceil((double)number/ITEM_PER_PAGE);
+
+        MaxPageVO vo = new MaxPageVO();
+        vo.setMaxPage(maxPage);
+
+        return vo;
+    }
+
     public LoanDetailVO getMortgageDetail(int guarantyId) {
         String sql = "SELECT GuarantyId, g.AccountNum AS CompanyAccount, State, ScopeOfRight, OwnerName, g.ReportId AS ReportId, g.Type AS GuarantyType, EvaluateValue, g.Name AS GuarantyName, r.AccountNum AS AuthAccount, Date, Duration, a.Name AS AuthName " +
                      "FROM Guaranty g join Report r on g.ReportId=r.ReportId join Authorization a on r.AccountNum=a.AccountNum " +
-                     "WHERE g.GuarantyId="+guarantyId+" AND g.State=4";
+                     "WHERE g.GuarantyId="+guarantyId+" AND g.State = "+applyingState+" ";
 
         List<Map<String, Object>> list = mapper.SELECT(sql);
 
@@ -87,8 +112,8 @@ public class LoanService extends BaseService
         String accountNum = token2AccountNum(user_id_token);
 
         String sql = "UPDATE Guaranty " +
-                     "SET State = 3 " +
-                     "WHERE GuarantyId = "+guarantyId+" AND State = 4 AND AccountNum = \'"+accountNum+"\'";
+                     "SET State = "+onBCState+" "+
+                     "WHERE GuarantyId = "+guarantyId+" AND State = "+applyingState+" AND AccountNum = \'"+accountNum+"\'";
 
         int affectedRows = mapper.UPDATE(sql);
 

@@ -10,6 +10,7 @@ import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,11 @@ public class LoanController extends BaseController {
     })
     List<LoanVO> getLoanRequestedButNotPassed(int pageIndex) {
         return loanService.getLoanRequestedButNotPassed(getCompanyUserDTO().getToken(), pageIndex);
+    }
+
+    @RequestMapping(value = "/getMaxPage", method = RequestMethod.GET)
+    MaxPageVO getMaxPage() {
+        return loanService.getMaxPage(getCompanyUserDTO().getToken());
     }
 
     @RequestMapping(value="/mortgageDetail", method = RequestMethod.GET)

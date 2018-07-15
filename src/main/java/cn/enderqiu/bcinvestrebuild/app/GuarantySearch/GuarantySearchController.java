@@ -4,6 +4,7 @@ package cn.enderqiu.bcinvestrebuild.app.GuarantySearch;
  * Created by EvanChoo on 7/13/18.
  */
 
+import cn.enderqiu.bcinvestrebuild.app.LoanManagement.LoanService;
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
@@ -32,7 +33,7 @@ public class GuarantySearchController extends BaseController {
                     paramType = "query",
                     name = "guarantyType",
                     required = false,
-                    value = "抵押物类型, 如果没有就发送null给后台;房产，土地，机器",
+                    value = "抵押物类型, 如果没有就发送null给后台;House，Land，Machine; 由于type在数据库中使用的是varchar，所以前台发送的时候一定要首字母大写",
                     dataType = "String"
             ),
             @ApiImplicitParam(
@@ -52,5 +53,33 @@ public class GuarantySearchController extends BaseController {
     })
     List<GuarantySearchVO> searchGuaranty(String guarantyType, String guarantyName, int guarantyState) {
         return guarantySearchService.searchGuanranty(getCompanyUserDTO().getToken(), guarantyType, guarantyName, guarantyState);
+    }
+
+    @RequestMapping(value = "/getMaxPage", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "guarantyType",
+                    required = false,
+                    value = "抵押物类型, 如果没有就发送null给后台;House，Land，Machine; 由于type在数据库中使用的是varchar，所以前台发送的时候一定要首字母大写",
+                    dataType = "String"
+            ),
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "guarantyName",
+                    required = false,
+                    value = "抵押物名称, 如果没有就返回null给后台",
+                    dataType = "String"
+            ),
+            @ApiImplicitParam(
+                    paramType = "query",
+                    name = "guarantyState",
+                    required = false,
+                    value = "抵押物状态，如果选择所有状态的抵押物则向后台发送-1",
+                    dataType = "int"
+            )
+    })
+    MaxPageVO getMaxPage(String guarantyType, String guarantyName, int guarantyState) {
+        return guarantySearchService.getMaxPage(getCompanyUserDTO().getToken(), guarantyType, guarantyName, guarantyState);
     }
 }
