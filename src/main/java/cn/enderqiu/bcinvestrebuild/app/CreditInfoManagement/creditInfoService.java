@@ -27,8 +27,8 @@ public class creditInfoService extends BaseService {
 
     for(Map<String, Object> m:creditinfo)
     {
-        String accountid= " ",reportId =" ",guarantyId =" ",type =" ",duetime=" ";
-        for(String key: m.keySet()) {
+        String accountid= " ",reportId =" ",guarantyId =" ",type =" ",duetime=" ",guarantyName=" ";
+
 
 
             accountid=m.get("AccountNum").toString();
@@ -37,10 +37,11 @@ public class creditInfoService extends BaseService {
             type=m.get("Type").toString();
             List<Map<String,Object>> reportinfo=mapper.SELECT("Select * from Report where ReportId=" +reportId);
             duetime=reportinfo.get(0).get("Date").toString();
+            List<Map<String,Object>> guarantyInfo=mapper.SELECT("Select * from Guaranty where GuarantyId=" +guarantyId);
+            guarantyName=guarantyInfo.get(0).get("Name").toString();
 
 
-        }
-        creditInfoVO cinfo=new creditInfoVO(accountid,guarantyId,reportId,type,duetime);
+        creditInfoVO cinfo=new creditInfoVO(accountid,guarantyId,reportId,type,duetime,guarantyName);
         cinfoList.add(cinfo);
     }
 
