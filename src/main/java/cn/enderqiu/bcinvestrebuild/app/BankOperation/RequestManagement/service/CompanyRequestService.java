@@ -63,8 +63,8 @@ public class CompanyRequestService extends BaseService{
         return maxPageVO;
     }
     public ReturnVO repay(int guarantyId){
-        //int isSuccess = 1;
-        int isSuccess = ccGuarantyChainInerface.updateState(guarantyId,4);
+        int isSuccess = 1;
+        //int isSuccess = ccGuarantyChainInerface.updateState(guarantyId,4);
         if(isSuccess>0){
             Date curdate = new Date(new java.util.Date().getTime());
             String sqlSentence = "SELECT startDate,duration FROM protocol WHERE guarantyId = "+guarantyId+";";
