@@ -13,7 +13,6 @@ public class CollectExecutive extends BaseService {
 
     public int execute() {
         synchronized (LockInstances.tempblocks.get(dto.getType().toString())) {
-
         }
         return 0;
     }
