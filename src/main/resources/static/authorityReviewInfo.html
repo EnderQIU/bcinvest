@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/company_authority.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/JQuery.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                $.get("/Authorization/reviewInfo/getComoanyInfo",
+                    {
+                        user_id_token:"12345"
+                    },
+                    function(){
+
+                    });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="content_container">
+<div>
+    <table style="width :100%;">
+        <tbody>
+        <tr>
+            <td class="table_head">
+                申请企业
+            </td>
+            <td class="table_head">
+                电话
+            </td>
+            <td class="table_head">
+                email
+            </td>
+            <td class="table_head">
+                信用值
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button>mm</button>
+</div>
+</div>
+</body>
+</html>
