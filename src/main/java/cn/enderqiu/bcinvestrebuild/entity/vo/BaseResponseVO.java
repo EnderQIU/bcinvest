@@ -9,10 +9,11 @@ public class BaseResponseVO {
     @ApiModelProperty("信息")
     private String message = "ok";
 
-    BaseResponseVO(String message){
+    public BaseResponseVO(String message){
         setMessage(message);
     }
-    BaseResponseVO() {}
+
+    public BaseResponseVO() {}
 
     public String getMessage() {
         return message;

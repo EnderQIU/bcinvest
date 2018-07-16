@@ -53,8 +53,8 @@ public class creditInfoController extends BaseController {
                     dataType = "int"
             )
     })
-    List<creditInfoVO> creditInfoToPages(String companyID, int page) {
-        return creditInfoService.getCompanyCredit2Pages(companyID, page);
+    List<creditInfoVO> creditInfoToPages(int page) {
+        return creditInfoService.getCompanyCredit2Pages(getCompanyUserDTO().getToken(), page);
     }
 
 
