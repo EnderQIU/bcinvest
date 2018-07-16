@@ -200,6 +200,7 @@ CREATE TABLE `Guaranty` (
   `Type` int(11) DEFAULT '0',
   `EvaluateValue` int(11) DEFAULT NULL,
   `Name` varchar(128) DEFAULT NULL,
+  `Lock` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`GuarantyId`),
   KEY `guaranty_fk_company` (`AccountNum`),
   KEY `guaranty_fk_report` (`ReportId`),
@@ -420,3 +421,13 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2018-07-14 19:49:27
+
+CREATE TABLE `GuarantyStateUpdateTask` (
+  `taskId` int(11) NOT NULL AUTO_INCREMENT,
+  `guarantyId` int(11) DEFAULT NULL,
+  `previousState` int(11) DEFAULT NULL,
+  `stateWillUpdateTo` int(11) DEFAULT NULL,
+  `taskState` varchar(128) DEFAULT NULL,
+  `count` int(11) DEFAULT '0',
+  PRIMARY KEY (`taskId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
