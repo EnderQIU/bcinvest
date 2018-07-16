@@ -1,0 +1,768 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>企业中心</title>
+        <script type="text/javascript" src="js/company_authority.js"></script>
+        <script type="text/javascript" src="js/vue.js"></script>
+        <script type="text/javascript" src="js/JQuery.js"></script>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                min-width: 600px;
+            }
+            #actual_body {
+                width: 100%;
+                height: 100%;
+            }
+            .head_bar {
+                width: 100%;
+                height: 80px;
+                float: left;
+                border: 1px solid red;
+            }
+            .head_bar .title {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                font-family:'Courier New', Courier, monospace;
+                font-size: 200%;
+                line-height: 250%;
+                margin: 0;
+                padding: 0;
+            }
+            .head_bar .right_button {
+                margin: 0;
+                padding: 0;
+                right: 30px;
+                float: right;
+                position: relative;
+                top: 50%;
+                transform: translateY(-52%);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .head_bar .company_name {
+                padding-right: 24px;
+                font-size: 18px;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            .head_bar .log_out {
+                text-decoration: none;
+                font-size: 18px;
+                padding: 6px 16px 8px 16px;
+                border: 1px solid black;
+                border-radius: 50px;
+                color: black;
+            }
+            .main_body {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+            }
+            .list_container {
+                float: left;
+                border-right: 1px solid black;
+            }
+            .list_container .list_content {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .list_container .list_item {
+                padding: 10px 20px 10px 20px;
+                margin: 0 0 6px 0;
+                cursor: pointer;
+            }
+            .list_container .item_selected {
+                background-color: #CCCCCC;
+            }
+            .content_container {
+                float: left;
+                padding: 20px;
+                flex-grow: 1;
+            }
+            .content_container .apply_mortgage_type_choice_label {
+                font-size: 24px;
+                margin-right: 21px;
+            }
+            .content_container .apply_mortgage_type_choice {
+                width: 200px;
+                height: 36px;
+                line-height: 100%;
+                border-radius: 4px;
+                padding-left: 6px;
+                font-size: 21px;
+            }
+            .apply_mortgage_outer_ul {
+                list-style: none;
+                margin: 0;
+            }
+            .apply_mortgage_outer_ul .apply_mortgage_li {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .table_head {
+                text-align: center;
+            }
+            .table_cell {
+                text-align: center;
+            }
+            .popup_window_container {
+                z-index: 10; 
+                width: 100%; 
+                height: 100%; 
+                position: absolute;
+                top: 0; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                background: rgba(204, 204, 204, 0.8)
+            }
+            .popup_window_container .popup_window_conten_container {
+                position:relative; 
+                width: 40%; 
+                height: 40%; 
+                background: rgba(204, 204, 204, 0.9); 
+                border: 1px #CCCCCC solid; 
+                border-radius: 12px;
+            }
+            .page_change_container {
+                text-align: center;
+            }
+            .page_change_container .page_change {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            .page_change_container .current_page {
+                color: darkorange;
+            }
+            .message_box {
+                border: 1px solid #EEEEEE;
+                width: 100%;
+                margin-bottom: 16px;
+            }
+        </style>
+        <script>
+            function isEmptyValue(value) {
+                if (value === null) {
+                    return true;
+                }
+                var type = typeof(value);
+                switch (type) {
+                    case 'number':
+                        return isNaN(value);
+                    case 'function':
+                        return false;
+                    case 'object':
+                        for (var key in value) {
+                            return false;
+                        }
+                        return true;
+                    case 'string':
+                        if (value.length > 0) {
+                            return false;
+                        }
+                        return true;
+                    case 'boolean':
+                        return false;
+                    case 'undefined':
+                        return true;
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div id="actual_body">
+            <div class="head_bar">
+                <h1 class="title">企业中心</h1>
+                 <div class="right_button">
+                    <label class="company_name">武汉大学公司</label>
+                    <a href="" class="log_out">
+                        登出
+                    </a>
+                </div>
+            </div>
+            <div class="main_body">
+                <div class="list_container">
+                    <ul class="list_content">
+                        <li class="list_item" v-for="(item, i) in list_items" v-on:click="select_item(i)" v-bind:class="[list_selected_index == i ? list_selected_class : '']">{{ list_data[item].label }}</li>
+                    </ul>
+                </div>
+                <div class="content_container">
+                    <div v-if="list_selected_index == 0">
+                        <ul class="apply_mortgage_outer_ul">
+                            <li class="apply_mortgage_li">
+                                <label class="apply_mortgage_type_choice_label">选择抵押物类型</label>
+                                <select class="apply_mortgage_type_choice" v-model="list_data.apply_mortgage.type">
+                                    <option v-for="item in list_data.apply_mortgage.type_choice">{{ item }}</option>
+                                </select>
+                            </li>
+                            <template v-if="apply_mortgage_choosed">
+                                <li class="apply_mortgage_li" v-for='item in list_data.apply_mortgage.inputs[list_data.apply_mortgage.type].input_name'>
+                                    <label class="apply_mortgage_type_choice_label">{{ list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].label }}</label>
+                                    <input v-if="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].type == 'text_input'" v-model="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].bindData"/>
+                                    <select v-else-if="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].type == 'select_input'" v-model="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].bindData">
+                                        <option v-for="item in list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].choices">{{ item }}</option>
+                                    </select>
+                                </li>
+                                <button v-on:click="apply_submit_click">确认提交</button>
+                            </template>
+                        </ul>
+                    </div>
+                    <div v-else-if="list_selected_index == 1" style="width: 100%">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td class="table_head">抵押物名称</td>
+                                <td class="table_head">状态</td>
+                                <td class="table_head">估值</td>
+                                <td class="table_head">操作</td>
+                            </tr>
+                            <tr v-for="item in company_mortgage">
+                                <td class="table_cell">{{ item.name }}</td>
+                                <td class="table_cell">{{ item.state }}</td>
+                                <td class="table_cell">{{ item.evaluateValue }}</td>
+                                <td class="table_cell">
+                                    <label v-on:click="unconfirmed_to_confirmed_click(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
+                                    <label v-on:click="unconfirmed_to_giveup_click(item)" style="cursor: pointer; text-decoration: underline;">放弃</label>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="page_change_container" v-if="max_page > 0">
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
+                            <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
+                            <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                            <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                            <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                            <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                            <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                            <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+                        </div>
+                        <div class="page_change_container" v-else>
+                            无
+                        </div>
+                    </div>
+                    <div v-else-if="list_selected_index == 2">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td class="table_head">抵押物名称</td>
+                                <td class="table_head">状态</td>
+                                <td class="table_head">估值</td>
+                            </tr>
+                            <tr v-for="item in company_mortgage">
+                                <td class="table_cell">{{ item.name }}</td>
+                                <td class="table_cell">{{ item.state }}</td>
+                                <td class="table_cell">{{ item.evaluateValue }}</td>
+                            </tr>
+                        </table>
+                        <div class="page_change_container" v-if="max_page > 0">
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
+                            <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
+                            <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                            <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                            <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                            <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                            <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                            <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+                        </div>
+                        <div class="page_change_container" v-else>
+                            无
+                        </div>
+                    </div>
+                    <div v-else-if="list_selected_index == 3">
+                        third
+                    </div>
+                    <div v-else-if="list_selected_index == 4">
+                        <div>
+                            <select v-model="manage_choosed_state">
+                                <option v-for="item in states_word">{{ item }}</option>
+                            </select>
+                        </div>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td class="table_head">抵押物名称</td>
+                                <td class="table_head">状态</td>
+                                <td class="table_head">估值</td>
+                            </tr>
+                            <tr v-for="item in company_mortgage">
+                                <td class="table_cell">{{ item.name }}</td>
+                                <td class="table_cell">{{ item.state }}</td>
+                                <td class="table_cell">{{ item.evaluateValue }}</td>
+                            </tr>
+                        </table>
+                        <div class="page_change_container" v-if="max_page > 0">
+                            <label v-if="current_page > 0" class="page_change">首页</label>
+                            <label v-if="current_page > 0" class="page_change">上一页</label>
+                            <label v-if="current_page > 2" class="page_change">{{ current_page - 2 }}</label>
+                            <label v-if="current_page > 1" class="page_change">{{ current_page - 1 }}</label>
+                            <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                            <label v-if="current_page < max_page" class="page_change">{{ current_page + 1 }}</label>
+                            <label v-if="current_page + 1 < max_page" class="page_change">{{ current_page + 2 }}</label>
+                            <label v-if="current_page > 0" class="page_change">下一页</label>
+                            <label v-if="current_page > 0" class="page_change">尾页</label>
+                        </div>
+                        <div class="page_change_container" v-else>
+                            无
+                        </div>
+                    </div>
+                    <div v-else-if="list_selected_index == 5">
+                        1235
+                    </div>
+                    <div v-else-if="list_selected_index == 6">
+                        1236
+                    </div>
+                    <div v-else-if="list_selected_index == 7">
+                        <div v-fo="item in message" class="message_box">
+                            {{ item.fromUserNum }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup_window_container" v-if="unconfirmed_to_confirmed_box_show">
+                <div class="popup_window_conten_container">
+                    <div style="position: relative; padding: 20px;">
+                        名称:{{ choosed_item.name }}<br />
+                        状态:&nbsp;&nbsp;待确认&nbsp;->确认
+                    </div>
+                    <div style="position: absolute; padding: 20px; bottom: 0; width: 100%;">
+                        <button style="float: left;" v-on:click="unconfirmed_to_confirmed_box_sure">确定</button>
+                        <button style="float: right;"  v-on:click="unconfirmed_to_confirmed_box_cancle">取消</button>
+                    </div>
+                </div>
+            </div>
+            <div class="popup_window_container" v-else-if="unconfirmed_to_give_up_box_show">
+                <div class="popup_window_conten_container">
+                    <div style="position: relative; padding: 20px;">
+                        名称:{{ choosed_item.name }}<br />
+                        状态:&nbsp;&nbsp;待确认&nbsp;->放弃
+                    </div>
+                    <div style="position: absolute; padding: 20px; bottom: 0; width: 100%;">
+                        <button style="float: left;" v-on:click="unconfirmed_to_give_up_box_sure">确定</button>
+                        <button style="float: right;"  v-on:click="unconfirmed_to_give_up_box_cancle">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function createTextInput(label, need, placeholder) {
+                this.type = "text_input";
+                this.label = label;
+                this.need = need;
+                this.placeholder = placeholder;
+                this.bindData = ""
+            }
+            function createSelectInput(label, need, choices) {
+                this.type = "select_input";
+                this.label = label
+                this.need = need;
+                this.choices = choices;
+                this.bindData = choices[0];
+            }
+            var whole_company = new Vue({
+                el: "#actual_body",
+                data: {
+                    'list_items': ['apply_mortgage', 'watch_uncomfirmed_mortgage', 'watch_checking_mortgage', 'manage_company_info', 'manage_mortgage', 'watch_loan_state', 'watch_credit_record', 'watch_message'],
+                    'list_data': {
+                        'apply_mortgage': {
+                            label: "申请抵押",
+                            type: "",
+                            type_choice: ['房产', '机器', '土地'],
+                            inputs: {
+                                '房产': {
+                                    'input_name': ['addr', 'zip', 'housingCertificatedId', 'area', 'scopeOfRight', 'ownerName'],
+                                    'addr': new createTextInput("地址", true, ''),
+                                    'zip': new createTextInput("邮编", false, ''),
+                                    'housingCertificatedId': new createTextInput("房产证编号", true, ''),
+                                    'area': new createTextInput("面积", true, ''),
+                                    'scopeOfRight': new createSelectInput("权力范围", true, ['整体', '部分']),
+                                    'ownerName': new createTextInput("所有者名称", true, ''),
+                                },
+                                '机器': {
+                                    'input_name': ['usedDays', 'name', 'model', 'producer', 'scopeOfRight', 'ownerName'],
+                                    'usedDays': new createTextInput("使用天数", true, ''),
+                                    'name': new createTextInput("名称", true, ''),
+                                    'model': new createTextInput("型号", true, ''),
+                                    'producer': new createTextInput("生产商", true, ''),
+                                    'scopeOfRight': new createSelectInput("权力范围", true, ['整体', '部分']),
+                                    'ownerName': new createTextInput("所有者名称", true, ''),
+                                },
+                                '土地': {
+                                    'input_name': ['addr', 'area', 'name', 'scopeOfRight', 'ownerName'],
+                                    'addr': new createTextInput("地址", true, ''),
+                                    'area': new createTextInput("面积", true, ''),
+                                    'name': new createTextInput("名称", true, ''),
+                                    'scopeOfRight': new createSelectInput("权力范围", true, ['整体', '部分']),
+                                    'ownerName': new createTextInput("所有者名称", true, ''),
+                                }
+                            }
+                        },
+                        'watch_uncomfirmed_mortgage': {
+                            label: "查看待确认抵押物",
+                        },
+                        'watch_checking_mortgage': {
+                            label: "查看审核中抵押物",
+                        },
+                        'manage_company_info': {
+                            label: "管理企业资料",
+                        },
+                        'manage_mortgage': {
+                            label: "抵押物管理",
+                        },
+                        'watch_loan_state': {
+                            label: "查看贷款状态(查看已抵押物品)",
+                        },
+                        'watch_credit_record': {
+                            label: "查看信用记录",
+                        },
+                        'watch_message': {
+                            label: "查看信息",
+                        }
+                    },
+                    'list_selected_class': 'item_selected',
+                    'list_selected_index': -1,
+                    'choosed_item': null,
+
+
+                    'company_mortgage': [
+                    ],
+                    'current_page': -1,
+                    'max_page': -1,
+
+                    'state_number_to_string': {
+                        '0': 'evaluating',
+                        '1': 'unqualified',
+                        '2': 'TBC',
+                        '3': 'onBC',
+                        '4': 'applying',
+                        '5': 'mortgaging',
+                        '6': 'overdue',
+                    },
+                    'current_states': [],
+                    'states_word': ['所有', '鉴定中', '不合格', '合格', '待确认', '可抵押', '申请抵押中', '申请已通过', '申请还款中', '逾期'],
+                    'states_word_to_array': {
+                        '所有': [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                        '鉴定中': [0],
+                        '不合格': [1],
+                        '合格': [2],
+                        '待确认': [3],
+                        '可抵押': [4],
+                        '申请抵押中': [5],
+                        '申请已通过': [6],
+                        '申请还款中': [7],
+                        '逾期': [8],
+                    },
+                    'message':[],
+                    // 'operations': {
+                    //     '待确认': [
+                    //         {
+                    //             name: '确认',
+                    //             function_name: 'unconfirmed_to_confirmed_click(item)'
+                    //         }
+                    //     ]
+                    // },
+                    'unconfirmed_to_confirmed_box_show': false,
+                    'unconfirmed_to_give_up_box_show': false,
+                    'manage_choosed_state': [],
+                },
+                computed: {
+                    apply_mortgage_choosed: function() {
+                        if (this.list_data.apply_mortgage.type != null && this.list_data.apply_mortgage.type != '') {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                },
+                methods: {
+                    get_states_parameter_string() {
+                        var query_para = '';
+                        for (var i = 0; i < this.current_states.length; i++) {
+                            if (i > 0) {
+                                query_para = query_para + '&'
+                            }
+                            query_para = query_para + 'states=' + this.current_states[i].toString();
+                        }
+                        return query_para;
+                    },
+                    abandon_guaranty() {
+                        var result = null;
+                        var query_para = '?guarantyId=' + this.choosed_item.guarantyId.toString();
+                        $.ajax({
+                            'url': '/user/guaranty/abandon' + query_para,
+                            'type': 'POST',
+                            'data': {
+                                '_method': 'DELETE',
+                            },
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            }
+                        });
+                        return result;
+                    },
+                    get_guaranty(page, states) {
+                        var query_para = '?' + this.get_states_parameter_string() + "&page=" + page.toString();
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/guaranty/guaranties' + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            }
+                        });
+                        return result;
+                    },
+                    get_max_page(states) {
+                        var query_para = '?' + this.get_states_parameter_string();
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/guaranty/maxPage' + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                        });
+                        return result;
+                    },
+                    to_be_comfirmed() {
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/guaranty/toBC',
+                            'type': 'POST',
+                            'data': {
+                                '_method': 'PUT',
+                                'states': states,
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            }
+                        });
+                        return result;
+                    },
+                    aimed_page(page) {
+                        // var guaranties = this.get_guaranty(page, this.current_states);
+                        //模拟用
+                        var guaranties = [
+                                        {
+                                            "accountNum": "1",
+                                            "evaluateValue": 1233124,
+                                            "guarantyId": 0,
+                                            "name": "string",
+                                            "ownerName": "string",
+                                            "reportId": 0,
+                                            "scopeOfRight": 0,
+                                            "state": 2,
+                                            "type": 2,
+                                        }
+                                    ];
+                        if (!isEmptyValue(guaranties)) {
+                            this.current_page = page;
+                            this.company_mortgage = guaranties;
+                        }
+                    },
+                    get_message() {
+                        var result = null;
+                        $.ajax({
+                            'url': '/message/',
+                            'type': 'GET',
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            }
+                        });
+                        return result;
+                    },
+                    select_item: function(index) {
+                        this.list_selected_index = -1;
+                        this.company_mortgage = [];
+                        this.current_page = -1;
+                        this.max_page = -1;
+                        this.list_selected_index = index;
+                        switch (this.list_items[index]) {
+                            case 'apply_mortgage':
+                                break;
+                            case 'watch_uncomfirmed_mortgage':
+                                this.current_states = [2];
+                                var max_page_data = this.get_max_page(this.current_states);
+                                if (!isEmptyValue(max_page_data) && max_page_data.maxPage > 0) {
+                                    this.max_page = max_page_data.maxPage;
+                                    var guaranties = this.get_guaranty(1, this.current_states);
+                                    this.current_page = 1;
+                                    this.company_mortgage = guaranties;
+                                }
+                                break;
+                            case 'watch_checking_mortgage':
+                                this.current_states = [0];
+                                var max_page_data = this.get_max_page(this.current_states);
+                                if (!isEmptyValue(max_page_data) && max_page_data.maxPage > 0) {
+                                    this.max_page = max_page_data.maxPage;
+                                    var guaranties = this.get_guaranty(1, this.current_states);
+                                    this.current_page = 1;
+                                    this.company_mortgage = guaranties;
+                                }
+                                break;
+                            case 'manage_mortgage':
+                                break;
+                            case 'watch_message':
+                                var tempMessage = this.get_message();
+                                this.message = tempMessage;
+                                break;
+                        }
+                    },
+                    submit_guaranty: function() {
+                        var result = null;
+                        var url = null;
+                        switch (this.list_data.apply_mortgage.type) {
+                            case '房产':
+                                url = '/user/guaranty/applyHouseEvaluation'
+                                break;
+                            case '土地':
+                                url = '/user/guaranty/applyLandEvaluation'
+                                break;
+                            case '机器':
+                                url = '/user/guaranty/applyMachineEvaluation'
+                                break;
+                        }
+                        var formData = new Object();
+                        var keys = this.list_data.apply_mortgage.inputs[this.list_data.apply_mortgage.type].input_name;
+                        for (var i = 0; i < keys.length; i++) {
+                            if (keys[i] == 'scopeOfRight') {
+                                switch (this.list_data.apply_mortgage.inputs[this.list_data.apply_mortgage.type][keys[i]].bindData) {
+                                    case '部分':
+                                        formData[keys[i]] = 0;
+                                        break;
+                                    case '整体':
+                                        formData[keys[i]] = 1;
+                                        break;
+                                }
+                            } else {
+                                formData[keys[i]] = this.list_data.apply_mortgage.inputs[this.list_data.apply_mortgage.type][keys[i]].bindData;
+                            }
+                        }
+                        var result = null;
+                        $.ajax({
+                            'url': url,
+                            'type': 'POST',
+                            'async': false,
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            'data': formData,
+                            'success': function (data) {
+                                result = data;
+                            }
+                        });
+                        return result;
+                    },
+                    apply_submit_click: function() {
+                        var result = this.submit_guaranty();
+                        if (result == 1) {
+                            alert('成功');
+                        }
+                        this.select_item(this.list_items.indexOf('watch_checking_mortgage'));
+                    },
+                    unconfirmed_to_confirmed_click: function(item) {
+                        this.choosed_item = item;
+                        this.unconfirmed_to_confirmed_box_show = true;
+                    },
+                    unconfirmed_to_confirmed_box_cancle: function() {
+                        this.choosed_item = null;
+                        this.unconfirmed_to_confirmed_box_show = false;
+                    },
+                    unconfirmed_to_confirmed_box_sure: function() {
+                        var returnData = this.to_be_comfirmed();
+                        var tempGuaranty = this.get_guaranty(this.current_page, this.current_states);
+                        //模拟用
+                        var tempGuaranty = [
+                            {
+                                "accountNum": "1",
+                                "evaluateValue": 120000,
+                                "guarantyId": 1,
+                                "name": "string",
+                                "ownerName": "string",
+                                "reportId": 0,
+                                "scopeOfRight": 0,
+                                "state": 2,
+                                "type": 2,
+                            }
+                        ]
+                        this.company_mortgage = tempGuaranty;
+                        this.select_item = null;
+                        this.unconfirmed_to_confirmed_box_show = false;
+                    },
+                    unconfirmed_to_giveup_click: function(item) {
+                        this.choosed_item = item;
+                        this.unconfirmed_to_give_up_box_show = true;
+                    },
+                    unconfirmed_to_give_up_box_sure: function() {
+                        // var returnData = this.abandon_guaranty();
+                        //模拟用
+                        var returnData = 1;
+                        if (returnData == 1) {
+                            alert(this.choosed_item.guarantyId); 
+                            this.choosed_item = null;
+                        }
+                        // var tempGuaranty = this.get_guaranty(this.current_page, this.current_states);
+                        //模拟用
+                        var tempGuaranty = [];
+                        this.company_mortgage = tempGuaranty;
+                        this.unconfirmed_to_give_up_box_show = false;
+                    },
+                    unconfirmed_to_give_up_box_cancle: function() {
+                        this.choosed_item = null;
+                        this.unconfirmed_to_give_up_box_show = false;
+                    }
+                },
+                watch: {
+                    manage_choosed_state: function (newValue, oldValue) {
+                        this.current_states = this.states_word_to_array[newValue];
+                        var max_page_data = this.get_max_page(this.current_states);
+                        if (!isEmptyValue(max_page_data) && max_page_data.maxPage > 0) {
+                            this.max_page = max_page_data.maxPage;
+                            var guaranties = this.get_guaranty(1, this.current_states);
+                            this.current_page = 1;
+                            this.company_mortgage = guaranties;
+                        } else {
+                            this.company_mortgage = [];
+                        }
+                    }
+                },
+            });
+        </script>
+    </body>
+</html>
