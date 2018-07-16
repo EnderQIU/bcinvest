@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/bank/infoManagement")
+@RequestMapping("/bank/infoManagement/company")
 @Api("银行业务－信息管理")
 @RequiredPermissions("bank")
 public class CompanyInfoController extends BaseController {

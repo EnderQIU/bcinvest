@@ -4,8 +4,6 @@ import cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.CompanyInfoManagement.
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.mapper.Mapper;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
-import cn.ssyram.blockchain.interfaces.EvanGuarantyChainInterface;
-import com.sun.tools.corba.se.idl.StringGen;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Max;
@@ -138,17 +136,17 @@ public class CompanyInfoService extends BaseService {
         List<CompanyCreditInfoVO> voList = new ArrayList<>();
 
         for(Map<String, Object> map : list) {
-            String query = (String)map.get("GuarantyId");
-            query = "SELECT Name, OwnerName " +
+            int guaId = (int)map.get("GuarantyId");
+            String query = "SELECT Name, OwnerName " +
                     "FROM Guaranty " +
-                    "WHERE GuarantyId = "+query+" ";
+                    "WHERE GuarantyId = "+guaId+" ";
             List<Map<String, Object>> guaList = mapper.SELECT(query);
 
             CompanyCreditInfoVO vo = new CompanyCreditInfoVO();
             vo.setGuarantyId((int)map.get("GuarantyId"));
             vo.setGuarantyName((String)guaList.get(0).get("Name"));
             vo.setOwnerName((String)guaList.get(0).get("OwnerName"));
-            vo.setType((int)map.get("Type"));
+            vo.setType((boolean)map.get("Type"));
 
             voList.add(vo);
         }
@@ -179,7 +177,7 @@ public class CompanyInfoService extends BaseService {
 
         String sql = "SELECT GuarantyId, ScopeOfRight, OwnerName, EvaluateValue, Name, State " +
                      "FROM Guaranty " +
-                     "WHERE AccountNum = \'"+currentPage+"\' " +
+                     "WHERE AccountNum = \'"+accountNum+"\' " +
                      "LIMIT "+startIndex+", "+ITEM_PER_PAGE;
 
         List<Map<String, Object>> list = mapper.SELECT(sql);

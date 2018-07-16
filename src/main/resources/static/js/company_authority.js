@@ -47,7 +47,7 @@ function requestCompanyStatusTokenCallBack(data) {
 // }
 window.requestCompanyStatusTokenCallBack({
     'status': 'passed',
-    'user_id_token': 'testToken',
+    'user_id_token': '34234',
 });
 // $.ajax({
 //     url: "/user/company/status",

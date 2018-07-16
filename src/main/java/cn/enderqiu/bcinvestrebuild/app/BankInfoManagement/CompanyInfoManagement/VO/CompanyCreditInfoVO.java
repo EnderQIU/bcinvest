@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 
 @ApiModel
-public class CompanyCreditInfoVO extends BaseResponseVO {
+public class CompanyCreditInfoVO {
     @ApiModelProperty(value = "抵押物id", required = true)
     private int guarantyId;
     @ApiModelProperty(value = "抵押物名称", required = true)
@@ -51,15 +51,10 @@ public class CompanyCreditInfoVO extends BaseResponseVO {
         this.ownerName = ownerName;
     }
 
-    public void setType(int type) {
-        switch (type) {
-            case 0:
-                this.type = "失约";
-                break;
-
-            case 1:
-                this.type = "守约";
-                break;
-        }
+    public void setType(boolean type) {
+        if(type)
+            this.type = "守约";
+        else
+            this.type = "失约";
     }
 }

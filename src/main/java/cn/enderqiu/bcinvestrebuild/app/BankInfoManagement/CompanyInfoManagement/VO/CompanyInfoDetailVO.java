@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 
 @ApiModel
-public class CompanyInfoDetailVO extends BaseResponseVO {
+public class CompanyInfoDetailVO {
     @ApiModelProperty(value = "公司账号", required = true)
     private String companyAccountNum;
     @ApiModelProperty(value = "公司名", required = true)
