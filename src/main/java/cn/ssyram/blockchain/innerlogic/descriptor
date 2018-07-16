@@ -15,6 +15,7 @@ Entity是负责区块链的存在实体类的描述。
     标记id id String
     变化量 Variation String
     最终值 Value String
+    出矿地址 Address String
     备注 Remarks String
 包含内容：
     区块：描述一个区块本身的内容，第一次new完成以后就不允许再修改
@@ -30,6 +31,7 @@ Entity是负责区块链的存在实体类的描述。
         标记id id String
         变化量 Variation String
         最终值 Value String
+        出矿地址 Address String
         备注 Remarks String
     区块链：描述区块链的内容，本质上就是 将数据库模型区块链化 的一个抽象操作类模型
         区块类型 type ChainType //本质上用于区别用哪一套数据库
