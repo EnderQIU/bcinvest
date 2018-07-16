@@ -4,6 +4,7 @@ import cn.enderqiu.bcinvestrebuild.app.BankOperation.RequestManagement.entity.vo
 import cn.enderqiu.bcinvestrebuild.app.BankOperation.RequestManagement.service.AuthorityRequestService;
 import cn.enderqiu.bcinvestrebuild.app.BankOperation.RequestManagement.service.CompanyRequestService;
 import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.*;
+import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.service.GuarantyManagementService;
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
 import cn.enderqiu.bcinvestrebuild.entity.vo.CompanyUserVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
@@ -26,70 +27,58 @@ import java.util.List;
 public class AuthorityRequestController extends BaseController{
     @Autowired
     private AuthorityRequestService service;
-    @RequestMapping(value = "/guaranties", method = RequestMethod.GET)
+    private GuarantyManagementService guarantyManagementService;
+    @RequestMapping(value = "/companies", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
                     required = true,  dataType = "int"),
     })
-    List<CompanyVO> getCompanies(int page, int[] states) {
+    List<CompanyVO> getCompanies(int page, String[] states) {
         List<CompanyVO> all = new ArrayList<>();
-        for(int state:states){
+        for(String state:states){
             List<CompanyVO> companies = service.findCompaniesByState(state,page);
             all.addAll(companies);
         }
         return all; }
     @RequestMapping(value = "/maxPage", method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
-                    required = true,  dataType = "String"),
     })
-    MaxPageVO getMaxPage(int[] states) {
+    MaxPageVO getMaxPage(String[] states) {
         return service.findMaxPage(states); }
 
-    @RequestMapping(value = "/repay", method = RequestMethod.PUT)
+    @RequestMapping(value = "/approve", method = RequestMethod.PUT)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "accountNum", value = "企业唯一标识符",
+                    required = true,  dataType = "int"),
+    })
+    ReturnVO approveApplication(String accountNum) {
+        return service.changeCompanyState(accountNum,"passed");
+    }
+    @RequestMapping(value = "/reject", method = RequestMethod.PUT)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "accountNum", value = "企业唯一标识符",
+                    required = true,  dataType = "int"),
+    })
+    ReturnVO rejectApplication(String accountNum) {
+        return service.changeCompanyState(accountNum,"unpassed");
+    }
+
+    @RequestMapping(value = "/companyDetail", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "accounNum", value = "企业唯一标识符",
+                    required = true,  dataType = "int"),
+    })
+    CompanyVO getCompanyDetail(String accounNum) {
+        return service.findCompany(accounNum);
+    }
+
+    @RequestMapping(value = "/toTBCList", method = RequestMethod.PUT)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
     })
-    int repay(int guarantyId) {
-        return service.repay(guarantyId);
-    }
-    @RequestMapping(value = "/mortgage", method = RequestMethod.PUT)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "int"),
-            @ApiImplicitParam(paramType = "form", name = "duration", value = "过期期限（单位：天）",
-                    required = true,  dataType = "int"),
-    })
-    int mortgage(int guarantyId,int duration) {
-        return service.mortgage(guarantyId,duration);
-    }
-
-    @RequestMapping(value = "/houseDetail", method = RequestMethod.GET)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "int"),
-    })
-    HouseVO getHouseDetail(int guarantyId) {
-        return service.findHouse(guarantyId);
-    }
-
-    @RequestMapping(value = "/landDetail", method = RequestMethod.GET)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "int"),
-    })
-    LandVO getLandDetail(int guarantyId) {
-        return service.findLand(guarantyId);
-    }
-
-    @RequestMapping(value = "/machineDetail", method = RequestMethod.GET)
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
-                    required = true,  dataType = "int"),
-    })
-    MachineVO getMachineDetail(int guarantyId) {
-        return service.findMachine(guarantyId);
+    ReturnVO toTBCList(int guarantyId) {
+        return service.changeGuarantyState(guarantyId,3);
     }
 
 }

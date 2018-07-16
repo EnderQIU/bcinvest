@@ -49,7 +49,7 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
     })
-    int putGuarantyToBC(int guarantyId) {
+    ReturnVO putGuarantyToBC(int guarantyId) {
         return service.putGuarantyToBC(guarantyId);
     }
 
@@ -58,7 +58,7 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
     })
-    int downBC(int guarantyId) {
+    ReturnVO downBC(int guarantyId) {
         return service.deleteGuaranty(guarantyId);
     }
 
@@ -67,7 +67,7 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
     })
-    int abandonGuaranty(int guarantyId) {
+    ReturnVO abandonGuaranty(int guarantyId) {
         return service.deleteGuaranty(guarantyId);
     }
 
@@ -103,7 +103,7 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "query", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
     })
-    int reappraiseGuaranty(int guarantyId) {
+    ReturnVO reappraiseGuaranty(int guarantyId) {
         return service.deleteGuaranty(guarantyId);
     }
     @RequestMapping(value = "/applyHouseEvaluation", method = RequestMethod.POST)
@@ -123,7 +123,7 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "form", name = "ownerName", value = "所有者名称",
                     required = true,  dataType = "String"),
     })
-    int applyEvaluationForHouse(String user_id_token,String addr,String housingCertificatedId,String zip,String name,int scopeOfRight,String ownerName) {
+    ReturnVO applyEvaluationForHouse(String user_id_token,String addr,String housingCertificatedId,String zip,String name,int scopeOfRight,String ownerName) {
         HouseVO houseVO = new HouseVO();
         houseVO.setAddr(addr);
         houseVO.setHousingCertificatedId(housingCertificatedId);
@@ -150,7 +150,7 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "form", name = "ownerName", value = "所有者名称",
                     required = true,  dataType = "String"),
     })
-    int applyEvaluationForMachine(String user_id_token,int usedDays,String model,String producer,String name,int scopeOfRight,String ownerName) {
+    ReturnVO applyEvaluationForMachine(String user_id_token,int usedDays,String model,String producer,String name,int scopeOfRight,String ownerName) {
         MachineVO machineVO = new MachineVO();
         machineVO.setUsedDays(usedDays);
         machineVO.setModel(model);
@@ -175,7 +175,7 @@ public class GuarantyController extends BaseController{
             @ApiImplicitParam(paramType = "form", name = "ownerName", value = "所有者名称",
                     required = true,  dataType = "String"),
     })
-    int applyEvaluationForLand(String user_id_token,int area,String addr,String name,int scopeOfRight,String ownerName) {
+    ReturnVO applyEvaluationForLand(String user_id_token,int area,String addr,String name,int scopeOfRight,String ownerName) {
         LandVO landVO = new LandVO();
         landVO.setAddr(addr);
         landVO.setArea(area);

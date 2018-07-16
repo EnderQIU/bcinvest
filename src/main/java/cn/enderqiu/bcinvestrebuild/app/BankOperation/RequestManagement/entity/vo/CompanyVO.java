@@ -8,33 +8,33 @@ import java.sql.Date;
 @ApiModel
 public class CompanyVO {
     @ApiModelProperty(value = "用户唯一标识符" ,required = true)
-    private int accountNum;
+    private String accountNum;
     @ApiModelProperty(value = "公司名称" ,required = true)
-    private int name;
+    private String name;
     @ApiModelProperty(value = "电话号码" ,required = true)
-    private Date telNum;
+    private String telNum;
     @ApiModelProperty(value = "电子邮箱" ,required = true)
-    private int emailAddress;
+    private String emailAddress;
     @ApiModelProperty(value = "user_id_token" ,required = true)
-    private Date token;
+    private String token;
     @ApiModelProperty(value = "信用" ,required = true)
     private long credit;
     @ApiModelProperty(value = "状态" ,required = true)
     private String state;
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setAccountNum(int accountNum) {
+    public void setAccountNum(String accountNum) {
         this.accountNum = accountNum;
     }
 
-    public void setTelNum(Date telNum) {
+    public void setTelNum(String telNum) {
         this.telNum = telNum;
     }
 
-    public void setEmailAddress(int emailAddress) {
+    public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
@@ -42,27 +42,27 @@ public class CompanyVO {
         this.credit = credit;
     }
 
-    public void setToken(Date token) {
+    public void setToken(String token) {
         this.token = token;
     }
 
-    public Date getTelNum() {
+    public String getTelNum() {
         return telNum;
     }
 
-    public Date getToken() {
+    public String getToken() {
         return token;
     }
 
-    public int getAccountNum() {
+    public String getAccountNum() {
         return accountNum;
     }
 
-    public int getEmailAddress() {
+    public String getEmailAddress() {
         return emailAddress;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 

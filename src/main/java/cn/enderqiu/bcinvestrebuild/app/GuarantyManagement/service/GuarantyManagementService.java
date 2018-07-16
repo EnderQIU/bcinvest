@@ -14,25 +14,30 @@ import java.util.UUID;
 @Service
 public class GuarantyManagementService extends BaseService{
     CCGuarantyChainInerface ccGuarantyChainInerface = new CCGuarantyChainInterfaceImpl();
+    public ReturnVO intToReturnVO(int influence){
+        ReturnVO returnVO = new ReturnVO();
+        returnVO.setInfluence(influence);
+        return returnVO;
+    }
     public String TokenToAccountNum(String token){
         String sqlSentence = "SELECT accountNum FROM company WHERE token = '"+token+"';";
         List<Map<String,Object>> result = mapper.SELECT(sqlSentence);
         String accountNum = mapper.SELECT(sqlSentence).get(0).get("accountNum").toString();
         return accountNum;
     }
-    public int putGuarantyToBC(int guarantyId){
+    public ReturnVO putGuarantyToBC(int guarantyId){
         if(ccGuarantyChainInerface.insertGuaranty(guarantyId)>0){
             String sqlSentence = "UPDATE guaranty SET state = '3' WHERE guarantyId = "+guarantyId+";";
-            return mapper.UPDATE(sqlSentence);
+            return intToReturnVO(mapper.UPDATE(sqlSentence));
         }
-        return 0;
+        return intToReturnVO(0);
     }
-    public int deleteGuaranty(int guarantyId){
+    public ReturnVO deleteGuaranty(int guarantyId){
         if(ccGuarantyChainInerface.deleteGuaranty(guarantyId)>0){
             String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
-            return mapper.DELETE(sqlSentence);
+            return intToReturnVO(mapper.DELETE(sqlSentence));
         }
-        return 0;
+        return intToReturnVO(0);
     }
     public HouseVO findHouse(int guarantyId){
         String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
@@ -64,8 +69,8 @@ public class GuarantyManagementService extends BaseService{
         extract(machineVO,result2);
         return machineVO;
     }
-    public GuarantyVO findGuaranty(int guarantyId){
-        String sqlSentence = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
+    public GuarantyVO findGuarantyByCompany(String accountNum,int guarantyId){
+        String sqlSentence = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+" AND accountNum = '"+accountNum+"';";
         Map<String, Object> result = mapper.SELECT(sqlSentence).get(0);
         GuarantyVO guarantyVO = new GuarantyVO();
         extract(guarantyVO,result);
@@ -81,10 +86,10 @@ public class GuarantyManagementService extends BaseService{
             case 6:
             case 7:
             case 8:
-                List<Map<String,Object>> guarantyIdList = ccGuarantyChainInerface.queryGuarantyIdByCompany(accountNum,stateNum);
+                List<Map<String,Object>> guarantyIdList = ccGuarantyChainInerface.queryGuarantyIdByState(stateNum);
                 for(Map<String,Object> m:guarantyIdList){
                     int guarantyId = Integer.parseInt(m.get(0).toString());
-                    guaranties.add(findGuaranty(guarantyId));
+                    guaranties.add(findGuarantyByCompany(accountNum,guarantyId));
                 }
                 break;
             default:
@@ -113,7 +118,7 @@ public class GuarantyManagementService extends BaseService{
                 case 7:
                 case 8:
                     String accountNum = TokenToAccountNum(user_id_token);
-                    count+=ccGuarantyChainInerface.queryGuarantyIdByCompany(accountNum,stateNum).size();break;
+                    count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();break;
                 default:
                     count+=findGuarantiesCount(user_id_token,stateNum);
             }
@@ -133,23 +138,26 @@ public class GuarantyManagementService extends BaseService{
         int guarantyId = Integer.parseInt(mapper.SELECT("SELECT LAST_INSERT_ID();").get(0).get("LAST_INSERT_ID()").toString());
         return guarantyId;
     }
-    public int createHouse(String user_id_token,HouseVO houseVO){
+    public ReturnVO createHouse(String user_id_token,HouseVO houseVO){
         int guarantyId = createGuaranty(user_id_token,houseVO,0);
         String sqlSentence2 = "INSERT INTO house(Addr,Zip,HousingCertificatedId,GuarantyId) VALUES('"+
                 houseVO.getAddr()+"','"+houseVO.getZip()+"','"+houseVO.getHousingCertificatedId()+"',"+guarantyId+");";
-        return mapper.INSERT(sqlSentence2);
+        ReturnVO returnVO = intToReturnVO(mapper.INSERT(sqlSentence2));
+        return returnVO;
     }
-    public int createLand(String user_id_token,LandVO landVO){
+    public ReturnVO createLand(String user_id_token,LandVO landVO){
         int guarantyId = createGuaranty(user_id_token,landVO,1);
         String sqlSentence2 = "INSERT INTO land(Addr,Area,GuarantyId) VALUES('"+
                 landVO.getAddr()+"','"+landVO.getArea()+"',"+guarantyId+");";
-        return mapper.INSERT(sqlSentence2);
+        ReturnVO returnVO = intToReturnVO(mapper.INSERT(sqlSentence2));
+        return returnVO;
     }
-    public int createMachine(String user_id_token,MachineVO machineVO){
+    public ReturnVO createMachine(String user_id_token,MachineVO machineVO){
         int guarantyId = createGuaranty(user_id_token,machineVO,2);
         String sqlSentence2 = "INSERT INTO machine(UsedDays,Producer,Model,GuarantyId) VALUES("+
                 machineVO.getUsedDays()+",'"+machineVO.getProducer()+"','"+machineVO.getModel()+"',"+guarantyId+");";
-        return mapper.INSERT(sqlSentence2);
+        ReturnVO returnVO = intToReturnVO(mapper.INSERT(sqlSentence2));
+        return returnVO;
     }
 
 
