@@ -1,0 +1,48 @@
+内部业务逻辑的包。
+
+Dispatcher：分发者，负责具体外部接口的分发，参数类型只接受DTO。
+
+
+Entity是负责区块链的存在实体类的描述。
+规定 本单元处理的区块信息为：
+    区块类型：要加入的是哪条区块链
+    时间戳
+    块Hash
+    前块Hash
+    //链长等加入了以后再计算
+区块信息内容：
+    块Hash this_hash String
+    标记id id String
+    变化量 Variation String
+    最终值 Value String
+    出矿地址 Address String
+    备注 Remarks String
+包含内容：
+    区块：描述一个区块本身的内容，第一次new完成以后就不允许再修改
+        区块类型
+        时间戳
+        this_hash
+        previous_hash
+        dataList
+    计算区块（缓冲区块）：区块的一个子类，一个允许修改的区块，用于做缓存和便于挖矿
+        比区块多了raw_this_hash字段，便于直接挖矿
+    信息：描述一个区块内记录内容的信息，如上所述，本次处理的信息的内容是固定的
+        块Hash this_hash String
+        标记id id String
+        变化量 Variation String
+        最终值 Value String
+        出矿地址 Address String
+        备注 Remarks String
+    区块链：描述区块链的内容，本质上就是 将数据库模型区块链化 的一个抽象操作类模型
+        区块类型 type ChainType //本质上用于区别用哪一套数据库
+        //因为实际内容都在数据库，所以作为内存实体的 区块链类对象 就仅仅拥有一个标识用的ChainType
+Entity仅仅是一个描述实体本身的存在，不带对实体的操作。
+
+operator包
+负责具体的对Entity部分内容的操作
+都是静态方法，参数分别是各自实体的对象。
+
+uitls包
+要用的内部辅助类型和辅助函数，辅助对象
+辅助类型包括需要用到的类型
+辅助对象有锁对象

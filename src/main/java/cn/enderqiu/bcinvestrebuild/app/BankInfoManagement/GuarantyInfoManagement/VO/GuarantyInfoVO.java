@@ -1,55 +1,49 @@
-package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
+package cn.enderqiu.bcinvestrebuild.app.BankInfoManagement.GuarantyInfoManagement.VO;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Created by EvanChoo on 7/11/18.
+ * Created by EvanChoo on 7/13/18.
  */
+
 @ApiModel
-public class LoanVO {
-    /*
-     * GuarantyId-抵押物ID
-     * ScopeOfRight-权利范围
-     * OwnerName-所有人姓名
-     * EvaluateValue-抵押物估值／抵押值
-     * Name-抵押物名称
-     */
+public class GuarantyInfoVO {
     @ApiModelProperty(value = "抵押物ID", required = true)
-    private int guarantyId = -1;
+    private int guarantyId;
     @ApiModelProperty(value = "抵押物权力范围", required = true)
-    private String scopeOfRight = "null";
+    private String scopeOfRight;
     @ApiModelProperty(value = "抵押物所有者姓名", required = true)
-    private String ownerName = "null";
+    private String ownerName;
     @ApiModelProperty(value = "抵押物估值", required = true)
-    private int evaluateValue = -1;
+    private int evaluateValue;
     @ApiModelProperty(value = "抵押物名称", required = true)
-    private String name = "null";
+    private String name;
 
     //getters
     public int getGuarantyId()
     {
-        return this.guarantyId;
+        return guarantyId;
     }
 
     public String getScopeOfRight()
     {
-        return this.scopeOfRight;
+        return scopeOfRight;
     }
 
     public String getOwnerName()
     {
-        return this.ownerName;
+        return ownerName;
     }
 
     public int getEvaluateValue()
     {
-        return this.evaluateValue;
+        return evaluateValue;
     }
 
     public String getName()
     {
-        return this.name;
+        return name;
     }
 
     //setters

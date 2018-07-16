@@ -3293,7 +3293,7 @@
     } //end of $.fn.fullpage
 
 
-    //utils
+    //support
     /**
     * Shows a message in the console of the given type.
     */
@@ -3794,7 +3794,7 @@
         };
     }
 
-    //utils are public, so we can use it wherever we want
+    //support are public, so we can use it wherever we want
     window.fp_utils = {
         $: $,
         deepExtend: deepExtend,

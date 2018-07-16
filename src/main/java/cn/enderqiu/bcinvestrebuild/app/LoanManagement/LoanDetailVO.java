@@ -12,138 +12,142 @@ public class LoanDetailVO {
      *GuarantyId, g.AccountNum AS CompanyAccount, State, ScopeOfRight, OwnerName, g.ReportId AS ReportId, g.Type AS GuarantyType, EvaluateValue, g.Name AS GuarantyName, r.AccountNum AS AuthAccount, Date, Duration, a.Name AS AuthName
      */
     @ApiModelProperty(value = "抵押物ID", required = true)
-    private int GuarantyId;
+    private int guarantyId;
     @ApiModelProperty(value = "公司AccountNum", required = true)
-    private String CompanyAccount;
+    private String companyAccount;
     @ApiModelProperty(value = "抵押物状态", required = true)
-    private String State;
+    private String state;
     @ApiModelProperty(value = "权利范围", required = true)
-    private String ScopeOfRight;
+    private String scopeOfRight;
     @ApiModelProperty(value = "所有者名字", required = true)
-    private String OwnerName;
+    private String ownerName;
     @ApiModelProperty(value = "抵押物鉴定书ID", required = true)
-    private int ReportId;
+    private int reportId;
     @ApiModelProperty(value = "抵押物类型", required = true)
-    private String GuarantyType;
+    private String guarantyType;
     @ApiModelProperty(value = "抵押物估值", required = true)
-    private int EvaluateValue;
+    private int evaluateValue;
     @ApiModelProperty(value = "抵押物名称", required = true)
-    private String GuarantyName;
+    private String guarantyName;
     @ApiModelProperty(value = "鉴定机构AccountNum", required = true)
-    private String AuthAccount;
+    private String authAccount;
     @ApiModelProperty(value = "审核通过日期", required = true)
-    private String Date;
+    private String date;
     @ApiModelProperty(value = "审核有效期", required = true)
-    private String Duration;
+    private String duration;
     @ApiModelProperty(value = "鉴定机构名称", required = true)
-    private String AuthName;
+    private String authName;
 
     //getters
     public int getGuarantyId()
     {
-        return GuarantyId;
+        return this.guarantyId;
     }
 
     public String getCompanyAccount()
     {
-        return CompanyAccount;
+        return this.companyAccount;
     }
 
     public String getState()
     {
-        return State;
+        return this.state;
     }
 
     public String getScopeOfRight()
     {
-        return ScopeOfRight;
+        return this.scopeOfRight;
     }
 
     public String getOwnerName()
     {
-        return OwnerName;
+        return this.ownerName;
     }
 
     public int getReportId()
     {
-        return ReportId;
+        return this.reportId;
     }
 
     public String getGuarantyType()
     {
-        return GuarantyType;
+        return this.guarantyType;
     }
 
     public int getEvaluateValue()
     {
-        return EvaluateValue;
+        return this.evaluateValue;
     }
 
     public String getGuarantyName()
     {
-        return GuarantyName;
+        return this.guarantyName;
     }
 
     public String getAuthAccount()
     {
-        return AuthAccount;
+        return this.authAccount;
     }
 
     public String getDate()
     {
-        return Date;
+        return date;
     }
 
     public String getDuration()
     {
-        return Duration;
+        return this.duration;
     }
 
     public String getAuthName()
     {
-        return AuthName;
+        return this.authName;
     }
 
     //setters
     public void setGuarantyId(int guarantyId)
     {
-        GuarantyId = guarantyId;
+        this.guarantyId = guarantyId;
     }
 
     public void setCompanyAccount(String companyAccount)
     {
-        CompanyAccount = companyAccount;
+        this.companyAccount = companyAccount;
     }
 
     public void setState(int state)
     {
         switch (state) {
             case 0:
-                this.State = "审核中";
+                this.state = "审核中";
                 break;
 
             case 1:
-                this.State = "不合格";
+                this.state = "不合格";
                 break;
 
             case 2:
-                this.State = "待确认";
+                this.state = "合格";
                 break;
 
             case 3:
-                this.State = "可抵押";
+                this.state = "待确认";
                 break;
 
             case 4:
-                this.State = "已抵押未确认";
+                this.state = "可抵押";
                 break;
 
             case 5:
-                this.State = "已抵押已确认";
+                this.state = "申请抵押中";
                 break;
 
             case 6:
-                this.State = "贷款逾期";
+                this.state = "申请已通过";
+                break;
+
+            case 8:
+                this.state = "逾期";
                 break;
         }
     }
@@ -153,69 +157,69 @@ public class LoanDetailVO {
         switch (scopeOfRight)
         {
             case 0:
-                this.ScopeOfRight = "部分";
+                this.scopeOfRight = "部分";
                 break;
 
             case 1:
-                this.ScopeOfRight = "整体";
+                this.scopeOfRight = "整体";
                 break;
         }
     }
 
     public void setOwnerName(String ownerName)
     {
-        OwnerName = ownerName;
+        this.ownerName = ownerName;
     }
 
     public void setReportId(int reportId)
     {
-        ReportId = reportId;
+        this.reportId = reportId;
     }
 
     public void setGuarantyType(int guarantyType)
     {
         switch (guarantyType) {
             case 0:
-                this.GuarantyType = "房产";
+                this.guarantyType = "房产";
                 break;
 
             case 1:
-                this.GuarantyType = "土地";
+                this.guarantyType = "土地";
                 break;
 
             case 2:
-                this.GuarantyType = "机器";
+                this.guarantyType = "机器";
                 break;
         }
     }
 
     public void setEvaluateValue(int evaluateValue)
     {
-        EvaluateValue = evaluateValue;
+        this.evaluateValue = evaluateValue;
     }
 
     public void setGuarantyName(String guarantyName)
     {
-        GuarantyName = guarantyName;
+        this.guarantyName = guarantyName;
     }
 
     public void setAuthAccount(String authAccount)
     {
-        AuthAccount = authAccount;
+        this.authAccount = authAccount;
     }
 
     public void setDate(String date)
     {
-        Date = date;
+        this.date = date;
     }
 
     public void setDuration(String duration)
     {
-        Duration = duration;
+        this.duration = duration;
     }
 
     public void setAuthName(String authName)
     {
-        AuthName = authName;
+        this.authName = authName;
     }
 }

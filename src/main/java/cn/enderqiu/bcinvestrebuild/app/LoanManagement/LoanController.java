@@ -10,6 +10,7 @@ import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,13 +29,6 @@ public class LoanController extends BaseController {
     @RequestMapping(value="/loanRequestedButNotPassed", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(
-                paramType = "form",
-                name = "user_id_token",
-                required = true,
-                value = "用户的标识符",
-                dataType = "String"
-            ),
-            @ApiImplicitParam(
                 paramType = "query",
                 name = "pageIndex",
                 required = true,
@@ -42,8 +36,13 @@ public class LoanController extends BaseController {
                 dataType = "int"
             )
     })
-    List<LoanVO> getLoanRequestedButNotPassed(String user_id_token, int pageIndex) {
-        return loanService.getLoanRequestedButNotPassed(user_id_token, pageIndex);
+    List<LoanVO> getLoanRequestedButNotPassed(int pageIndex) {
+        return loanService.getLoanRequestedButNotPassed(getCompanyUserDTO().getToken(), pageIndex);
+    }
+
+    @RequestMapping(value = "/getMaxPage", method = RequestMethod.GET)
+    MaxPageVO getMaxPage() {
+        return loanService.getMaxPage(getCompanyUserDTO().getToken());
     }
 
     @RequestMapping(value="/mortgageDetail", method = RequestMethod.GET)
@@ -63,21 +62,14 @@ public class LoanController extends BaseController {
     @RequestMapping(value="/cancleLoanRequest", method = RequestMethod.PUT)
     @ApiImplicitParams({
             @ApiImplicitParam(
-                    paramType = "form",
-                    name = "user_id_token",
-                    required = true,
-                    value = "用户的标识符",
-                    dataType = "String"
-            ),
-            @ApiImplicitParam(
-                paramType = "form",
+                paramType = "query",
                     name = "guarantyId",
                     required = true,
-                    value = "抵押物的id，如果执行失败会返回false",
+                    value = "抵押物的id，返回的是BaseResponseVO，成功的消息是OK，失败的消息是Error",
                     dataType = "int"
             )
     })
-    BaseResponseVO cancleLoanRequest(String user_id_token, int guarantyId) {
-        return loanService.cancleLoanRequest(user_id_token, guarantyId);
+    BaseResponseVO cancleLoanRequest(int guarantyId) {
+        return loanService.cancleLoanRequest(getCompanyUserDTO().getToken(), guarantyId);
     }
 }
