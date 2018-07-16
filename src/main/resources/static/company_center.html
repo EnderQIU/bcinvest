@@ -70,7 +70,6 @@
             }
             .main_body {
                 width: 100%;
-                height: 100%;
                 display: flex;
                 flex-direction: row;
             }
@@ -124,9 +123,9 @@
                 text-align: center;
             }
             .popup_window_container {
-                z-index: 10; 
-                width: 100%; 
-                height: 100%; 
+                z-index: 10;
+                width: 100%;
+                height: 100%;
                 position: absolute;
                 top: 0; 
                 display: flex; 
@@ -134,10 +133,9 @@
                 align-items: center; 
                 background: rgba(204, 204, 204, 0.8)
             }
-            .popup_window_container .popup_window_conten_container {
-                position:relative; 
-                width: 40%; 
-                height: 40%; 
+            .popup_window_container .popup_window_content_container {
+                position:relative;
+                min-width: 480px;
                 background: rgba(204, 204, 204, 0.9); 
                 border: 1px #CCCCCC solid; 
                 border-radius: 12px;
@@ -302,12 +300,12 @@
                         </div>
                         <table style="width: 100%;">
                             <tr>
-                                <td class="table_head" v-on:click="">抵押物名称</td>
+                                <td class="table_head">抵押物名称</td>
                                 <td class="table_head">状态</td>
                                 <td class="table_head">估值</td>
                             </tr>
                             <tr v-for="item in company_mortgage">
-                                <td class="table_cell">{{ item.name }}</td>
+                                <td class="table_cell" v-on:click="show_guaranty_detail(item)">{{ item.name }}</td>
                                 <td class="table_cell">{{ item.state }}</td>
                                 <td class="table_cell">{{ item.evaluateValue }}</td>
                             </tr>
@@ -350,7 +348,7 @@
                 </div>
             </div>
             <div class="popup_window_container" v-if="unconfirmed_to_confirmed_box_show">
-                <div class="popup_window_conten_container">
+                <div class="popup_window_content_container">
                     <div style="position: relative; padding: 20px;">
                         名称:{{ choosed_item.name }}<br />
                         状态:&nbsp;&nbsp;待确认&nbsp;->确认
@@ -362,7 +360,7 @@
                 </div>
             </div>
             <div class="popup_window_container" v-else-if="unconfirmed_to_give_up_box_show">
-                <div class="popup_window_conten_container">
+                <div class="popup_window_content_container">
                     <div style="position: relative; padding: 20px;">
                         名称:{{ choosed_item.name }}<br />
                         状态:&nbsp;&nbsp;待确认&nbsp;->放弃
@@ -371,6 +369,15 @@
                         <button style="float: left;" v-on:click="unconfirmed_to_give_up_box_sure">确定</button>
                         <button style="float: right;"  v-on:click="unconfirmed_to_give_up_box_cancle">取消</button>
                     </div>
+                </div>
+            </div>
+            <div class="popup_window_container" v-else-if="detail_box_show">
+                <div class="popup_window_content_container">
+                    <label style="position: absolute; top: 20px; right: 20px;"  v-on:click="detail_box_disappear()">X</label>
+                    <p v-for="item in Object.keys(detail_item)">
+                        {{ item }}&nbsp;:&nbsp;
+                        {{ detail_item[item] }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -496,6 +503,8 @@
                     'manage_choosed_state': [],
                     'message_read_class': 'message_read',
                     'message_unread_class': 'message_unread',
+                    'detail_box_show': false,
+                    'detail_item': null,
                 },
                 computed: {
                     apply_mortgage_choosed: function() {
@@ -507,6 +516,38 @@
                     }
                 },
                 methods: {
+                    show_guaranty_detail(item) {
+                        var url = '';
+                        switch (item.type) {
+                            case 0:
+                                url = '/user/guaranty/houseDetail';
+                                break;
+                            case 1:
+                                url = '/user/guaranty/landDetail'
+                                break;
+                            case 2:
+                                url = '/user/guaranty/machineDetail'
+                                break;
+                        }
+                        var result = null;
+                        $.ajax({
+                            'url': url + "?guarantyId=" + item.guarantyId,
+                            'type': 'GET',
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            'success': function (data) {
+                                result = data;
+                            },
+                            'async': false,
+                        });
+                        this.detail_item = result;
+                        this.detail_box_show = true;
+                    },
+                    detail_box_disappear() {
+                        this.detail_box_show = false;
+                        this.detail_item = null;
+                    },
                     get_states_parameter_string() {
                         var query_para = '';
                         for (var i = 0; i < this.current_states.length; i++) {
