@@ -22,20 +22,10 @@ public class ReviewInfoController extends BaseController {
     private ReviewInfoService ReviewInfoService;
 
     @RequestMapping(value = "/getComoanyInfo", method = RequestMethod.GET)
- @ApiImplicitParams({
-           @ApiImplicitParam(paramType = "query",
-                   /* 来源分为form, header, query
-                     * 分别对应 表单，请求头， 请求体
-                     */
-                    name = "company_id", //和参数列表的参数名对应
-                   required = true, //如果不可或缺填写true，否则可以不写这一栏或者写false
-                    value = "公司唯一标识符",
-                   dataType = "String"
-            )
-   })
-    ReviewCompanyInfoVO getCompanyInfo(String company_id)
+
+    List<ReviewCompanyInfoVO> getCompanyInfo()
     {
-        return ReviewInfoService.getCompanyInfo(company_id);
+        return ReviewInfoService.getCompanyStateUnapplied();
     }
     @RequestMapping(value = "/getChainInfo", method = RequestMethod.GET)
 //    @ApiImplicitParams({

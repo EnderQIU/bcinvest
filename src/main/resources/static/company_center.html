@@ -70,7 +70,6 @@
             }
             .main_body {
                 width: 100%;
-                height: 100%;
                 display: flex;
                 flex-direction: row;
             }
@@ -124,9 +123,9 @@
                 text-align: center;
             }
             .popup_window_container {
-                z-index: 10; 
-                width: 100%; 
-                height: 100%; 
+                z-index: 10;
+                width: 100%;
+                height: 100%;
                 position: absolute;
                 top: 0; 
                 display: flex; 
@@ -134,10 +133,9 @@
                 align-items: center; 
                 background: rgba(204, 204, 204, 0.8)
             }
-            .popup_window_container .popup_window_conten_container {
-                position:relative; 
-                width: 40%; 
-                height: 40%; 
+            .popup_window_container .popup_window_content_container {
+                position:relative;
+                min-width: 480px;
                 background: rgba(204, 204, 204, 0.9); 
                 border: 1px #CCCCCC solid; 
                 border-radius: 12px;
@@ -153,9 +151,14 @@
                 color: darkorange;
             }
             .message_box {
-                border: 1px solid #EEEEEE;
                 width: 100%;
                 margin-bottom: 16px;
+            }
+            .message_read {
+                border: 1px solid #CCCCCC;
+            }
+            .message_unread {
+                border: 1px solid red;
             }
         </style>
         <script>
@@ -302,21 +305,21 @@
                                 <td class="table_head">估值</td>
                             </tr>
                             <tr v-for="item in company_mortgage">
-                                <td class="table_cell">{{ item.name }}</td>
+                                <td class="table_cell" v-on:click="show_guaranty_detail(item)">{{ item.name }}</td>
                                 <td class="table_cell">{{ item.state }}</td>
                                 <td class="table_cell">{{ item.evaluateValue }}</td>
                             </tr>
                         </table>
                         <div class="page_change_container" v-if="max_page > 0">
-                            <label v-if="current_page > 0" class="page_change">首页</label>
-                            <label v-if="current_page > 0" class="page_change">上一页</label>
-                            <label v-if="current_page > 2" class="page_change">{{ current_page - 2 }}</label>
-                            <label v-if="current_page > 1" class="page_change">{{ current_page - 1 }}</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
+                            <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
+                            <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                            <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
                             <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
-                            <label v-if="current_page < max_page" class="page_change">{{ current_page + 1 }}</label>
-                            <label v-if="current_page + 1 < max_page" class="page_change">{{ current_page + 2 }}</label>
-                            <label v-if="current_page > 0" class="page_change">下一页</label>
-                            <label v-if="current_page > 0" class="page_change">尾页</label>
+                            <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                            <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                            <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
                         </div>
                         <div class="page_change_container" v-else>
                             无
@@ -329,14 +332,23 @@
                         1236
                     </div>
                     <div v-else-if="list_selected_index == 7">
-                        <div v-fo="item in message" class="message_box">
-                            {{ item.fromUserNum }}
-                        </div>
+                        <table>
+                            <tr>
+                                <td>来自</td>
+                                <td>内容</td>
+                            </tr>
+                            <div v-for="item in message" class="message_box" v-bind:class="[item.status == 0 ? message_unread_class : message_read_class]">
+                                <tr>
+                                    <td>{{ item.fromUserNum }}</td>
+                                    <td>{{ item.content }}</td>
+                                </tr>
+                            </div>
+                        </table>
                     </div>
                 </div>
             </div>
             <div class="popup_window_container" v-if="unconfirmed_to_confirmed_box_show">
-                <div class="popup_window_conten_container">
+                <div class="popup_window_content_container">
                     <div style="position: relative; padding: 20px;">
                         名称:{{ choosed_item.name }}<br />
                         状态:&nbsp;&nbsp;待确认&nbsp;->确认
@@ -348,7 +360,7 @@
                 </div>
             </div>
             <div class="popup_window_container" v-else-if="unconfirmed_to_give_up_box_show">
-                <div class="popup_window_conten_container">
+                <div class="popup_window_content_container">
                     <div style="position: relative; padding: 20px;">
                         名称:{{ choosed_item.name }}<br />
                         状态:&nbsp;&nbsp;待确认&nbsp;->放弃
@@ -357,6 +369,15 @@
                         <button style="float: left;" v-on:click="unconfirmed_to_give_up_box_sure">确定</button>
                         <button style="float: right;"  v-on:click="unconfirmed_to_give_up_box_cancle">取消</button>
                     </div>
+                </div>
+            </div>
+            <div class="popup_window_container" v-else-if="detail_box_show">
+                <div class="popup_window_content_container">
+                    <label style="position: absolute; top: 20px; right: 20px;"  v-on:click="detail_box_disappear()">X</label>
+                    <p v-for="item in Object.keys(detail_item)">
+                        {{ item }}&nbsp;:&nbsp;
+                        {{ detail_item[item] }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -480,6 +501,10 @@
                     'unconfirmed_to_confirmed_box_show': false,
                     'unconfirmed_to_give_up_box_show': false,
                     'manage_choosed_state': [],
+                    'message_read_class': 'message_read',
+                    'message_unread_class': 'message_unread',
+                    'detail_box_show': false,
+                    'detail_item': null,
                 },
                 computed: {
                     apply_mortgage_choosed: function() {
@@ -491,6 +516,38 @@
                     }
                 },
                 methods: {
+                    show_guaranty_detail(item) {
+                        var url = '';
+                        switch (item.type) {
+                            case 0:
+                                url = '/user/guaranty/houseDetail';
+                                break;
+                            case 1:
+                                url = '/user/guaranty/landDetail'
+                                break;
+                            case 2:
+                                url = '/user/guaranty/machineDetail'
+                                break;
+                        }
+                        var result = null;
+                        $.ajax({
+                            'url': url + "?guarantyId=" + item.guarantyId,
+                            'type': 'GET',
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            'success': function (data) {
+                                result = data;
+                            },
+                            'async': false,
+                        });
+                        this.detail_item = result;
+                        this.detail_box_show = true;
+                    },
+                    detail_box_disappear() {
+                        this.detail_box_show = false;
+                        this.detail_item = null;
+                    },
                     get_states_parameter_string() {
                         var query_para = '';
                         for (var i = 0; i < this.current_states.length; i++) {
@@ -572,21 +629,8 @@
                         return result;
                     },
                     aimed_page(page) {
-                        // var guaranties = this.get_guaranty(page, this.current_states);
-                        //模拟用
-                        var guaranties = [
-                                        {
-                                            "accountNum": "1",
-                                            "evaluateValue": 1233124,
-                                            "guarantyId": 0,
-                                            "name": "string",
-                                            "ownerName": "string",
-                                            "reportId": 0,
-                                            "scopeOfRight": 0,
-                                            "state": 2,
-                                            "type": 2,
-                                        }
-                                    ];
+                        var guaranties = this.get_guaranty(page, this.current_states);
+
                         if (!isEmptyValue(guaranties)) {
                             this.current_page = page;
                             this.company_mortgage = guaranties;
@@ -624,6 +668,8 @@
                                     var guaranties = this.get_guaranty(1, this.current_states);
                                     this.current_page = 1;
                                     this.company_mortgage = guaranties;
+                                } else {
+                                    this.max_page = 0;
                                 }
                                 break;
                             case 'watch_checking_mortgage':
@@ -634,6 +680,8 @@
                                     var guaranties = this.get_guaranty(1, this.current_states);
                                     this.current_page = 1;
                                     this.company_mortgage = guaranties;
+                                } else {
+                                    this.max_page = 0;
                                 }
                                 break;
                             case 'manage_mortgage':

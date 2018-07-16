@@ -30,6 +30,29 @@ public class ReviewInfoService extends BaseService {
 
 
     }
+    List<ReviewCompanyInfoVO> getCompanyStateUnapplied()
+    {
+        List<ReviewCompanyInfoVO> rcInfos=new ArrayList<>();
+
+        List<Map<String,Object>> mm=mapper.SELECT("Select * from Company where status = 'unapplied' ");
+        if(mm.size()>0) {
+            for(Map<String,Object> m:mm) {
+                String CompanytNum = m.get("AccountNum").toString();
+                String Name = m.get("Name").toString();
+                String telNum = m.get("TelNum").toString();
+                String emailAddress = m.get("EmailAddress").toString();
+                String credit = " ";
+                ReviewCompanyInfoVO rinfo = new ReviewCompanyInfoVO(CompanytNum, credit, Name, telNum, emailAddress);
+                rcInfos.add(rinfo);
+            }
+            return  rcInfos;
+
+        }
+        else
+        {
+            return null;
+        }
+    }
     List<ReviewChainInfoVO> getGuarantyTBCInfo(String user_id_token)
     {
         List<ReviewChainInfoVO> guarantyTBCinfos=new ArrayList<>();
