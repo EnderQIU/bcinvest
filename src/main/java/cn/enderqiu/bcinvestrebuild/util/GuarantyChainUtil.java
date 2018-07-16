@@ -108,6 +108,13 @@ public class GuarantyChainUtil {
     }
 
     /**
+     * 检查是否超时未还款，若超时则更改状态为 Overdue(6)
+     */
+    private void checkOverdue(){
+
+    }
+
+    /**
      * rate =  1 min
      * 遍历队列中任务状态为 pending 的任务，检查状态是否更新为想要的状态，
      * 若状态更新为想要的状态，则将队列的状态字段更改为 success 并更新 guaranty 表中记录，

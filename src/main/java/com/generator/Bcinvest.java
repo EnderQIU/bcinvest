@@ -11,6 +11,7 @@ import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
+import com.generator.tables.Guarantystateupdatetask;
 import com.generator.tables.House;
 import com.generator.tables.Land;
 import com.generator.tables.Machine;
@@ -43,7 +44,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Bcinvest extends SchemaImpl {
 
-    private static final long serialVersionUID = 1460898802;
+    private static final long serialVersionUID = 947671877;
 
     /**
      * The reference instance of <code>bcinvest</code>
@@ -84,6 +85,11 @@ public class Bcinvest extends SchemaImpl {
      * The table <code>bcinvest.Guaranty</code>.
      */
     public final Guaranty GUARANTY = com.generator.tables.Guaranty.GUARANTY;
+
+    /**
+     * The table <code>bcinvest.GuarantyStateUpdateTask</code>.
+     */
+    public final Guarantystateupdatetask GUARANTYSTATEUPDATETASK = com.generator.tables.Guarantystateupdatetask.GUARANTYSTATEUPDATETASK;
 
     /**
      * The table <code>bcinvest.House</code>.
@@ -152,6 +158,7 @@ public class Bcinvest extends SchemaImpl {
             Credit.CREDIT,
             Fundamentalcertificate.FUNDAMENTALCERTIFICATE,
             Guaranty.GUARANTY,
+            Guarantystateupdatetask.GUARANTYSTATEUPDATETASK,
             House.HOUSE,
             Land.LAND,
             Machine.MACHINE,

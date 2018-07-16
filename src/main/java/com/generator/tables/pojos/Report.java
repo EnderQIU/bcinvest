@@ -23,12 +23,13 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Report implements Serializable {
 
-    private static final long serialVersionUID = -1220839825;
+    private static final long serialVersionUID = 253970053;
 
     private String        accountnum;
     private Integer       reportid;
     private LocalDateTime date;
     private String        duration;
+    private String        type;
 
     public Report() {}
 
@@ -37,18 +38,21 @@ public class Report implements Serializable {
         this.reportid = value.reportid;
         this.date = value.date;
         this.duration = value.duration;
+        this.type = value.type;
     }
 
     public Report(
         String        accountnum,
         Integer       reportid,
         LocalDateTime date,
-        String        duration
+        String        duration,
+        String        type
     ) {
         this.accountnum = accountnum;
         this.reportid = reportid;
         this.date = date;
         this.duration = duration;
+        this.type = type;
     }
 
     public String getAccountnum() {
@@ -83,6 +87,14 @@ public class Report implements Serializable {
         this.duration = duration;
     }
 
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Report (");
@@ -91,6 +103,7 @@ public class Report implements Serializable {
         sb.append(", ").append(reportid);
         sb.append(", ").append(date);
         sb.append(", ").append(duration);
+        sb.append(", ").append(type);
 
         sb.append(")");
         return sb.toString();

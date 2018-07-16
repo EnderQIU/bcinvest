@@ -85,4 +85,11 @@ public class ReportDao extends DAOImpl<ReportRecord, com.generator.tables.pojos.
     public List<com.generator.tables.pojos.Report> fetchByDuration(String... values) {
         return fetch(Report.REPORT.DURATION, values);
     }
+
+    /**
+     * Fetch records that have <code>type IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Report> fetchByType(String... values) {
+        return fetch(Report.REPORT.TYPE, values);
+    }
 }

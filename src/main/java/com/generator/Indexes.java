@@ -11,6 +11,7 @@ import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
+import com.generator.tables.Guarantystateupdatetask;
 import com.generator.tables.House;
 import com.generator.tables.Land;
 import com.generator.tables.Machine;
@@ -57,6 +58,7 @@ public class Indexes {
     public static final Index GUARANTY_GUARANTY_FK_COMPANY = Indexes0.GUARANTY_GUARANTY_FK_COMPANY;
     public static final Index GUARANTY_GUARANTY_FK_REPORT = Indexes0.GUARANTY_GUARANTY_FK_REPORT;
     public static final Index GUARANTY_PRIMARY = Indexes0.GUARANTY_PRIMARY;
+    public static final Index GUARANTYSTATEUPDATETASK_PRIMARY = Indexes0.GUARANTYSTATEUPDATETASK_PRIMARY;
     public static final Index HOUSE_PRIMARY = Indexes0.HOUSE_PRIMARY;
     public static final Index LAND_PRIMARY = Indexes0.LAND_PRIMARY;
     public static final Index MACHINE_PRIMARY = Indexes0.MACHINE_PRIMARY;
@@ -86,6 +88,7 @@ public class Indexes {
         public static Index GUARANTY_GUARANTY_FK_COMPANY = Internal.createIndex("guaranty_fk_company", Guaranty.GUARANTY, new OrderField[] { Guaranty.GUARANTY.ACCOUNTNUM }, false);
         public static Index GUARANTY_GUARANTY_FK_REPORT = Internal.createIndex("guaranty_fk_report", Guaranty.GUARANTY, new OrderField[] { Guaranty.GUARANTY.REPORTID }, false);
         public static Index GUARANTY_PRIMARY = Internal.createIndex("PRIMARY", Guaranty.GUARANTY, new OrderField[] { Guaranty.GUARANTY.GUARANTYID }, true);
+        public static Index GUARANTYSTATEUPDATETASK_PRIMARY = Internal.createIndex("PRIMARY", Guarantystateupdatetask.GUARANTYSTATEUPDATETASK, new OrderField[] { Guarantystateupdatetask.GUARANTYSTATEUPDATETASK.TASKID }, true);
         public static Index HOUSE_PRIMARY = Internal.createIndex("PRIMARY", House.HOUSE, new OrderField[] { House.HOUSE.GUARANTYID }, true);
         public static Index LAND_PRIMARY = Internal.createIndex("PRIMARY", Land.LAND, new OrderField[] { Land.LAND.GUARANTYID }, true);
         public static Index MACHINE_PRIMARY = Internal.createIndex("PRIMARY", Machine.MACHINE, new OrderField[] { Machine.MACHINE.GUARANTYID }, true);

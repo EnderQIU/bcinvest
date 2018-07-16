@@ -11,6 +11,7 @@ import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
+import com.generator.tables.Guarantystateupdatetask;
 import com.generator.tables.House;
 import com.generator.tables.Land;
 import com.generator.tables.Machine;
@@ -69,6 +70,11 @@ public class Tables {
      * The table <code>bcinvest.Guaranty</code>.
      */
     public static final Guaranty GUARANTY = com.generator.tables.Guaranty.GUARANTY;
+
+    /**
+     * The table <code>bcinvest.GuarantyStateUpdateTask</code>.
+     */
+    public static final Guarantystateupdatetask GUARANTYSTATEUPDATETASK = com.generator.tables.Guarantystateupdatetask.GUARANTYSTATEUPDATETASK;
 
     /**
      * The table <code>bcinvest.House</code>.

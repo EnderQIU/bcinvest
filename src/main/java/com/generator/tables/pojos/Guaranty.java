@@ -22,7 +22,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guaranty implements Serializable {
 
-    private static final long serialVersionUID = -1824497759;
+    private static final long serialVersionUID = -941590678;
 
     private Integer guarantyid;
     private String  accountnum;
@@ -33,6 +33,7 @@ public class Guaranty implements Serializable {
     private Integer type;
     private Integer evaluatevalue;
     private String  name;
+    private Byte    lock;
 
     public Guaranty() {}
 
@@ -46,6 +47,7 @@ public class Guaranty implements Serializable {
         this.type = value.type;
         this.evaluatevalue = value.evaluatevalue;
         this.name = value.name;
+        this.lock = value.lock;
     }
 
     public Guaranty(
@@ -57,7 +59,8 @@ public class Guaranty implements Serializable {
         Integer reportid,
         Integer type,
         Integer evaluatevalue,
-        String  name
+        String  name,
+        Byte    lock
     ) {
         this.guarantyid = guarantyid;
         this.accountnum = accountnum;
@@ -68,6 +71,7 @@ public class Guaranty implements Serializable {
         this.type = type;
         this.evaluatevalue = evaluatevalue;
         this.name = name;
+        this.lock = lock;
     }
 
     public Integer getGuarantyid() {
@@ -142,6 +146,14 @@ public class Guaranty implements Serializable {
         this.name = name;
     }
 
+    public Byte getLock() {
+        return this.lock;
+    }
+
+    public void setLock(Byte lock) {
+        this.lock = lock;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Guaranty (");
@@ -155,6 +167,7 @@ public class Guaranty implements Serializable {
         sb.append(", ").append(type);
         sb.append(", ").append(evaluatevalue);
         sb.append(", ").append(name);
+        sb.append(", ").append(lock);
 
         sb.append(")");
         return sb.toString();

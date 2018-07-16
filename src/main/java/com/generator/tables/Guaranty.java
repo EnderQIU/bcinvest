@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guaranty extends TableImpl<GuarantyRecord> {
 
-    private static final long serialVersionUID = -399636541;
+    private static final long serialVersionUID = -1497502227;
 
     /**
      * The reference instance of <code>bcinvest.Guaranty</code>
@@ -99,6 +99,11 @@ public class Guaranty extends TableImpl<GuarantyRecord> {
      * The column <code>bcinvest.Guaranty.Name</code>.
      */
     public final TableField<GuarantyRecord, String> NAME = createField("Name", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+
+    /**
+     * The column <code>bcinvest.Guaranty.Lock</code>.
+     */
+    public final TableField<GuarantyRecord, Byte> LOCK = createField("Lock", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
      * Create a <code>bcinvest.Guaranty</code> table reference
@@ -174,7 +179,7 @@ public class Guaranty extends TableImpl<GuarantyRecord> {
      */
     @Override
     public List<ForeignKey<GuarantyRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<GuarantyRecord, ?>>asList(Keys.GUARANTY_FK_COMPANY, Keys.GUARANTY_FK_REPORT);
+        return Arrays.<ForeignKey<GuarantyRecord, ?>>asList(Keys.GUARANTY_FK_REPORT);
     }
 
     /**

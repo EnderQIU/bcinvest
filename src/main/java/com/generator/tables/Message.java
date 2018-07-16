@@ -15,6 +15,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -38,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Message extends TableImpl<MessageRecord> {
 
-    private static final long serialVersionUID = 360257955;
+    private static final long serialVersionUID = 2049253917;
 
     /**
      * The reference instance of <code>bcinvest.Message</code>
@@ -56,7 +57,7 @@ public class Message extends TableImpl<MessageRecord> {
     /**
      * The column <code>bcinvest.Message.id</code>.
      */
-    public final TableField<MessageRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<MessageRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>bcinvest.Message.content</code>.
@@ -121,6 +122,14 @@ public class Message extends TableImpl<MessageRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.MESSAGE_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<MessageRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_MESSAGE;
     }
 
     /**

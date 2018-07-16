@@ -119,4 +119,11 @@ public class GuarantyDao extends DAOImpl<GuarantyRecord, com.generator.tables.po
     public List<com.generator.tables.pojos.Guaranty> fetchByName(String... values) {
         return fetch(Guaranty.GUARANTY.NAME, values);
     }
+
+    /**
+     * Fetch records that have <code>Lock IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByLock(Byte... values) {
+        return fetch(Guaranty.GUARANTY.LOCK, values);
+    }
 }
