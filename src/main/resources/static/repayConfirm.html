@@ -1,0 +1,236 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>确认企业还贷申请</title>
+	<!-- Bootstrap -->
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+	<script type="text/javascript" src="js/bank_authority.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/JQuery.js"></script>
+	<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	<style type="text/css">
+	.table_head {
+		text-align: center;
+	}
+	.table_cell {
+		text-align: center;
+	}
+	.page_change_container {
+		text-align: center;
+	}
+	.page_change_container .page_change {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	.page_change_container .current_page {
+		color: darkorange;
+	}
+	.house_detail{
+		display: none;
+	}
+	.land_detail{
+		display: none;
+	}
+	.machine_detail{
+		display: none;
+	}
+</style>
+</head>
+<body>
+	<div id = "main">
+		<table style="width: 100%;">
+			<tr>
+				<td class="table_head">抵押物名称</td>
+				<td class="table_head">操作</td>
+			</tr>
+			<tr v-for="item in repaying_guaranties">
+				<td class="table_cell">{{ item.name }}</td>
+				<td class="table_cell">
+					<label v-on:click="confirm_repay_click(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
+					<label v-on:click="view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+				</td>
+			</tr>
+		</table>
+		<div class="page_change_container" v-if="max_page > 0">
+			<label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
+			<label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
+			<label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+			<label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+			<label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+			<label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+			<label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+			<label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
+			<label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+		</div>
+		<div class="page_change_container" v-else>
+			
+		</div>
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">抵押物详情</h4>
+					</div>
+					<div class="modal-body">
+						<div class="input-group" id = "guaranty_detail">
+							<label>名称：</label><span id = "guaranty_name"></span><br>
+							<label>估值：</label><span id = "guaranty_value"></span><br>
+							<label>拥有者姓名:</label><span id = "guaranty_owner"></span><br>
+							<label>权利范围:</label><span id = "guaranty_scope"></span><br>
+							<label>状态：</label><span id = "guaranty_state"></span><br>
+							<label>类型：</label><span id = "guaranty_type"></span><br>
+							<div class = "house_detail">
+								<label>地址：</label><span id = "house_addr" ></span><br>
+								<label>邮编：</label><span id = "house_zip"></span><br>
+								<label>房产证号:</label><span id = "house_certificatedId"></span><br>
+							</div>
+							<div class = "land_detail">
+								<label>地址:</label><span id = "land_addr"></span><br>
+								<label>面积：</label><span id = "land_area"></span><br>
+								
+							</div>
+							<div class = "machine_detail">
+								<label>使用天数：</label><span id = "machine_usedDays"></span><br>
+								<label>生产商：</label><span id = "machine_producer"></span><br>
+								<label>型号：</label><span id = "machine_model"></span><br>
+							</div>
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" id = "close">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue({
+		el:"#main",
+		data:{
+			'repaying_guaranties':[],
+			'states':[],
+			current_page:-1,
+			max_page:-1,
+		},
+		methods:{
+			get_states_parameter_string() {
+				var query_para = '';
+				for (var i = 0; i < this.states.length; i++) {
+					if (i > 0) {
+						query_para = query_para + '&'
+					}
+					query_para = query_para + 'states=' + this.states[i].toString();
+				}
+				return query_para;
+			},
+			get_guaranty(page, states) {
+				this.states = states;
+				var query_para = '?' + this.get_states_parameter_string() + "&page=" + page.toString();
+				var result = null;
+				$.ajax({
+					'url': '/user/bank/companyRequest/guaranties' + query_para,
+					'type': 'GET',
+					'async': false,
+					'success': function(data) {
+						result = data;
+					},
+					'headers': {
+						'user_id_token': getCookie('user_id_token'),
+					}
+				});
+				return result;
+			},
+			get_max_page(states) {
+				this.states = states;
+				var query_para = '?' + this.get_states_parameter_string();
+				var result = null;
+				$.ajax({
+					'url': '/user/bank/companyRequest/guaranties' + query_para,
+					'type': 'GET',
+					'async': false,
+					'success': function(data) {
+						result = data;
+					},
+					'headers': {
+						'user_id_token': getCookie('user_id_token'),
+					},
+				});
+				return result;
+			},
+			displayTable(){
+				this.repaying_guaranties = this.get_guaranty(1,[0]);
+			},
+			view_detail_click(item){
+				var url = null;
+				switch(item.type){
+					case 0:
+					url = '/user/bank/companyRequest/houseDetail'
+					break;
+					case 1:
+					url = '/user/bank/companyRequest/landDetail'
+					break;
+					case 2:
+					url = '/user/bank/companyRequest/machineDetail'
+					break;
+				}
+				var query_para = '?guarantyId='+item.guarantyId.toString();
+				var result = null;
+				$.ajax({
+					'url': url + query_para,
+					'type': 'GET',
+					'async': false,
+					'success': function(data) {
+						result = data;
+					},
+					'headers': {
+						'user_id_token': getCookie('user_id_token'),
+					}
+				});
+				var guaranty = result;
+				var modal = $('#myModal');
+				modal.find('#guaranty_name').html(guaranty.name);
+				modal.find('#guaranty_value').html(guaranty.evaluationValue);
+				modal.find('#guaranty_owner').html(guaranty.ownerName);
+				modal.find('#guaranty_scope').html(guaranty.scopeOfRight);
+				modal.find('#guaranty_state').html(guaranty.state);
+				modal.find('#guaranty_type').html(guaranty.type);
+				switch(item.type){
+					case 0:
+					modal.find('#house_addr').html(guaranty.addr);
+					modal.find('#house_zip').html(guaranty.zip);
+					modal.find('#house_certificatedId').html(guaranty.housingCertificatedId);
+					$('.house_detail').css("display","inline");
+					break;
+					case 1:
+					modal.find('#land_addr').html(guaranty.addr);
+					modal.find('#land_area').html(guaranty.area);
+					$('.land_detail').css("display","inline");
+					break;
+					case 2:
+					modal.find('#machine_producer').html(guaranty.producer);
+					modal.find('#machine_model').html(guaranty.model);
+					modal.find('#machine_usedDays').html(guaranty.usedDays);
+					$('.machine_detail').css("display","inline");
+					break;
+				}
+				modal.modal('show');
+			},
+		}
+	});
+	$('#myModal').on('hidden.bs.modal', function () {
+		$('.house_detail').css("display","none");
+		$('.land_detail').css("display","none");
+		$('.machine_detail').css("display","none");
+})
+</script>
+</html>

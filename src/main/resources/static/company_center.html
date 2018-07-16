@@ -135,7 +135,8 @@
             }
             .popup_window_container .popup_window_content_container {
                 position:relative;
-                min-width: 480px;
+                min-width: 600px;
+                min-height: 480px;
                 background: rgba(204, 204, 204, 0.9); 
                 border: 1px #CCCCCC solid; 
                 border-radius: 12px;
@@ -159,6 +160,10 @@
             }
             .message_unread {
                 border: 1px solid red;
+            }
+            .mortgage_detailable {
+                cursor: pointer;
+                text-decoration: underline;
             }
         </style>
         <script>
@@ -237,9 +242,9 @@
                                 <td class="table_head">操作</td>
                             </tr>
                             <tr v-for="item in company_mortgage">
-                                <td class="table_cell">{{ item.name }}</td>
-                                <td class="table_cell">{{ item.state }}</td>
-                                <td class="table_cell">{{ item.evaluateValue }}</td>
+                                <td class="table_cell mortgage_detailable" v-on:click="show_guaranty_detail(item)">{{ item.抵押物名称 }}</td>
+                                <td class="table_cell">{{ item.抵押物状态 }}</td>
+                                <td class="table_cell">{{ item.评估价值 }}</td>
                                 <td class="table_cell">
                                     <label v-on:click="unconfirmed_to_confirmed_click(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
                                     <label v-on:click="unconfirmed_to_giveup_click(item)" style="cursor: pointer; text-decoration: underline;">放弃</label>
@@ -269,9 +274,9 @@
                                 <td class="table_head">估值</td>
                             </tr>
                             <tr v-for="item in company_mortgage">
-                                <td class="table_cell">{{ item.name }}</td>
-                                <td class="table_cell">{{ item.state }}</td>
-                                <td class="table_cell">{{ item.evaluateValue }}</td>
+                                <td class="table_cell mortgage_detailable" v-on:click="show_guaranty_detail(item)">{{ item.抵押物名称 }}</td>
+                                <td class="table_cell">{{ item.抵押物状态 }}</td>
+                                <td class="table_cell">{{ item.评估价值 }}</td>
                             </tr>
                         </table>
                         <div class="page_change_container" v-if="max_page > 0">
@@ -305,9 +310,9 @@
                                 <td class="table_head">估值</td>
                             </tr>
                             <tr v-for="item in company_mortgage">
-                                <td class="table_cell" v-on:click="show_guaranty_detail(item)">{{ item.name }}</td>
-                                <td class="table_cell">{{ item.state }}</td>
-                                <td class="table_cell">{{ item.evaluateValue }}</td>
+                                <td class="table_cell mortgage_detailable" v-on:click="show_guaranty_detail(item)">{{ item.抵押物名称 }}</td>
+                                <td class="table_cell">{{ item.抵押物状态 }}</td>
+                                <td class="table_cell">{{ item.评估价值 }}</td>
                             </tr>
                         </table>
                         <div class="page_change_container" v-if="max_page > 0">
@@ -332,17 +337,15 @@
                         1236
                     </div>
                     <div v-else-if="list_selected_index == 7">
-                        <table>
+                        <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td>来自</td>
                                 <td>内容</td>
                             </tr>
-                            <div v-for="item in message" class="message_box" v-bind:class="[item.status == 0 ? message_unread_class : message_read_class]">
-                                <tr>
-                                    <td>{{ item.fromUserNum }}</td>
-                                    <td>{{ item.content }}</td>
-                                </tr>
-                            </div>
+                            <tr v-for="item in message" class="message_box" v-bind:class="[item.status == 0 ? message_unread_class : message_read_class]">
+                                <td>{{ item.fromUserNum }}</td>
+                                <td>{{ item.content }}</td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -404,7 +407,7 @@
                         'apply_mortgage': {
                             label: "申请抵押",
                             type: "",
-                            type_choice: ['房产', '机器', '土地'],
+                            type_choice: ['房产', '机器', '地产'],
                             inputs: {
                                 '房产': {
                                     'input_name': ['addr', 'zip', 'housingCertificatedId', 'area', 'scopeOfRight', 'ownerName'],
@@ -424,7 +427,7 @@
                                     'scopeOfRight': new createSelectInput("权力范围", true, ['整体', '部分']),
                                     'ownerName': new createTextInput("所有者名称", true, ''),
                                 },
-                                '土地': {
+                                '地产': {
                                     'input_name': ['addr', 'area', 'name', 'scopeOfRight', 'ownerName'],
                                     'addr': new createTextInput("地址", true, ''),
                                     'area': new createTextInput("面积", true, ''),
@@ -516,22 +519,139 @@
                     }
                 },
                 methods: {
-                    show_guaranty_detail(item) {
-                        var url = '';
-                        switch (item.type) {
+                    deal_guaranty(guaranty) {
+                        switch (guaranty.state) {
                             case 0:
-                                url = '/user/guaranty/houseDetail';
+                                guaranty.state = '鉴定中';
                                 break;
                             case 1:
-                                url = '/user/guaranty/landDetail'
+                                guaranty.state = '不合格';
                                 break;
                             case 2:
+                                guaranty.state = '合格';
+                                break;
+                            case 3:
+                                guaranty.state = '待确认';
+                                break;
+                            case 4:
+                                guaranty.state = '可抵押';
+                                break;
+                            case 5:
+                                guaranty.state = '申请抵押中';
+                                break;
+                            case 6:
+                                guaranty.state = '申请已通过';
+                                break;
+                            case 7:
+                                guaranty.state = '申请还款中';
+                                break;
+                            case 8:
+                                guaranty.state = '逾期';
+                                break;
+                        }
+                        if (!isEmptyValue(guaranty.type)) {
+                            switch (guaranty.type) {
+                                case 0:
+                                    guaranty.type = '房产';
+                                    break;
+                                case 1:
+                                    guaranty.type = '地产';
+                                    break;
+                                case 2:
+                                    guaranty.type = '机器';
+                                    break;
+                            }
+                        }
+                        if (!isEmptyValue(guaranty.scopeOfRight)) {
+                            switch (guaranty.scopeOfRight) {
+                                case 0:
+                                    guaranty.scopeOfRight = '部分';
+                                    break;
+                                case 1:
+                                    guaranty.scopeOfRight = '整体';
+                                    break;
+                            }
+                        }
+                        var keys = [];
+                        for (var key in guaranty) {
+                            keys.push(key);
+                        }
+                        var value = null;
+                        var tempKey = null;
+                        for (var i = 0 ; i < keys.length; i++) {
+                            value = guaranty[keys[i]];
+                            delete guaranty[keys[i]];
+                            switch (keys[i]) {
+                                case 'guarantyId':
+                                    tempKey = '抵押物编号';
+                                    break;
+                                case 'accountNum':
+                                    tempKey = '账户名称';
+                                    break;
+                                case 'addr':
+                                    tempKey = '地址';
+                                    break;
+                                case 'evaluateValue':
+                                    tempKey = '评估价值';
+                                    break;
+                                case 'housingCertificatedId':
+                                    tempKey = '房产证编号';
+                                    break;
+                                case 'name':
+                                    tempKey = '抵押物名称';
+                                    break;
+                                case 'ownerName':
+                                    tempKey = '抵押物拥有者名字';
+                                    break;
+                                case 'reportId':
+                                    tempKey = '评估报告编号';
+                                    break;
+                                case 'scopeOfRight':
+                                    tempKey = '权力范围';
+                                    break;
+                                case 'state':
+                                    tempKey = '抵押物状态';
+                                    break;
+                                case 'type':
+                                    tempKey = '抵押物类型';
+                                    break;
+                                case 'zip':
+                                    tempKey = '邮政编号';
+                                    break;
+                                case 'model':
+                                    tempKey = '机器型号';
+                                    break;
+                                case 'producer':
+                                    tempKey = '生产商';
+                                    break;
+                                case 'usedDays':
+                                    tempKey = '租用天数';
+                                    break;
+                            }
+                            guaranty[tempKey] = value;
+                        }
+                    },
+                    deal_guaranty_array(guaranty_array) {
+                        for (var i = 0; i < guaranty_array.length; i++) {
+                            this.deal_guaranty(guaranty_array[i])
+                        }
+                    },
+                    show_guaranty_detail(item) {
+                        var url = '';
+                        switch (item.抵押物类型) {
+                            case '房产':
+                                url = '/user/guaranty/houseDetail';
+                                break;
+                            case '地产':
+                                url = '/user/guaranty/landDetail'
+                                break;
+                            case '机器':
                                 url = '/user/guaranty/machineDetail'
                                 break;
                         }
                         var result = null;
                         $.ajax({
-                            'url': url + "?guarantyId=" + item.guarantyId,
+                            'url': url + "?guarantyId=" + item.抵押物编号,
                             'type': 'GET',
                             'headers': {
                                 'user_id_token': getCookie('user_id_token'),
@@ -541,6 +661,7 @@
                             },
                             'async': false,
                         });
+                        this.deal_guaranty(result);
                         this.detail_item = result;
                         this.detail_box_show = true;
                     },
@@ -591,6 +712,7 @@
                                 'user_id_token': getCookie('user_id_token'),
                             }
                         });
+                        this.deal_guaranty_array(result);
                         return result;
                     },
                     get_max_page(states) {
@@ -699,7 +821,7 @@
                             case '房产':
                                 url = '/user/guaranty/applyHouseEvaluation'
                                 break;
-                            case '土地':
+                            case '地产':
                                 url = '/user/guaranty/applyLandEvaluation'
                                 break;
                             case '机器':
@@ -755,20 +877,6 @@
                     unconfirmed_to_confirmed_box_sure: function() {
                         var returnData = this.to_be_comfirmed();
                         var tempGuaranty = this.get_guaranty(this.current_page, this.current_states);
-                        //模拟用
-                        var tempGuaranty = [
-                            {
-                                "accountNum": "1",
-                                "evaluateValue": 120000,
-                                "guarantyId": 1,
-                                "name": "string",
-                                "ownerName": "string",
-                                "reportId": 0,
-                                "scopeOfRight": 0,
-                                "state": 2,
-                                "type": 2,
-                            }
-                        ]
                         this.company_mortgage = tempGuaranty;
                         this.select_item = null;
                         this.unconfirmed_to_confirmed_box_show = false;
@@ -782,7 +890,7 @@
                         //模拟用
                         var returnData = 1;
                         if (returnData == 1) {
-                            alert(this.choosed_item.guarantyId); 
+                            alert(this.choosed_item.guarantyId);
                             this.choosed_item = null;
                         }
                         // var tempGuaranty = this.get_guaranty(this.current_page, this.current_states);

@@ -1,6 +1,75 @@
 <!Doctype html>
 <html>
     <head>
+        <script type="text/javascript" src="js/JQuery.js"></script>
+        <script>
+            function getCookie(c_name) {
+                if (document.cookie.length > 0) {
+                    c_start = document.cookie.indexOf(c_name + "=")
+                    if (c_start != -1) {
+                        c_start = c_start + c_name.length + 1;
+                        c_end = document.cookie.indexOf(";", c_start);
+                        if (c_end == -1) c_end = document.cookie.length;
+                        return unescape(document.cookie.substring(c_start,c_end));
+                    }
+                }
+                return "";
+            };
+            function setCookie(c_name, value, expiredays) {
+                var exdate = new Date();
+                exdate.setDate(exdate.getDate() + expiredays);
+                document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+            };
+            function isEmptyValue(value) {
+                if (value === null) {
+                    return true;
+                }
+                var type = typeof(value);
+                switch (type) {
+                    case 'number':
+                        return isNaN(value);
+                    case 'function':
+                        return false;
+                    case 'object':
+                        for (var key in value) {
+                            return false;
+                        }
+                        return true;
+                    case 'string':
+                        if (value.length > 0) {
+                            return false;
+                        }
+                        return true;
+                    case 'boolean':
+                        return false;
+                    case 'undefined':
+                        return true;
+                }
+            };
+        </script>
+        <script>
+            $.ajax({
+                'url': '/user/bankOrAuthority/info',
+                'type': 'GET',
+                'headers': {
+                    'user_id_token': 'testBankToken',
+                    // 'user_id_token': getCookie('user_id_token'),
+                },
+                'async': false,
+                'success': function (data) {
+                    if (!isEmptyValue(data.name) && !isEmptyValue(data.type)) {
+                        switch (data.type) {
+                            case 'bank':
+                                location.href='bank.html';
+                                break;
+                            case 'authorization':
+                                location.href='authorization.html';
+                                break;
+                        }
+                    }
+                }
+            })
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
         </script>
         <link rel="stylesheet" type="text/css" href="css/login/login-in.css">
@@ -70,9 +139,7 @@
                 },
                 methods: {
                     submitLogIn:function() {
-                        //alert(this.bindData.username);
-                        //alert("123");
-                        window.location.href="companyCenter.html";
+
                     }
                 },
                 computed: {
