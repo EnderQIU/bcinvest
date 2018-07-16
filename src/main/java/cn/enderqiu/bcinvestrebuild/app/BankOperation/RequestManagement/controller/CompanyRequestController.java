@@ -24,7 +24,6 @@ import java.util.List;
 public class CompanyRequestController extends BaseController{
     @Autowired
     private CompanyRequestService service;
-    private GuarantyManagementService guarantyManagementService;
     @RequestMapping(value = "/guaranties", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
@@ -68,7 +67,7 @@ public class CompanyRequestController extends BaseController{
                     required = true,  dataType = "int"),
     })
     HouseVO getHouseDetail(int guarantyId) {
-        return guarantyManagementService.findHouse(guarantyId);
+        return service.findHouse(guarantyId);
     }
 
     @RequestMapping(value = "/landDetail", method = RequestMethod.GET)
@@ -77,7 +76,7 @@ public class CompanyRequestController extends BaseController{
                     required = true,  dataType = "int"),
     })
     LandVO getLandDetail(int guarantyId) {
-        return guarantyManagementService.findLand(guarantyId);
+        return service.findLand(guarantyId);
     }
 
     @RequestMapping(value = "/machineDetail", method = RequestMethod.GET)
@@ -86,7 +85,7 @@ public class CompanyRequestController extends BaseController{
                     required = true,  dataType = "int"),
     })
     MachineVO getMachineDetail(int guarantyId) {
-        return guarantyManagementService.findMachine(guarantyId);
+        return service.findMachine(guarantyId);
     }
 
 }
