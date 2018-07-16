@@ -36,7 +36,13 @@ public class CompanyRequestService extends BaseService{
     public List<GuarantyVO> findGuarantiesByState(int stateNum,int page){
         List<GuarantyVO> guaranties = new ArrayList<>();
         List<Map<String,Object>> guarantyIdList = ccGuarantyChainInerface.queryGuarantyIdByState(stateNum);
-        for(Map<String,Object> m:guarantyIdList){
+        List<Map<String,Object>> guarantyIdListTest = new ArrayList<>();
+        for(int i = 1;i<=36;i++){
+            Map<String,Object> guarantyId= new HashMap<String,Object>();
+            guarantyId.put("guarantyId",new Integer(i));
+            guarantyIdListTest.add(guarantyId);
+        }
+        for(Map<String,Object> m:guarantyIdListTest){
             int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
             guaranties.add(findGuaranty(guarantyId));
         }
@@ -90,5 +96,35 @@ public class CompanyRequestService extends BaseService{
             return intToReturnVO(mapper.INSERT(sqlSentence));
         }
         return intToReturnVO(0);
+    }
+    public HouseVO findHouse(int guarantyId){
+        String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
+        String sqlSentence2 = "SELECT * FROM house WHERE guarantyId = "+guarantyId+";";
+        Map<String, Object> result1 = mapper.SELECT(sqlSentence1).get(0);
+        Map<String, Object> result2 = mapper.SELECT(sqlSentence2).get(0);
+        HouseVO houseVO = new HouseVO();
+        extract(houseVO,result1);
+        extract(houseVO,result2);
+        return houseVO;
+    }
+    public LandVO findLand(int guarantyId){
+        String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
+        String sqlSentence2 = "SELECT * FROM land WHERE guarantyId = "+guarantyId+";";
+        Map<String, Object> result1 = mapper.SELECT(sqlSentence1).get(0);
+        Map<String, Object> result2 = mapper.SELECT(sqlSentence2).get(0);
+        LandVO landVO = new LandVO();
+        extract(landVO,result1);
+        extract(landVO,result2);
+        return landVO;
+    }
+    public MachineVO findMachine(int guarantyId){
+        String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
+        String sqlSentence2 = "SELECT * FROM machine WHERE guarantyId = "+guarantyId+";";
+        Map<String, Object> result1 = mapper.SELECT(sqlSentence1).get(0);
+        Map<String, Object> result2 = mapper.SELECT(sqlSentence2).get(0);
+        MachineVO machineVO = new MachineVO();
+        extract(machineVO,result1);
+        extract(machineVO,result2);
+        return machineVO;
     }
 }

@@ -27,7 +27,6 @@ import java.util.List;
 public class AuthorityRequestController extends BaseController{
     @Autowired
     private AuthorityRequestService service;
-    private GuarantyManagementService guarantyManagementService;
     @RequestMapping(value = "/companies", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
