@@ -19,6 +19,11 @@ import java.util.Map;
 @Service
 public class AuthorityRequestService extends BaseService{
     CCGuarantyChainInerface ccGuarantyChainInerface = new CCGuarantyChainInterfaceImpl();
+    public ReturnVO intToReturnVO(int influence){
+        ReturnVO returnVO = new ReturnVO();
+        returnVO.setInfluence(influence);
+        return returnVO;
+    }
     public String TokenToAccountNum(String token) {
         String sqlSentence = "SELECT accountNum FROM company WHERE token = '" + token + "';";
         List<Map<String, Object>> result = mapper.SELECT(sqlSentence);
@@ -61,12 +66,12 @@ public class AuthorityRequestService extends BaseService{
         maxPageVO.setMaxPage(maxPage);
         return maxPageVO;
     }
-    public int changeCompanyState(String accountNum,String state){
+    public ReturnVO changeCompanyState(String accountNum,String state){
         String sqlSentence = "UPDATE company SET state = '"+state+"' WHERE accountNum = '"+accountNum+"';";
-        return mapper.UPDATE(sqlSentence);
+        return intToReturnVO(mapper.UPDATE(sqlSentence));
     }
-    public int changeGuarantyState(int guarantyId,int state){
+    public ReturnVO changeGuarantyState(int guarantyId,int state){
         String sqlSentence = "UPDATE guaranty SET state = "+state+" WHERE guarantyId = "+guarantyId+";";
-        return mapper.UPDATE(sqlSentence);
+        return intToReturnVO(mapper.UPDATE(sqlSentence));
     }
 }

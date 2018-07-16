@@ -51,7 +51,7 @@ public class AuthorityRequestController extends BaseController{
             @ApiImplicitParam(paramType = "form", name = "accountNum", value = "企业唯一标识符",
                     required = true,  dataType = "int"),
     })
-    int approveApplication(String accountNum) {
+    ReturnVO approveApplication(String accountNum) {
         return service.changeCompanyState(accountNum,"passed");
     }
     @RequestMapping(value = "/reject", method = RequestMethod.PUT)
@@ -59,7 +59,7 @@ public class AuthorityRequestController extends BaseController{
             @ApiImplicitParam(paramType = "form", name = "accountNum", value = "企业唯一标识符",
                     required = true,  dataType = "int"),
     })
-    int rejectApplication(String accountNum) {
+    ReturnVO rejectApplication(String accountNum) {
         return service.changeCompanyState(accountNum,"unpassed");
     }
 
@@ -77,7 +77,7 @@ public class AuthorityRequestController extends BaseController{
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
     })
-    int toTBCList(int guarantyId) {
+    ReturnVO toTBCList(int guarantyId) {
         return service.changeGuarantyState(guarantyId,3);
     }
 

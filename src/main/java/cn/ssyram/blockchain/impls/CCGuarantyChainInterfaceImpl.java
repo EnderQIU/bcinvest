@@ -15,11 +15,7 @@ public class CCGuarantyChainInterfaceImpl implements CCGuarantyChainInerface{
         return 0;
     }
     @Override
-    public List<Map<String, Object>> queryGuarantyIdByBank(int state){
-        return null;
-    }
-    @Override
-    public List<Map<String, Object>> queryGuarantyIdByCompany(String accountNum,int state){
+    public List<Map<String, Object>> queryGuarantyIdByState(int state){
         return null;
     }
     @Override
