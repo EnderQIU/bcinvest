@@ -39,11 +39,32 @@ public class AuthorityRequestController extends BaseController{
             all.addAll(companies);
         }
         return all; }
-    @RequestMapping(value = "/maxPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/companyMaxPage", method = RequestMethod.GET)
     @ApiImplicitParams({
     })
-    MaxPageVO getMaxPage(String[] states) {
-        return service.findMaxPage(states); }
+    MaxPageVO getCompanyMaxPage(String[] states) {
+        return service.findCompanyMaxPage(states); }
+    @RequestMapping(value = "/guaranties", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
+                    required = true,  dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "page", value = "请求页面数",
+                    required = true,  dataType = "int"),
+    })
+    List<GuarantyVO> getGuaranties(int page,int[] states) {
+        List<GuarantyVO> all = new ArrayList<>();
+        for(int state:states){
+            List<GuarantyVO> guaranties = service.findGuarantiesByState(state,page);
+            all.addAll(guaranties);
+        }
+        return all; }
+    @RequestMapping(value = "/guarantyMaxPage", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
+                    required = true,  dataType = "String"),
+    })
+    MaxPageVO getGuarantyMaxPage(int[] states) {
+        return service.findGuarantyMaxPage(states); }
 
     @RequestMapping(value = "/approve", method = RequestMethod.PUT)
     @ApiImplicitParams({
@@ -64,11 +85,11 @@ public class AuthorityRequestController extends BaseController{
 
     @RequestMapping(value = "/companyDetail", method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "accounNum", value = "企业唯一标识符",
+            @ApiImplicitParam(paramType = "query", name = "accountNum", value = "企业唯一标识符",
                     required = true,  dataType = "int"),
     })
-    CompanyVO getCompanyDetail(String accounNum) {
-        return service.findCompany(accounNum);
+    CompanyVO getCompanyDetail(String accountNum) {
+        return service.findCompany(accountNum);
     }
 
     @RequestMapping(value = "/toTBCList", method = RequestMethod.PUT)
