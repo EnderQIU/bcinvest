@@ -1,80 +1,11 @@
 <!Doctype html>
 <html>
     <head>
-        <script type="text/javascript" src="js/JQuery.js"></script>
-        <script>
-            function getCookie(c_name) {
-                if (document.cookie.length > 0) {
-                    c_start = document.cookie.indexOf(c_name + "=")
-                    if (c_start != -1) {
-                        c_start = c_start + c_name.length + 1;
-                        c_end = document.cookie.indexOf(";", c_start);
-                        if (c_end == -1) c_end = document.cookie.length;
-                        return unescape(document.cookie.substring(c_start,c_end));
-                    }
-                }
-                return "";
-            };
-            function setCookie(c_name, value, expiredays) {
-                var exdate = new Date();
-                exdate.setDate(exdate.getDate() + expiredays);
-                document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
-            };
-            function isEmptyValue(value) {
-                if (value === null) {
-                    return true;
-                }
-                var type = typeof(value);
-                switch (type) {
-                    case 'number':
-                        return isNaN(value);
-                    case 'function':
-                        return false;
-                    case 'object':
-                        for (var key in value) {
-                            return false;
-                        }
-                        return true;
-                    case 'string':
-                        if (value.length > 0) {
-                            return false;
-                        }
-                        return true;
-                    case 'boolean':
-                        return false;
-                    case 'undefined':
-                        return true;
-                }
-            };
-        </script>
-        <script>
-            $.ajax({
-                'url': '/user/bankOrAuthority/info',
-                'type': 'GET',
-                'headers': {
-                    'user_id_token': 'testBankToken',
-                    // 'user_id_token': getCookie('user_id_token'),
-                },
-                'async': false,
-                'success': function (data) {
-                    if (!isEmptyValue(data.name) && !isEmptyValue(data.type)) {
-                        switch (data.type) {
-                            case 'bank':
-                                location.href='bank.html';
-                                break;
-                            case 'authorization':
-                                location.href='authorization.html';
-                                break;
-                        }
-                    }
-                }
-            })
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
-        </script>
-        <link rel="stylesheet" type="text/css" href="css/login/login-in.css">
-        
         <meta charset="UTF-8">
+        <script type="text/javascript" src="js/JQuery.js"></script>
+        <script type="text/javascript" src="js/login_in_authority.js"></script>
+        <script src="js/vue.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/login/login-in.css">
     </head>
     <body>
         <img class="logo" src="pics/logo.png"/>
@@ -86,60 +17,88 @@
             </li>
         </ul>
 
-        <form id="login-in-form" class="login-form">
-            <h1>平台登陆</h1>
+        <div id="login-in-form" class="login-form">
+            <div class="info_container">
+                <h1 class="form_title">平台登陆</h1>
+                <p class="error_info" v-if="error_info">{{ error_info }}</p>
+            </div>
             <ul>
-                <li class="write_in" v-for="(item, i) in urlandplaceholder">
-                    <label class="icon" v-bind:style="{background: 'url(' + item.url + ')'}"></label>
-                    <input :placeholder="item.placeholder" v-model="bindData[str[i]]"/>
+                <li class="write_in">
+                    <label class="icon" style="background: url('pics/icon-username.png')"></label>
+                    <input placeholder="username" v-model="bindData.username"/>
                 </li>
+                <li class="write_in">
+                    <label class="icon" style="background: url('pics/icon-password.png')"></label>
+                    <input placeholder="password" v-model="bindData.password" type="password"/>
+                </li>
+                <!-- <li class="write_in" v-for="(item, i) in urlandplaceholder">
+                </li> -->
                 <li class="type_choice">
                     <label>
-                        <input type="radio" name="account_type" value="bank"/>
+                        <input type="radio" name="account_type" value="bank" v-model="bindData.account_type"/>
                         银行
                     </label>
                     <label>
-                        <input type="radio" name="account_type" value="authority"/>
+                        <input type="radio" name="account_type" value="authority" v-model="bindData.account_type"/>
                         机构
                     </label>
                 </li>
             </ul>
             <div class="choice_action">
                 <label class="remember_me">
-                    <input type="checkbox"/>
+                    <input type="checkbox" v-model="bindData.remember"/>
                     记住我
                 </label>
                 <a class="forget-password" href="">忘记密码?&nbsp;</a>
             </div>
-            <button id="submit-login-in" v-on:click.stop.prevent="submitLogIn()">登&nbsp;陆</button>
+            <button id="submit-login-in" v-on:click="submitLogIn">登&nbsp;陆</button>
             <!--a><button>登&nbsp;陆</button></a-->
-        </form>
+        </div>
 
         <script>
             var loginInComponents = new Vue({
                 el: "#login-in-form",
                 data: {
-                    urlandplaceholder: [
-                        {
-                            url: 'pics/icon-username.png',
-                            placeholder: 'username',
-                            username: ''
-                        },
-                        {
-                            url: 'pics/icon-password.png',
-                            placeholder: 'password',
-                            password: ''
-                        }
-                    ],
                     bindData: {
-                        username: '',
-                        password: ''
+                        'username': '',
+                        'password': '',
+                        'account_type': '',
+                        'remember': false,
                     },
-                    str: ['username', 'password']
+                    error_info: '',
                 },
                 methods: {
                     submitLogIn:function() {
-
+                        var query_string = '?userName=' + this.bindData.username + "&password=" + this.bindData.password;
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/bankOrAuthority/token' + query_string,
+                            'type': 'PUT',
+                            'async':false,
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            'success': function (data) {
+                                result = data;
+                            }
+                        });
+                        if (!isEmptyValue(result)) {
+                            if (!isEmptyValue(result.message)) {
+                                if (result.message == 'ok') {
+                                    setCookie('user_id_token', result.token);
+                                    switch (this.bindData.account_type) {
+                                        case 'bank':
+                                            window.location.href = 'bank.html';
+                                            break;
+                                        case 'authority':
+                                            window.location.href = 'authority.html';
+                                            break;
+                                    }
+                                } else {
+                                    this.error_info = result.message;
+                                }
+                            }
+                        }
                     }
                 },
                 computed: {
@@ -154,6 +113,5 @@
                 }
             });
         </script>
-
     </body>
 </html>
