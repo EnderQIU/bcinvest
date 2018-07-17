@@ -29,7 +29,7 @@ public class Transferer {
     @Autowired
     private static DSLContext dsl;
 
-    public static void send(Serializable ser) throws IOException {
+    public static void send(Serializable ser){
         String type = "";
         if (ser instanceof Block)
             type = "Block";
@@ -46,8 +46,13 @@ public class Transferer {
         }
 
         ByteArrayOutputStream byt = new ByteArrayOutputStream();
-        ObjectOutputStream obj = new ObjectOutputStream(byt);
-        obj.writeObject(ser);
+        try{
+            ObjectOutputStream obj = new ObjectOutputStream(byt);
+            obj.writeObject(ser);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
         byte[] data = byt.toByteArray();
 
         CloseableHttpClient httpClient = null;
