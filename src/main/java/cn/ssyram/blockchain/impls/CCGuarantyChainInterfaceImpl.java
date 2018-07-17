@@ -37,9 +37,4 @@ public class CCGuarantyChainInterfaceImpl implements CCGuarantyChainInerface{
     public Integer getGuarantyState(Integer guarantyId) {
         return null;
     }
-
-    @Override
-    public ArrayList<Integer> getGuarantyState(ArrayList<Integer> guarantyIds) {
-        return null;
-    }
 }
