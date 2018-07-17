@@ -6,6 +6,7 @@ import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
 import cn.ssyram.blockchain.innerlogic.support.DatabaseOperator;
 
+import java.time.temporal.TemporalAmount;
 import java.util.*;
 
 public class BlockChainOperator {
@@ -111,4 +112,11 @@ public class BlockChainOperator {
         return originValue + variation == value;
     }
 
+    public static Map<String, Object> getLatestReadyMainBlockInfo(ChainType type) {
+        return DatabaseOperator.SELECT(
+                "SELECT * FROM " + type.getChainTableName()
+                + " WHERE is_main = 1 AND (length + 6) IN (SELECT MAX(length) FROM "
+                + type.getChainTableName() + ")"
+        ).get(0);
+    }
 }

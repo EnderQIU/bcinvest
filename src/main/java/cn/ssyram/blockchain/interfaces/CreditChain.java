@@ -2,6 +2,9 @@ package cn.ssyram.blockchain.interfaces;
 
 import cn.ssyram.blockchain.impls.CreditChainImpl;
 
+import java.util.List;
+import java.util.Map;
+
 public interface CreditChain extends BlockChain {
     CreditChain chain = new CreditChainImpl();
 

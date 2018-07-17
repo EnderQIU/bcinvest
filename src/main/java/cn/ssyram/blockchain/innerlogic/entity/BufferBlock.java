@@ -57,10 +57,14 @@ public class BufferBlock extends Block{
     }
 
     public Block getBlock() {
+        setThis_hash(Miner.bytesToHexString(getRaw_this_hash()));
+        List<BlockData> dl = getDataList();
+        for (BlockData data:dl)
+            data.setBlock_hash(getThis_hash());
         return new Block(
                 getType(),
                 Calendar.getInstance().getTime().toString(),
-                Miner.bytesToHexString(getRaw_this_hash()),
+                getThis_hash(),
                 (String) BlockChainOperator.getLatestMainBlockInfo(getType()).get("previous_hash"),
                 getDataList()
         );
