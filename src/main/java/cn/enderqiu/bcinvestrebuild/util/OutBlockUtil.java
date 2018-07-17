@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class OutBlockUtil {
 
-    public static void notifyOutBlock(ArrayList<String> addresses){
+    public static void notifyOutBlock(String addresses){
         return;
     }
 }
