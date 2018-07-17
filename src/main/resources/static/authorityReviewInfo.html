@@ -1,28 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>审查注册信息</title>
     <script type="text/javascript" src="js/company_authority.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
     <script type="text/javascript" src="js/JQuery.js"></script>
-    <script>
-        $(document).ready(function(){
-            $("button").click(function(){
-                $.get("/Authorization/reviewInfo/getComoanyInfo",
-                    {
-                        user_id_token:"12345"
-                    },
-                    function(){
 
-                    });
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="content_container">
-<div>
+
+<div id="company_credit_info">
     <table style="width :100%;">
         <tbody>
         <tr>
@@ -39,10 +28,60 @@
                 信用值
             </td>
         </tr>
+
+        <tr v-for ="item in GuarantyCompanyInfo">
+            <td>{{ item['name'] }}</td>
+            <td>{{ item['telNum'] }}</td>
+            <td>{{ item['emailAddress'] }}</td>
+            <td>{{ item['credit']}}</td>
+        </tr>
         </tbody>
     </table>
-    <button>mm</button>
+    <button v-on:click="click_listener()">获取申请企业的信息</button>
 </div>
+    <script>
+        new Vue({
+            el: '#company_credit_info',
+            data :{
+
+                GuarantyCompanyInfo :[]
+            },
+            methods:{
+                getData: function () {
+                    var result =' ';
+                    //deal with parameter
+                    $.ajax({
+                        method: "GET" ,
+                        url: "/Authorization/reviewInfo/getComoanyInfo",
+                        async: false,
+
+                        beforeSend: function (request) {
+                            request.setRequestHeader("user_id_token", "12345");
+                        },
+                        success : function(data)
+                        {
+
+                            result=data;
+
+                        }
+
+
+                    });
+
+                    return result;
+
+                },
+                click_listener: function () {
+                    result = this.getData();
+
+                    this.GuarantyCompanyInfo= result;
+                }
+
+            }
+        })
+    </script>
+
 </div>
+
 </body>
 </html>
