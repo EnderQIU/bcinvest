@@ -4,6 +4,7 @@ import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,17 @@ import java.util.List;
 public class CollectDTO implements Serializable {
     private ChainType type;
     private List<BlockData> blockDataList;
+
+    public CollectDTO() {}
+
+    /**
+     * 放入一条信息生成一个只含有一条信息的信息盒包装
+     */
+    public CollectDTO(ChainType type, BlockData data) {
+        this.type = type;
+        blockDataList = new ArrayList<>(1);
+        blockDataList.add(data);
+    }
 
     public ChainType getType() {
         return type;

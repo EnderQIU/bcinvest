@@ -1,6 +1,7 @@
 package cn.ssyram.blockchain.innerlogic.executive;
 
 import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
+import cn.ssyram.blockchain.innerlogic.Dispatcher;
 import cn.ssyram.blockchain.innerlogic.dto.LinkDTO;
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
@@ -65,6 +66,12 @@ public class LinkExecutive implements Runnable {
 
             if (!ConditionVariables.calculating) return;
 
+//            //如果算完是第一个让当前计算应该被give up，则实际上已经结束了计算，应该设置为false
+//            if (ConditionVariables.shouldGiveUp) {
+//                ConditionVariables.calculating = false;
+//                Dispatcher.recallBlockInfo(block);
+//            }
+
             sendBlock();
         }
 
@@ -108,6 +115,8 @@ public class LinkExecutive implements Runnable {
         }
 
         private void changeMainChain() {
+            //这个时候增加了主链，所以新的确认挖矿者增加
+            Dispatcher.recallBlockInfo(block);
             //一次溯源
             //在计算data的时候已经算完了
             //使用notMainHashList即可获得当前块前一块到主链为止所有非main的hash，所以加上本块hash即完成构建

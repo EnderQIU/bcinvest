@@ -1,6 +1,7 @@
 package cn.ssyram.blockchain.innerlogic.executive;
 
 import cn.ssyram.blockchain.innerlogic.CurrentBlocks;
+import cn.ssyram.blockchain.innerlogic.Dispatcher;
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BufferBlock;
 import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
@@ -86,6 +87,8 @@ public class MineExecutive implements Runnable {
             return;
 
         BlockChainOperator.addBlock(b, true);
+
+        Dispatcher.recallBlockInfo(b);
 
         Transferer.send(b);
     }

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script>
+
+        </script>
+        <script type="text/javascript" src="js/JQuery.js"></script>
+        <script type="text/javascript" src="js/bank_authority.js"></script>
+        <script type="text/javascript" src="js/vue.js"></script>
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/bootbox.min.js"></script>
+        <style>
+            html {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .body_header {
+                width: 100%;
+                height: 80px;
+                border: 1px solid red;
+            }
+            .body_header .header_title {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 32px;
+            }
+            .body_header .right_button {
+                margin: 0;
+                padding: 0;
+                right: 30px;
+                float: right;
+                position: relative;
+                top: 50%;
+                transform: translateY(-52%);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .body_header .bank_name {
+                padding-right: 24px;
+                font-size: 18px;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            .main_body {
+                width: 100%;
+                display: flex;
+            }
+            .list_container {
+                float: left;
+                border-right: 1px solid black;
+            }
+            .list_container .list_content {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .list_container .list_item {
+                padding: 10px 20px 10px 20px;
+                margin: 0 0 6px 0;
+                cursor: pointer;
+            }
+            .list_container .item_selected {
+                background-color: #CCCCCC;
+            }
+            .table_head {
+                text-align: center;
+            }
+            .table_cell {
+                text-align: center;
+            }
+            .page_change_container {
+                text-align: center;
+            }
+            .page_change_container .page_change {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            .page_change_container .current_page {
+                color: darkorange;
+            }
+            .house_detail{
+                display: none;
+            }
+            .land_detail{
+                display: none;
+            }
+            .machine_detail{
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="body_header" id="body_header">
+            <label class="header_title">银行中心</label>
+            <div class="right_button">
+                <label class="bank_name">{{ bank_name }}</label>
+                <a href="" class="log_out">
+                    登出
+                </a>
+            </div>
+        </div>
+        <div class="main_body" id="main_body">
+            <div class="list_container">
+                <ul class="list_content">
+                    <li class="list_item" v-for="(item, i) in list_item_str"  v-on:click="select_item(i)" v-bind:class="[list_selected_index == i ? list_selected_class : '']">
+                        {{ list_item_data[item].label_text }}
+                    </li>
+                </ul>
+
+            </div>
+            <div class="content_container">
+                <div v-if="list_item_str[list_selected_index] == 'login_apply'">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td class="table_head">企业名称</td>
+                            <td class="table_head">操作</td>
+                        </tr>
+                        <tr v-for="item in current_company">
+                            <td class="table_cell">{{ item.name }}</td>
+                            <td class="table_cell">
+                                <label v-on:click="company_pass_login_click(item)" style="cursor: pointer; text-decoration: underline;">通过</label>&nbsp;&nbsp;
+                                <label v-on:click="company_unpass_login_click(item)" style="cursor: pointer; text-decoration: underline;">拒绝</label>&nbsp;&nbsp;
+                                <label v-on:click="view_company_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="page_change_container" v-if="max_page > 0">
+                        <label v-if="current_page > 0" class="page_change" v-on:click="company_aimed_page(1)">首页</label>
+                        <label v-if="current_page > 1" class="page_change" v-on:click="company_aimed_page(current_page - 1)">上一页</label>
+                        <label v-if="current_page > 2" class="page_change" v-on:click="company_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                        <label v-if="current_page > 1" class="page_change" v-on:click="company_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                        <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                        <label v-if="current_page < max_page" class="page_change" v-on:click="company_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                        <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="company_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                        <label v-if="current_page < max_page" class="page_change" v-on:click="company_aimed_page(current_page + 1)">下一页</label>
+                        <label v-if="current_page > 0" class="page_change" v-on:click="company_aimed_page(max_page)">尾页</label>
+                    </div>
+                    <div class="page_change_container" v-else>
+
+                    </div>
+                    <!-- 模态框（Modal） -->
+                    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">企业详情</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group" id = "company_detail">
+                                        <label>名称：</label><span id = "company_name"></span><br>
+                                        <label>电话：</label><span id = "company_tel"></span><br>
+                                        <label>邮件:</label><span id = "company_email"></span><br>
+                                        <label>信用:</label><span id = "company_credit"></span><br>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id = "close">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function isEmptyValue(value) {
+                if (value === null) {
+                    return true;
+                }
+                var type = typeof(value);
+                switch (type) {
+                    case 'number':
+                        return isNaN(value);
+                    case 'function':
+                        return false;
+                    case 'object':
+                        for (var key in value) {
+                            return false;
+                        }
+                        return true;
+                    case 'string':
+                        if (value.length > 0) {
+                            return false;
+                        }
+                        return true;
+                    case 'boolean':
+                        return false;
+                    case 'undefined':
+                        return true;
+                }
+            };
+            var for_header = new Vue({
+                el: '#body_header',
+                data: {
+                    'bank_name': window.bank_name,
+                }
+            });
+            var main_body = new Vue({
+                el: '#main_body',
+                data: {
+                    list_item_str:['repay_confirm', 'login_apply', 'test'],
+                    list_item_data: {
+                        'repay_confirm': {
+                            label_text: '企业还贷申请',
+                        },
+                        'login_apply': {
+                            label_text: '企业注册申请管理',
+                        },
+                        'test': {
+                            label_text: 'test',
+                        }
+                    },
+                    list_selected_class: 'item_selected',
+                    list_selected_index: -1,
+                    current_guaranty:[],
+                    current_guaranty_states:[],
+                    current_page:-1,
+                    max_page :-1,
+                    states_word: ['鉴定中', '不合格', '合格', '待确认', '可抵押', '申请抵押中', '申请已通过', '申请还款中', '逾期'],
+                    type_word:['房产','地产','机器'],
+                    scope_of_right_word:['整体','部分'],
+                    current_company: [],
+                    current_company_state: null,
+                },
+                methods: {
+                    select_item: function (index) {
+                        this.list_selected_index = index;
+                        switch (this.list_item_str[index]) {
+                            case 'repay_confirm':
+                                break;
+                            case 'login_apply':
+                                this.display_login_apply_table();
+                                break;
+                            case 'test':
+                                alert('123');
+                                break;
+                        }
+                    },
+                    company_states_to_string() {
+                        var result = '';
+                        for (var i = 0; i < this.current_company_state.length; i++) {
+                            if (i > 0) {
+                                result = result + "&";
+                            }
+                            result = result + "states=" + this.current_company_state[i];
+                        }
+                        return result;
+                    },
+                    get_company(page) {
+                        var query_para = '?' + this.company_states_to_string() + "&page=" + page.toString();
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/bank/authorityRequest/companies' + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            }
+                        });
+                        return result;
+                    },
+                    get_company_max_page() {
+                        var query_para = '?' + "states=" + this.company_states_to_string();
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/bank/authorityRequest/maxPage' + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                        });
+                        return result;
+                    },
+                    company_aimed_page(page) {
+                        var companies = this.get_company(page);
+                        if (!isEmptyValue(companies)) {
+                            this.current_page = page;
+                            this.current_company = companies;
+                        }
+                    },
+                    display_login_apply_table(){
+                        this.current_company_state = ['checking_2'];
+                        this.current_company = [];
+                        this.max_page = 0;
+                        this.current_page = 0;
+                        var max_page_data = this.get_company_max_page();
+                        if (!isEmptyValue(max_page_data) && !isEmptyValue(max_page_data.maxPage) && max_page_data.maxPage > 0) {
+                            this.max_page = max_page_data.maxPage;
+                            this.current_company = this.get_company(1);
+                            this.current_page = 1;
+                        } else {
+                            this.max_page = 0;
+                        }
+                    },
+                    view_company_detail_click(item){
+                        var query_para = '?accountNum=' + item.accountNum.toString();
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/bank/authorityRequest/companyDetail' + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            }
+                        });
+                        var company = result;
+                        var modal = $('#detailModal');
+                        modal.find('#company_name').html(company.name);
+                        modal.find('#company_tel').html(company.telNum);
+                        modal.find('#company_email').html(company.emailAddress);
+                        modal.find('#company_credit').html(company.credit);
+                        modal.modal('show');
+                    },
+                    company_pass_login_click(item){
+                        bootbox.confirm({
+                            message: "您确定要通过该企业注册申请吗？",
+                            buttons: {
+                                confirm: {
+                                    label: '确认',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: '返回',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function (result) {
+                                if(result){
+                                    var influence = null;
+                                    $.ajax({
+                                        'url': '/user/bank/authorityRequest/approve',
+                                        'type': 'PUT',
+                                        'data':{
+                                            'accountNum':item.accountNum,
+                                        },
+                                        'async': false,
+                                        'success': function(data) {
+                                            influence = data;
+                                        },
+                                        'headers': {
+                                            'user_id_token': getCookie('user_id_token'),
+                                        }
+                                    });
+                                    if (influence.influence > 0 ){
+                                        main_body.display_login_apply_table();
+                                    } else {
+                                        //错误提示
+                                    }
+                                }
+                            }
+                        });
+                    },
+                    company_unpass_login_click(item){
+                        bootbox.confirm({
+                            message: "您确定要拒绝该企业注册申请吗？",
+                            buttons: {
+                                confirm: {
+                                    label: '确认',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: '返回',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function (result) {
+                                if(result){
+                                    var influence = null;
+                                    $.ajax({
+                                        'url': '/user/bank/authorityRequest/reject',
+                                        'type': 'PUT',
+                                        'data':{
+                                            'accountNum':item.accountNum,
+                                        },
+                                        'async': false,
+                                        'success': function(data) {
+                                            influence = data;
+                                        },
+                                        'headers': {
+                                            'user_id_token': getCookie('user_id_token'),
+                                        }
+                                    });
+                                    if (influence.influence > 0) {
+                                        main_body.display_login_apply_table();
+
+                                    } else{
+                                        //错误提示
+                                    }
+                                }
+                            }
+                        });
+                    },
+
+                }
+            });
+        </script>
+    </body>
+</html>

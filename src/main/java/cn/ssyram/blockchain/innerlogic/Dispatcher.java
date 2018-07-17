@@ -1,5 +1,6 @@
 package cn.ssyram.blockchain.innerlogic;
 
+import cn.enderqiu.bcinvestrebuild.util.OutBlockUtil;
 import cn.ssyram.blockchain.innerlogic.dto.CollectDTO;
 import cn.ssyram.blockchain.innerlogic.dto.LinkDTO;
 import cn.ssyram.blockchain.innerlogic.dto.QueryDTO;
@@ -7,6 +8,7 @@ import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.executive.CollectExecutive;
 import cn.ssyram.blockchain.innerlogic.executive.LinkExecutive;
 import cn.ssyram.blockchain.innerlogic.executive.QueryExecutive;
+import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,5 +48,12 @@ public class Dispatcher {
     public static List<Map<String, Object>> query(QueryDTO dto) {
         QueryExecutive executive = new QueryExecutive(dto);
         return executive.execute();
+    }
+
+    public static void recallBlockInfo(Block block) {
+        String targetAddress = (String) BlockChainOperator
+                .getLatestReadyMainBlockInfo(block.getType())
+                .get("address");
+        OutBlockUtil.notifyOutBlock(targetAddress);
     }
 }
