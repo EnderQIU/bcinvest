@@ -2,7 +2,9 @@ package cn.ssyram.blockchain.innerlogic.dto;
 
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
 
-public class QueryDTO {
+import java.io.Serializable;
+
+public class QueryDTO implements Serializable {
 //    //表名
 //    private ChainType type;
 //    /**

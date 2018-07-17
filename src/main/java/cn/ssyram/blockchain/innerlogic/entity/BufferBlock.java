@@ -1,7 +1,10 @@
 package cn.ssyram.blockchain.innerlogic.entity;
 
+import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
+import cn.ssyram.blockchain.innerlogic.operator.Miner;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class BufferBlock extends Block{
@@ -24,8 +27,9 @@ public class BufferBlock extends Block{
         this.raw_this_hash = raw_this_hash;
     }
 
-    public BufferBlock() {
+    public BufferBlock(ChainType type) {
         super();
+        this.type = type;
     }
 
     public void setType(ChainType type) {
@@ -33,7 +37,7 @@ public class BufferBlock extends Block{
     }
 
     public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
+        this.time_stamp = timeStamp;
     }
 
     public void setThis_hash(String this_hash) {
@@ -46,5 +50,19 @@ public class BufferBlock extends Block{
 
     public void setDataList(List<BlockData> dataList) {
         this.dataList = dataList;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Block getBlock() {
+        return new Block(
+                getType(),
+                Calendar.getInstance().getTime().toString(),
+                Miner.bytesToHexString(getRaw_this_hash()),
+                (String) BlockChainOperator.getLatestMainBlockInfo(getType()).get("previous_hash"),
+                getDataList()
+        );
     }
 }

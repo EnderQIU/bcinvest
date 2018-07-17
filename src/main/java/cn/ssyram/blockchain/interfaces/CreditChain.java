@@ -11,12 +11,12 @@ public interface CreditChain extends BlockChain {
      * @param previousCredit
      * @param delta
      */
-    void updateGuarantyState(Integer accountNum, Integer previousCredit, Integer delta);
+    void updateGuarantyState(String accountNum, Integer previousCredit, Integer delta);
 
     /**
      * 获取指定企业的信用值
      * @param accountNum
      * @return
      */
-    Integer getCreditOfCompany(Integer accountNum);
+    Integer getCreditOfCompany(String accountNum);
 }

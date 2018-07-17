@@ -15,7 +15,7 @@ public class CurrentBlocks {
     private static Map<String, BufferBlock> blocksMap = new HashMap<>();
     static {
         for (ChainType type:ChainType.values())
-            blocksMap.put(type.toString(), new BufferBlock());
+            blocksMap.put(type.toString(), new BufferBlock(type));
     }
 
     /**
@@ -24,7 +24,7 @@ public class CurrentBlocks {
      * @return 之前的缓冲区块
      */
     public static BufferBlock replaceCurrentBlockFor(@NotNull ChainType type) {
-        return blocksMap.replace(type.toString(), new BufferBlock());
+        return blocksMap.replace(type.toString(), new BufferBlock(type));
     }
 
     /**

@@ -3,12 +3,13 @@ package cn.ssyram.blockchain.innerlogic.dto;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 本质上是一个带上type用于寻找合适区块的BlockData
  */
-public class CollectDTO {
+public class CollectDTO implements Serializable {
     private ChainType type;
     private List<BlockData> blockDataList;
 
