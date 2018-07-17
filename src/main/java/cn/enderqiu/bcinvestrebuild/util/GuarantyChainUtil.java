@@ -121,7 +121,7 @@ public class GuarantyChainUtil {
      * 若状态未更新且 count 小于等于 180，则将 count + 1，
      * 若状态未更新且 count 大于 180，则将此记录状态设为 failure。
      */
-    @Scheduled(fixedRate = 10)
+   //@Scheduled(fixedRate = 10)
     public void checkStateWhetherUpdate(){
         Byte locked = 1;
         Byte unlocked = 0;
