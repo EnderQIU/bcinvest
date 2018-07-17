@@ -8,5 +8,7 @@ public class ConditionVariables {
     /**
      * 表征正在计算中时的linker数量
      */
-    public static int linkerAmountWhenCalculating = 0;
+    public static Integer linkerAmountWhenCalculating = 0;
+
+    public static boolean shouldGiveUp = false;
 }

@@ -1,6 +1,8 @@
 package cn.ssyram.blockchain.innerlogic.entity;
 
-public class BlockData {
+import java.io.Serializable;
+
+public class BlockData implements Serializable {
     private String block_hash;
     private String id; //这里的id指的是绑定物的id
     private String variation;
@@ -45,5 +47,14 @@ public class BlockData {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    @Override
+    public String toString() {
+        return "block_hash: " + getBlock_hash() + ", "
+                + "id: " + getId() + ", "
+                + "variation: " + getVariation() + ", "
+                + "value: " + getValue() + ", "
+                + (getRemarks() == null ? "" : "remarks: " + getRemarks());
     }
 }
