@@ -53,11 +53,48 @@ public class AuthorityRequestService extends BaseService{
         int count = Integer.parseInt(results.get(0).get("COUNT(*)").toString());
         return count;
     }
-    public MaxPageVO findMaxPage(String[] states){
+    public MaxPageVO findCompanyMaxPage(String[] states){
         int count = 0;
         int maxPage = 0;
         for(String state :states){
             count+=findCompaniesCount(state);
+        }
+        if(count>0){
+            maxPage = count/21+1;
+        }
+        MaxPageVO maxPageVO = new MaxPageVO();
+        maxPageVO.setMaxPage(maxPage);
+        return maxPageVO;
+    }
+    public int findGuarantiesCount(int stateNum){
+        String sqlSentence = "SELECT COUNT(*) FROM guaranty WHERE state = "+stateNum+" ORDER BY accountNum;";
+        List<Map<String,Object>> results = mapper.SELECT(sqlSentence);
+        int count = Integer.parseInt(results.get(0).get("COUNT(*)").toString());
+        return count;
+    }
+    public List<GuarantyVO> findGuarantiesByState(int stateNum,int page){
+        List<Map<String,Object>> results = null;
+        List<GuarantyVO> guaranties = new ArrayList<>();
+        int pageStartIndex = (page-1)*20;
+        String sqlSentence = "SELECT * FROM guaranty WHERE state = "+stateNum+" ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
+        results = mapper.SELECT(sqlSentence);
+        guaranties = getVOListByResult(results,GuarantyVO.class);
+        return guaranties;
+    }
+    public MaxPageVO findGuarantyMaxPage(int[] stateNums){
+        int count = 0;
+        int maxPage = 0;
+        for(int stateNum :stateNums){
+            switch (stateNum){
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();break;
+                default:
+                    count+=findGuarantiesCount(stateNum);
+            }
         }
         if(count>0){
             maxPage = count/21+1;
