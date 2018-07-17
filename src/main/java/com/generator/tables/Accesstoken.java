@@ -6,7 +6,6 @@ package com.generator.tables;
 
 import com.generator.Bcinvest;
 import com.generator.Indexes;
-import com.generator.Keys;
 import com.generator.tables.records.AccesstokenRecord;
 
 import java.time.LocalDateTime;
@@ -16,7 +15,6 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -39,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Accesstoken extends TableImpl<AccesstokenRecord> {
 
-    private static final long serialVersionUID = 1419860333;
+    private static final long serialVersionUID = 1724749360;
 
     /**
      * The reference instance of <code>bcinvest.Accesstoken</code>
@@ -112,14 +110,6 @@ public class Accesstoken extends TableImpl<AccesstokenRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.ACCESSTOKEN_ACCOUNTNUM);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<ForeignKey<AccesstokenRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<AccesstokenRecord, ?>>asList(Keys.ACCESSTOKEN_IBFK_1);
     }
 
     /**

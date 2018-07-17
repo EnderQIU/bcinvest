@@ -6,10 +6,11 @@ import com.generator.tables.Creditupdatetask;
 import com.generator.tables.records.CompanyRecord;
 import com.generator.tables.records.CreditupdatetaskRecord;
 import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.Record2;
+import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreditChainUtil {
@@ -35,7 +36,7 @@ public class CreditChainUtil {
      * @param creditNeedToBeUpdated
      */
     private static void addTask(String accountnum, Long previousCredit, int creditNeedToBeUpdated) {
-        Byte locked = new Byte("0");
+        Byte locked = new Byte("1");
         dsl.insertInto(Creditupdatetask.CREDITUPDATETASK)
                 .set(Creditupdatetask.CREDITUPDATETASK.ACCOUNTNUM, accountnum)
                 .set(Creditupdatetask.CREDITUPDATETASK.PREVIOUSCREDIT, previousCredit.intValue())
@@ -59,10 +60,11 @@ public class CreditChainUtil {
      * 2. 检查事务状态。查询所有 状态为 pending 的记录，调用 CreditChain.getCreditOfCompany 接口，获取指定企业最新的链上信用值 presentCredit，
      * 并与此记录中的 (previousCredit + delta) 对比，若相等则将此记录的状态变为 finished，若不相等则跳过。
      *
-     * 3. 解锁。查询队列中 accountNum 相同的记录中是否存在状态全为 finished 的情况，若存在，则将指定的企业信用值解锁
+     * 3. 解锁。查询队列中 accountNum 相同的记录中是否存在状态全为 finished 的情况，若存在，则将指定的企业信用值解锁，并将所有状态为 finished 的记录删除
      */
     // @Scheduled(fixedRate = 120)
     private static void updateCreditSchedule(){
+        Byte unlocked = new Byte("0");
         // 提交事务
         Creditupdatetask T = Creditupdatetask.CREDITUPDATETASK;
         List<Integer> tasks = dsl.select().distinctOn(T.ACCOUNTNUM).where(T.STATE.ne("pending")).fetch(T.ID);
@@ -75,5 +77,34 @@ public class CreditChainUtil {
             }
 
         }
+        // 检查事务状态
+        Result result = dsl.select().from(T).where(T.STATE.eq("pending")).fetch();
+        if (result != null){
+            for (Object o: result){
+                Record record = (Record) o;
+                String accountNum = record.getValue("AccountNum", String.class);
+                Integer presentCredit = CreditChain.chain.getCreditOfCompany(accountNum);
+                Integer previousCredit = record.getValue("previousCredit", Integer.class);
+                Integer delta = record.getValue("delta", Integer.class);
+                if (presentCredit == (previousCredit + delta)){
+                    Integer taskId = record.getValue("id", Integer.class);
+                    dsl.update(T)
+                            .set(T.STATE, "finished")
+                            .where(T.ID.eq(taskId))
+                            .execute();
+                }
+            }
+        }
+        // 解锁
+        Result<Record2<Integer, String>> result1 = dsl.select(T.ID, T.ACCOUNTNUM).distinctOn(T.ACCOUNTNUM).where(T.STATE.eq("finished")).fetch();
+        if (result1 != null){
+            for (Record2<Integer, String> record2: result1){
+                dsl.update(Company.COMPANY)
+                        .set(Company.COMPANY.LOCK, unlocked)
+                        .execute();
+                dsl.delete(T).where(T.ID.eq(record2.value1())).execute();
+            }
+        }
+
     }
 }

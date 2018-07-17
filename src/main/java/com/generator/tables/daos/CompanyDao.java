@@ -119,4 +119,11 @@ public class CompanyDao extends DAOImpl<CompanyRecord, com.generator.tables.pojo
     public List<com.generator.tables.pojos.Company> fetchByStatus(String... values) {
         return fetch(Company.COMPANY.STATUS, values);
     }
+
+    /**
+     * Fetch records that have <code>Lock IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Company> fetchByLock(Byte... values) {
+        return fetch(Company.COMPANY.LOCK, values);
+    }
 }

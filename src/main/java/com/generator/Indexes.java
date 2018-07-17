@@ -9,6 +9,7 @@ import com.generator.tables.Authorization;
 import com.generator.tables.Company;
 import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
+import com.generator.tables.Creditupdatetask;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
 import com.generator.tables.Guarantystateupdatetask;
@@ -54,6 +55,7 @@ public class Indexes {
     public static final Index CREDIT_CREDIT_FK_GUARANTY = Indexes0.CREDIT_CREDIT_FK_GUARANTY;
     public static final Index CREDIT_CREDIT_FK_REPORT = Indexes0.CREDIT_CREDIT_FK_REPORT;
     public static final Index CREDIT_PRIMARY = Indexes0.CREDIT_PRIMARY;
+    public static final Index CREDITUPDATETASK_PRIMARY = Indexes0.CREDITUPDATETASK_PRIMARY;
     public static final Index FUNDAMENTALCERTIFICATE_PRIMARY = Indexes0.FUNDAMENTALCERTIFICATE_PRIMARY;
     public static final Index GUARANTY_GUARANTY_FK_COMPANY = Indexes0.GUARANTY_GUARANTY_FK_COMPANY;
     public static final Index GUARANTY_GUARANTY_FK_REPORT = Indexes0.GUARANTY_GUARANTY_FK_REPORT;
@@ -84,6 +86,7 @@ public class Indexes {
         public static Index CREDIT_CREDIT_FK_GUARANTY = Internal.createIndex("credit_fk_guaranty", Credit.CREDIT, new OrderField[] { Credit.CREDIT.GUARANTYID }, false);
         public static Index CREDIT_CREDIT_FK_REPORT = Internal.createIndex("credit_fk_report", Credit.CREDIT, new OrderField[] { Credit.CREDIT.REPORTID }, false);
         public static Index CREDIT_PRIMARY = Internal.createIndex("PRIMARY", Credit.CREDIT, new OrderField[] { Credit.CREDIT.ACCOUNTNUM, Credit.CREDIT.GUARANTYID, Credit.CREDIT.REPORTID }, true);
+        public static Index CREDITUPDATETASK_PRIMARY = Internal.createIndex("PRIMARY", Creditupdatetask.CREDITUPDATETASK, new OrderField[] { Creditupdatetask.CREDITUPDATETASK.ID }, true);
         public static Index FUNDAMENTALCERTIFICATE_PRIMARY = Internal.createIndex("PRIMARY", Fundamentalcertificate.FUNDAMENTALCERTIFICATE, new OrderField[] { Fundamentalcertificate.FUNDAMENTALCERTIFICATE.ACCOUNTNUM }, true);
         public static Index GUARANTY_GUARANTY_FK_COMPANY = Internal.createIndex("guaranty_fk_company", Guaranty.GUARANTY, new OrderField[] { Guaranty.GUARANTY.ACCOUNTNUM }, false);
         public static Index GUARANTY_GUARANTY_FK_REPORT = Internal.createIndex("guaranty_fk_report", Guaranty.GUARANTY, new OrderField[] { Guaranty.GUARANTY.REPORTID }, false);

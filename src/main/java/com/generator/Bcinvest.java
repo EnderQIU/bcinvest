@@ -9,6 +9,7 @@ import com.generator.tables.Authorization;
 import com.generator.tables.Company;
 import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
+import com.generator.tables.Creditupdatetask;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
 import com.generator.tables.Guarantystateupdatetask;
@@ -44,7 +45,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Bcinvest extends SchemaImpl {
 
-    private static final long serialVersionUID = 947671877;
+    private static final long serialVersionUID = -856405238;
 
     /**
      * The reference instance of <code>bcinvest</code>
@@ -75,6 +76,11 @@ public class Bcinvest extends SchemaImpl {
      * The table <code>bcinvest.Credit</code>.
      */
     public final Credit CREDIT = com.generator.tables.Credit.CREDIT;
+
+    /**
+     * The table <code>bcinvest.CreditUpdateTask</code>.
+     */
+    public final Creditupdatetask CREDITUPDATETASK = com.generator.tables.Creditupdatetask.CREDITUPDATETASK;
 
     /**
      * The table <code>bcinvest.FundamentalCertificate</code>.
@@ -156,6 +162,7 @@ public class Bcinvest extends SchemaImpl {
             Company.COMPANY,
             Companyaddress.COMPANYADDRESS,
             Credit.CREDIT,
+            Creditupdatetask.CREDITUPDATETASK,
             Fundamentalcertificate.FUNDAMENTALCERTIFICATE,
             Guaranty.GUARANTY,
             Guarantystateupdatetask.GUARANTYSTATEUPDATETASK,

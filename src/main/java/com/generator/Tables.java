@@ -9,6 +9,7 @@ import com.generator.tables.Authorization;
 import com.generator.tables.Company;
 import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
+import com.generator.tables.Creditupdatetask;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
 import com.generator.tables.Guarantystateupdatetask;
@@ -60,6 +61,11 @@ public class Tables {
      * The table <code>bcinvest.Credit</code>.
      */
     public static final Credit CREDIT = com.generator.tables.Credit.CREDIT;
+
+    /**
+     * The table <code>bcinvest.CreditUpdateTask</code>.
+     */
+    public static final Creditupdatetask CREDITUPDATETASK = com.generator.tables.Creditupdatetask.CREDITUPDATETASK;
 
     /**
      * The table <code>bcinvest.FundamentalCertificate</code>.

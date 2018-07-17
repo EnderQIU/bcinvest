@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Credit extends TableImpl<CreditRecord> {
 
-    private static final long serialVersionUID = -2069581332;
+    private static final long serialVersionUID = -621003553;
 
     /**
      * The reference instance of <code>bcinvest.Credit</code>
@@ -73,6 +73,11 @@ public class Credit extends TableImpl<CreditRecord> {
      * The column <code>bcinvest.Credit.Type</code>.
      */
     public final TableField<CreditRecord, Byte> TYPE = createField("Type", org.jooq.impl.SQLDataType.TINYINT, this, "");
+
+    /**
+     * The column <code>bcinvest.Credit.Lock</code>.
+     */
+    public final TableField<CreditRecord, Byte> LOCK = createField("Lock", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
      * Create a <code>bcinvest.Credit</code> table reference
@@ -140,7 +145,7 @@ public class Credit extends TableImpl<CreditRecord> {
      */
     @Override
     public List<ForeignKey<CreditRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<CreditRecord, ?>>asList(Keys.CREDIT_FK_COMPANY, Keys.CREDIT_FK_GUARANTY, Keys.CREDIT_FK_REPORT);
+        return Arrays.<ForeignKey<CreditRecord, ?>>asList(Keys.CREDIT_FK_REPORT);
     }
 
     /**

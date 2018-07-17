@@ -22,7 +22,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Company implements Serializable {
 
-    private static final long serialVersionUID = 1414780153;
+    private static final long serialVersionUID = -1837954986;
 
     private String accountnum;
     private String name;
@@ -31,6 +31,7 @@ public class Company implements Serializable {
     private String token;
     private Long   credit;
     private String status;
+    private Byte   lock;
 
     public Company() {}
 
@@ -42,6 +43,7 @@ public class Company implements Serializable {
         this.token = value.token;
         this.credit = value.credit;
         this.status = value.status;
+        this.lock = value.lock;
     }
 
     public Company(
@@ -51,7 +53,8 @@ public class Company implements Serializable {
         String emailaddress,
         String token,
         Long   credit,
-        String status
+        String status,
+        Byte   lock
     ) {
         this.accountnum = accountnum;
         this.name = name;
@@ -60,6 +63,7 @@ public class Company implements Serializable {
         this.token = token;
         this.credit = credit;
         this.status = status;
+        this.lock = lock;
     }
 
     public String getAccountnum() {
@@ -118,6 +122,14 @@ public class Company implements Serializable {
         this.status = status;
     }
 
+    public Byte getLock() {
+        return this.lock;
+    }
+
+    public void setLock(Byte lock) {
+        this.lock = lock;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Company (");
@@ -129,6 +141,7 @@ public class Company implements Serializable {
         sb.append(", ").append(token);
         sb.append(", ").append(credit);
         sb.append(", ").append(status);
+        sb.append(", ").append(lock);
 
         sb.append(")");
         return sb.toString();

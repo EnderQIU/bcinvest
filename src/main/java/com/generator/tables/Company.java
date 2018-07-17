@@ -38,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Company extends TableImpl<CompanyRecord> {
 
-    private static final long serialVersionUID = -795978658;
+    private static final long serialVersionUID = -398346944;
 
     /**
      * The reference instance of <code>bcinvest.Company</code>
@@ -87,6 +87,11 @@ public class Company extends TableImpl<CompanyRecord> {
      * The column <code>bcinvest.Company.Status</code>.
      */
     public final TableField<CompanyRecord, String> STATUS = createField("Status", org.jooq.impl.SQLDataType.VARCHAR(128).defaultValue(org.jooq.impl.DSL.inline("unapplied", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>bcinvest.Company.Lock</code>.
+     */
+    public final TableField<CompanyRecord, Byte> LOCK = createField("Lock", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
     /**
      * Create a <code>bcinvest.Company</code> table reference

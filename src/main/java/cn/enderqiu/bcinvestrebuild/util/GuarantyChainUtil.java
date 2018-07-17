@@ -1,8 +1,10 @@
 package cn.enderqiu.bcinvestrebuild.util;
 
 import cn.ssyram.blockchain.interfaces.GuarantyChain;
+import com.generator.tables.Company;
 import com.generator.tables.Guaranty;
 import com.generator.tables.Guarantystateupdatetask;
+import com.generator.tables.records.CompanyRecord;
 import com.generator.tables.records.GuarantyRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -25,15 +27,17 @@ public class GuarantyChainUtil {
      */
     public static boolean checkUpdateIllegal(Integer orig, Integer dest){
         boolean[][] validActionMap = {
-                {false, false, false, false, false, false, false, },
-                {false, false, true, false, false, false, true, },
-                {true, false, false, false, false, false, false, },
-                {false, false, true, false, true, true, true, },
-                {false, false, false, true, false, false, false, },
-                {false, false, false, false, true, false, false, },
-                {false, false, false, false, false, true, false, },
+                {false, true, true, false, false, false, false, false, false, },
+                {false, false, false, false, false, false, false, false, false, },
+                {false, false, false, true, false, false, false, false, false, },
+                {false, false, true, false, true, false, false, false, false, },
+                {false, false, false, false, false, true, false, false, false, },
+                {false, false, false, false, true, false, true, false, false, },
+                {false, false, false, false, true, false, false, false, true, },
+                {false, false, false, false, false, false, false, false, false, },
+                {false, false, false, false, true, false, false, false, false, },
         };
-        return validActionMap[dest][orig];
+        return validActionMap[orig][dest];
     }
 
     /**
@@ -44,15 +48,38 @@ public class GuarantyChainUtil {
      */
     public static boolean checkUpdateimmediately(Integer orig, Integer dest){
         boolean[][] immediatelyActionMap = {
-                {false, false, false, false, false, false, false, },
-                {false, false, true, false, false, false, false, },
-                {true, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, },
+                {false, true, true, false, false, false, false, false, false, },
+                {false, false, false, false, false, false, false, false, false, },
+                {false, false, false, true, false, false, false, false, false, },
+                {false, false, true, false, false, false, false, false, false, },
+                {false, false, false, false, false, false, false, false, false, },
+                {false, false, false, false, false, false, false, false, false, },
+                {false, false, false, false, false, false, false, false, false, },
+                {false, false, false, false, false, false, false, false, false, },
+                {false, false, false, false, false, false, false, false, false, },
         };
-        return immediatelyActionMap[dest][orig];
+        return immediatelyActionMap[orig][dest];
+    }
+
+    /**
+     * 检查状态转换是否涉及更新企业信用
+     * @param orig
+     * @param dest
+     * @return
+     */
+    public static int checkHowMuchCreditNeedToBeUpdated(Integer orig, Integer dest){
+        int[][] needUpdateCreditActionMap = {
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                {0, 0, 0, 0, -50, 0, 0, 0, +20, },  // 逾期，-50；逾期还款，+20
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                {0, 0, 0, 0, +30, 0, 0, 0, 0, },  // 期限内还款，+30
+        };
+        return needUpdateCreditActionMap[orig][dest];
     }
 
     /**
@@ -137,6 +164,12 @@ public class GuarantyChainUtil {
                 dsl.update(Guaranty.GUARANTY)
                         .set(Guaranty.GUARANTY.STATE, record.getValue("stateWillUpdateTo", Integer.class))
                         .set(Guaranty.GUARANTY.LOCK, unlocked).execute();
+                // 判断是否需要更新信用信息，若需要，则调用 CreditChainUtil.updateCredit()
+                int creditNeedToBeUpdated = GuarantyChainUtil.checkHowMuchCreditNeedToBeUpdated(record.getValue("previousState", Integer.class), stateWillUpdateTo);
+                if ( creditNeedToBeUpdated != 0){
+                    GuarantyRecord record1 = dsl.fetchOne(Guaranty.GUARANTY, Guaranty.GUARANTY.GUARANTYID.eq(record.getValue("guarantyId", Integer.class)));
+                    CreditChainUtil.updateCredit(record1.getAccountnum(), creditNeedToBeUpdated);
+                }
             }else{
                 Integer count = record.getValue("count", Integer.class);
                 if (count <= 180){

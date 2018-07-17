@@ -4,11 +4,11 @@
 package com.generator;
 
 
-import com.generator.tables.Accesstoken;
 import com.generator.tables.Authorization;
 import com.generator.tables.Company;
 import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
+import com.generator.tables.Creditupdatetask;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
 import com.generator.tables.Guarantystateupdatetask;
@@ -19,11 +19,11 @@ import com.generator.tables.Message;
 import com.generator.tables.Protocol;
 import com.generator.tables.Report;
 import com.generator.tables.Securitiesinformation;
-import com.generator.tables.records.AccesstokenRecord;
 import com.generator.tables.records.AuthorizationRecord;
 import com.generator.tables.records.CompanyRecord;
 import com.generator.tables.records.CompanyaddressRecord;
 import com.generator.tables.records.CreditRecord;
+import com.generator.tables.records.CreditupdatetaskRecord;
 import com.generator.tables.records.FundamentalcertificateRecord;
 import com.generator.tables.records.GuarantyRecord;
 import com.generator.tables.records.GuarantystateupdatetaskRecord;
@@ -61,6 +61,7 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<CreditupdatetaskRecord, Integer> IDENTITY_CREDITUPDATETASK = Identities0.IDENTITY_CREDITUPDATETASK;
     public static final Identity<GuarantyRecord, Integer> IDENTITY_GUARANTY = Identities0.IDENTITY_GUARANTY;
     public static final Identity<GuarantystateupdatetaskRecord, Integer> IDENTITY_GUARANTYSTATEUPDATETASK = Identities0.IDENTITY_GUARANTYSTATEUPDATETASK;
     public static final Identity<MessageRecord, Integer> IDENTITY_MESSAGE = Identities0.IDENTITY_MESSAGE;
@@ -78,6 +79,7 @@ public class Keys {
     public static final UniqueKey<CompanyRecord> KEY_COMPANY_TOKEN = UniqueKeys0.KEY_COMPANY_TOKEN;
     public static final UniqueKey<CompanyaddressRecord> KEY_COMPANYADDRESS_PRIMARY = UniqueKeys0.KEY_COMPANYADDRESS_PRIMARY;
     public static final UniqueKey<CreditRecord> KEY_CREDIT_PRIMARY = UniqueKeys0.KEY_CREDIT_PRIMARY;
+    public static final UniqueKey<CreditupdatetaskRecord> KEY_CREDITUPDATETASK_PRIMARY = UniqueKeys0.KEY_CREDITUPDATETASK_PRIMARY;
     public static final UniqueKey<FundamentalcertificateRecord> KEY_FUNDAMENTALCERTIFICATE_PRIMARY = UniqueKeys0.KEY_FUNDAMENTALCERTIFICATE_PRIMARY;
     public static final UniqueKey<GuarantyRecord> KEY_GUARANTY_PRIMARY = UniqueKeys0.KEY_GUARANTY_PRIMARY;
     public static final UniqueKey<GuarantystateupdatetaskRecord> KEY_GUARANTYSTATEUPDATETASK_PRIMARY = UniqueKeys0.KEY_GUARANTYSTATEUPDATETASK_PRIMARY;
@@ -93,10 +95,7 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<AccesstokenRecord, CompanyRecord> ACCESSTOKEN_IBFK_1 = ForeignKeys0.ACCESSTOKEN_IBFK_1;
     public static final ForeignKey<CompanyaddressRecord, CompanyRecord> COMPANYADDRESS_IBFK_1 = ForeignKeys0.COMPANYADDRESS_IBFK_1;
-    public static final ForeignKey<CreditRecord, CompanyRecord> CREDIT_FK_COMPANY = ForeignKeys0.CREDIT_FK_COMPANY;
-    public static final ForeignKey<CreditRecord, GuarantyRecord> CREDIT_FK_GUARANTY = ForeignKeys0.CREDIT_FK_GUARANTY;
     public static final ForeignKey<CreditRecord, ReportRecord> CREDIT_FK_REPORT = ForeignKeys0.CREDIT_FK_REPORT;
     public static final ForeignKey<FundamentalcertificateRecord, CompanyRecord> FUNDAMENTALCERTIFICATE_IBFK_1 = ForeignKeys0.FUNDAMENTALCERTIFICATE_IBFK_1;
     public static final ForeignKey<GuarantyRecord, ReportRecord> GUARANTY_FK_REPORT = ForeignKeys0.GUARANTY_FK_REPORT;
@@ -112,6 +111,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 {
+        public static Identity<CreditupdatetaskRecord, Integer> IDENTITY_CREDITUPDATETASK = Internal.createIdentity(Creditupdatetask.CREDITUPDATETASK, Creditupdatetask.CREDITUPDATETASK.ID);
         public static Identity<GuarantyRecord, Integer> IDENTITY_GUARANTY = Internal.createIdentity(Guaranty.GUARANTY, Guaranty.GUARANTY.GUARANTYID);
         public static Identity<GuarantystateupdatetaskRecord, Integer> IDENTITY_GUARANTYSTATEUPDATETASK = Internal.createIdentity(Guarantystateupdatetask.GUARANTYSTATEUPDATETASK, Guarantystateupdatetask.GUARANTYSTATEUPDATETASK.TASKID);
         public static Identity<MessageRecord, Integer> IDENTITY_MESSAGE = Internal.createIdentity(Message.MESSAGE, Message.MESSAGE.ID);
@@ -127,6 +127,7 @@ public class Keys {
         public static final UniqueKey<CompanyRecord> KEY_COMPANY_TOKEN = Internal.createUniqueKey(Company.COMPANY, "KEY_Company_Token", Company.COMPANY.TOKEN);
         public static final UniqueKey<CompanyaddressRecord> KEY_COMPANYADDRESS_PRIMARY = Internal.createUniqueKey(Companyaddress.COMPANYADDRESS, "KEY_CompanyAddress_PRIMARY", Companyaddress.COMPANYADDRESS.ACCOUNTNUM);
         public static final UniqueKey<CreditRecord> KEY_CREDIT_PRIMARY = Internal.createUniqueKey(Credit.CREDIT, "KEY_Credit_PRIMARY", Credit.CREDIT.ACCOUNTNUM, Credit.CREDIT.GUARANTYID, Credit.CREDIT.REPORTID);
+        public static final UniqueKey<CreditupdatetaskRecord> KEY_CREDITUPDATETASK_PRIMARY = Internal.createUniqueKey(Creditupdatetask.CREDITUPDATETASK, "KEY_CreditUpdateTask_PRIMARY", Creditupdatetask.CREDITUPDATETASK.ID);
         public static final UniqueKey<FundamentalcertificateRecord> KEY_FUNDAMENTALCERTIFICATE_PRIMARY = Internal.createUniqueKey(Fundamentalcertificate.FUNDAMENTALCERTIFICATE, "KEY_FundamentalCertificate_PRIMARY", Fundamentalcertificate.FUNDAMENTALCERTIFICATE.ACCOUNTNUM);
         public static final UniqueKey<GuarantyRecord> KEY_GUARANTY_PRIMARY = Internal.createUniqueKey(Guaranty.GUARANTY, "KEY_Guaranty_PRIMARY", Guaranty.GUARANTY.GUARANTYID);
         public static final UniqueKey<GuarantystateupdatetaskRecord> KEY_GUARANTYSTATEUPDATETASK_PRIMARY = Internal.createUniqueKey(Guarantystateupdatetask.GUARANTYSTATEUPDATETASK, "KEY_GuarantyStateUpdateTask_PRIMARY", Guarantystateupdatetask.GUARANTYSTATEUPDATETASK.TASKID);
@@ -140,10 +141,7 @@ public class Keys {
     }
 
     private static class ForeignKeys0 {
-        public static final ForeignKey<AccesstokenRecord, CompanyRecord> ACCESSTOKEN_IBFK_1 = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Accesstoken.ACCESSTOKEN, "accesstoken_ibfk_1", Accesstoken.ACCESSTOKEN.ACCOUNTNUM);
         public static final ForeignKey<CompanyaddressRecord, CompanyRecord> COMPANYADDRESS_IBFK_1 = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Companyaddress.COMPANYADDRESS, "companyaddress_ibfk_1", Companyaddress.COMPANYADDRESS.ACCOUNTNUM);
-        public static final ForeignKey<CreditRecord, CompanyRecord> CREDIT_FK_COMPANY = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Credit.CREDIT, "credit_fk_company", Credit.CREDIT.ACCOUNTNUM);
-        public static final ForeignKey<CreditRecord, GuarantyRecord> CREDIT_FK_GUARANTY = Internal.createForeignKey(com.generator.Keys.KEY_GUARANTY_PRIMARY, Credit.CREDIT, "credit_fk_guaranty", Credit.CREDIT.GUARANTYID);
         public static final ForeignKey<CreditRecord, ReportRecord> CREDIT_FK_REPORT = Internal.createForeignKey(com.generator.Keys.KEY_REPORT_PRIMARY, Credit.CREDIT, "credit_fk_report", Credit.CREDIT.REPORTID);
         public static final ForeignKey<FundamentalcertificateRecord, CompanyRecord> FUNDAMENTALCERTIFICATE_IBFK_1 = Internal.createForeignKey(com.generator.Keys.KEY_COMPANY_PRIMARY, Fundamentalcertificate.FUNDAMENTALCERTIFICATE, "fundamentalcertificate_ibfk_1", Fundamentalcertificate.FUNDAMENTALCERTIFICATE.ACCOUNTNUM);
         public static final ForeignKey<GuarantyRecord, ReportRecord> GUARANTY_FK_REPORT = Internal.createForeignKey(com.generator.Keys.KEY_REPORT_PRIMARY, Guaranty.GUARANTY, "guaranty_fk_report", Guaranty.GUARANTY.REPORTID);

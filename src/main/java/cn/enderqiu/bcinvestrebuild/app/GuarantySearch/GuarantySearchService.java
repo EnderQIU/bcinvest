@@ -59,7 +59,6 @@ public class GuarantySearchService extends BaseService{
     private String getSQL(String user_id_token, int guarantyType, String guarantyName, int guarantyState) {
         String whereClause = " WHERE AccountNum = \'"+token2AccountNum(user_id_token)+"\' ";
 
-        //!!!: attention: 由于type在数据库中使用的是varchar，所以前台发送的时候一定要首字母大写
         if(guarantyType!=-1) {
             whereClause += " AND Type = "+guarantyType+" ";
         }
