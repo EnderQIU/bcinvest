@@ -10,7 +10,6 @@ import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import sun.jvm.hotspot.opto.Block_List;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
