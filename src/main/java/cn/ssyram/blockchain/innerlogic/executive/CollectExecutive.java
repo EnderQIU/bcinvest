@@ -3,15 +3,12 @@ package cn.ssyram.blockchain.innerlogic.executive;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import cn.ssyram.blockchain.innerlogic.CurrentBlocks;
 import cn.ssyram.blockchain.innerlogic.dto.CollectDTO;
-
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
-import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
 import cn.ssyram.blockchain.innerlogic.operator.BlockOperator;
 import cn.ssyram.blockchain.innerlogic.support.LockInstances;
 import cn.ssyram.blockchain.innerlogic.support.Transferer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CollectExecutive extends BaseService {
     private CollectDTO dto;
@@ -28,8 +25,7 @@ public class CollectExecutive extends BaseService {
             CurrentBlocks.getCurrentBlockFor(dto.getType())
                     .getDataList().addAll(dto.getBlockDataList());
         }
-        ArrayList<BlockData> dataArrayList = new ArrayList<>();
-        dataArrayList.addAll(dto.getBlockDataList());
+        ArrayList<BlockData> dataArrayList = new ArrayList<>(dto.getBlockDataList());
         Transferer.send(dataArrayList);
         return dto.getBlockDataList().size();
     }

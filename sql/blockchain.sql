@@ -67,7 +67,35 @@ create table blockchain.guaranty_data
 )
 ;
 
+CREATE OR REPLACE VIEW credit_ready_main_chain_view AS
+	SELECT id, value, variation, remarks
+    FROM credit_chain JOIN credit_data AS One ON this_hash = block_hash
+    WHERE is_main = 1 AND length >= ALL (
+		SELECT MAX(length)
+        FROM credit_chain JOIN credit_data AS Two ON this_hash = block_hash
+        WHERE is_main = 1 AND One.id = Two.id AND length + 6 <= ALL (
+			SELECT length
+			FROM guaranty_most_front_block_info
+		)
+	) AND length + 6 <= ALL (
+		SELECT length
+        FROM guaranty_most_front_block_info
+	);
 
+CREATE OR REPLACE VIEW guaranty_ready_main_chain_view AS
+	SELECT id, value, variation, remarks
+    FROM guaranty_chain JOIN guaranty_data AS One ON this_hash = block_hash
+    WHERE is_main = 1 AND length >= ALL (
+		SELECT MAX(length)
+        FROM guaranty_chain JOIN guaranty_data AS Two ON this_hash = block_hash
+        WHERE is_main = 1 AND One.id = Two.id AND length + 6 <= ALL(
+			SELECT length
+            FROM guaranty_most_front_block_info
+		)
+	) AND length + 6 <= ALL (
+		SELECT length
+        FROM guaranty_most_front_block_info
+	);
 
 CREATE OR REPLACE VIEW credit_most_front_block_info AS
 	SELECT *
