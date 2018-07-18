@@ -22,4 +22,9 @@ public interface CreditChain extends BlockChain {
      * @return
      */
     Integer getCreditOfCompany(String accountNum);
+
+    /**
+     * 获取指定企业的信用值变化列表
+     */
+    List<Map<String, Object>> getCompanyCreditList(String accountNum);
 }
