@@ -6,9 +6,8 @@ import com.generator.tables.Guaranty;
 import com.generator.tables.Guarantystateupdatetask;
 import com.generator.tables.records.CompanyRecord;
 import com.generator.tables.records.GuarantyRecord;
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
+import com.generator.tables.records.GuarantystateupdatetaskRecord;
+import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -143,10 +142,12 @@ public class GuarantyChainUtil {
 
     /**
      * rate =  1 min
-     * 遍历队列中任务状态为 pending 的任务，检查状态是否更新为想要的状态，
+     * 1. 遍历队列中任务状态为 pending 的任务，检查状态是否更新为想要的状态，
      * 若状态更新为想要的状态，则将队列的状态字段更改为 success 并更新 guaranty 表中记录，
      * 若状态未更新且 count 小于等于 180，则将 count + 1，
      * 若状态未更新且 count 大于 180，则将此记录状态设为 failure。
+     *
+     * 2. 遍历队列中任务状态为 failure 的任务，调用 addTask() 重新提交处理，然后将这些记录删除。
      */
     //@Scheduled(fixedRate = 10)
     public void checkStateWhetherUpdate(){
@@ -184,6 +185,15 @@ public class GuarantyChainUtil {
                 }
             }
         }
+
+        // 处理失败的任务
+        Result<Record2<Integer, Integer>> record2s = dsl.select(T.GUARANTYID, T.STATEWILLUPDATETO).from(T).where(T.TASKSTATE.eq("failure")).fetch();
+
+        for(Record2<Integer, Integer> record2 : record2s){
+            GuarantyChainUtil.updateState(record2.value1(), record2.value2());
+        }
+
+        dsl.delete(T).where(T.TASKSTATE.eq("failure")).execute();
     }
 
     /**
