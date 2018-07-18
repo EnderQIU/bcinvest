@@ -8,6 +8,7 @@ import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
 import cn.ssyram.blockchain.innerlogic.operator.BlockOperator;
 import cn.ssyram.blockchain.innerlogic.operator.DatabaseOperator;
+import cn.ssyram.blockchain.innerlogic.operator.Miner;
 import cn.ssyram.blockchain.innerlogic.support.*;
 import cn.ssyram.blockchain.innerlogic.test.Logger;
 import com.generator.tables.Addresslist;
@@ -184,7 +185,13 @@ public class LinkExecutive implements Runnable {
         }
 
         private boolean verifyThis_Hash() {
+            if (!canculateAsTheSame())
+                return false;
             return BlockOperator.hasValidThis_Hash(block);
+        }
+
+        private boolean canculateAsTheSame() {
+            return block.getThis_hash().equals(Miner.getRealThis_Hash(block));
         }
 
         private boolean verifyDataList() {

@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Block implements Serializable {
+    private String toStringBuffer;
     protected ChainType type;
     //Calendar.getInstance().toString();
     protected String time_stamp;
@@ -16,8 +17,21 @@ public class Block implements Serializable {
     protected String address;
     protected String previous_hash;
     protected List<BlockData> dataList;
+    protected long nonce;
 
     protected Block() {}
+
+    public long getNonce() {
+        return nonce;
+    }
+
+    /**
+     * 只有確定nonce的時候才改，每次改都會清空toStringBuffer
+     */
+    public void setNonce(long nonce) {
+        toStringBuffer = null;
+        this.nonce = nonce;
+    }
 
     public Block(@NotNull ChainType type,
                  String time_stamp,
@@ -69,12 +83,13 @@ public class Block implements Serializable {
 
     @Override
     public String toString() {
+        if (toStringBuffer != null)
+            return toStringBuffer;
         StringBuilder builder = new StringBuilder(
                 "block:"
         );
         builder.append("type: ").append(getType()).append(", ")
                 .append("previous_hash").append(getPrevious_hash()).append(", ")
-                .append("this_hash: ").append(getThis_hash()).append(", ")
                 .append("time_stamp: ").append(getTime_stamp()).append(", ")
                 .append("address: ").append(getAddress()).append(", ")
                 .append("data: [");
@@ -83,6 +98,7 @@ public class Block implements Serializable {
             builder.append("{").append(data.toString()).append("}, ");
         builder.delete(builder.length() - 2, builder.length());
         builder.append("]");
-        return builder.toString();
+        toStringBuffer = builder.toString();
+        return toStringBuffer;
     }
 }

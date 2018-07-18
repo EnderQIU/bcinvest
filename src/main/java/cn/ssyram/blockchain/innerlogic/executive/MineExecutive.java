@@ -61,7 +61,10 @@ public class MineExecutive extends Thread {
 
                     //如果验证完了合法且别人已经完成了自身工作
                     //退出本次挖矿，无论自身是否已经挖出来
-                    if (ConditionVariables.shouldGiveUp) break;
+                    if (ConditionVariables.shouldGiveUp) {
+                        Semaphores.blockchains.get(block.getType()).release();
+                        break;
+                    }
 
                     //检验是否合法，且用的是byte直接检验
                     if (!miner.hasValidThis_Hash(block)) continue;

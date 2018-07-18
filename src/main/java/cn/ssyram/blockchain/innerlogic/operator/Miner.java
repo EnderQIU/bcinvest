@@ -51,15 +51,13 @@ public class Miner {
         return stringBuilder.toString();
     }
 
-    private int nonce = 0;
+    private long nonce = 0;
+
+    public static String getRealThis_Hash(Block block) {
+        return encode(block.getNonce() + block.toString());
+    }
 
     public void getNewThis_Hash(Block block) {
-        if (block.getThis_hash() != null)
-            block.setThis_hash(encode(
-                    (++nonce) + block.getThis_hash()
-            ));
-        else
-            //生成第一个raw_hash
             block.setThis_hash(encode(
                     (++nonce) + block.toString()
             ));
@@ -75,6 +73,7 @@ public class Miner {
 //            return false;
         if (BlockOperator.hasValidThis_Hash(block)) {
             Logger.log("chain of type " + block.getType() + "get potential block, for " + nonce + " calculating times.");
+            block.setNonce(nonce);
             return true;
         }
         return false;

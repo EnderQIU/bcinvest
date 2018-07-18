@@ -72,7 +72,7 @@ public class BlockChainOperator {
         //获得当前的主链上的所有id的相应状态
         List<Map<String, Object>> result = DatabaseOperator.SELECT(
                 "SELECT * FROM " + block.getType().getMainChainViewName()
-                + "WHERE id IN " + idSet
+                + " WHERE id IN " + idSet
         );
 
         //标记已经处理过的block的dataList中的id
