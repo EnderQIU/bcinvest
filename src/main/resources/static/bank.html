@@ -71,6 +71,9 @@
                 margin: 0 0 6px 0;
                 cursor: pointer;
             }
+            .content_container {
+                flex-grow: 5;
+            }
             .list_container .item_selected {
                 background-color: #CCCCCC;
             }
@@ -121,31 +124,100 @@
 
             </div>
             <div class="content_container">
-                <div v-if="list_item_str[list_selected_index] == 'login_apply'">
+                <div style="width: 100%" v-if="list_item_str[list_selected_index] == 'repay_confirm'">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td class="table_head">抵押物名称</td>
+                            <td class="table_head">操作</td>
+                        </tr>
+                        <tr v-for="item in repay_confirm_guaranty">
+                            <td class="table_cell">{{ item.name }}</td>
+                            <td class="table_cell">
+                                <label v-on:click="repay_confirm_confirm_repay_click(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
+                                <label v-on:click="repay_confirm_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="page_change_container" v-if="max_page > 0">
+                        <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(1)">首页</label>
+                        <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">上一页</label>
+                        <label v-if="current_page > 2" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                        <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                        <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                        <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                        <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                        <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">下一页</label>
+                        <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(max_page)">尾页</label>
+                    </div>
+                    <div class="page_change_container" v-else>
+                        无内容
+                    </div>
+                    <!-- 模态框（Modal） -->
+                    <div class="modal fade" id="repay_confirm_detail_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">抵押物详情</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group">
+                                        <label>名称：</label><span id = "repay_confirm_guaranty_name"></span><br>
+                                        <label>估值：</label><span id = "repay_confirm_guaranty_value"></span><br>
+                                        <label>拥有者姓名:</label><span id = "repay_confirm_guaranty_owner"></span><br>
+                                        <label>权利范围:</label><span id = "repay_confirm_guaranty_scope"></span><br>
+                                        <label>状态：</label><span id = "repay_confirm_guaranty_state"></span><br>
+                                        <label>类型：</label><span id = "repay_confirm_guaranty_type"></span><br>
+                                        <div class = "house_detail">
+                                            <label>地址：</label><span id = "repay_confirm_house_addr" ></span><br>
+                                            <label>邮编：</label><span id = "repay_confirm_house_zip"></span><br>
+                                            <label>房产证号:</label><span id = "repay_confirm_house_certificatedId"></span><br>
+                                        </div>
+                                        <div class = "land_detail">
+                                            <label>地址:</label><span id = "repay_confirm_land_addr"></span><br>
+                                            <label>面积：</label><span id = "repay_confirm_land_area"></span><br>
+
+                                        </div>
+                                        <div class = "machine_detail">
+                                            <label>使用天数：</label><span id = "repay_confirm_machine_usedDays"></span><br>
+                                            <label>生产商：</label><span id = "repay_confirm_machine_producer"></span><br>
+                                            <label>型号：</label><span id = "repay_confirm_machine_model"></span><br>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id = "close">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%" v-else-if="list_item_str[list_selected_index] == 'login_apply'">
                     <table style="width: 100%;">
                         <tr>
                             <td class="table_head">企业名称</td>
                             <td class="table_head">操作</td>
                         </tr>
-                        <tr v-for="item in current_company">
+                        <tr v-for="item in login_apply_company">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
-                                <label v-on:click="company_pass_login_click(item)" style="cursor: pointer; text-decoration: underline;">通过</label>&nbsp;&nbsp;
-                                <label v-on:click="company_unpass_login_click(item)" style="cursor: pointer; text-decoration: underline;">拒绝</label>&nbsp;&nbsp;
-                                <label v-on:click="view_company_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                                <label v-on:click="login_apply_company_pass_login_click(item)" style="cursor: pointer; text-decoration: underline;">通过</label>&nbsp;&nbsp;
+                                <label v-on:click="login_apply_company_unpass_login_click(item)" style="cursor: pointer; text-decoration: underline;">拒绝</label>&nbsp;&nbsp;
+                                <label v-on:click="login_apply_view_company_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
                             </td>
                         </tr>
                     </table>
                     <div class="page_change_container" v-if="max_page > 0">
-                        <label v-if="current_page > 0" class="page_change" v-on:click="company_aimed_page(1)">首页</label>
-                        <label v-if="current_page > 1" class="page_change" v-on:click="company_aimed_page(current_page - 1)">上一页</label>
-                        <label v-if="current_page > 2" class="page_change" v-on:click="company_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
-                        <label v-if="current_page > 1" class="page_change" v-on:click="company_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                        <label v-if="current_page > 0" class="page_change" v-on:click="login_apply_company_aimed_page(1)">首页</label>
+                        <label v-if="current_page > 1" class="page_change" v-on:click="login_apply_company_aimed_page(current_page - 1)">上一页</label>
+                        <label v-if="current_page > 2" class="page_change" v-on:click="login_apply_company_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                        <label v-if="current_page > 1" class="page_change" v-on:click="login_apply_company_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
                         <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
-                        <label v-if="current_page < max_page" class="page_change" v-on:click="company_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
-                        <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="company_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
-                        <label v-if="current_page < max_page" class="page_change" v-on:click="company_aimed_page(current_page + 1)">下一页</label>
-                        <label v-if="current_page > 0" class="page_change" v-on:click="company_aimed_page(max_page)">尾页</label>
+                        <label v-if="current_page < max_page" class="page_change" v-on:click="login_apply_company_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                        <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="login_apply_company_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                        <label v-if="current_page < max_page" class="page_change" v-on:click="login_apply_company_aimed_page(current_page + 1)">下一页</label>
+                        <label v-if="current_page > 0" class="page_change" v-on:click="login_apply_company_aimed_page(max_page)">尾页</label>
                     </div>
                     <div class="page_change_container" v-else>
                         无内容
@@ -173,7 +245,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="list_item_str[list_selected_index] == 'guaranty_to_bc'">
+                <div style="width: 100%" v-else-if="list_item_str[list_selected_index] == 'guaranty_to_tbc'">
                     <table style="width: 100%;">
                         <tr>
                             <td class="table_head">抵押物名称</td>
@@ -182,21 +254,21 @@
                         <tr v-for="item in qualified_guaranties">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
-                                <label v-on:click="confirm_repay_click(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
-                                <label v-on:click="view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                                <label v-on:click="guaranty_to_tbc_confirm_to_tbc(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
+                                <label v-on:click="guaranty_to_tbc_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
                             </td>
                         </tr>
                     </table>
                     <div class="page_change_container" v-if="max_page > 0">
-                        <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
-                        <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
-                        <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
-                        <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                        <label v-if="current_page > 0" class="page_change" v-on:click="to_tbc_aimed_page(1)">首页</label>
+                        <label v-if="current_page > 1" class="page_change" v-on:click="to_tbc_aimed_page(current_page - 1)">上一页</label>
+                        <label v-if="current_page > 2" class="page_change" v-on:click="to_tbc_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                        <label v-if="current_page > 1" class="page_change" v-on:click="to_tbc_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
                         <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
-                        <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
-                        <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
-                        <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
-                        <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+                        <label v-if="current_page < max_page" class="page_change" v-on:click="to_tbc_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                        <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="to_tbc_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                        <label v-if="current_page < max_page" class="page_change" v-on:click="to_tbc_aimed_page(current_page + 1)">下一页</label>
+                        <label v-if="current_page > 0" class="page_change" v-on:click="to_tbc_aimed_page(max_page)">尾页</label>
                     </div>
                     <div class="page_change_container" v-else>
 
@@ -280,7 +352,7 @@
             var main_body = new Vue({
                 el: '#main_body',
                 data: {
-                    list_item_str:['repay_confirm', 'login_apply', 'guaranty_to_bc','test'],
+                    list_item_str:['repay_confirm', 'login_apply', 'guaranty_to_tbc','test'],
                     list_item_data: {
                         'repay_confirm': {
                             label_text: '企业还贷申请',
@@ -288,7 +360,7 @@
                         'login_apply': {
                             label_text: '企业注册申请管理',
                         },
-                        'guaranty_to_bc': {
+                        'guaranty_to_tbc': {
                             label_text: '抵押物上链管理',
                         },
                         'test': {
@@ -303,13 +375,18 @@
                     current_page:-1,
                     max_page :-1,
 
-                    //当前选中栏的所表示company的state和  当前页的company数据
-                    current_company: [],
-                    current_company_state: null,
 
-                    //当前选中栏的所表示guaranty的state和  当前页的guaranty数据
+                    //repay_confirm中的guaranty及其state
+                    repay_confirm_guaranty:[],
+                    repay_confirm_guaranty_state:[],
+
+                    //login_application中的company及其state
+                    login_apply_company: [],
+                    login_apply_company_state: null,
+
+                    //guaranty_to_tbc中的guaranty及其state
                     qualified_guaranties:[],
-                    guaranty_states:[],
+                    qualified_guaranty_states:[],
 
 
                     states_word: ['鉴定中', '不合格', '合格', '待确认', '可抵押', '申请抵押中', '申请已通过', '申请还款中', '逾期'],
@@ -321,27 +398,32 @@
                         this.list_selected_index = index;
                         switch (this.list_item_str[index]) {
                             case 'repay_confirm':
+                                this.display_repay_confirm_table();
                                 break;
                             case 'login_apply':
                                 this.display_login_apply_table();
+                                break;
+                            case 'guaranty_to_tbc':
+                                this.display_guaranty_to_tbc_table();
                                 break;
                             case 'test':
                                 alert('123');
                                 break;
                         }
                     },
-                    company_states_to_string() {
+
+                    login_apply_company_states_to_string() {
                         var result = '';
-                        for (var i = 0; i < this.current_company_state.length; i++) {
+                        for (var i = 0; i < this.login_apply_company_state.length; i++) {
                             if (i > 0) {
                                 result = result + "&";
                             }
-                            result = result + "states=" + this.current_company_state[i];
+                            result = result + "states=" + this.login_apply_company_state[i];
                         }
                         return result;
                     },
-                    get_company(page) {
-                        var query_para = '?' + this.company_states_to_string() + "&page=" + page.toString();
+                    login_apply_get_company(page) {
+                        var query_para = '?' + this.login_apply_company_states_to_string() + "&page=" + page.toString();
                         var result = null;
                         $.ajax({
                             'url': '/user/bank/authorityRequest/companies' + query_para,
@@ -356,8 +438,8 @@
                         });
                         return result;
                     },
-                    get_company_max_page() {
-                        var query_para = '?' + this.company_states_to_string();
+                    login_apply_get_company_max_page() {
+                        var query_para = '?' + this.login_apply_company_states_to_string();
                         var result = null;
                         $.ajax({
                             'url': '/user/bank/authorityRequest/companyMaxPage' + query_para,
@@ -372,28 +454,28 @@
                         });
                         return result;
                     },
-                    company_aimed_page(page) {
-                        var companies = this.get_company(page);
+                    login_apply_company_aimed_page(page) {
+                        var companies = this.login_apply_get_company(page);
                         if (!isEmptyValue(companies)) {
                             this.current_page = page;
-                            this.current_company = companies;
+                            this.login_apply_company = companies;
                         }
                     },
                     display_login_apply_table(){
-                        this.current_company_state = ['checking_2'];
-                        this.current_company = [];
+                        this.login_apply_company_state = ['checking_2'];
+                        this.login_apply_company = [];
                         this.max_page = 0;
                         this.current_page = 0;
-                        var max_page_data = this.get_company_max_page();
+                        var max_page_data = this.login_apply_get_company_max_page();
                         if (!isEmptyValue(max_page_data) && !isEmptyValue(max_page_data.maxPage) && max_page_data.maxPage > 0) {
                             this.max_page = max_page_data.maxPage;
-                            this.current_company = this.get_company(1);
+                            this.login_apply_company = this.login_apply_get_company(1);
                             this.current_page = 1;
                         } else {
                             this.max_page = 0;
                         }
                     },
-                    view_company_detail_click(item){
+                    login_apply_view_company_detail_click(item){
                         var query_para = '?accountNum=' + item.accountNum.toString();
                         var result = null;
                         $.ajax({
@@ -415,7 +497,7 @@
                         modal.find('#company_credit').html(company.credit);
                         modal.modal('show');
                     },
-                    company_pass_login_click(item){
+                    login_apply_company_pass_login_click(item){
                         bootbox.confirm({
                             message: "您确定要通过该企业注册申请吗？",
                             buttons: {
@@ -454,7 +536,7 @@
                             }
                         });
                     },
-                    company_unpass_login_click(item){
+                    login_apply_company_unpass_login_click(item){
                         bootbox.confirm({
                             message: "您确定要拒绝该企业注册申请吗？",
                             buttons: {
@@ -497,18 +579,18 @@
 
 
 
-                    guaranty_states_to_string() {
+                    to_tbc_qualified_guaranty_states_to_string() {
                         var query_para = '';
-                        for (var i = 0; i < this.guaranty_states.length; i++) {
+                        for (var i = 0; i < this.qualified_guaranty_states.length; i++) {
                             if (i > 0) {
                                 query_para = query_para + '&'
                             }
-                            query_para = query_para + 'states=' + this.guaranty_states[i].toString();
+                            query_para = query_para + 'states=' + this.qualified_guaranty_states[i].toString();
                         }
                         return query_para;
                     },
-                    get_guaranty(page) {
-                        var query_para = '?' + this.guaranty_states_to_string() + "&page=" + page.toString();
+                    to_tbc_get_guaranty(page) {
+                        var query_para = '?' + this.to_tbc_qualified_guaranty_states_to_string() + "&page=" + page.toString();
                         var result = null;
                         $.ajax({
                             'url': '/user/bank/authorityRequest/guaranties' + query_para,
@@ -523,8 +605,8 @@
                         });
                         return result;
                     },
-                    get_guaranty_max_page() {
-                        var query_para = '?' + this.guaranty_states_to_string();
+                    to_tbc_get_guaranty_max_page() {
+                        var query_para = '?' + this.to_tbc_qualified_guaranty_states_to_string();
                         var result = null;
                         $.ajax({
                             'url': '/user/bank/authorityRequest/guarantyMaxPage' + query_para,
@@ -539,30 +621,30 @@
                         });
                         return result;
                     },
-                    guaranty_aimed_page(page) {
-                        var guaranties = this.get_guaranty(page);
+                    to_tbc_aimed_page(page) {
+                        var guaranties = this.to_tbc_get_guaranty(page);
 
                         if (!isEmptyValue(guaranties)) {
                             this.current_page = page;
                             this.qualified_guaranties = guaranties;
                         }
                     },
-                    display_guaranty_table(){
-                        this.guaranty_states = [2];
+                    display_guaranty_to_tbc_table(){
+                        this.qualified_guaranty_states = [2];
                         this.qualified_guaranties = [];
                         this.max_page = 0;
                         this.current_page = 0;
-                        var max_page_data = this.get_guaranty_max_page();
+                        var max_page_data = this.to_tbc_get_guaranty_max_page();
                         if (!isEmptyValue(max_page_data) && !isEmptyValue(max_page_data.maxPage) && max_page_data.maxPage > 0) {
                             this.max_page = max_page_data.maxPage;
-                            this.qualified_guaranties = this.get_guaranty(1);
+                            this.qualified_guaranties = this.to_tbc_get_guaranty(1);
                             this.current_page = 1;
                         } else {
                             this.max_page = 0;
                         }
 
                     },
-                    view_detail_click(item){
+                    guaranty_to_tbc_view_detail_click(item){
                         var url = null;
                         switch(item.type){
                             case 0:
@@ -617,7 +699,7 @@
                         }
                         modal.modal('show');
                     },
-                    confirm_repay_click(item){
+                    guaranty_to_tbc_confirm_to_tbc(item){
                         bootbox.confirm({
                             message: "您确定要确认该抵押物鉴定结果吗？",
                             buttons: {
@@ -648,7 +730,7 @@
                                         }
                                     });
                                     if (influence.influence > 0) {
-                                        main_body.display_guaranty_table();
+                                        main_body.display_guaranty_to_tbc_table();
                                     } else {
                                         //错误提示
                                     }
@@ -658,6 +740,166 @@
                     },
 
 
+
+
+                    repay_confirm_guaranty_states_to_string() {
+                        var query_para = '';
+                        for (var i = 0; i < this.repay_confirm_guaranty_state.length; i++) {
+                            if (i > 0) {
+                                query_para = query_para + '&'
+                            }
+                            query_para = query_para + 'states=' + this.repay_confirm_guaranty_state[i].toString();
+                        }
+                        return query_para;
+                    },
+                    repay_confirm_get_guaranty(page) {
+                        var query_para = '?' + this.repay_confirm_guaranty_states_to_string() + "&page=" + page.toString();
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/bank/companyRequest/guaranties' + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            }
+                        });
+                        return result;
+                    },
+                    repay_confirm_get_max_page() {
+                        var query_para = '?' + this.repay_confirm_guaranty_states_to_string();
+                        var result = null;
+                        $.ajax({
+                            'url': '/user/bank/companyRequest/maxPage' + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                        });
+                        return result;
+                    },
+                    repay_confirm_aimed_page(page) {
+                        var guaranties = this.repay_confirm_get_guaranty(page);
+
+                        if (!isEmptyValue(guaranties)) {
+                            this.current_page = page;
+                            this.repay_confirm_guaranty = guaranties;
+                        }
+                    },
+                    display_repay_confirm_table: function () {
+                        this.repay_confirm_guaranty_state = [0];
+                        this.repay_confirm_guaranty = [];
+                        this.max_page = 0;
+                        this.current_page = 0;
+                        var max_page_data = this.repay_confirm_get_max_page();
+                        if (!isEmptyValue(max_page_data) && !isEmptyValue(max_page_data.maxPage) && max_page_data.maxPage > 0) {
+                            this.max_page = max_page_data.maxPage;
+                            this.repay_confirm_guaranty = this.repay_confirm_get_guaranty(1);
+                            this.current_page = 1;
+                        } else {
+                            this.max_page = 0;
+                        }
+                    },
+                    repay_confirm_view_detail_click(item){
+                        var url = null;
+                        switch(item.type){
+                            case 0:
+                                url = '/user/bank/companyRequest/houseDetail'
+                                break;
+                            case 1:
+                                url = '/user/bank/companyRequest/landDetail'
+                                break;
+                            case 2:
+                                url = '/user/bank/companyRequest/machineDetail'
+                                break;
+                        }
+                        var query_para = '?guarantyId=' + item.guarantyId.toString();
+                        var result = null;
+                        $.ajax({
+                            'url': url + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            }
+                        });
+                        var guaranty = result;
+                        var modal = $('#repay_confirm_detail_modal');
+                        modal.find('#repay_confirm_guaranty_name').html(guaranty.name);
+                        modal.find('#repay_confirm_guaranty_value').html(guaranty.evaluationValue);
+                        modal.find('#repay_confirm_guaranty_owner').html(guaranty.ownerName);
+                        modal.find('#repay_confirm_guaranty_scope').html(this.scope_of_right_word[guaranty.scopeOfRight]);
+                        modal.find('#repay_confirm_guaranty_state').html(this.states_word[guaranty.state]);
+                        modal.find('#repay_confirm_guaranty_type').html(this.type_word[guaranty.type]);
+                        switch(item.type){
+                            case 0:
+                                modal.find('#repay_confirm_house_addr').html(guaranty.addr);
+                                modal.find('#repay_confirm_house_zip').html(guaranty.zip);
+                                modal.find('#repay_confirm_house_certificatedId').html(guaranty.housingCertificatedId);
+                                $('.house_detail').css("display","inline");
+                                break;
+                            case 1:
+                                modal.find('#repay_confirm_land_addr').html(guaranty.addr);
+                                modal.find('#repay_confirm_land_area').html(guaranty.area);
+                                $('.land_detail').css("display","inline");
+                                break;
+                            case 2:
+                                modal.find('#repay_confirm_machine_producer').html(guaranty.producer);
+                                modal.find('#repay_confirm_machine_model').html(guaranty.model);
+                                modal.find('#repay_confirm_machine_usedDays').html(guaranty.usedDays);
+                                $('.machine_detail').css("display","inline");
+                                break;
+                        }
+                        modal.modal('show');
+                    },
+                    repay_confirm_confirm_repay_click(item){
+                        bootbox.confirm({
+                            message: "您确定要通过该还贷申请吗？",
+                            buttons: {
+                                confirm: {
+                                    label: '确认',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: '返回',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function (result) {
+                                if(result){
+                                    var influence = null;
+                                    $.ajax({
+                                        'url': '/user/bank/companyRequest/repay',
+                                        'type': 'PUT',
+                                        'data':{
+                                            'guarantyId':item.guarantyId,
+                                        },
+                                        'async': false,
+                                        'success': function(data) {
+                                            influence = data;
+                                        },
+                                        'headers': {
+                                            'user_id_token': getCookie('user_id_token'),
+                                        }
+                                    });
+                                    if(influence>0){
+                                        vm.displayTable();
+                                    }else{
+                                        //错误提示
+                                    }
+                                }
+                            }
+                        });
+                    },
                 }
             });
         </script>
