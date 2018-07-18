@@ -25,8 +25,7 @@ public class CollectExecutive extends BaseService {
             CurrentBlocks.getCurrentBlockFor(dto.getType())
                     .getDataList().addAll(dto.getBlockDataList());
         }
-        ArrayList<BlockData> dataArrayList = new ArrayList<>(dto.getBlockDataList());
-        Transferer.send(dataArrayList);
+        Transferer.send(dto);
         return dto.getBlockDataList().size();
     }
 }

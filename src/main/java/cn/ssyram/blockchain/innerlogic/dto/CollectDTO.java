@@ -13,7 +13,7 @@ import java.util.List;
 public class CollectDTO implements Serializable {
     private String address;
     private ChainType type;
-    private List<BlockData> blockDataList;
+    private ArrayList<BlockData> blockDataList;
 
     public CollectDTO() {}
 
@@ -42,11 +42,11 @@ public class CollectDTO implements Serializable {
         this.type = type;
     }
 
-    public List<BlockData> getBlockDataList() {
+    public ArrayList<BlockData> getBlockDataList() {
         return blockDataList;
     }
 
-    public void setBlockDataList(List<BlockData> blockDataList) {
+    public void setBlockDataList(ArrayList<BlockData> blockDataList) {
         this.blockDataList = blockDataList;
     }
 }
