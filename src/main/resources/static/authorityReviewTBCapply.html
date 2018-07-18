@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>审查待上链物品</title> <script type="text/javascript" src="js/company_authority.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/JQuery.js"></script>
+
+</head>
+<body>
+<div class="content_container">
+    <div id="company_credit_info">
+        <table style="width :100%;">
+            <tbody>
+            <tr>
+                <td class="table_head">
+                    抵押物名称
+                </td>
+
+                <td class="table_head">
+                    申请企业
+                </td>
+                <td class="table_head">
+                    电话
+                </td>
+                <td class="table_head">
+                    email
+                </td>
+                <td class="table_head">
+                    信用值
+                </td>
+                <td class="table_head">
+                    估值
+                </td>
+                <td>修改估值</td>
+            <td>
+                提交
+            </td>
+
+            <tr v-for ="item in GuarantyCompanyInfo">
+                <td>{{ item['guarantyName'] }}</td>
+                <td>{{ item['reviewCompanyInfoVO']['name'] }}</td>
+                <td>{{ item['reviewCompanyInfoVO']['telNum'] }}</td>
+                <td>{{ item['reviewCompanyInfoVO']['emailAddress'] }}</td>
+                <td>{{ item['credit']}}</td>
+                <td>{{ item['evaluateValue']}}</td>
+                <td><input id="evaluate" ></input></td>
+                <td><button v-on:click="update_listener(item,this.evaluate.value)">修改估值</button></td>
+
+
+            </tr>
+
+
+            </tbody>
+        </table>
+        <button v-on:click="click_listener">更新数据</button>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#company_credit_info',
+        data :{
+
+            GuarantyCompanyInfo :[]
+        },
+        methods:{
+            getData: function () {
+                var result =' ';
+                //deal with parameter
+                $.ajax({
+                    method: "GET" ,
+                    url: "/Authorization/reviewInfo/getChainInfo",
+                    async: false,
+
+                    beforeSend: function (request) {
+                        request.setRequestHeader("user_id_token", "12345");
+                    },
+                    success : function(data)
+                    {
+                        result=data;
+
+                    }
+
+
+                });
+
+                return result;
+
+            },
+            updateGuaranty: function(guarantyid,value){
+                var result =' ';
+                var r=confirm("是否确定修改");
+                if(r==true) {
+                    //deal with parameter
+                    $.ajax({
+                        method: "PUT",
+                        url: "/Authorization/reviewInfo/updateGuarantyValue",
+                        async: false,
+                        data: {
+                            "guaranty_id": guarantyid,
+                            "value": value,
+                        },
+                        beforeSend: function (request) {
+                            request.setRequestHeader("user_id_token", "12345");
+                        },
+                        success: function (data) {
+
+                            result = data;
+
+                        }
+
+
+                    });
+
+                    return result;
+                }
+            },
+            click_listener: function () {
+                result = this.getData();
+
+                this.GuarantyCompanyInfo= result;
+            },
+            update_listener:function (item,value) {
+            result=this.updateGuaranty(item["guarantyId"],value);
+            alert(result['message']);
+            this.click_listener();
+            },
+
+
+        }
+    })
+</script>
+</body>
+</html>
