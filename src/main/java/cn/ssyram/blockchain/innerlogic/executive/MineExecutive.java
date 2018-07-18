@@ -44,7 +44,7 @@ public class MineExecutive extends Thread {
 
                 fillBlock();
 
-                Semaphores.blockchain.acquire();
+                Semaphores.blockchains.get(block.getType()).acquire();
                 Logger.logger.info("Miner of type " + type + " start mining.");
 
                 //临界资源：说明正式开始计算新的块
@@ -56,8 +56,8 @@ public class MineExecutive extends Thread {
                     miner.getNewThis_Hash(block);
 
                     //检测有没有新送来的块，先验证
-                    Semaphores.blockchain.release();
-                    Semaphores.blockchain.acquire();
+                    Semaphores.blockchains.get(block.getType()).release();
+                    Semaphores.blockchains.get(block.getType()).acquire();
 
                     //如果验证完了合法且别人已经完成了自身工作
                     //退出本次挖矿，无论自身是否已经挖出来
@@ -69,6 +69,7 @@ public class MineExecutive extends Thread {
                     //发布新的矿块
                     releaseOre();
 
+                    Semaphores.blockchains.get(block.getType()).release();
                     break;
                 }
             }

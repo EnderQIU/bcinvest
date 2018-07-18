@@ -308,7 +308,7 @@ public class LinkExecutive implements Runnable {
             synchronized (ConditionVariables.linkerAmountWhenCalculating) {
                 --ConditionVariables.linkerAmountWhenCalculating;
                 if (ConditionVariables.linkerAmountWhenCalculating == 0)
-                    Semaphores.blockchain.release();
+                    Semaphores.blockchains.get(block.getType()).release();
             }
         }
     }
@@ -354,7 +354,7 @@ public class LinkExecutive implements Runnable {
         synchronized (ConditionVariables.linkerAmountWhenCalculating) {
             if (ConditionVariables.linkerAmountWhenCalculating == 0) {
                 try {
-                    Semaphores.blockchain.acquire();
+                    Semaphores.blockchains.get(block.getType()).acquire();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
