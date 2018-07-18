@@ -94,13 +94,22 @@ public class BlockChainOperator {
 
     private static boolean validChange(ChainType type, String originValue, BlockData data) {
         if (type == ChainType.credit)
-            return creditValid(
+            if (originValue == null)
+                return creditValid(
+                    0,
+                    Integer.valueOf(data.getValue()),
+                    Integer.valueOf(data.getVariation())
+            );
+            else return creditValid(
                     Integer.valueOf(originValue),
                     Integer.valueOf(data.getValue()),
                     Integer.valueOf(data.getVariation())
             );
         else if (type == ChainType.guaranty)
-            return guarantyValid(
+            //如果是新設定的狀態，只能是變成可抵押的狀態
+            if (originValue == null)
+                return Integer.valueOf(data.getValue()) == 4;
+            else return guarantyValid(
                     Integer.valueOf(originValue),
                     Integer.valueOf(data.getValue())
             );

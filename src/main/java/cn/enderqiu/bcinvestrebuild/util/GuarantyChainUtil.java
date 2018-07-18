@@ -39,6 +39,17 @@ public class GuarantyChainUtil {
         return validActionMap[orig][dest];
     }
 
+    private static boolean[][] immediatelyActionMap = {
+            {false, true, true, false, false, false, false, false, false, },
+            {false, false, false, false, false, false, false, false, false, },
+            {false, false, false, true, false, false, false, false, false, },
+            {false, false, true, false, false, false, false, false, false, },
+            {false, false, false, false, false, false, false, false, false, },
+            {false, false, false, false, false, false, false, false, false, },
+            {false, false, false, false, false, false, false, false, false, },
+            {false, false, false, false, false, false, false, false, false, },
+            {false, false, false, false, false, false, false, false, false, },
+    };
     /**
      * 检查动作是否为立即的
      * @param orig 当前状态
@@ -46,38 +57,29 @@ public class GuarantyChainUtil {
      * @return
      */
     public static boolean checkUpdateimmediately(Integer orig, Integer dest){
-        boolean[][] immediatelyActionMap = {
-                {false, true, true, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, false, false, },
-                {false, false, false, true, false, false, false, false, false, },
-                {false, false, true, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, false, false, },
-                {false, false, false, false, false, false, false, false, false, },
-        };
+        if (orig == null)
+            return dest == 4;
         return immediatelyActionMap[orig][dest];
     }
 
+    private static int[][] needUpdateCreditActionMap = {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, -50, 0, 0, 0, +20, },  // 逾期，-50；逾期还款，+20
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, +30, 0, 0, 0, 0, },  // 期限内还款，+30
+    };
     /**
      * 检查状态转换是否涉及更新企业信用
      * @param orig
      * @param dest
      * @return
      */
-    public static int checkHowMuchCreditNeedToBeUpdated(Integer orig, Integer dest){
-        int[][] needUpdateCreditActionMap = {
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
-                {0, 0, 0, 0, -50, 0, 0, 0, +20, },  // 逾期，-50；逾期还款，+20
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, },
-                {0, 0, 0, 0, +30, 0, 0, 0, 0, },  // 期限内还款，+30
-        };
+    public static int checkHowMuchCreditNeedToBeUpdated(Integer orig, Integer dest) {
         return needUpdateCreditActionMap[orig][dest];
     }
 

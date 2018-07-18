@@ -25,7 +25,7 @@ public class GurantyChainImpl implements GuarantyChain {
         data.setId(guarantyId.toString());
         data.setValue(stateWillUpdateTo.toString());
 
-        List<BlockData> dataList = new ArrayList<>(1);
+        ArrayList<BlockData> dataList = new ArrayList<>(1);
         dataList.add(data);
 
         CollectDTO dto = new CollectDTO();
