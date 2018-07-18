@@ -40,10 +40,8 @@ public class ObjectView {
             LinkDTO linkDTO = new LinkDTO();
             linkDTO.setBlock(block);
             Dispatcher.link(linkDTO);
-        }else if (type.equals("BlockData")){
-            ArrayList<BlockData> blockData = (ArrayList<BlockData>) objInt.readObject();
-            CollectDTO collectDTO = new CollectDTO();
-            collectDTO.setBlockDataList(blockData);
+        }else if (type.equals("CollectDTO")){
+            CollectDTO collectDTO = (CollectDTO) objInt.readObject();
             Dispatcher.collect(collectDTO);
         }
         return messageResponse;

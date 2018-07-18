@@ -1,5 +1,6 @@
 package cn.ssyram.blockchain.innerlogic.support;
 
+import cn.ssyram.blockchain.innerlogic.dto.CollectDTO;
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import com.generator.tables.Addresslist;
@@ -39,9 +40,9 @@ public class Transferer {
         String type = "";
         if (ser instanceof Block)
             type = "Block";
-        else if (ser instanceof ArrayList)
+        else if (ser instanceof CollectDTO)
             //内容是BlockData
-            type = "BlockData";
+            type = "CollectDTO";
         if (type.equals("")) return;
         Result<Record1<String>> targets = dsl
                 .select(Addresslist.ADDRESSLIST.ADDRESS)
