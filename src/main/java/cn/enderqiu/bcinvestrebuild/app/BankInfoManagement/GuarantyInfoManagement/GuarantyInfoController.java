@@ -98,17 +98,17 @@ public class GuarantyInfoController extends BaseController {
         return infoService.getGuarantyDetail(guarantyId);
     }
 
-    @RequestMapping(value = "/forceOutChain", method = RequestMethod.PUT)
-    @ApiImplicitParams({
-            @ApiImplicitParam(
-                    paramType = "query",
-                    name = "guarantyId",
-                    required = true,
-                    value = "每次后台返回的用来填充抵押物列表的抵押物概要信息中包含了抵押物的id，在用户点击某一项查看详细信息时需要发送给后台",
-                    dataType = "int"
-            )
-    })
-    BaseResponseVO forceOutChain (int guarantyId) {
-        return infoService.forceOutChain(guarantyId);
-    }
+    //@RequestMapping(value = "/forceOutChain", method = RequestMethod.PUT)
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(
+//                    paramType = "query",
+//                    name = "guarantyId",
+//                    required = true,
+//                    value = "每次后台返回的用来填充抵押物列表的抵押物概要信息中包含了抵押物的id，在用户点击某一项查看详细信息时需要发送给后台",
+//                    dataType = "int"
+//            )
+//    })
+//    BaseResponseVO forceOutChain (int guarantyId) {
+//        return infoService.forceOutChain(guarantyId);
+//    }
 }

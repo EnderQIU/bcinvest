@@ -6,8 +6,16 @@ package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
 
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
+import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
+import com.bcgenerator.tables.GuarantyChain;
+import com.generator.tables.Guaranty;
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.impl.DSL;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +25,9 @@ public class LoanService extends BaseService {
     static int ITEM_PER_PAGE = 20;
     static int onBCState = 4;
     static int applyingState = 5;
+
+    @Autowired
+    private DSLContext dsl;
 
     public List<LoanVO> getLoanRequestedButNotPassed(String user_id_token, int pageIndex) {
         String AccountNum = token2AccountNum(user_id_token);
@@ -39,11 +50,16 @@ public class LoanService extends BaseService {
 
         for(Map<String, Object> map : list) {
             LoanVO vo = new LoanVO();
-            vo.setGuarantyId((int)map.get("GuarantyId"));
-            vo.setScopeOfRight((int)map.get("ScopeOfRight"));
-            vo.setOwnerName((String)map.get("OwnerName"));
-            vo.setEvaluateValue((int)map.get("EvaluateValue"));
-            vo.setName((String)map.get("Name"));
+            if(map.containsKey("GuarantyId"))
+                vo.setGuarantyId((int)map.get("GuarantyId"));
+            if(map.containsKey("ScopeOfRight"))
+                vo.setScopeOfRight((int)map.get("ScopeOfRight"));
+            if(map.containsKey("OwnerName"))
+                vo.setOwnerName((String)map.get("OwnerName"));
+            if(map.containsKey("EvaluateValue"))
+                vo.setEvaluateValue((int)map.get("EvaluateValue"));
+            if(map.containsKey("Name"))
+                vo.setName((String)map.get("Name"));
             //extract(vo, map);
             result.add(vo);
         }
@@ -91,19 +107,32 @@ public class LoanService extends BaseService {
 
         Map<String, Object> map = list.get(0);
 
-        vo.setGuarantyId((int)map.get("GuarantyId"));
-        vo.setCompanyAccount((String)map.get("CompanyAccount"));
-        vo.setState((int)map.get("State"));
-        vo.setScopeOfRight((int)map.get("ScopeOfRight"));
-        vo.setOwnerName((String)map.get("OwnerName"));
-        vo.setReportId((int)map.get("ReportId"));
-        vo.setGuarantyType(Integer.parseInt(map.get("GuarantyType").toString()));
-        vo.setEvaluateValue((int)map.get("EvaluateValue"));
-        vo.setGuarantyName((String)map.get("GuarantyName"));
-        vo.setAuthAccount((String)map.get("AuthAccount"));
-        vo.setDate(map.get("Date").toString());
-        vo.setDuration((String)map.get("Duration"));
-        vo.setAuthName((String)map.get("AuthName"));
+        if(map.containsKey("GuarantyId"))
+            vo.setGuarantyId((int)map.get("GuarantyId"));
+        if(map.containsKey("CompanyAccount"))
+            vo.setCompanyAccount((String)map.get("CompanyAccount"));
+        if(map.containsKey("State"))
+            vo.setState((int)map.get("State"));
+        if(map.containsKey("ScopeOfRight"))
+            vo.setScopeOfRight((int)map.get("ScopeOfRight"));
+        if(map.containsKey("OwnerName"))
+            vo.setOwnerName((String)map.get("OwnerName"));
+        if(map.containsKey("ReportId"))
+            vo.setReportId((int)map.get("ReportId"));
+        if(map.containsKey("GuarantyType"))
+            vo.setGuarantyType(Integer.parseInt(map.get("GuarantyType").toString()));
+        if(map.containsKey("EvaluateValue"))
+            vo.setEvaluateValue((int)map.get("EvaluateValue"));
+        if(map.containsKey("GuarantyName"))
+            vo.setGuarantyName((String)map.get("GuarantyName"));
+        if(map.containsKey("AuthAccount"))
+            vo.setAuthAccount((String)map.get("AuthAccount"));
+        if(map.containsKey("Date"))
+            vo.setDate(map.get("Date").toString());
+        if(map.containsKey("Duration"))
+            vo.setDuration((String)map.get("Duration"));
+        if(map.containsKey("AuthName"))
+            vo.setAuthName((String)map.get("AuthName"));
 
         return vo;
     }
@@ -111,19 +140,19 @@ public class LoanService extends BaseService {
     public BaseResponseVO cancleLoanRequest(String user_id_token, int guarantyId) {
         String accountNum = token2AccountNum(user_id_token);
 
-        String sql = "UPDATE Guaranty " +
-                     "SET State = "+onBCState+" "+
-                     "WHERE GuarantyId = "+guarantyId+" AND State = "+applyingState+" AND AccountNum = \'"+accountNum+"\'";
+        int LOCKED = 1;
 
-        int affectedRows = mapper.UPDATE(sql);
+        Record record = dsl.select(Guaranty.GUARANTY.LOCK).from(Guaranty.GUARANTY).where(Guaranty.GUARANTY.GUARANTYID.eq(guarantyId).and(Guaranty.GUARANTY.STATE.eq(applyingState)).and(Guaranty.GUARANTY.ACCOUNTNUM.eq(accountNum))).fetchOne();
 
-        BaseResponseVO vo = new BaseResponseVO();
+        int lock = record.getValue(0, Integer.class);
 
-        if(affectedRows==1){
-            vo.setMessage("OK");
-        } else {
-            vo.setMessage("Error");
+        if(lock==LOCKED){
+            BaseResponseVO vo = new BaseResponseVO("Guaranty locked");
+            return vo;
         }
+
+        GuarantyChainUtil.updateState(guarantyId, onBCState);
+        BaseResponseVO vo = new BaseResponseVO("OK");
 
         return vo;
     }

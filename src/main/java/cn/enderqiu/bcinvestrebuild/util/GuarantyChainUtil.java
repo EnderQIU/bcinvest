@@ -9,6 +9,7 @@ import com.generator.tables.records.GuarantyRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class GuarantyChainUtil {
 
-    @Autowired
     private static DSLContext dsl;
+
+    @Autowired
+    public void setDSL(DSLContext dsl){
+        GuarantyChainUtil.dsl = dsl;
+    }
 
     /**
      * 检查动作是否合法
@@ -104,7 +109,7 @@ public class GuarantyChainUtil {
         }
         Integer presentState = record.getState();
         if (!GuarantyChainUtil.checkUpdateIllegal(record.getState(), stateWillUpdateTo)){
-            // 无效的状态更改
+           // 无效的状态更改
             return;
         }
         if (GuarantyChainUtil.checkUpdateimmediately(record.getState(), stateWillUpdateTo)){
