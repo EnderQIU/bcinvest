@@ -11,6 +11,7 @@ import java.util.List;
  * 本质上是一个带上type用于寻找合适区块的BlockData
  */
 public class CollectDTO implements Serializable {
+    private String address;
     private ChainType type;
     private List<BlockData> blockDataList;
 
@@ -27,6 +28,14 @@ public class CollectDTO implements Serializable {
 
     public ChainType getType() {
         return type;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setType(ChainType type) {

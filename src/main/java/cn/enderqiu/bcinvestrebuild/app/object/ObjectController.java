@@ -13,14 +13,14 @@ import java.io.IOException;
 
 @Api("区块链数据传输")
 @RestController
-@RequestMapping("/object")
+@RequestMapping("/bc")
 public class ObjectController {
 
     @Autowired
     private ObjectView view;
 
     @ApiOperation("接受序列化对象的字节流文件，传给 dispature 处理")
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "miner/", method = RequestMethod.POST)
     private MessageResponse receiveObject(ObjectSerializer serializer) throws IOException, ClassNotFoundException {
         return view.receiveObject(serializer);
     }
