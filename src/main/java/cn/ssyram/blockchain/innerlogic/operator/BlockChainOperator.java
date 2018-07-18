@@ -66,20 +66,8 @@ public class BlockChainOperator {
     private static boolean mainChainCheck(Block block) {
         if (block.getDataList().size() == 0)
             return true;
-        StringBuilder idSet = new StringBuilder("(");
-        for (BlockData data:block.getDataList())
-            idSet.append(data.getId()).append(",");
-        idSet.replace(idSet.length() - 1, idSet.length(), ")");
-        //获得当前的主链上的所有id的相应状态
-        List<Map<String, Object>> result = DatabaseOperator.SELECT(
-                "SELECT * FROM " + block.getType().getMainChainViewName()
-                + " WHERE id IN " + idSet
-        );
 
-        //标记已经处理过的block的dataList中的id
-        Map<String, String> id_value = new HashMap<>();
-        for (Map<String, Object> map:result)
-            id_value.put((String)map.get("id"), (String)map.get("value"));
+        Map<String, String> id_value = getPreviousConditionOnMainChainFor(block);
 
         for (BlockData data:block.getDataList())
             if (!validChange(
@@ -90,6 +78,40 @@ public class BlockChainOperator {
                 return false;
 
         return true;
+    }
+
+    private static Map<String, String> getPreviousConditionOnMainChainFor(Block block)
+    {
+        StringBuilder idSet = new StringBuilder("(");
+        for (BlockData data:block.getDataList())
+            idSet.append(data.getId()).append(",");
+        idSet.replace(idSet.length() - 1, idSet.length(), ")");
+        //获得当前的主链上的所有id的相应状态
+        List<Map<String, Object>> result = DatabaseOperator.SELECT(
+                "SELECT * FROM " + block.getType().getMainChainViewName()
+                        + " WHERE id IN " + idSet
+        );
+
+        //标记已经处理过的block的dataList中的id
+        Map<String, String> id_value = new HashMap<>();
+        for (Map<String, Object> map:result)
+            id_value.put((String)map.get("id"), (String)map.get("value"));
+        return id_value;
+    }
+
+    public static void blockContentTrim(Block block, boolean is_main) {
+        if (block.getDataList().size() == 0)
+            return;
+
+        Map<String, String> id_value = getPreviousConditionOnMainChainFor(block);
+
+        for (BlockData data:block.getDataList())
+            if (!validChange(
+                    block.getType(),
+                    id_value.get(data.getId()),
+                    data
+            ))
+                block.getDataList().remove(data);
     }
 
     private static boolean validChange(ChainType type, String originValue, BlockData data) {

@@ -1,7 +1,6 @@
 package cn.ssyram.blockchain.innerlogic.entity;
 
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
-import com.sun.istack.internal.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,12 +32,12 @@ public class Block implements Serializable {
         this.nonce = nonce;
     }
 
-    public Block(@NotNull ChainType type,
+    public Block(ChainType type,
                  String time_stamp,
-                 @NotNull String this_hash,
-                 @NotNull String previous_hash,
-                 @NotNull List<BlockData> dataList,
-                 @NotNull String address)
+                 String this_hash,
+                 String previous_hash,
+                 List<BlockData> dataList,
+                 String address)
     {
         this.type = type;
         if (time_stamp != null)

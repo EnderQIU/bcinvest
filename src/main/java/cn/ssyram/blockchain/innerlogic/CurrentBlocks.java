@@ -3,7 +3,6 @@ package cn.ssyram.blockchain.innerlogic;
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BufferBlock;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
-import com.sun.istack.internal.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class CurrentBlocks {
      * @param type 缓冲区块类型
      * @return 之前的缓冲区块
      */
-    public static BufferBlock replaceCurrentBlockFor(@NotNull ChainType type) {
+    public static BufferBlock replaceCurrentBlockFor(ChainType type) {
         return blocksMap.replace(type.toString(), new BufferBlock(type));
     }
 
@@ -32,7 +31,7 @@ public class CurrentBlocks {
      * @param type 目标缓冲区块所属的类型
      * @return 目标缓冲区块
      */
-    public static BufferBlock getCurrentBlockFor(@NotNull ChainType type) {
+    public static BufferBlock getCurrentBlockFor(ChainType type) {
         return blocksMap.get(type.toString());
     }
 }
