@@ -27,11 +27,17 @@ public class GuarantySearchService extends BaseService{
         for(Map<String, Object> item : list) {
             GuarantySearchVO searchVO = new GuarantySearchVO();
             //extract(searchVO, item);
-            searchVO.setGuarantyId((int)item.get("GuarantyId"));
-            searchVO.setScopeOfRight((int)item.get("ScopeOfRight"));
-            searchVO.setOwnerName((String)item.get("OwnerName"));
-            searchVO.setEvaluateValue((int)item.get("EvaluateValue"));
-            searchVO.setName((String)item.get("Name"));
+            if(item.containsKey("GuarantyId"))
+                searchVO.setGuarantyId((int)item.get("GuarantyId"));
+            if(item.containsKey("ScopeOfRight"))
+                searchVO.setScopeOfRight((int)item.get("ScopeOfRight"));
+            if(item.containsKey("OwnerName"))
+                searchVO.setOwnerName((String)item.get("OwnerName"));
+            if(item.containsKey("EvaluateValue"))
+                searchVO.setEvaluateValue((int)item.get("EvaluateValue"));
+            if(item.containsKey("Name"))
+                searchVO.setName((String)item.get("Name"));
+
             voList.add(searchVO);
         }
 

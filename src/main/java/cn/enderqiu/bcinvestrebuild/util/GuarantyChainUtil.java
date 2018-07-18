@@ -1,12 +1,9 @@
 package cn.enderqiu.bcinvestrebuild.util;
 
 import cn.ssyram.blockchain.interfaces.GuarantyChain;
-import com.generator.tables.Company;
 import com.generator.tables.Guaranty;
 import com.generator.tables.Guarantystateupdatetask;
-import com.generator.tables.records.CompanyRecord;
 import com.generator.tables.records.GuarantyRecord;
-import com.generator.tables.records.GuarantystateupdatetaskRecord;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,8 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class GuarantyChainUtil {
 
-    @Autowired
     private static DSLContext dsl;
+
+    @Autowired
+    public void setDsl(DSLContext dsl){
+        GuarantyChainUtil.dsl = dsl;
+    }
 
     /**
      * 检查动作是否合法

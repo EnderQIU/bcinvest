@@ -10,13 +10,19 @@ import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class CreditChainUtil {
 
-    @Autowired
     private static DSLContext dsl;
+
+    @Autowired
+    public void setDsl(DSLContext dsl){
+        CreditChainUtil.dsl = dsl;
+    }
 
     /**
      * 共有函数，对指定企业修改信用信息
