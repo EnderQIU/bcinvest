@@ -1,11 +1,11 @@
-create table blockchain.addresslist
+create table bcinvest.addresslist
 (
 	address varchar(512) not null
 		primary key
 )
 ;
 
-create table blockchain.credit_chain
+create table bcinvest.credit_chain
 (
 	this_hash varchar(64) not null
 		primary key,
@@ -15,15 +15,15 @@ create table blockchain.credit_chain
 	is_main tinyint(1) not null,
 	address varchar(512) not null,
 	constraint credit_chain_addresslist_address_fk
-		foreign key (address) references blockchain.addresslist (address)
+		foreign key (address) references bcinvest.addresslist (address)
 )
 ;
 
 create index credit_chain_addresslist_address_fk
-	on blockchain.credit_chain (address)
+	on bcinvest.credit_chain (address)
 ;
 
-create table blockchain.credit_data
+create table bcinvest.credit_data
 (
 	block_hash varchar(64) not null,
 	id varchar(256) not null,
@@ -32,11 +32,11 @@ create table blockchain.credit_data
 	remarks varchar(512) null,
 	primary key (block_hash, id),
 	constraint credit_data_chain_this_hash_fk
-		foreign key (block_hash) references blockchain.credit_chain (this_hash)
+		foreign key (block_hash) references bcinvest.credit_chain (this_hash)
 )
 ;
 
-create table blockchain.guaranty_chain
+create table bcinvest.guaranty_chain
 (
 	this_hash varchar(64) not null
 		primary key,
@@ -46,15 +46,15 @@ create table blockchain.guaranty_chain
 	is_main tinyint(1) not null,
 	address varchar(512) not null,
 	constraint guaranty_chain_addresslist_address_fk
-		foreign key (address) references blockchain.addresslist (address)
+		foreign key (address) references bcinvest.addresslist (address)
 )
 ;
 
 create index guaranty_chain_addresslist_address_fk
-	on blockchain.guaranty_chain (address)
+	on bcinvest.guaranty_chain (address)
 ;
 
-create table blockchain.guaranty_data
+create table bcinvest.guaranty_data
 (
 	block_hash varchar(64) not null,
 	id varchar(256) not null,
@@ -63,9 +63,27 @@ create table blockchain.guaranty_data
 	remarks varchar(512) null,
 	primary key (block_hash, id),
 	constraint guaranty_data_chain_this_hash_fk
-		foreign key (block_hash) references blockchain.guaranty_chain (this_hash)
+		foreign key (block_hash) references bcinvest.guaranty_chain (this_hash)
 )
 ;
+
+CREATE OR REPLACE VIEW credit_most_front_block_info AS
+	SELECT *
+    FROM credit_chain
+    WHERE is_main = 1 AND length >= ALL (
+		SELECT MAX(length)
+        FROM credit_chain
+        WHERE is_main = 1
+	);
+
+CREATE OR REPLACE VIEW guaranty_most_front_block_info AS
+	SELECT *
+    FROM guaranty_chain
+    WHERE is_main = 1 AND length >= ALL (
+		SELECT MAX(length)
+        FROM guaranty_chain
+        WHERE is_main = 1
+	);
 
 CREATE OR REPLACE VIEW credit_ready_main_chain_view AS
 	SELECT id, value, variation, remarks
@@ -95,24 +113,6 @@ CREATE OR REPLACE VIEW guaranty_ready_main_chain_view AS
 	) AND length + 6 <= ALL (
 		SELECT length
         FROM guaranty_most_front_block_info
-	);
-
-CREATE OR REPLACE VIEW credit_most_front_block_info AS
-	SELECT *
-    FROM credit_chain
-    WHERE is_main = 1 AND length >= ALL (
-		SELECT MAX(length)
-        FROM credit_chain
-        WHERE is_main = 1
-	);
-
-CREATE OR REPLACE VIEW guaranty_most_front_block_info AS
-	SELECT *
-    FROM guaranty_chain
-    WHERE is_main = 1 AND length >= ALL (
-		SELECT MAX(length)
-        FROM guaranty_chain
-        WHERE is_main = 1
 	);
 
 CREATE OR REPLACE VIEW credit_main_chain_view AS

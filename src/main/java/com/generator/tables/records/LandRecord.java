@@ -28,45 +28,45 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LandRecord extends UpdatableRecordImpl<LandRecord> implements Record3<String, Long, Integer> {
 
-    private static final long serialVersionUID = 389280218;
+    private static final long serialVersionUID = 1935317402;
 
     /**
-     * Setter for <code>bcinvest.Land.Addr</code>.
+     * Setter for <code>bcinvest.land.Addr</code>.
      */
     public void setAddr(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Land.Addr</code>.
+     * Getter for <code>bcinvest.land.Addr</code>.
      */
     public String getAddr() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.Land.Area</code>.
+     * Setter for <code>bcinvest.land.Area</code>.
      */
     public void setArea(Long value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Land.Area</code>.
+     * Getter for <code>bcinvest.land.Area</code>.
      */
     public Long getArea() {
         return (Long) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.Land.GuarantyId</code>.
+     * Setter for <code>bcinvest.land.GuarantyId</code>.
      */
     public void setGuarantyid(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Land.GuarantyId</code>.
+     * Getter for <code>bcinvest.land.GuarantyId</code>.
      */
     public Integer getGuarantyid() {
         return (Integer) get(2);

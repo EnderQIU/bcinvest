@@ -29,45 +29,45 @@ import org.jooq.impl.TableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AccesstokenRecord extends TableRecordImpl<AccesstokenRecord> implements Record3<String, LocalDateTime, String> {
 
-    private static final long serialVersionUID = 1702154957;
+    private static final long serialVersionUID = -1060491571;
 
     /**
-     * Setter for <code>bcinvest.Accesstoken.AccessToken</code>.
+     * Setter for <code>bcinvest.accesstoken.AccessToken</code>.
      */
     public void setAccesstoken(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Accesstoken.AccessToken</code>.
+     * Getter for <code>bcinvest.accesstoken.AccessToken</code>.
      */
     public String getAccesstoken() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.Accesstoken.ExpiryTime</code>.
+     * Setter for <code>bcinvest.accesstoken.ExpiryTime</code>.
      */
     public void setExpirytime(LocalDateTime value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Accesstoken.ExpiryTime</code>.
+     * Getter for <code>bcinvest.accesstoken.ExpiryTime</code>.
      */
     public LocalDateTime getExpirytime() {
         return (LocalDateTime) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.Accesstoken.AccountNum</code>.
+     * Setter for <code>bcinvest.accesstoken.AccountNum</code>.
      */
     public void setAccountnum(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Accesstoken.AccountNum</code>.
+     * Getter for <code>bcinvest.accesstoken.AccountNum</code>.
      */
     public String getAccountnum() {
         return (String) get(2);

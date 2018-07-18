@@ -100,13 +100,6 @@ public class GuarantyDao extends DAOImpl<GuarantyRecord, com.generator.tables.po
     }
 
     /**
-     * Fetch records that have <code>Type IN (values)</code>
-     */
-    public List<com.generator.tables.pojos.Guaranty> fetchByType(Integer... values) {
-        return fetch(Guaranty.GUARANTY.TYPE, values);
-    }
-
-    /**
      * Fetch records that have <code>EvaluateValue IN (values)</code>
      */
     public List<com.generator.tables.pojos.Guaranty> fetchByEvaluatevalue(Integer... values) {
@@ -118,6 +111,13 @@ public class GuarantyDao extends DAOImpl<GuarantyRecord, com.generator.tables.po
      */
     public List<com.generator.tables.pojos.Guaranty> fetchByName(String... values) {
         return fetch(Guaranty.GUARANTY.NAME, values);
+    }
+
+    /**
+     * Fetch records that have <code>Type IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Guaranty> fetchByType(String... values) {
+        return fetch(Guaranty.GUARANTY.TYPE, values);
     }
 
     /**

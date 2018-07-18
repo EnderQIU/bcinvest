@@ -28,73 +28,73 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CreditupdatetaskRecord extends UpdatableRecordImpl<CreditupdatetaskRecord> implements Record5<Integer, String, Integer, Integer, String> {
 
-    private static final long serialVersionUID = -1466553670;
+    private static final long serialVersionUID = 1634343802;
 
     /**
-     * Setter for <code>bcinvest.CreditUpdateTask.id</code>.
+     * Setter for <code>bcinvest.creditupdatetask.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.CreditUpdateTask.id</code>.
+     * Getter for <code>bcinvest.creditupdatetask.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.CreditUpdateTask.AccountNum</code>.
+     * Setter for <code>bcinvest.creditupdatetask.AccountNum</code>.
      */
     public void setAccountnum(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.CreditUpdateTask.AccountNum</code>.
+     * Getter for <code>bcinvest.creditupdatetask.AccountNum</code>.
      */
     public String getAccountnum() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.CreditUpdateTask.previousCredit</code>.
+     * Setter for <code>bcinvest.creditupdatetask.previousCredit</code>.
      */
     public void setPreviouscredit(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.CreditUpdateTask.previousCredit</code>.
+     * Getter for <code>bcinvest.creditupdatetask.previousCredit</code>.
      */
     public Integer getPreviouscredit() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>bcinvest.CreditUpdateTask.delta</code>.
+     * Setter for <code>bcinvest.creditupdatetask.delta</code>.
      */
     public void setDelta(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>bcinvest.CreditUpdateTask.delta</code>.
+     * Getter for <code>bcinvest.creditupdatetask.delta</code>.
      */
     public Integer getDelta() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>bcinvest.CreditUpdateTask.state</code>.
+     * Setter for <code>bcinvest.creditupdatetask.state</code>.
      */
     public void setState(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>bcinvest.CreditUpdateTask.state</code>.
+     * Getter for <code>bcinvest.creditupdatetask.state</code>.
      */
     public String getState() {
         return (String) get(4);

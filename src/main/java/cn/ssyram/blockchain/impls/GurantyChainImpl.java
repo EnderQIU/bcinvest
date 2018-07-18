@@ -5,7 +5,7 @@ import cn.ssyram.blockchain.innerlogic.dto.CollectDTO;
 import cn.ssyram.blockchain.innerlogic.dto.QueryDTO;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
-import cn.ssyram.blockchain.innerlogic.support.DatabaseOperator;
+import cn.ssyram.blockchain.innerlogic.DatabaseOperator;
 import cn.ssyram.blockchain.interfaces.GuarantyChain;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class GurantyChainImpl implements GuarantyChain {
         data.setId(guarantyId.toString());
         data.setValue(stateWillUpdateTo.toString());
 
-        List<BlockData> dataList = new ArrayList<>(1);
+        ArrayList<BlockData> dataList = new ArrayList<>(1);
         dataList.add(data);
 
         CollectDTO dto = new CollectDTO();

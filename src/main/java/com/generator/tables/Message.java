@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Message extends TableImpl<MessageRecord> {
 
-    private static final long serialVersionUID = 2049253917;
+    private static final long serialVersionUID = -1710117347;
 
     /**
-     * The reference instance of <code>bcinvest.Message</code>
+     * The reference instance of <code>bcinvest.message</code>
      */
     public static final Message MESSAGE = new Message();
 
@@ -55,46 +55,46 @@ public class Message extends TableImpl<MessageRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Message.id</code>.
+     * The column <code>bcinvest.message.id</code>.
      */
     public final TableField<MessageRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>bcinvest.Message.content</code>.
+     * The column <code>bcinvest.message.content</code>.
      */
     public final TableField<MessageRecord, String> CONTENT = createField("content", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>bcinvest.Message.fromUserNum</code>.
+     * The column <code>bcinvest.message.fromUserNum</code>.
      */
     public final TableField<MessageRecord, String> FROMUSERNUM = createField("fromUserNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.Message.toUserNum</code>.
+     * The column <code>bcinvest.message.toUserNum</code>.
      */
     public final TableField<MessageRecord, String> TOUSERNUM = createField("toUserNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.Message.status</code>.
+     * The column <code>bcinvest.message.status</code>.
      */
     public final TableField<MessageRecord, Byte> STATUS = createField("status", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
     /**
-     * Create a <code>bcinvest.Message</code> table reference
+     * Create a <code>bcinvest.message</code> table reference
      */
     public Message() {
-        this(DSL.name("Message"), null);
+        this(DSL.name("message"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Message</code> table reference
+     * Create an aliased <code>bcinvest.message</code> table reference
      */
     public Message(String alias) {
         this(DSL.name(alias), MESSAGE);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Message</code> table reference
+     * Create an aliased <code>bcinvest.message</code> table reference
      */
     public Message(Name alias) {
         this(alias, MESSAGE);

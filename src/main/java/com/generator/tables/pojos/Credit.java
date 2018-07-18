@@ -22,13 +22,12 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Credit implements Serializable {
 
-    private static final long serialVersionUID = -437716897;
+    private static final long serialVersionUID = -131087536;
 
     private String  accountnum;
     private Integer guarantyid;
     private Integer reportid;
     private Byte    type;
-    private Byte    lock;
 
     public Credit() {}
 
@@ -37,21 +36,18 @@ public class Credit implements Serializable {
         this.guarantyid = value.guarantyid;
         this.reportid = value.reportid;
         this.type = value.type;
-        this.lock = value.lock;
     }
 
     public Credit(
         String  accountnum,
         Integer guarantyid,
         Integer reportid,
-        Byte    type,
-        Byte    lock
+        Byte    type
     ) {
         this.accountnum = accountnum;
         this.guarantyid = guarantyid;
         this.reportid = reportid;
         this.type = type;
-        this.lock = lock;
     }
 
     public String getAccountnum() {
@@ -86,14 +82,6 @@ public class Credit implements Serializable {
         this.type = type;
     }
 
-    public Byte getLock() {
-        return this.lock;
-    }
-
-    public void setLock(Byte lock) {
-        this.lock = lock;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Credit (");
@@ -102,7 +90,6 @@ public class Credit implements Serializable {
         sb.append(", ").append(guarantyid);
         sb.append(", ").append(reportid);
         sb.append(", ").append(type);
-        sb.append(", ").append(lock);
 
         sb.append(")");
         return sb.toString();

@@ -37,10 +37,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Accesstoken extends TableImpl<AccesstokenRecord> {
 
-    private static final long serialVersionUID = 1724749360;
+    private static final long serialVersionUID = -140327504;
 
     /**
-     * The reference instance of <code>bcinvest.Accesstoken</code>
+     * The reference instance of <code>bcinvest.accesstoken</code>
      */
     public static final Accesstoken ACCESSTOKEN = new Accesstoken();
 
@@ -53,36 +53,36 @@ public class Accesstoken extends TableImpl<AccesstokenRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Accesstoken.AccessToken</code>.
+     * The column <code>bcinvest.accesstoken.AccessToken</code>.
      */
     public final TableField<AccesstokenRecord, String> ACCESSTOKEN_ = createField("AccessToken", org.jooq.impl.SQLDataType.VARCHAR(512), this, "");
 
     /**
-     * The column <code>bcinvest.Accesstoken.ExpiryTime</code>.
+     * The column <code>bcinvest.accesstoken.ExpiryTime</code>.
      */
     public final TableField<AccesstokenRecord, LocalDateTime> EXPIRYTIME = createField("ExpiryTime", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
 
     /**
-     * The column <code>bcinvest.Accesstoken.AccountNum</code>.
+     * The column <code>bcinvest.accesstoken.AccountNum</code>.
      */
     public final TableField<AccesstokenRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
-     * Create a <code>bcinvest.Accesstoken</code> table reference
+     * Create a <code>bcinvest.accesstoken</code> table reference
      */
     public Accesstoken() {
-        this(DSL.name("Accesstoken"), null);
+        this(DSL.name("accesstoken"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Accesstoken</code> table reference
+     * Create an aliased <code>bcinvest.accesstoken</code> table reference
      */
     public Accesstoken(String alias) {
         this(DSL.name(alias), ACCESSTOKEN);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Accesstoken</code> table reference
+     * Create an aliased <code>bcinvest.accesstoken</code> table reference
      */
     public Accesstoken(Name alias) {
         this(alias, ACCESSTOKEN);

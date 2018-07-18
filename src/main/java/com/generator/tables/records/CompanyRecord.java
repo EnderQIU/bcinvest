@@ -28,115 +28,115 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CompanyRecord extends UpdatableRecordImpl<CompanyRecord> implements Record8<String, String, String, String, String, Long, String, Byte> {
 
-    private static final long serialVersionUID = 230189933;
+    private static final long serialVersionUID = 1354285933;
 
     /**
-     * Setter for <code>bcinvest.Company.AccountNum</code>.
+     * Setter for <code>bcinvest.company.AccountNum</code>.
      */
     public void setAccountnum(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Company.AccountNum</code>.
+     * Getter for <code>bcinvest.company.AccountNum</code>.
      */
     public String getAccountnum() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.Company.Name</code>.
+     * Setter for <code>bcinvest.company.Name</code>.
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Company.Name</code>.
+     * Getter for <code>bcinvest.company.Name</code>.
      */
     public String getName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.Company.TelNum</code>.
+     * Setter for <code>bcinvest.company.TelNum</code>.
      */
     public void setTelnum(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Company.TelNum</code>.
+     * Getter for <code>bcinvest.company.TelNum</code>.
      */
     public String getTelnum() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>bcinvest.Company.EmailAddress</code>.
+     * Setter for <code>bcinvest.company.EmailAddress</code>.
      */
     public void setEmailaddress(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Company.EmailAddress</code>.
+     * Getter for <code>bcinvest.company.EmailAddress</code>.
      */
     public String getEmailaddress() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>bcinvest.Company.Token</code>.
+     * Setter for <code>bcinvest.company.Token</code>.
      */
     public void setToken(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Company.Token</code>.
+     * Getter for <code>bcinvest.company.Token</code>.
      */
     public String getToken() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>bcinvest.Company.Credit</code>.
+     * Setter for <code>bcinvest.company.Credit</code>.
      */
     public void setCredit(Long value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Company.Credit</code>.
+     * Getter for <code>bcinvest.company.Credit</code>.
      */
     public Long getCredit() {
         return (Long) get(5);
     }
 
     /**
-     * Setter for <code>bcinvest.Company.Status</code>.
+     * Setter for <code>bcinvest.company.Status</code>.
      */
     public void setStatus(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Company.Status</code>.
+     * Getter for <code>bcinvest.company.Status</code>.
      */
     public String getStatus() {
         return (String) get(6);
     }
 
     /**
-     * Setter for <code>bcinvest.Company.Lock</code>.
+     * Setter for <code>bcinvest.company.Lock</code>.
      */
     public void setLock(Byte value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Company.Lock</code>.
+     * Getter for <code>bcinvest.company.Lock</code>.
      */
     public Byte getLock() {
         return (Byte) get(7);

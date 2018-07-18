@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Machine extends TableImpl<MachineRecord> {
 
-    private static final long serialVersionUID = -766957652;
+    private static final long serialVersionUID = -712725492;
 
     /**
-     * The reference instance of <code>bcinvest.Machine</code>
+     * The reference instance of <code>bcinvest.machine</code>
      */
     public static final Machine MACHINE = new Machine();
 
@@ -55,41 +55,41 @@ public class Machine extends TableImpl<MachineRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Machine.UsedDays</code>.
+     * The column <code>bcinvest.machine.UsedDays</code>.
      */
     public final TableField<MachineRecord, Integer> USEDDAYS = createField("UsedDays", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.Machine.Producer</code>.
+     * The column <code>bcinvest.machine.Producer</code>.
      */
     public final TableField<MachineRecord, String> PRODUCER = createField("Producer", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.Machine.Model</code>.
+     * The column <code>bcinvest.machine.Model</code>.
      */
     public final TableField<MachineRecord, String> MODEL = createField("Model", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.Machine.GuarantyId</code>.
+     * The column <code>bcinvest.machine.GuarantyId</code>.
      */
     public final TableField<MachineRecord, Integer> GUARANTYID = createField("GuarantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>bcinvest.Machine</code> table reference
+     * Create a <code>bcinvest.machine</code> table reference
      */
     public Machine() {
-        this(DSL.name("Machine"), null);
+        this(DSL.name("machine"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Machine</code> table reference
+     * Create an aliased <code>bcinvest.machine</code> table reference
      */
     public Machine(String alias) {
         this(DSL.name(alias), MACHINE);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Machine</code> table reference
+     * Create an aliased <code>bcinvest.machine</code> table reference
      */
     public Machine(Name alias) {
         this(alias, MACHINE);

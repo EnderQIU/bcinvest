@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Credit extends TableImpl<CreditRecord> {
 
-    private static final long serialVersionUID = -621003553;
+    private static final long serialVersionUID = 1873976205;
 
     /**
-     * The reference instance of <code>bcinvest.Credit</code>
+     * The reference instance of <code>bcinvest.credit</code>
      */
     public static final Credit CREDIT = new Credit();
 
@@ -55,46 +55,41 @@ public class Credit extends TableImpl<CreditRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Credit.AccountNum</code>.
+     * The column <code>bcinvest.credit.AccountNum</code>.
      */
     public final TableField<CreditRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.Credit.GuarantyId</code>.
+     * The column <code>bcinvest.credit.GuarantyId</code>.
      */
     public final TableField<CreditRecord, Integer> GUARANTYID = createField("GuarantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.Credit.ReportId</code>.
+     * The column <code>bcinvest.credit.ReportId</code>.
      */
     public final TableField<CreditRecord, Integer> REPORTID = createField("ReportId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.Credit.Type</code>.
+     * The column <code>bcinvest.credit.Type</code>.
      */
     public final TableField<CreditRecord, Byte> TYPE = createField("Type", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
     /**
-     * The column <code>bcinvest.Credit.Lock</code>.
-     */
-    public final TableField<CreditRecord, Byte> LOCK = createField("Lock", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
-
-    /**
-     * Create a <code>bcinvest.Credit</code> table reference
+     * Create a <code>bcinvest.credit</code> table reference
      */
     public Credit() {
-        this(DSL.name("Credit"), null);
+        this(DSL.name("credit"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Credit</code> table reference
+     * Create an aliased <code>bcinvest.credit</code> table reference
      */
     public Credit(String alias) {
         this(DSL.name(alias), CREDIT);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Credit</code> table reference
+     * Create an aliased <code>bcinvest.credit</code> table reference
      */
     public Credit(Name alias) {
         this(alias, CREDIT);
@@ -121,7 +116,7 @@ public class Credit extends TableImpl<CreditRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.CREDIT_CREDIT_FK_GUARANTY, Indexes.CREDIT_CREDIT_FK_REPORT, Indexes.CREDIT_PRIMARY);
+        return Arrays.<Index>asList(Indexes.CREDIT_CREDIT_FK_GUARANTY, Indexes.CREDIT_PRIMARY);
     }
 
     /**
@@ -145,7 +140,7 @@ public class Credit extends TableImpl<CreditRecord> {
      */
     @Override
     public List<ForeignKey<CreditRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<CreditRecord, ?>>asList(Keys.CREDIT_FK_REPORT);
+        return Arrays.<ForeignKey<CreditRecord, ?>>asList(Keys.CREDIT_FK_GUARANTY);
     }
 
     /**

@@ -1,34 +1,35 @@
 package cn.ssyram.blockchain.innerlogic.operator;
 
 import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
+import cn.ssyram.blockchain.innerlogic.DatabaseOperator;
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
-import cn.ssyram.blockchain.innerlogic.support.DatabaseOperator;
 
-import java.time.temporal.TemporalAmount;
 import java.util.*;
 
 public class BlockChainOperator {
-    private static int getLength(Block block) {
+    private static long getLength(Block block) {
         List<Map<String, Object>> r = DatabaseOperator.SELECT(
-                "SELECT length FROM" + block.getType().getChainTableName() + "WHERE this_hash = " + block.getPrevious_hash()
+                "SELECT length FROM " + block.getType().getChainTableName() + " WHERE this_hash =" +
+                        " " +
+                        "'" + block.getPrevious_hash() + "'"
         );
 
-        return ((int) r.get(0).get("length")) + 1;
+        return (long)r.get(0).get("length") + 1;
     }
     public static void addBlock(Block block, boolean on_main) {
-        int length = getLength(block);
+        long length = getLength(block);
         DatabaseOperator.INSERT("INSERT INTO "
                 + block.getType().getChainTableName()
                 + "(this_hash, time_stamp, previous_hash, length, is_main, address) "
-                + "VALUES (" + block.getThis_hash() + ", "
-                + block.getTime_stamp() + ", "
-                + block.getPrevious_hash() + ", "
+                + "VALUES ('" + block.getThis_hash() + "', '"
+                + block.getTime_stamp() + "', '"
+                + block.getPrevious_hash() + "', "
                 + length + ", "
-                + (on_main ? "1, " : "2, ")
+                + (on_main ? "1, '" : "2, '")
                 + block.getAddress()
-                + ");"
+                + "');"
         );
 
         String dataTableName = block.getType().getDataTableName();
@@ -63,6 +64,8 @@ public class BlockChainOperator {
     }
 
     private static boolean mainChainCheck(Block block) {
+        if (block.getDataList().size() == 0)
+            return true;
         StringBuilder idSet = new StringBuilder("(");
         for (BlockData data:block.getDataList())
             idSet.append(data.getId()).append(",");
@@ -70,7 +73,7 @@ public class BlockChainOperator {
         //获得当前的主链上的所有id的相应状态
         List<Map<String, Object>> result = DatabaseOperator.SELECT(
                 "SELECT * FROM " + block.getType().getMainChainViewName()
-                + "WHERE id IN " + idSet
+                + " WHERE id IN " + idSet
         );
 
         //标记已经处理过的block的dataList中的id
@@ -91,13 +94,22 @@ public class BlockChainOperator {
 
     private static boolean validChange(ChainType type, String originValue, BlockData data) {
         if (type == ChainType.credit)
-            return creditValid(
+            if (originValue == null)
+                return creditValid(
+                    0,
+                    Integer.valueOf(data.getValue()),
+                    Integer.valueOf(data.getVariation())
+            );
+            else return creditValid(
                     Integer.valueOf(originValue),
                     Integer.valueOf(data.getValue()),
                     Integer.valueOf(data.getVariation())
             );
         else if (type == ChainType.guaranty)
-            return guarantyValid(
+            //如果是新設定的狀態，只能是變成可抵押的狀態
+            if (originValue == null)
+                return Integer.valueOf(data.getValue()) == 4;
+            else return guarantyValid(
                     Integer.valueOf(originValue),
                     Integer.valueOf(data.getValue())
             );

@@ -10,7 +10,7 @@ import cn.ssyram.blockchain.innerlogic.support.Transferer;
 
 import java.util.ArrayList;
 
-public class CollectExecutive extends BaseService {
+public class CollectExecutive {
     private CollectDTO dto;
     public CollectExecutive(CollectDTO dto) {
         this.dto = dto;
@@ -25,8 +25,7 @@ public class CollectExecutive extends BaseService {
             CurrentBlocks.getCurrentBlockFor(dto.getType())
                     .getDataList().addAll(dto.getBlockDataList());
         }
-        ArrayList<BlockData> dataArrayList = new ArrayList<>(dto.getBlockDataList());
-        Transferer.send(dataArrayList);
+        Transferer.send(dto);
         return dto.getBlockDataList().size();
     }
 }

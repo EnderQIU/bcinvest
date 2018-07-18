@@ -7,8 +7,10 @@ import cn.ssyram.blockchain.innerlogic.dto.QueryDTO;
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.executive.CollectExecutive;
 import cn.ssyram.blockchain.innerlogic.executive.LinkExecutive;
+import cn.ssyram.blockchain.innerlogic.executive.MineExecutive;
 import cn.ssyram.blockchain.innerlogic.executive.QueryExecutive;
 import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
+import cn.ssyram.blockchain.innerlogic.support.ChainType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +32,16 @@ public class Dispatcher {
      * 分别表示
      * 连接，  收集，   查询
      */
+    public static Map<ChainType, MineExecutive> miners = new HashMap<>();
+    public static void startMining(double waitMinutes) {
+        DatabaseOperator op = new DatabaseOperator();
+        for (ChainType type:ChainType.values()) {
+            MineExecutive miner = new MineExecutive(type, waitMinutes);
+            miners.put(type, miner);
+            miner.start();
+        }
+    }
+
     private static Map<String, ExecutorService> poolMap = new HashMap<>();
     static{
         poolMap.put("link", Executors.newCachedThreadPool());
@@ -51,9 +63,14 @@ public class Dispatcher {
     }
 
     public static void recallBlockInfo(Block block) {
-        String targetAddress = (String) BlockChainOperator
-                .getLatestReadyMainBlockInfo(block.getType())
-                .get("address");
+        String targetAddress = null;
+        try {
+            targetAddress = (String) BlockChainOperator.getLatestReadyMainBlockInfo(block.getType()).get("address");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
         OutBlockUtil.notifyOutBlock(targetAddress);
     }
 }

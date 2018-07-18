@@ -78,11 +78,4 @@ public class CreditDao extends DAOImpl<CreditRecord, com.generator.tables.pojos.
     public List<com.generator.tables.pojos.Credit> fetchByType(Byte... values) {
         return fetch(Credit.CREDIT.TYPE, values);
     }
-
-    /**
-     * Fetch records that have <code>Lock IN (values)</code>
-     */
-    public List<com.generator.tables.pojos.Credit> fetchByLock(Byte... values) {
-        return fetch(Credit.CREDIT.LOCK, values);
-    }
 }
