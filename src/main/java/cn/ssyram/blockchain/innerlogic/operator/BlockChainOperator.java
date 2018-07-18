@@ -1,6 +1,7 @@
 package cn.ssyram.blockchain.innerlogic.operator;
 
 import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
+import cn.ssyram.blockchain.innerlogic.DatabaseOperator;
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;

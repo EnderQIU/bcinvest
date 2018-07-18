@@ -7,7 +7,7 @@ import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
 import cn.ssyram.blockchain.innerlogic.operator.BlockOperator;
-import cn.ssyram.blockchain.innerlogic.operator.DatabaseOperator;
+import cn.ssyram.blockchain.innerlogic.DatabaseOperator;
 import cn.ssyram.blockchain.innerlogic.operator.Miner;
 import cn.ssyram.blockchain.innerlogic.support.*;
 import cn.ssyram.blockchain.innerlogic.test.Logger;
@@ -18,7 +18,6 @@ import com.generator.tables.records.AddresslistRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;

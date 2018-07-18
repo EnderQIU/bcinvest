@@ -11,7 +11,6 @@ import cn.ssyram.blockchain.innerlogic.executive.MineExecutive;
 import cn.ssyram.blockchain.innerlogic.executive.QueryExecutive;
 import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
-import cn.ssyram.blockchain.innerlogic.operator.DatabaseOperator;
 
 import java.util.HashMap;
 import java.util.List;

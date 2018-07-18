@@ -1,11 +1,9 @@
-package cn.ssyram.blockchain.innerlogic.operator;
+package cn.ssyram.blockchain.innerlogic;
 
 import cn.enderqiu.bcinvestrebuild.mapper.Mapper;
-import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 
