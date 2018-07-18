@@ -1,5 +1,6 @@
 package cn.ssyram.blockchain.impls;
 
+import cn.ssyram.blockchain.innerlogic.DatabaseOperator;
 import cn.ssyram.blockchain.innerlogic.Dispatcher;
 import cn.ssyram.blockchain.innerlogic.dto.CollectDTO;
 import cn.ssyram.blockchain.innerlogic.dto.QueryDTO;
@@ -35,6 +36,14 @@ public class CreditChainImpl implements CreditChain {
                 + " WHERE id = " + accountNum;
         return Integer.valueOf(
                 (String) Dispatcher.query(new QueryDTO(type, sentence)).get(0).get("value")
+        );
+    }
+
+    @Override
+    public List<Map<String, Object>> getCompanyCreditList(String accountNum) {
+        return DatabaseOperator.SELECT(
+                "SELECT DISTINCT * FROM " + type.getReadyMainChainViewName()
+                + " WHERE id = " + accountNum
         );
     }
 }

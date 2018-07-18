@@ -80,8 +80,7 @@ public class MineExecutive extends Thread {
     }
 
     private void releaseOre() {
-        if (!BlockChainOperator.blockContentVerify(block ,true))
-            return;
+        BlockChainOperator.blockContentTrim(block ,true);
 
         Logger.log("Find potential ore of type " + type + ", hash: " + block.getThis_hash());
 
