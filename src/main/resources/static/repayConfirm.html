@@ -4,16 +4,13 @@
 	<title>确认企业还贷申请</title>
 	<!-- Bootstrap -->
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 	<script type="text/javascript" src="js/bank_authority.js"></script>
 	<script type="text/javascript" src="js/vue.js"></script>
 	<script type="text/javascript" src="js/JQuery.js"></script>
 	<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+	<!-- bootbox.js at 4.4.0 -->
+	<script type="text/javascript" src="js/bootbox.min.js"></script>
 	<style type="text/css">
 	.table_head {
 		text-align: center;
@@ -49,7 +46,7 @@
 				<td class="table_head">抵押物名称</td>
 				<td class="table_head">操作</td>
 			</tr>
-			<tr v-for="item in repaying_guaranties">
+			<tr v-for="item in mortgaging_guaranties">
 				<td class="table_cell">{{ item.name }}</td>
 				<td class="table_cell">
 					<label v-on:click="confirm_repay_click(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
@@ -72,7 +69,7 @@
 			
 		</div>
 		<!-- 模态框（Modal） -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -114,13 +111,42 @@
 	</div>
 </body>
 <script type="text/javascript">
+	function isEmptyValue(value) {
+		if (value === null) {
+			return true;
+		}
+		var type = typeof(value);
+		switch (type) {
+			case 'number':
+			return isNaN(value);
+			case 'function':
+			return false;
+			case 'object':
+			for (var key in value) {
+				return false;
+			}
+			return true;
+			case 'string':
+			if (value.length > 0) {
+				return false;
+			}
+			return true;
+			case 'boolean':
+			return false;
+			case 'undefined':
+			return true;
+		}
+	};
 	var vm = new Vue({
 		el:"#main",
 		data:{
-			'repaying_guaranties':[],
+			'mortgaging_guaranties':[],
 			'states':[],
-			current_page:-1,
-			max_page:-1,
+			'current_page':-1,
+			'max_page':-1,
+			'states_word': ['鉴定中', '不合格', '合格', '待确认', '可抵押', '申请抵押中', '申请已通过', '申请还款中', '逾期'],
+			'type_word':['房产','地产','机器'],
+			'scope_of_right_word':['整体','部分'],
 		},
 		methods:{
 			get_states_parameter_string() {
@@ -155,7 +181,7 @@
 				var query_para = '?' + this.get_states_parameter_string();
 				var result = null;
 				$.ajax({
-					'url': '/user/bank/companyRequest/guaranties' + query_para,
+					'url': '/user/bank/companyRequest/maxPage' + query_para,
 					'type': 'GET',
 					'async': false,
 					'success': function(data) {
@@ -167,8 +193,25 @@
 				});
 				return result;
 			},
+			aimed_page(page) {
+				var guaranties = this.get_guaranty(page, this.states);
+
+				if (!isEmptyValue(guaranties)) {
+					this.current_page = page;
+					this.mortgaging_guaranties = guaranties;
+				}
+			},
 			displayTable(){
-				this.repaying_guaranties = this.get_guaranty(1,[0]);
+				this.states = [6];
+				var max_page_data = this.get_max_page(this.states);
+				if (!isEmptyValue(max_page_data) && max_page_data.maxPage > 0) {
+					this.max_page = max_page_data.maxPage;
+					this.mortgaging_guaranties = this.get_guaranty(1,this.states);
+					this.current_page = 1;
+				} else {
+					this.max_page = 0;
+				}
+				
 			},
 			view_detail_click(item){
 				var url = null;
@@ -197,13 +240,13 @@
 					}
 				});
 				var guaranty = result;
-				var modal = $('#myModal');
+				var modal = $('#detailModal');
 				modal.find('#guaranty_name').html(guaranty.name);
 				modal.find('#guaranty_value').html(guaranty.evaluationValue);
 				modal.find('#guaranty_owner').html(guaranty.ownerName);
-				modal.find('#guaranty_scope').html(guaranty.scopeOfRight);
-				modal.find('#guaranty_state').html(guaranty.state);
-				modal.find('#guaranty_type').html(guaranty.type);
+				modal.find('#guaranty_scope').html(this.scope_of_right_word[guaranty.scopeOfRight]);
+				modal.find('#guaranty_state').html(this.states_word[guaranty.state]);
+				modal.find('#guaranty_type').html(this.type_word[guaranty.type]);
 				switch(item.type){
 					case 0:
 					modal.find('#house_addr').html(guaranty.addr);
@@ -225,12 +268,51 @@
 				}
 				modal.modal('show');
 			},
+			confirm_repay_click(item){
+				bootbox.confirm({
+					message: "您确定要通过该还贷申请吗？",
+					buttons: {
+						confirm: {
+							label: '确认',
+							className: 'btn-success'
+						},
+						cancel: {
+							label: '返回',
+							className: 'btn-danger'
+						}
+					},
+					callback: function (result) {
+						if(result){
+							var influence = null;
+							$.ajax({
+								'url': '/user/bank/companyRequest/repay',
+								'type': 'PUT',
+								'data':{
+									'guarantyId':item.guarantyId,
+								},
+								'async': false,
+								'success': function(data) {
+									influence = data;
+								},
+								'headers': {
+									'user_id_token': getCookie('user_id_token'),
+								}
+							});
+							if(influence.influence>0){
+								vm.displayTable();
+							}else{
+								//错误提示
+							}	
+						}
+					}
+				});
+			},
 		}
 	});
-	$('#myModal').on('hidden.bs.modal', function () {
-		$('.house_detail').css("display","none");
-		$('.land_detail').css("display","none");
-		$('.machine_detail').css("display","none");
+$('#detailModal').on('hidden.bs.modal', function () {
+	$('.house_detail').css("display","none");
+	$('.land_detail').css("display","none");
+	$('.machine_detail').css("display","none");
 })
 </script>
 </html>

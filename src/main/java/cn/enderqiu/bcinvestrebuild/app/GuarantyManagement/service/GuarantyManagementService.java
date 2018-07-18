@@ -2,8 +2,11 @@ package cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.service;
 
 import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.*;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
+import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
 import cn.ssyram.blockchain.impls.CCGuarantyChainInterfaceImpl;
+import cn.ssyram.blockchain.impls.GurantyChainImpl;
 import cn.ssyram.blockchain.interfaces.CCGuarantyChainInerface;
+import cn.ssyram.blockchain.interfaces.GuarantyChain;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ import java.util.UUID;
 
 @Service
 public class GuarantyManagementService extends BaseService{
-    CCGuarantyChainInerface ccGuarantyChainInerface = new CCGuarantyChainInterfaceImpl();
+    GuarantyChain guarantyChain = new GurantyChainImpl();
     public ReturnVO intToReturnVO(int influence){
         ReturnVO returnVO = new ReturnVO();
         returnVO.setInfluence(influence);
@@ -26,17 +29,18 @@ public class GuarantyManagementService extends BaseService{
         return accountNum;
     }
     public ReturnVO putGuarantyToBC(int guarantyId){
-        if(ccGuarantyChainInerface.insertGuaranty(guarantyId)>0){
-            String sqlSentence = "UPDATE guaranty SET state = '3' WHERE guarantyId = "+guarantyId+";";
-            return intToReturnVO(mapper.UPDATE(sqlSentence));
-        }
+        GuarantyChainUtil.updateState(guarantyId,4);
+        //if(ccGuarantyChainInerface.insertGuaranty(guarantyId)>0){
+          //  String sqlSentence = "UPDATE guaranty SET state = '3' WHERE guarantyId = "+guarantyId+";";
+            //return intToReturnVO(mapper.UPDATE(sqlSentence));
+        //}
         return intToReturnVO(0);
     }
     public ReturnVO deleteGuaranty(int guarantyId){
-        if(ccGuarantyChainInerface.deleteGuaranty(guarantyId)>0){
-            String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
-            return intToReturnVO(mapper.DELETE(sqlSentence));
-        }
+        //if(ccGuarantyChainInerface.deleteGuaranty(guarantyId)>0){
+       //     String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
+       //     return intToReturnVO(mapper.DELETE(sqlSentence));
+       // }
         return intToReturnVO(0);
     }
     public HouseVO findHouse(int guarantyId){
@@ -86,12 +90,12 @@ public class GuarantyManagementService extends BaseService{
             case 6:
             case 7:
             case 8:
-                List<Map<String,Object>> guarantyIdList = ccGuarantyChainInerface.queryGuarantyIdByState(stateNum);
-                for(Map<String,Object> m:guarantyIdList){
-                    int guarantyId = Integer.parseInt(m.get(0).toString());
-                    guaranties.add(findGuarantyByCompany(accountNum,guarantyId));
-                }
-                break;
+                //List<Map<String,Object>> guarantyIdList = ccGuarantyChainInerface.queryGuarantyIdByState(stateNum);
+                //for(Map<String,Object> m:guarantyIdList){
+                //    int guarantyId = Integer.parseInt(m.get(0).toString());
+               //     guaranties.add(findGuarantyByCompany(accountNum,guarantyId));
+               // }
+               // break;
             default:
                 int pageStartIndex = (page-1)*20;
                 String sqlSentence = "SELECT * FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+" ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
@@ -118,7 +122,7 @@ public class GuarantyManagementService extends BaseService{
                 case 7:
                 case 8:
                     String accountNum = TokenToAccountNum(user_id_token);
-                    count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();break;
+                   // count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();break;
                 default:
                     count+=findGuarantiesCount(user_id_token,stateNum);
             }

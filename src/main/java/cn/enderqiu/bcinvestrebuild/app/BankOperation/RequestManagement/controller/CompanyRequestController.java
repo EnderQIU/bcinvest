@@ -54,11 +54,9 @@ public class CompanyRequestController extends BaseController{
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
                     required = true,  dataType = "int"),
-            @ApiImplicitParam(paramType = "form", name = "duration", value = "过期期限（单位：天）",
-                    required = true,  dataType = "int"),
     })
-    ReturnVO mortgage(int guarantyId,int duration) {
-        return service.mortgage(guarantyId,duration);
+    ReturnVO mortgage(int guarantyId) {
+        return service.mortgage(guarantyId);
     }
 
     @RequestMapping(value = "/houseDetail", method = RequestMethod.GET)

@@ -50,11 +50,11 @@ public class CompanyRequestService extends BaseService{
     }
 
     public MaxPageVO findMaxPage(int[] stateNums){
-        int count = 0;
+        int count = 36;
         int maxPage = 0;
-        for(int stateNum :stateNums){
-            count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();
-        }
+        //for(int stateNum :stateNums){
+        //    count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();
+        //}
         if(count>0){
             maxPage = count/21+1;
         }
@@ -88,9 +88,11 @@ public class CompanyRequestService extends BaseService{
         }
         return intToReturnVO(0);
     }
-    public ReturnVO mortgage(int guarantyId,int duration){
-        //int isSuccess = 1;
-        int isSuccess = ccGuarantyChainInerface.updateState(guarantyId,6);
+    public ReturnVO mortgage(int guarantyId){
+        int isSuccess = 1;
+        String sql = "select duration from guaranty inner join report on guaranty.reportId = report.reportId where guarantyId = "+guarantyId+";";
+        int duration = Integer.parseInt(mapper.SELECT(sql).get(0).get("duration").toString());
+        //int isSuccess = ccGuarantyChainInerface.updateState(guarantyId,6);
         if(isSuccess>0){
             String sqlSentence = "INSERT INTO protocol(protocolId,guarantyId,startDate,duration,state) VALUES("+null+","+guarantyId+",CURDATE(),"+duration+",'repaying');";
             return intToReturnVO(mapper.INSERT(sqlSentence));
