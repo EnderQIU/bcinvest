@@ -4,8 +4,10 @@ import cn.enderqiu.bcinvestrebuild.app.BankOperation.RequestManagement.entity.vo
 import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.*;
 import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.service.GuarantyManagementService;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
+import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
 import cn.ssyram.blockchain.impls.CCGuarantyChainInterfaceImpl;
 import cn.ssyram.blockchain.interfaces.CCGuarantyChainInerface;
+import cn.ssyram.blockchain.interfaces.GuarantyChain;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -35,14 +37,8 @@ public class CompanyRequestService extends BaseService{
     }
     public List<GuarantyVO> findGuarantiesByState(int stateNum,int page){
         List<GuarantyVO> guaranties = new ArrayList<>();
-        List<Map<String,Object>> guarantyIdList = ccGuarantyChainInerface.queryGuarantyIdByState(stateNum);
-        List<Map<String,Object>> guarantyIdListTest = new ArrayList<>();
-        for(int i = 1;i<=36;i++){
-            Map<String,Object> guarantyId= new HashMap<String,Object>();
-            guarantyId.put("guarantyId",new Integer(i));
-            guarantyIdListTest.add(guarantyId);
-        }
-        for(Map<String,Object> m:guarantyIdListTest){
+        List<Map<String,Object>> guarantyIdList = GuarantyChain.chain.queryGuarantyIdByState(stateNum);
+        for(Map<String,Object> m:guarantyIdList){
             int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
             guaranties.add(findGuaranty(guarantyId));
         }
@@ -50,11 +46,11 @@ public class CompanyRequestService extends BaseService{
     }
 
     public MaxPageVO findMaxPage(int[] stateNums){
-        int count = 36;
+        int count = 0;
         int maxPage = 0;
-        //for(int stateNum :stateNums){
-        //    count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();
-        //}
+        for(int stateNum :stateNums){
+            count+=GuarantyChain.chain.queryGuarantyIdByState(stateNum).size();
+        }
         if(count>0){
             maxPage = count/21+1;
         }
@@ -64,7 +60,7 @@ public class CompanyRequestService extends BaseService{
     }
     public ReturnVO repay(int guarantyId){
         int isSuccess = 1;
-        //int isSuccess = ccGuarantyChainInerface.updateState(guarantyId,4);
+        GuarantyChainUtil.updateState(guarantyId,4);
         if(isSuccess>0){
             Date curdate = new Date(new java.util.Date().getTime());
             String sqlSentence = "SELECT startDate,duration FROM protocol WHERE guarantyId = "+guarantyId+";";
@@ -92,10 +88,12 @@ public class CompanyRequestService extends BaseService{
         int isSuccess = 1;
         String sql = "select duration from guaranty inner join report on guaranty.reportId = report.reportId where guarantyId = "+guarantyId+";";
         int duration = Integer.parseInt(mapper.SELECT(sql).get(0).get("duration").toString());
+        GuarantyChainUtil.updateState(guarantyId,6);
         //int isSuccess = ccGuarantyChainInerface.updateState(guarantyId,6);
         if(isSuccess>0){
             String sqlSentence = "INSERT INTO protocol(protocolId,guarantyId,startDate,duration,state) VALUES("+null+","+guarantyId+",CURDATE(),"+duration+",'repaying');";
-            return intToReturnVO(mapper.INSERT(sqlSentence));
+            int result = mapper.INSERT(sqlSentence);
+            return intToReturnVO(result);
         }
         return intToReturnVO(0);
     }

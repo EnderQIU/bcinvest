@@ -16,7 +16,6 @@ import java.util.UUID;
 
 @Service
 public class GuarantyManagementService extends BaseService{
-    GuarantyChain guarantyChain = new GurantyChainImpl();
     public ReturnVO intToReturnVO(int influence){
         ReturnVO returnVO = new ReturnVO();
         returnVO.setInfluence(influence);
@@ -29,19 +28,14 @@ public class GuarantyManagementService extends BaseService{
         return accountNum;
     }
     public ReturnVO putGuarantyToBC(int guarantyId){
+        ReturnVO returnVO = new ReturnVO();
         GuarantyChainUtil.updateState(guarantyId,4);
-        //if(ccGuarantyChainInerface.insertGuaranty(guarantyId)>0){
-          //  String sqlSentence = "UPDATE guaranty SET state = '3' WHERE guarantyId = "+guarantyId+";";
-            //return intToReturnVO(mapper.UPDATE(sqlSentence));
-        //}
-        return intToReturnVO(0);
+        return returnVO;
     }
     public ReturnVO deleteGuaranty(int guarantyId){
-        //if(ccGuarantyChainInerface.deleteGuaranty(guarantyId)>0){
-       //     String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
-       //     return intToReturnVO(mapper.DELETE(sqlSentence));
-       // }
-        return intToReturnVO(0);
+        ReturnVO returnVO = new ReturnVO();
+        GuarantyChainUtil.updateState(guarantyId,1);
+        return returnVO;
     }
     public HouseVO findHouse(int guarantyId){
         String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
