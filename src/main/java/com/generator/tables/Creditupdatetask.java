@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Creditupdatetask extends TableImpl<CreditupdatetaskRecord> {
 
-    private static final long serialVersionUID = -1077093648;
+    private static final long serialVersionUID = 903391792;
 
     /**
-     * The reference instance of <code>bcinvest.CreditUpdateTask</code>
+     * The reference instance of <code>bcinvest.creditupdatetask</code>
      */
     public static final Creditupdatetask CREDITUPDATETASK = new Creditupdatetask();
 
@@ -55,46 +55,46 @@ public class Creditupdatetask extends TableImpl<CreditupdatetaskRecord> {
     }
 
     /**
-     * The column <code>bcinvest.CreditUpdateTask.id</code>.
+     * The column <code>bcinvest.creditupdatetask.id</code>.
      */
     public final TableField<CreditupdatetaskRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>bcinvest.CreditUpdateTask.AccountNum</code>.
+     * The column <code>bcinvest.creditupdatetask.AccountNum</code>.
      */
     public final TableField<CreditupdatetaskRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.CreditUpdateTask.previousCredit</code>.
+     * The column <code>bcinvest.creditupdatetask.previousCredit</code>.
      */
     public final TableField<CreditupdatetaskRecord, Integer> PREVIOUSCREDIT = createField("previousCredit", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.CreditUpdateTask.delta</code>.
+     * The column <code>bcinvest.creditupdatetask.delta</code>.
      */
     public final TableField<CreditupdatetaskRecord, Integer> DELTA = createField("delta", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.CreditUpdateTask.state</code>.
+     * The column <code>bcinvest.creditupdatetask.state</code>.
      */
     public final TableField<CreditupdatetaskRecord, String> STATE = createField("state", org.jooq.impl.SQLDataType.VARCHAR(36), this, "");
 
     /**
-     * Create a <code>bcinvest.CreditUpdateTask</code> table reference
+     * Create a <code>bcinvest.creditupdatetask</code> table reference
      */
     public Creditupdatetask() {
-        this(DSL.name("CreditUpdateTask"), null);
+        this(DSL.name("creditupdatetask"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.CreditUpdateTask</code> table reference
+     * Create an aliased <code>bcinvest.creditupdatetask</code> table reference
      */
     public Creditupdatetask(String alias) {
         this(DSL.name(alias), CREDITUPDATETASK);
     }
 
     /**
-     * Create an aliased <code>bcinvest.CreditUpdateTask</code> table reference
+     * Create an aliased <code>bcinvest.creditupdatetask</code> table reference
      */
     public Creditupdatetask(Name alias) {
         this(alias, CREDITUPDATETASK);

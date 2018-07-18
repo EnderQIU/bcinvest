@@ -20,6 +20,8 @@ import java.util.ArrayList;
 @Service
 public class ObjectView {
 
+    private MessageResponse messageResponse;
+
     /**
      * 接受一个序列化对象，根据 type 判断将此字节流反序列化为何种对象
      * @param serializer
@@ -44,6 +46,6 @@ public class ObjectView {
             collectDTO.setBlockDataList(blockData);
             Dispatcher.collect(collectDTO);
         }
-        return new MessageResponse();
+        return messageResponse;
     }
 }

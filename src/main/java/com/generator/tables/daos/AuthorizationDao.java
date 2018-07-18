@@ -79,6 +79,13 @@ public class AuthorizationDao extends DAOImpl<AuthorizationRecord, com.generator
     }
 
     /**
+     * Fetch records that have <code>Password IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Authorization> fetchByPassword(String... values) {
+        return fetch(Authorization.AUTHORIZATION.PASSWORD, values);
+    }
+
+    /**
      * Fetch records that have <code>Token IN (values)</code>
      */
     public List<com.generator.tables.pojos.Authorization> fetchByToken(String... values) {
@@ -90,12 +97,5 @@ public class AuthorizationDao extends DAOImpl<AuthorizationRecord, com.generator
      */
     public com.generator.tables.pojos.Authorization fetchOneByToken(String value) {
         return fetchOne(Authorization.AUTHORIZATION.TOKEN, value);
-    }
-
-    /**
-     * Fetch records that have <code>Password IN (values)</code>
-     */
-    public List<com.generator.tables.pojos.Authorization> fetchByPassword(String... values) {
-        return fetch(Authorization.AUTHORIZATION.PASSWORD, values);
     }
 }

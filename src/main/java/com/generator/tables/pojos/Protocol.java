@@ -23,12 +23,11 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Protocol implements Serializable {
 
-    private static final long serialVersionUID = 1684402065;
+    private static final long serialVersionUID = 1324133363;
 
     private Integer   protocolid;
     private Integer   gurantyid;
     private LocalDate startdate;
-    private String    duration;
     private LocalDate enddate;
     private String    message;
     private String    condition;
@@ -39,7 +38,6 @@ public class Protocol implements Serializable {
         this.protocolid = value.protocolid;
         this.gurantyid = value.gurantyid;
         this.startdate = value.startdate;
-        this.duration = value.duration;
         this.enddate = value.enddate;
         this.message = value.message;
         this.condition = value.condition;
@@ -49,7 +47,6 @@ public class Protocol implements Serializable {
         Integer   protocolid,
         Integer   gurantyid,
         LocalDate startdate,
-        String    duration,
         LocalDate enddate,
         String    message,
         String    condition
@@ -57,7 +54,6 @@ public class Protocol implements Serializable {
         this.protocolid = protocolid;
         this.gurantyid = gurantyid;
         this.startdate = startdate;
-        this.duration = duration;
         this.enddate = enddate;
         this.message = message;
         this.condition = condition;
@@ -85,14 +81,6 @@ public class Protocol implements Serializable {
 
     public void setStartdate(LocalDate startdate) {
         this.startdate = startdate;
-    }
-
-    public String getDuration() {
-        return this.duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public LocalDate getEnddate() {
@@ -126,7 +114,6 @@ public class Protocol implements Serializable {
         sb.append(protocolid);
         sb.append(", ").append(gurantyid);
         sb.append(", ").append(startdate);
-        sb.append(", ").append(duration);
         sb.append(", ").append(enddate);
         sb.append(", ").append(message);
         sb.append(", ").append(condition);

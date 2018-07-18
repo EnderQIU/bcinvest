@@ -13,7 +13,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
-public class CompanyUserService extends BaseService{
+public class CompanyUserService extends BaseService {
 
     @Autowired
     private CompanyUserMapper CompanyUserMapper;
@@ -84,6 +84,13 @@ public class CompanyUserService extends BaseService{
     }
 
     public CompanyUserVO getUserData(String token) {
-        return findUserByToken(token);
+        CompanyUserDTO dto = new CompanyUserDTO();
+        try {
+            extract(dto, mapper.SELECT("SELECT AccountNum, Name, TelNum, EmailAddress, Status FROM " + "Company WHERE Token = " + token).get(0));
+        }
+        catch (Exception e) {
+            return null;
+        }
+        return dto;
     }
 }

@@ -2,7 +2,7 @@ package cn.ssyram.blockchain.innerlogic.support;
 
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
-import com.bcgenerator.tables.Addresslist;
+import com.generator.tables.Addresslist;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
@@ -17,6 +17,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,10 +25,15 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@Component
 public class Transferer {
 
-    @Autowired
     private static DSLContext dsl;
+
+    @Autowired
+    public void setDsl(DSLContext dsl) {
+        Transferer.dsl = dsl;
+    }
 
     public static void send(Serializable ser){
         String type = "";
@@ -41,7 +47,7 @@ public class Transferer {
                 .select(Addresslist.ADDRESSLIST.ADDRESS)
                 .from(Addresslist.ADDRESSLIST)
                 .fetch();
-        if (targets ==  null){
+        if (targets ==  null || targets.size() == 0){
             return;
         }
 

@@ -5,13 +5,18 @@ package com.generator;
 
 
 import com.generator.tables.Accesstoken;
+import com.generator.tables.Addresslist;
 import com.generator.tables.Authorization;
 import com.generator.tables.Company;
 import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
+import com.generator.tables.CreditChain;
+import com.generator.tables.CreditData;
 import com.generator.tables.Creditupdatetask;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
+import com.generator.tables.GuarantyChain;
+import com.generator.tables.GuarantyData;
 import com.generator.tables.Guarantystateupdatetask;
 import com.generator.tables.House;
 import com.generator.tables.Land;
@@ -46,6 +51,7 @@ public class Indexes {
     // -------------------------------------------------------------------------
 
     public static final Index ACCESSTOKEN_ACCOUNTNUM = Indexes0.ACCESSTOKEN_ACCOUNTNUM;
+    public static final Index ADDRESSLIST_PRIMARY = Indexes0.ADDRESSLIST_PRIMARY;
     public static final Index AUTHORIZATION_PRIMARY = Indexes0.AUTHORIZATION_PRIMARY;
     public static final Index AUTHORIZATION_TOKEN = Indexes0.AUTHORIZATION_TOKEN;
     public static final Index COMPANY_EMAILADDRESS = Indexes0.COMPANY_EMAILADDRESS;
@@ -53,13 +59,18 @@ public class Indexes {
     public static final Index COMPANY_TOKEN = Indexes0.COMPANY_TOKEN;
     public static final Index COMPANYADDRESS_PRIMARY = Indexes0.COMPANYADDRESS_PRIMARY;
     public static final Index CREDIT_CREDIT_FK_GUARANTY = Indexes0.CREDIT_CREDIT_FK_GUARANTY;
-    public static final Index CREDIT_CREDIT_FK_REPORT = Indexes0.CREDIT_CREDIT_FK_REPORT;
     public static final Index CREDIT_PRIMARY = Indexes0.CREDIT_PRIMARY;
+    public static final Index CREDIT_CHAIN_CREDIT_CHAIN_ADDRESSLIST_ADDRESS_FK = Indexes0.CREDIT_CHAIN_CREDIT_CHAIN_ADDRESSLIST_ADDRESS_FK;
+    public static final Index CREDIT_CHAIN_PRIMARY = Indexes0.CREDIT_CHAIN_PRIMARY;
+    public static final Index CREDIT_DATA_PRIMARY = Indexes0.CREDIT_DATA_PRIMARY;
     public static final Index CREDITUPDATETASK_PRIMARY = Indexes0.CREDITUPDATETASK_PRIMARY;
     public static final Index FUNDAMENTALCERTIFICATE_PRIMARY = Indexes0.FUNDAMENTALCERTIFICATE_PRIMARY;
     public static final Index GUARANTY_GUARANTY_FK_COMPANY = Indexes0.GUARANTY_GUARANTY_FK_COMPANY;
     public static final Index GUARANTY_GUARANTY_FK_REPORT = Indexes0.GUARANTY_GUARANTY_FK_REPORT;
     public static final Index GUARANTY_PRIMARY = Indexes0.GUARANTY_PRIMARY;
+    public static final Index GUARANTY_CHAIN_GUARANTY_CHAIN_ADDRESSLIST_ADDRESS_FK = Indexes0.GUARANTY_CHAIN_GUARANTY_CHAIN_ADDRESSLIST_ADDRESS_FK;
+    public static final Index GUARANTY_CHAIN_PRIMARY = Indexes0.GUARANTY_CHAIN_PRIMARY;
+    public static final Index GUARANTY_DATA_PRIMARY = Indexes0.GUARANTY_DATA_PRIMARY;
     public static final Index GUARANTYSTATEUPDATETASK_PRIMARY = Indexes0.GUARANTYSTATEUPDATETASK_PRIMARY;
     public static final Index HOUSE_PRIMARY = Indexes0.HOUSE_PRIMARY;
     public static final Index LAND_PRIMARY = Indexes0.LAND_PRIMARY;
@@ -67,7 +78,7 @@ public class Indexes {
     public static final Index MESSAGE_PRIMARY = Indexes0.MESSAGE_PRIMARY;
     public static final Index PROTOCOL_FK_PROTOCOL_TO_GURANTY = Indexes0.PROTOCOL_FK_PROTOCOL_TO_GURANTY;
     public static final Index PROTOCOL_PRIMARY = Indexes0.PROTOCOL_PRIMARY;
-    public static final Index REPORT_ACCOUNTNUM = Indexes0.REPORT_ACCOUNTNUM;
+    public static final Index REPORT_AUTHNAME = Indexes0.REPORT_AUTHNAME;
     public static final Index REPORT_PRIMARY = Indexes0.REPORT_PRIMARY;
     public static final Index SECURITIESINFORMATION_PRIMARY = Indexes0.SECURITIESINFORMATION_PRIMARY;
 
@@ -77,6 +88,7 @@ public class Indexes {
 
     private static class Indexes0 {
         public static Index ACCESSTOKEN_ACCOUNTNUM = Internal.createIndex("AccountNum", Accesstoken.ACCESSTOKEN, new OrderField[] { Accesstoken.ACCESSTOKEN.ACCOUNTNUM }, false);
+        public static Index ADDRESSLIST_PRIMARY = Internal.createIndex("PRIMARY", Addresslist.ADDRESSLIST, new OrderField[] { Addresslist.ADDRESSLIST.ADDRESS }, true);
         public static Index AUTHORIZATION_PRIMARY = Internal.createIndex("PRIMARY", Authorization.AUTHORIZATION, new OrderField[] { Authorization.AUTHORIZATION.ACCOUNTNUM }, true);
         public static Index AUTHORIZATION_TOKEN = Internal.createIndex("Token", Authorization.AUTHORIZATION, new OrderField[] { Authorization.AUTHORIZATION.TOKEN }, true);
         public static Index COMPANY_EMAILADDRESS = Internal.createIndex("EmailAddress", Company.COMPANY, new OrderField[] { Company.COMPANY.EMAILADDRESS }, true);
@@ -84,13 +96,18 @@ public class Indexes {
         public static Index COMPANY_TOKEN = Internal.createIndex("Token", Company.COMPANY, new OrderField[] { Company.COMPANY.TOKEN }, true);
         public static Index COMPANYADDRESS_PRIMARY = Internal.createIndex("PRIMARY", Companyaddress.COMPANYADDRESS, new OrderField[] { Companyaddress.COMPANYADDRESS.ACCOUNTNUM }, true);
         public static Index CREDIT_CREDIT_FK_GUARANTY = Internal.createIndex("credit_fk_guaranty", Credit.CREDIT, new OrderField[] { Credit.CREDIT.GUARANTYID }, false);
-        public static Index CREDIT_CREDIT_FK_REPORT = Internal.createIndex("credit_fk_report", Credit.CREDIT, new OrderField[] { Credit.CREDIT.REPORTID }, false);
         public static Index CREDIT_PRIMARY = Internal.createIndex("PRIMARY", Credit.CREDIT, new OrderField[] { Credit.CREDIT.ACCOUNTNUM, Credit.CREDIT.GUARANTYID, Credit.CREDIT.REPORTID }, true);
+        public static Index CREDIT_CHAIN_CREDIT_CHAIN_ADDRESSLIST_ADDRESS_FK = Internal.createIndex("credit_chain_addresslist_address_fk", CreditChain.CREDIT_CHAIN, new OrderField[] { CreditChain.CREDIT_CHAIN.ADDRESS }, false);
+        public static Index CREDIT_CHAIN_PRIMARY = Internal.createIndex("PRIMARY", CreditChain.CREDIT_CHAIN, new OrderField[] { CreditChain.CREDIT_CHAIN.THIS_HASH }, true);
+        public static Index CREDIT_DATA_PRIMARY = Internal.createIndex("PRIMARY", CreditData.CREDIT_DATA, new OrderField[] { CreditData.CREDIT_DATA.BLOCK_HASH, CreditData.CREDIT_DATA.ID }, true);
         public static Index CREDITUPDATETASK_PRIMARY = Internal.createIndex("PRIMARY", Creditupdatetask.CREDITUPDATETASK, new OrderField[] { Creditupdatetask.CREDITUPDATETASK.ID }, true);
         public static Index FUNDAMENTALCERTIFICATE_PRIMARY = Internal.createIndex("PRIMARY", Fundamentalcertificate.FUNDAMENTALCERTIFICATE, new OrderField[] { Fundamentalcertificate.FUNDAMENTALCERTIFICATE.ACCOUNTNUM }, true);
         public static Index GUARANTY_GUARANTY_FK_COMPANY = Internal.createIndex("guaranty_fk_company", Guaranty.GUARANTY, new OrderField[] { Guaranty.GUARANTY.ACCOUNTNUM }, false);
         public static Index GUARANTY_GUARANTY_FK_REPORT = Internal.createIndex("guaranty_fk_report", Guaranty.GUARANTY, new OrderField[] { Guaranty.GUARANTY.REPORTID }, false);
         public static Index GUARANTY_PRIMARY = Internal.createIndex("PRIMARY", Guaranty.GUARANTY, new OrderField[] { Guaranty.GUARANTY.GUARANTYID }, true);
+        public static Index GUARANTY_CHAIN_GUARANTY_CHAIN_ADDRESSLIST_ADDRESS_FK = Internal.createIndex("guaranty_chain_addresslist_address_fk", GuarantyChain.GUARANTY_CHAIN, new OrderField[] { GuarantyChain.GUARANTY_CHAIN.ADDRESS }, false);
+        public static Index GUARANTY_CHAIN_PRIMARY = Internal.createIndex("PRIMARY", GuarantyChain.GUARANTY_CHAIN, new OrderField[] { GuarantyChain.GUARANTY_CHAIN.THIS_HASH }, true);
+        public static Index GUARANTY_DATA_PRIMARY = Internal.createIndex("PRIMARY", GuarantyData.GUARANTY_DATA, new OrderField[] { GuarantyData.GUARANTY_DATA.BLOCK_HASH, GuarantyData.GUARANTY_DATA.ID }, true);
         public static Index GUARANTYSTATEUPDATETASK_PRIMARY = Internal.createIndex("PRIMARY", Guarantystateupdatetask.GUARANTYSTATEUPDATETASK, new OrderField[] { Guarantystateupdatetask.GUARANTYSTATEUPDATETASK.TASKID }, true);
         public static Index HOUSE_PRIMARY = Internal.createIndex("PRIMARY", House.HOUSE, new OrderField[] { House.HOUSE.GUARANTYID }, true);
         public static Index LAND_PRIMARY = Internal.createIndex("PRIMARY", Land.LAND, new OrderField[] { Land.LAND.GUARANTYID }, true);
@@ -98,7 +115,7 @@ public class Indexes {
         public static Index MESSAGE_PRIMARY = Internal.createIndex("PRIMARY", Message.MESSAGE, new OrderField[] { Message.MESSAGE.ID }, true);
         public static Index PROTOCOL_FK_PROTOCOL_TO_GURANTY = Internal.createIndex("fk_protocol_to_guranty", Protocol.PROTOCOL, new OrderField[] { Protocol.PROTOCOL.GURANTYID }, false);
         public static Index PROTOCOL_PRIMARY = Internal.createIndex("PRIMARY", Protocol.PROTOCOL, new OrderField[] { Protocol.PROTOCOL.PROTOCOLID }, true);
-        public static Index REPORT_ACCOUNTNUM = Internal.createIndex("AccountNum", Report.REPORT, new OrderField[] { Report.REPORT.ACCOUNTNUM }, false);
+        public static Index REPORT_AUTHNAME = Internal.createIndex("AuthName", Report.REPORT, new OrderField[] { Report.REPORT.AUTHNAME }, false);
         public static Index REPORT_PRIMARY = Internal.createIndex("PRIMARY", Report.REPORT, new OrderField[] { Report.REPORT.REPORTID }, true);
         public static Index SECURITIESINFORMATION_PRIMARY = Internal.createIndex("PRIMARY", Securitiesinformation.SECURITIESINFORMATION, new OrderField[] { Securitiesinformation.SECURITIESINFORMATION.ACCOUNTNUM }, true);
     }

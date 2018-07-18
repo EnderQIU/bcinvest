@@ -17,7 +17,6 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -41,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Protocol extends TableImpl<ProtocolRecord> {
 
-    private static final long serialVersionUID = 728848519;
+    private static final long serialVersionUID = 604490504;
 
     /**
-     * The reference instance of <code>bcinvest.Protocol</code>
+     * The reference instance of <code>bcinvest.protocol</code>
      */
     public static final Protocol PROTOCOL = new Protocol();
 
@@ -57,56 +56,51 @@ public class Protocol extends TableImpl<ProtocolRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Protocol.ProtocolId</code>.
+     * The column <code>bcinvest.protocol.ProtocolId</code>.
      */
-    public final TableField<ProtocolRecord, Integer> PROTOCOLID = createField("ProtocolId", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<ProtocolRecord, Integer> PROTOCOLID = createField("ProtocolId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.GurantyId</code>.
+     * The column <code>bcinvest.protocol.GurantyId</code>.
      */
     public final TableField<ProtocolRecord, Integer> GURANTYID = createField("GurantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.StartDate</code>.
+     * The column <code>bcinvest.protocol.StartDate</code>.
      */
     public final TableField<ProtocolRecord, LocalDate> STARTDATE = createField("StartDate", org.jooq.impl.SQLDataType.LOCALDATE.nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.Duration</code>.
-     */
-    public final TableField<ProtocolRecord, String> DURATION = createField("Duration", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
-
-    /**
-     * The column <code>bcinvest.Protocol.EndDate</code>.
+     * The column <code>bcinvest.protocol.EndDate</code>.
      */
     public final TableField<ProtocolRecord, LocalDate> ENDDATE = createField("EndDate", org.jooq.impl.SQLDataType.LOCALDATE.nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.Message</code>.
+     * The column <code>bcinvest.protocol.Message</code>.
      */
     public final TableField<ProtocolRecord, String> MESSAGE = createField("Message", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>bcinvest.Protocol.Condition</code>.
+     * The column <code>bcinvest.protocol.Condition</code>.
      */
     public final TableField<ProtocolRecord, String> CONDITION = createField("Condition", org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * Create a <code>bcinvest.Protocol</code> table reference
+     * Create a <code>bcinvest.protocol</code> table reference
      */
     public Protocol() {
-        this(DSL.name("Protocol"), null);
+        this(DSL.name("protocol"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Protocol</code> table reference
+     * Create an aliased <code>bcinvest.protocol</code> table reference
      */
     public Protocol(String alias) {
         this(DSL.name(alias), PROTOCOL);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Protocol</code> table reference
+     * Create an aliased <code>bcinvest.protocol</code> table reference
      */
     public Protocol(Name alias) {
         this(alias, PROTOCOL);
@@ -134,14 +128,6 @@ public class Protocol extends TableImpl<ProtocolRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PROTOCOL_FK_PROTOCOL_TO_GURANTY, Indexes.PROTOCOL_PRIMARY);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Identity<ProtocolRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_PROTOCOL;
     }
 
     /**

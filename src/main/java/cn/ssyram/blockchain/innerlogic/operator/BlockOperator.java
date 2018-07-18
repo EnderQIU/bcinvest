@@ -12,35 +12,37 @@ import static cn.ssyram.blockchain.innerlogic.support.GlobalInfo.DIFFICULTY;
 
 public class BlockOperator {
     public static boolean hasValidThis_Hash(Block block) {
-        String bte = hex2Byte(block.getThis_hash());
-        return isValidHash(bte);
+        return isValidHash(block.getThis_hash());
     }
 
+//    /**
+//     * 将一个hexString转成256位String
+//     * @param hexString 64位的hash
+//     * @return 目标的256位hash
+//     */
+//    private static String hex2Byte(String hexString) {
+//        if (hexString == null || hexString.length() % 2 != 0) return null;
+//
+//        String bString = "", tmp;
+//        for (int i = 0; i < hexString.length(); i++) {
+//            tmp = "0000" + Integer
+//                    .toBinaryString(Integer.parseInt(hexString.substring(i, i + 1), 16));
+//            bString += tmp.substring(tmp.length() - 4);
+//        }
+//        return bString;
+//
+//    }
+
     /**
-     * 将一个hexString转成256位String
-     * @param hexString 64位的hash
-     * @return 目标的256位hash
-     */
-    private static String hex2Byte(String hexString) {
-        if (hexString == null || hexString.length() % 2 != 0) return null;
-
-        String bString = "", tmp;
-        for (int i = 0; i < hexString.length(); i++) {
-            tmp = "0000" + Integer
-                    .toBinaryString(Integer.parseInt(hexString.substring(i, i + 1), 16));
-            bString += tmp.substring(tmp.length() - 4);
-        }
-        return bString;
-
-    }
-
-    /**
-     * 判断是否合法的 256位Hash 串
+     * 判断是否合法的 64位hash 串
      *
      * @return 是否合法值
      */
     private static boolean isValidHash(String hash) {
-        return hash.substring(0, DIFFICULTY).compareTo(validBeginning()) == 0;
+        for (int i = 0; i < DIFFICULTY * 2; ++i)
+            if (hash.charAt(i) != '0')
+                return false;
+        return true;
     }
 
     private static String beginning;

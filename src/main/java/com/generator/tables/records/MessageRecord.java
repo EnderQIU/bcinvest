@@ -28,73 +28,73 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MessageRecord extends UpdatableRecordImpl<MessageRecord> implements Record5<Integer, String, String, String, Byte> {
 
-    private static final long serialVersionUID = -1694966164;
+    private static final long serialVersionUID = 65041004;
 
     /**
-     * Setter for <code>bcinvest.Message.id</code>.
+     * Setter for <code>bcinvest.message.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Message.id</code>.
+     * Getter for <code>bcinvest.message.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.Message.content</code>.
+     * Setter for <code>bcinvest.message.content</code>.
      */
     public void setContent(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Message.content</code>.
+     * Getter for <code>bcinvest.message.content</code>.
      */
     public String getContent() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.Message.fromUserNum</code>.
+     * Setter for <code>bcinvest.message.fromUserNum</code>.
      */
     public void setFromusernum(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Message.fromUserNum</code>.
+     * Getter for <code>bcinvest.message.fromUserNum</code>.
      */
     public String getFromusernum() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>bcinvest.Message.toUserNum</code>.
+     * Setter for <code>bcinvest.message.toUserNum</code>.
      */
     public void setTousernum(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Message.toUserNum</code>.
+     * Getter for <code>bcinvest.message.toUserNum</code>.
      */
     public String getTousernum() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>bcinvest.Message.status</code>.
+     * Setter for <code>bcinvest.message.status</code>.
      */
     public void setStatus(Byte value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Message.status</code>.
+     * Getter for <code>bcinvest.message.status</code>.
      */
     public Byte getStatus() {
         return (Byte) get(4);

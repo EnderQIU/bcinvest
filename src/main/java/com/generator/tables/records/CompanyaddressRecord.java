@@ -28,31 +28,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CompanyaddressRecord extends UpdatableRecordImpl<CompanyaddressRecord> implements Record2<String, String> {
 
-    private static final long serialVersionUID = -247288781;
+    private static final long serialVersionUID = -1702319053;
 
     /**
-     * Setter for <code>bcinvest.CompanyAddress.AccountNum</code>.
+     * Setter for <code>bcinvest.companyaddress.AccountNum</code>.
      */
     public void setAccountnum(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.CompanyAddress.AccountNum</code>.
+     * Getter for <code>bcinvest.companyaddress.AccountNum</code>.
      */
     public String getAccountnum() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.CompanyAddress.Addr</code>.
+     * Setter for <code>bcinvest.companyaddress.Addr</code>.
      */
     public void setAddr(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.CompanyAddress.Addr</code>.
+     * Getter for <code>bcinvest.companyaddress.Addr</code>.
      */
     public String getAddr() {
         return (String) get(1);

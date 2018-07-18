@@ -7,19 +7,19 @@ import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
 import cn.ssyram.blockchain.innerlogic.operator.BlockOperator;
+import cn.ssyram.blockchain.innerlogic.operator.DatabaseOperator;
 import cn.ssyram.blockchain.innerlogic.support.*;
 import cn.ssyram.blockchain.innerlogic.test.Logger;
-import com.bcgenerator.tables.Addresslist;
-import com.bcgenerator.tables.CreditChain;
-import com.bcgenerator.tables.GuarantyChain;
-import com.bcgenerator.tables.records.AddresslistRecord;
+import com.generator.tables.Addresslist;
+import com.generator.tables.CreditChain;
+import com.generator.tables.GuarantyChain;
+import com.generator.tables.records.AddresslistRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -31,10 +31,11 @@ import java.util.concurrent.Executors;
  * Link过程的执行者
  * 其run方法即开始执行的程序
  */
-@Component
 public class LinkExecutive implements Runnable {
     @Autowired
     DSLContext dsl;
+
+
     private Block block;
     //    /**
 //     * previous_hash线程池
@@ -312,8 +313,8 @@ public class LinkExecutive implements Runnable {
         }
     }
 
-    public LinkExecutive(LinkDTO dto) {
-        this.block = dto.getBlock();
+    public LinkExecutive(LinkDTO linkDTO) {
+        this.block = linkDTO.getBlock();
     }
 
     //    /**

@@ -5,13 +5,24 @@ package com.generator;
 
 
 import com.generator.tables.Accesstoken;
+import com.generator.tables.Addresslist;
 import com.generator.tables.Authorization;
 import com.generator.tables.Company;
 import com.generator.tables.Companyaddress;
 import com.generator.tables.Credit;
+import com.generator.tables.CreditChain;
+import com.generator.tables.CreditData;
+import com.generator.tables.CreditMainChainView;
+import com.generator.tables.CreditMostFrontBlockInfo;
+import com.generator.tables.CreditReadyMainChainView;
 import com.generator.tables.Creditupdatetask;
 import com.generator.tables.Fundamentalcertificate;
 import com.generator.tables.Guaranty;
+import com.generator.tables.GuarantyChain;
+import com.generator.tables.GuarantyData;
+import com.generator.tables.GuarantyMainChainView;
+import com.generator.tables.GuarantyMostFrontBlockInfo;
+import com.generator.tables.GuarantyReadyMainChainView;
 import com.generator.tables.Guarantystateupdatetask;
 import com.generator.tables.House;
 import com.generator.tables.Land;
@@ -45,7 +56,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Bcinvest extends SchemaImpl {
 
-    private static final long serialVersionUID = -856405238;
+    private static final long serialVersionUID = 33857221;
 
     /**
      * The reference instance of <code>bcinvest</code>
@@ -53,82 +64,137 @@ public class Bcinvest extends SchemaImpl {
     public static final Bcinvest BCINVEST = new Bcinvest();
 
     /**
-     * The table <code>bcinvest.Accesstoken</code>.
+     * The table <code>bcinvest.accesstoken</code>.
      */
     public final Accesstoken ACCESSTOKEN = com.generator.tables.Accesstoken.ACCESSTOKEN;
 
     /**
-     * The table <code>bcinvest.Authorization</code>.
+     * The table <code>bcinvest.addresslist</code>.
+     */
+    public final Addresslist ADDRESSLIST = com.generator.tables.Addresslist.ADDRESSLIST;
+
+    /**
+     * The table <code>bcinvest.authorization</code>.
      */
     public final Authorization AUTHORIZATION = com.generator.tables.Authorization.AUTHORIZATION;
 
     /**
-     * The table <code>bcinvest.Company</code>.
+     * The table <code>bcinvest.company</code>.
      */
     public final Company COMPANY = com.generator.tables.Company.COMPANY;
 
     /**
-     * The table <code>bcinvest.CompanyAddress</code>.
+     * The table <code>bcinvest.companyaddress</code>.
      */
     public final Companyaddress COMPANYADDRESS = com.generator.tables.Companyaddress.COMPANYADDRESS;
 
     /**
-     * The table <code>bcinvest.Credit</code>.
+     * The table <code>bcinvest.credit</code>.
      */
     public final Credit CREDIT = com.generator.tables.Credit.CREDIT;
 
     /**
-     * The table <code>bcinvest.CreditUpdateTask</code>.
+     * The table <code>bcinvest.credit_chain</code>.
+     */
+    public final CreditChain CREDIT_CHAIN = com.generator.tables.CreditChain.CREDIT_CHAIN;
+
+    /**
+     * The table <code>bcinvest.credit_data</code>.
+     */
+    public final CreditData CREDIT_DATA = com.generator.tables.CreditData.CREDIT_DATA;
+
+    /**
+     * VIEW
+     */
+    public final CreditMainChainView CREDIT_MAIN_CHAIN_VIEW = com.generator.tables.CreditMainChainView.CREDIT_MAIN_CHAIN_VIEW;
+
+    /**
+     * VIEW
+     */
+    public final CreditMostFrontBlockInfo CREDIT_MOST_FRONT_BLOCK_INFO = com.generator.tables.CreditMostFrontBlockInfo.CREDIT_MOST_FRONT_BLOCK_INFO;
+
+    /**
+     * VIEW
+     */
+    public final CreditReadyMainChainView CREDIT_READY_MAIN_CHAIN_VIEW = com.generator.tables.CreditReadyMainChainView.CREDIT_READY_MAIN_CHAIN_VIEW;
+
+    /**
+     * The table <code>bcinvest.creditupdatetask</code>.
      */
     public final Creditupdatetask CREDITUPDATETASK = com.generator.tables.Creditupdatetask.CREDITUPDATETASK;
 
     /**
-     * The table <code>bcinvest.FundamentalCertificate</code>.
+     * The table <code>bcinvest.fundamentalcertificate</code>.
      */
     public final Fundamentalcertificate FUNDAMENTALCERTIFICATE = com.generator.tables.Fundamentalcertificate.FUNDAMENTALCERTIFICATE;
 
     /**
-     * The table <code>bcinvest.Guaranty</code>.
+     * The table <code>bcinvest.guaranty</code>.
      */
     public final Guaranty GUARANTY = com.generator.tables.Guaranty.GUARANTY;
 
     /**
-     * The table <code>bcinvest.GuarantyStateUpdateTask</code>.
+     * The table <code>bcinvest.guaranty_chain</code>.
+     */
+    public final GuarantyChain GUARANTY_CHAIN = com.generator.tables.GuarantyChain.GUARANTY_CHAIN;
+
+    /**
+     * The table <code>bcinvest.guaranty_data</code>.
+     */
+    public final GuarantyData GUARANTY_DATA = com.generator.tables.GuarantyData.GUARANTY_DATA;
+
+    /**
+     * VIEW
+     */
+    public final GuarantyMainChainView GUARANTY_MAIN_CHAIN_VIEW = com.generator.tables.GuarantyMainChainView.GUARANTY_MAIN_CHAIN_VIEW;
+
+    /**
+     * VIEW
+     */
+    public final GuarantyMostFrontBlockInfo GUARANTY_MOST_FRONT_BLOCK_INFO = com.generator.tables.GuarantyMostFrontBlockInfo.GUARANTY_MOST_FRONT_BLOCK_INFO;
+
+    /**
+     * VIEW
+     */
+    public final GuarantyReadyMainChainView GUARANTY_READY_MAIN_CHAIN_VIEW = com.generator.tables.GuarantyReadyMainChainView.GUARANTY_READY_MAIN_CHAIN_VIEW;
+
+    /**
+     * The table <code>bcinvest.guarantystateupdatetask</code>.
      */
     public final Guarantystateupdatetask GUARANTYSTATEUPDATETASK = com.generator.tables.Guarantystateupdatetask.GUARANTYSTATEUPDATETASK;
 
     /**
-     * The table <code>bcinvest.House</code>.
+     * The table <code>bcinvest.house</code>.
      */
     public final House HOUSE = com.generator.tables.House.HOUSE;
 
     /**
-     * The table <code>bcinvest.Land</code>.
+     * The table <code>bcinvest.land</code>.
      */
     public final Land LAND = com.generator.tables.Land.LAND;
 
     /**
-     * The table <code>bcinvest.Machine</code>.
+     * The table <code>bcinvest.machine</code>.
      */
     public final Machine MACHINE = com.generator.tables.Machine.MACHINE;
 
     /**
-     * The table <code>bcinvest.Message</code>.
+     * The table <code>bcinvest.message</code>.
      */
     public final Message MESSAGE = com.generator.tables.Message.MESSAGE;
 
     /**
-     * The table <code>bcinvest.Protocol</code>.
+     * The table <code>bcinvest.protocol</code>.
      */
     public final Protocol PROTOCOL = com.generator.tables.Protocol.PROTOCOL;
 
     /**
-     * The table <code>bcinvest.Report</code>.
+     * The table <code>bcinvest.report</code>.
      */
     public final Report REPORT = com.generator.tables.Report.REPORT;
 
     /**
-     * The table <code>bcinvest.Securitiesinformation</code>.
+     * The table <code>bcinvest.securitiesinformation</code>.
      */
     public final Securitiesinformation SECURITIESINFORMATION = com.generator.tables.Securitiesinformation.SECURITIESINFORMATION;
 
@@ -158,13 +224,24 @@ public class Bcinvest extends SchemaImpl {
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Accesstoken.ACCESSTOKEN,
+            Addresslist.ADDRESSLIST,
             Authorization.AUTHORIZATION,
             Company.COMPANY,
             Companyaddress.COMPANYADDRESS,
             Credit.CREDIT,
+            CreditChain.CREDIT_CHAIN,
+            CreditData.CREDIT_DATA,
+            CreditMainChainView.CREDIT_MAIN_CHAIN_VIEW,
+            CreditMostFrontBlockInfo.CREDIT_MOST_FRONT_BLOCK_INFO,
+            CreditReadyMainChainView.CREDIT_READY_MAIN_CHAIN_VIEW,
             Creditupdatetask.CREDITUPDATETASK,
             Fundamentalcertificate.FUNDAMENTALCERTIFICATE,
             Guaranty.GUARANTY,
+            GuarantyChain.GUARANTY_CHAIN,
+            GuarantyData.GUARANTY_DATA,
+            GuarantyMainChainView.GUARANTY_MAIN_CHAIN_VIEW,
+            GuarantyMostFrontBlockInfo.GUARANTY_MOST_FRONT_BLOCK_INFO,
+            GuarantyReadyMainChainView.GUARANTY_READY_MAIN_CHAIN_VIEW,
             Guarantystateupdatetask.GUARANTYSTATEUPDATETASK,
             House.HOUSE,
             Land.LAND,

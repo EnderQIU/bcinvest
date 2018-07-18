@@ -3,7 +3,9 @@ package cn.ssyram.blockchain.innerlogic.entity;
 import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
 import cn.ssyram.blockchain.innerlogic.operator.Miner;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
+import cn.ssyram.blockchain.innerlogic.support.GlobalInfo;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -14,12 +16,15 @@ public class BufferBlock extends Block{
                        String timeStamp,
                        String this_hash,
                        String previous_hash,
-                       List<BlockData> dataList)
+                       List<BlockData> dataList,
+                       String address)
     {
-        super(type, timeStamp, this_hash, previous_hash, dataList);
+        super(type, timeStamp, this_hash, previous_hash, dataList, address);
     }
 
     public byte[] getRaw_this_hash() {
+        if (raw_this_hash == null)
+            raw_this_hash = new byte[256];
         return raw_this_hash;
     }
 
@@ -56,17 +61,20 @@ public class BufferBlock extends Block{
         this.address = address;
     }
 
+    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     public Block getBlock() {
-        setThis_hash(Miner.bytesToHexString(getRaw_this_hash()));
-        List<BlockData> dl = getDataList();
-        for (BlockData data:dl)
-            data.setBlock_hash(getThis_hash());
+//        setThis_hash(Miner.bytesToHexString(getRaw_this_hash()));
+//        List<BlockData> dl = getDataList();
+//        for (BlockData data:dl)
+//            data.setBlock_hash(getThis_hash());
         return new Block(
                 getType(),
-                Calendar.getInstance().getTime().toString(),
+                format.format(Calendar.getInstance().getTime()),
                 getThis_hash(),
-                (String) BlockChainOperator.getLatestMainBlockInfo(getType()).get("previous_hash"),
-                getDataList()
+                (String) BlockChainOperator.getLatestMainBlockInfo(getType()).get("this_hash"),
+                getDataList(),
+                GlobalInfo.SELF_ADDRESS
         );
     }
 }

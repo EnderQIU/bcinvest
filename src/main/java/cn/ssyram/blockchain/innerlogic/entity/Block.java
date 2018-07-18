@@ -4,6 +4,7 @@ import cn.ssyram.blockchain.innerlogic.support.ChainType;
 import com.sun.istack.internal.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class Block implements Serializable {
                  String time_stamp,
                  @NotNull String this_hash,
                  @NotNull String previous_hash,
-                 @NotNull List<BlockData> dataList)
+                 @NotNull List<BlockData> dataList,
+                 @NotNull String address)
     {
         this.type = type;
         if (time_stamp != null)
@@ -32,6 +34,11 @@ public class Block implements Serializable {
         this.this_hash = this_hash;
         this.previous_hash = previous_hash;
         this.dataList = dataList;
+        this.address = address;
+    }
+
+    public void setThis_hash(String this_hash) {
+        this.this_hash = this_hash;
     }
 
     public ChainType getType() {
@@ -51,6 +58,8 @@ public class Block implements Serializable {
     }
 
     public List<BlockData> getDataList() {
+        if (dataList == null)
+            dataList = new ArrayList<>();
         return dataList;
     }
 

@@ -1,6 +1,6 @@
 package cn.ssyram.blockchain.innerlogic.support;
 
-import com.bcgenerator.tables.CreditChain;
+import com.generator.tables.CreditChain;
 import com.generator.Tables;
 
 import java.io.Serializable;

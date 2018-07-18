@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guarantystateupdatetask extends TableImpl<GuarantystateupdatetaskRecord> {
 
-    private static final long serialVersionUID = 381908573;
+    private static final long serialVersionUID = -687974819;
 
     /**
-     * The reference instance of <code>bcinvest.GuarantyStateUpdateTask</code>
+     * The reference instance of <code>bcinvest.guarantystateupdatetask</code>
      */
     public static final Guarantystateupdatetask GUARANTYSTATEUPDATETASK = new Guarantystateupdatetask();
 
@@ -55,51 +55,51 @@ public class Guarantystateupdatetask extends TableImpl<GuarantystateupdatetaskRe
     }
 
     /**
-     * The column <code>bcinvest.GuarantyStateUpdateTask.taskId</code>.
+     * The column <code>bcinvest.guarantystateupdatetask.taskId</code>.
      */
     public final TableField<GuarantystateupdatetaskRecord, Integer> TASKID = createField("taskId", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>bcinvest.GuarantyStateUpdateTask.guarantyId</code>.
+     * The column <code>bcinvest.guarantystateupdatetask.guarantyId</code>.
      */
     public final TableField<GuarantystateupdatetaskRecord, Integer> GUARANTYID = createField("guarantyId", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.GuarantyStateUpdateTask.previousState</code>.
+     * The column <code>bcinvest.guarantystateupdatetask.previousState</code>.
      */
     public final TableField<GuarantystateupdatetaskRecord, Integer> PREVIOUSSTATE = createField("previousState", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.GuarantyStateUpdateTask.stateWillUpdateTo</code>.
+     * The column <code>bcinvest.guarantystateupdatetask.stateWillUpdateTo</code>.
      */
     public final TableField<GuarantystateupdatetaskRecord, Integer> STATEWILLUPDATETO = createField("stateWillUpdateTo", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.GuarantyStateUpdateTask.taskState</code>.
+     * The column <code>bcinvest.guarantystateupdatetask.taskState</code>.
      */
     public final TableField<GuarantystateupdatetaskRecord, String> TASKSTATE = createField("taskState", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.GuarantyStateUpdateTask.count</code>.
+     * The column <code>bcinvest.guarantystateupdatetask.count</code>.
      */
     public final TableField<GuarantystateupdatetaskRecord, Integer> COUNT = createField("count", org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * Create a <code>bcinvest.GuarantyStateUpdateTask</code> table reference
+     * Create a <code>bcinvest.guarantystateupdatetask</code> table reference
      */
     public Guarantystateupdatetask() {
-        this(DSL.name("GuarantyStateUpdateTask"), null);
+        this(DSL.name("guarantystateupdatetask"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.GuarantyStateUpdateTask</code> table reference
+     * Create an aliased <code>bcinvest.guarantystateupdatetask</code> table reference
      */
     public Guarantystateupdatetask(String alias) {
         this(DSL.name(alias), GUARANTYSTATEUPDATETASK);
     }
 
     /**
-     * Create an aliased <code>bcinvest.GuarantyStateUpdateTask</code> table reference
+     * Create an aliased <code>bcinvest.guarantystateupdatetask</code> table reference
      */
     public Guarantystateupdatetask(Name alias) {
         this(alias, GUARANTYSTATEUPDATETASK);

@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Land extends TableImpl<LandRecord> {
 
-    private static final long serialVersionUID = 1602471698;
+    private static final long serialVersionUID = -10386734;
 
     /**
-     * The reference instance of <code>bcinvest.Land</code>
+     * The reference instance of <code>bcinvest.land</code>
      */
     public static final Land LAND = new Land();
 
@@ -55,36 +55,36 @@ public class Land extends TableImpl<LandRecord> {
     }
 
     /**
-     * The column <code>bcinvest.Land.Addr</code>.
+     * The column <code>bcinvest.land.Addr</code>.
      */
     public final TableField<LandRecord, String> ADDR = createField("Addr", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.Land.Area</code>.
+     * The column <code>bcinvest.land.Area</code>.
      */
     public final TableField<LandRecord, Long> AREA = createField("Area", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>bcinvest.Land.GuarantyId</code>.
+     * The column <code>bcinvest.land.GuarantyId</code>.
      */
     public final TableField<LandRecord, Integer> GUARANTYID = createField("GuarantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>bcinvest.Land</code> table reference
+     * Create a <code>bcinvest.land</code> table reference
      */
     public Land() {
-        this(DSL.name("Land"), null);
+        this(DSL.name("land"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Land</code> table reference
+     * Create an aliased <code>bcinvest.land</code> table reference
      */
     public Land(String alias) {
         this(DSL.name(alias), LAND);
     }
 
     /**
-     * Create an aliased <code>bcinvest.Land</code> table reference
+     * Create an aliased <code>bcinvest.land</code> table reference
      */
     public Land(Name alias) {
         this(alias, LAND);

@@ -30,143 +30,143 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SecuritiesinformationRecord extends UpdatableRecordImpl<SecuritiesinformationRecord> implements Record10<String, String, String, String, Long, Integer, LocalDateTime, Long, Byte, String> {
 
-    private static final long serialVersionUID = -1943281349;
+    private static final long serialVersionUID = 1887985979;
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.AccountNum</code>.
+     * Setter for <code>bcinvest.securitiesinformation.AccountNum</code>.
      */
     public void setAccountnum(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.AccountNum</code>.
+     * Getter for <code>bcinvest.securitiesinformation.AccountNum</code>.
      */
     public String getAccountnum() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.StockCode</code>.
+     * Setter for <code>bcinvest.securitiesinformation.StockCode</code>.
      */
     public void setStockcode(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.StockCode</code>.
+     * Getter for <code>bcinvest.securitiesinformation.StockCode</code>.
      */
     public String getStockcode() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.ListedApproval</code>.
+     * Setter for <code>bcinvest.securitiesinformation.ListedApproval</code>.
      */
     public void setListedapproval(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.ListedApproval</code>.
+     * Getter for <code>bcinvest.securitiesinformation.ListedApproval</code>.
      */
     public String getListedapproval() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.StockAbbr</code>.
+     * Setter for <code>bcinvest.securitiesinformation.StockAbbr</code>.
      */
     public void setStockabbr(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.StockAbbr</code>.
+     * Getter for <code>bcinvest.securitiesinformation.StockAbbr</code>.
      */
     public String getStockabbr() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.IssuePrice</code>.
+     * Setter for <code>bcinvest.securitiesinformation.IssuePrice</code>.
      */
     public void setIssueprice(Long value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.IssuePrice</code>.
+     * Getter for <code>bcinvest.securitiesinformation.IssuePrice</code>.
      */
     public Long getIssueprice() {
         return (Long) get(4);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.StockType</code>.
+     * Setter for <code>bcinvest.securitiesinformation.StockType</code>.
      */
     public void setStocktype(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.StockType</code>.
+     * Getter for <code>bcinvest.securitiesinformation.StockType</code>.
      */
     public Integer getStocktype() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.LaunchDate</code>.
+     * Setter for <code>bcinvest.securitiesinformation.LaunchDate</code>.
      */
     public void setLaunchdate(LocalDateTime value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.LaunchDate</code>.
+     * Getter for <code>bcinvest.securitiesinformation.LaunchDate</code>.
      */
     public LocalDateTime getLaunchdate() {
         return (LocalDateTime) get(6);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.Circulation</code>.
+     * Setter for <code>bcinvest.securitiesinformation.Circulation</code>.
      */
     public void setCirculation(Long value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.Circulation</code>.
+     * Getter for <code>bcinvest.securitiesinformation.Circulation</code>.
      */
     public Long getCirculation() {
         return (Long) get(7);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.IsValid</code>.
+     * Setter for <code>bcinvest.securitiesinformation.IsValid</code>.
      */
     public void setIsvalid(Byte value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.IsValid</code>.
+     * Getter for <code>bcinvest.securitiesinformation.IsValid</code>.
      */
     public Byte getIsvalid() {
         return (Byte) get(8);
     }
 
     /**
-     * Setter for <code>bcinvest.Securitiesinformation.Remark</code>.
+     * Setter for <code>bcinvest.securitiesinformation.Remark</code>.
      */
     public void setRemark(String value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>bcinvest.Securitiesinformation.Remark</code>.
+     * Getter for <code>bcinvest.securitiesinformation.Remark</code>.
      */
     public String getRemark() {
         return (String) get(9);

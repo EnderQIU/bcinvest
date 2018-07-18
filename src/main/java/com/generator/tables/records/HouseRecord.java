@@ -28,59 +28,59 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class HouseRecord extends UpdatableRecordImpl<HouseRecord> implements Record4<String, String, String, Integer> {
 
-    private static final long serialVersionUID = 803970614;
+    private static final long serialVersionUID = 984885878;
 
     /**
-     * Setter for <code>bcinvest.House.Addr</code>.
+     * Setter for <code>bcinvest.house.Addr</code>.
      */
     public void setAddr(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.House.Addr</code>.
+     * Getter for <code>bcinvest.house.Addr</code>.
      */
     public String getAddr() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.House.Zip</code>.
+     * Setter for <code>bcinvest.house.Zip</code>.
      */
     public void setZip(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.House.Zip</code>.
+     * Getter for <code>bcinvest.house.Zip</code>.
      */
     public String getZip() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.House.HousingCertificatedId</code>.
+     * Setter for <code>bcinvest.house.HousingCertificatedId</code>.
      */
     public void setHousingcertificatedid(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.House.HousingCertificatedId</code>.
+     * Getter for <code>bcinvest.house.HousingCertificatedId</code>.
      */
     public String getHousingcertificatedid() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>bcinvest.House.GuarantyId</code>.
+     * Setter for <code>bcinvest.house.GuarantyId</code>.
      */
     public void setGuarantyid(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>bcinvest.House.GuarantyId</code>.
+     * Getter for <code>bcinvest.house.GuarantyId</code>.
      */
     public Integer getGuarantyid() {
         return (Integer) get(3);

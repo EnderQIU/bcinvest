@@ -5,7 +5,7 @@ import cn.ssyram.blockchain.innerlogic.dto.CollectDTO;
 import cn.ssyram.blockchain.innerlogic.dto.QueryDTO;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
-import cn.ssyram.blockchain.innerlogic.support.DatabaseOperator;
+import cn.ssyram.blockchain.innerlogic.operator.DatabaseOperator;
 import cn.ssyram.blockchain.interfaces.GuarantyChain;
 
 import java.util.ArrayList;
