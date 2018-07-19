@@ -47,7 +47,7 @@ public class MessageController extends BaseController {
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", dataType = "Integer", required = true, name = "messageId", value = "消息Id"),
-            @ApiImplicitParam(paramType = "form", dataType = "String", required = true, name = "state", value = "消息状态"),
+            @ApiImplicitParam(paramType = "form", dataType = "String", required = true, name = "status", value = "消息状态"),
     })
     public BaseResponseVO markMessage(MarkMessageSerializer serializer) {
         return view.markMessage(serializer);
