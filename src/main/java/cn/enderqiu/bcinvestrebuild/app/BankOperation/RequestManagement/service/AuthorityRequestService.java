@@ -5,8 +5,10 @@ import cn.enderqiu.bcinvestrebuild.app.BankOperation.RequestManagement.entity.vo
 import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.*;
 import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.service.GuarantyManagementService;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
+import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
 import cn.ssyram.blockchain.impls.CCGuarantyChainInterfaceImpl;
 import cn.ssyram.blockchain.interfaces.CCGuarantyChainInerface;
+import cn.ssyram.blockchain.interfaces.GuarantyChain;
 import com.generator.tables.Company;
 import org.springframework.stereotype.Service;
 
@@ -91,7 +93,7 @@ public class AuthorityRequestService extends BaseService{
                 case 6:
                 case 7:
                 case 8:
-                    count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();break;
+                    count+= GuarantyChain.chain.queryGuarantyIdByState(stateNum).size();break;
                 default:
                     count+=findGuarantiesCount(stateNum);
             }
@@ -108,7 +110,8 @@ public class AuthorityRequestService extends BaseService{
         return intToReturnVO(mapper.UPDATE(sqlSentence));
     }
     public ReturnVO changeGuarantyState(int guarantyId,int state){
-        String sqlSentence = "UPDATE guaranty SET state = "+state+" WHERE guarantyId = "+guarantyId+";";
-        return intToReturnVO(mapper.UPDATE(sqlSentence));
+        ReturnVO returnVO = new ReturnVO();
+        GuarantyChainUtil.updateState(guarantyId,3);
+        return returnVO;
     }
 }
