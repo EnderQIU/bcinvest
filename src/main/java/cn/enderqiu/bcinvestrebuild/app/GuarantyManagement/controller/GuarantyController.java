@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/guaranty")
+@RequestMapping("/api/user/guaranty")
 @Api("抵押物相关操作")
 @RequiredPermissions("company")
 

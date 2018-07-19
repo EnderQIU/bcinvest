@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/bank/authorityRequest")
+@RequestMapping("/api/user/bank/authorityRequest")
 @Api("银行处理机构请求")
 @RequiredPermissions("bank")
 

@@ -445,15 +445,15 @@ DROP TABLE IF EXISTS `Protocol`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Protocol` (
   `ProtocolId` int(11) NOT NULL AUTO_INCREMENT,
-  `GurantyId` int(11) NOT NULL,
+  `GuarantyId` int(11) NOT NULL,
   `StartDate` date NOT NULL,
   `Duration` varchar(128) NOT NULL,
-  `EndDate` date NOT NULL,
+  `EndDate` date,
   `Message` mediumtext,
-  `Condition` varchar(45) DEFAULT NULL,
+  `State` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ProtocolId`),
-  KEY `fk_protocol_to_guranty` (`GurantyId`),
-  CONSTRAINT `fk_protocol_to_guranty` FOREIGN KEY (`GurantyId`) REFERENCES `guaranty` (`guarantyid`)
+  KEY `fk_protocol_to_guaranty` (`GuarantyId`),
+  CONSTRAINT `fk_protocol_to_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `guaranty` (`guarantyid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

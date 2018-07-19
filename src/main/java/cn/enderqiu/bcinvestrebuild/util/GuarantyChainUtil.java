@@ -172,7 +172,7 @@ public class GuarantyChainUtil {
                 int creditNeedToBeUpdated = GuarantyChainUtil.checkHowMuchCreditNeedToBeUpdated(record.getValue("previousState", Integer.class), stateWillUpdateTo);
                 if ( creditNeedToBeUpdated != 0){
                     GuarantyRecord record1 = dsl.fetchOne(Guaranty.GUARANTY, Guaranty.GUARANTY.GUARANTYID.eq(record.getValue("guarantyId", Integer.class)));
-                    CreditChainUtil.updateCredit(record1.getAccountnum(), creditNeedToBeUpdated);
+                    CreditChainUtil.updateCredit(record1.getAccountnum(), creditNeedToBeUpdated, "");
                 }
             }else{
                 Integer count = record.getValue("count", Integer.class);

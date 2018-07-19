@@ -36,7 +36,7 @@ public interface CompanyUserMapper {
             telephoneNumber);
 
     @Update("UPDATE Company SET Status = #{status} WHERE Token = #{token}")
-    int changeStatusByToken(@Param("token") String token, @Param("status") int status);
+    int changeStatusByToken(@Param("token") String token, @Param("status") String status);
 
 //    @Select("${sentence}")
 //    @ResultType(java.util.HashMap.class)

@@ -15,6 +15,7 @@ function getCookie(c_name) {
     }
     return "";
 };
+setCookie('user_id_token', 'testToken');
 window.requestByCode = function(code) {
     $.ajax(
         {
@@ -52,7 +53,10 @@ window.requestUserTokenCallBack = function(data) {
             case "unapplied":
                 window.companyStatus = "unapplied";
                 break;
-            case "checking":
+            case "checking_1":
+                window.companyStatus = "checking";
+                break;
+            case "checking_2":
                 window.companyStatus = "checking";
                 break;
             case "unpassed":
@@ -61,14 +65,14 @@ window.requestUserTokenCallBack = function(data) {
                 break;
             case "passed":
                 window.companyStatus = "passed";
-                window.location.href = "companyCenter.html";
+                window.location.href = "company_center.html";
                 break;
             default:
                 window.location.href = "introduction.html";
         }
     } else {
         setCookie("user_id_token", "", -1);
-        location.href ="";
+        location.href ="introduction.html";
     }
 }
 var url = location.search;
@@ -80,8 +84,6 @@ if (url != "") {
         requestParameter[requestParameterString[i].split("=")[0]] = unescape(requestParameterString[i].split("=")[1]);
     }
 }
-// window.requestUserTokenCallBack({"status": "unapplied", "user_id_token": "123456"});
-
 var user_id_token = getCookie("user_id_token");
 if (user_id_token != null && user_id_token != "") {
     window.requestByCookie(user_id_token);

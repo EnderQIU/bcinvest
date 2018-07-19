@@ -78,7 +78,7 @@ public class CompanyUserService extends BaseService {
             CompanyUserMapper.changeUserNameByToken(token, dto.getUserName());
         if (dto.getTelephoneNumber() != null)
             CompanyUserMapper.changeTelNumByToken(token, dto.getTelephoneNumber());
-        CompanyUserMapper.changeStatusByToken(token, 1);
+        CompanyUserMapper.changeStatusByToken(token, "checking_1");
 
         return new CompanyUserStatusVO(dto.getStatus(), token);
     }

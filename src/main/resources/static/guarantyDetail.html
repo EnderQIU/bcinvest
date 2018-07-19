@@ -1,0 +1,199 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看抵押物详情</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="js/bank_authority.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/JQuery.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- bootbox.js at 4.4.0 -->
+    <script type="text/javascript" src="js/bootbox.min.js"></script>
+    <style type="text/css">
+        .table_head {
+            text-align: center;
+        }
+        .table_cell {
+            text-align: center;
+        }
+        .page_change_container {
+            text-align: center;
+        }
+        .page_change_container .page_change {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .page_change_container .current_page {
+            color: darkorange;
+        }
+        .house_detail{
+            display: none;
+        }
+        .land_detail{
+            display: none;
+        }
+        .machine_detail{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id = "main">
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">抵押物详情</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group" id = "guaranty_detail">
+                        <label>名称：</label><span id = "guaranty_name"></span><br>
+                        <label>估值：</label><span id = "guaranty_value"></span><br>
+                        <label>拥有者姓名:</label><span id = "guaranty_owner"></span><br>
+                        <label>权利范围:</label><span id = "guaranty_scope"></span><br>
+                        <label>状态：</label><span id = "guaranty_state"></span><br>
+                        <label>类型：</label><span id = "guaranty_type"></span><br>
+                        <div class = "house_detail">
+                            <label>地址：</label><span id = "house_addr" ></span><br>
+                            <label>邮编：</label><span id = "house_zip"></span><br>
+                            <label>房产证号:</label><span id = "house_certificatedId"></span><br>
+                        </div>
+                        <div class = "land_detail">
+                            <label>地址:</label><span id = "land_addr"></span><br>
+                            <label>面积：</label><span id = "land_area"></span><br>
+
+                        </div>
+                        <div class = "machine_detail">
+                            <label>使用天数：</label><span id = "machine_usedDays"></span><br>
+                            <label>生产商：</label><span id = "machine_producer"></span><br>
+                            <label>型号：</label><span id = "machine_model"></span><br>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id = "close">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function isEmptyValue(value) {
+        if (value === null) {
+            return true;
+        }
+        var type = typeof(value);
+        switch (type) {
+            case 'number':
+                return isNaN(value);
+            case 'function':
+                return false;
+            case 'object':
+                for (var key in value) {
+                    return false;
+                }
+                return true;
+            case 'string':
+                if (value.length > 0) {
+                    return false;
+                }
+                return true;
+            case 'boolean':
+                return false;
+            case 'undefined':
+                return true;
+        }
+    };
+    var vm = new Vue({
+        el:"#main",
+        data:{
+            'qualified_guaranties':[ {
+                "guarantyId": 1,
+                "accountNum": "1",
+                "name": "1",
+                "evaluateValue": 0,
+                "state": 3,
+                "scopeOfRight": 1,
+                "ownerName": "1",
+                "reportId": 0,
+                "type": 0
+            }],
+            'states':[],
+            'current_page':-1,
+            'max_page':-1,
+            'states_word': ['鉴定中', '不合格', '合格', '待确认', '可抵押', '申请抵押中', '申请已通过', '申请还款中', '逾期'],
+            'type_word':['房产','地产','机器'],
+            'scope_of_right_word':['整体','部分'],
+        },
+        methods:{
+            view_detail_click(){
+                var url = null;
+                var item = this.qualified_guaranties[0];
+                switch(item.type){
+                    case 0:
+                        url = '/user/bank/companyRequest/houseDetail'
+                        break;
+                    case 1:
+                        url = '/user/bank/companyRequest/landDetail'
+                        break;
+                    case 2:
+                        url = '/user/bank/companyRequest/machineDetail'
+                        break;
+                }
+                var query_para = '?guarantyId='+item.guarantyId.toString();
+                var result = null;
+                $.ajax({
+                    'url': url + query_para,
+                    'type': 'GET',
+                    'async': false,
+                    'success': function(data) {
+                        result = data;
+                    },
+                    'headers': {
+                        'user_id_token': getCookie('user_id_token'),
+                    }
+                });
+                var guaranty = result;
+                var modal = $('#detailModal');
+                modal.find('#guaranty_name').html(guaranty.name);
+                modal.find('#guaranty_value').html(guaranty.evaluationValue);
+                modal.find('#guaranty_owner').html(guaranty.ownerName);
+                modal.find('#guaranty_scope').html(this.scope_of_right_word[guaranty.scopeOfRight]);
+                modal.find('#guaranty_state').html(this.states_word[guaranty.state]);
+                modal.find('#guaranty_type').html(this.type_word[guaranty.type]);
+                switch(item.type){
+                    case 0:
+                        modal.find('#house_addr').html(guaranty.addr);
+                        modal.find('#house_zip').html(guaranty.zip);
+                        modal.find('#house_certificatedId').html(guaranty.housingCertificatedId);
+                        $('.house_detail').css("display","inline");
+                        break;
+                    case 1:
+                        modal.find('#land_addr').html(guaranty.addr);
+                        modal.find('#land_area').html(guaranty.area);
+                        $('.land_detail').css("display","inline");
+                        break;
+                    case 2:
+                        modal.find('#machine_producer').html(guaranty.producer);
+                        modal.find('#machine_model').html(guaranty.model);
+                        modal.find('#machine_usedDays').html(guaranty.usedDays);
+                        $('.machine_detail').css("display","inline");
+                        break;
+                }
+                modal.modal('show');
+            },
+        }
+    });
+    $('#detailModal').on('hidden.bs.modal', function () {
+        $('.house_detail').css("display","none");
+        $('.land_detail').css("display","none");
+        $('.machine_detail').css("display","none");
+    })
+</script>
+</html>

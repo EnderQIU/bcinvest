@@ -18,13 +18,25 @@ public class CreditChainImpl implements CreditChain {
         return null;
     }
 
+//    @Override
+//    public void updateGuarantyState(String accountNum, Integer previousCredit, Integer delta) {
+//        BlockData data = new BlockData();
+//        data.setId(accountNum);
+//        data.setVariation(delta.toString());
+//        Integer value = previousCredit + delta;
+//        data.setValue(value.toString());
+//
+//        Dispatcher.collect(new CollectDTO(type, data));
+//    }
+
     @Override
-    public void updateGuarantyState(String accountNum, Integer previousCredit, Integer delta) {
+    public void updateGuarantyState(String accountNum, Integer previousCredit, Integer delta, String timestamp, String reason) {
         BlockData data = new BlockData();
         data.setId(accountNum);
         data.setVariation(delta.toString());
         Integer value = previousCredit + delta;
         data.setValue(value.toString());
+        data.setRemarks(timestamp + "-" + reason);
 
         Dispatcher.collect(new CollectDTO(type, data));
     }
@@ -33,7 +45,7 @@ public class CreditChainImpl implements CreditChain {
     public Integer getCreditOfCompany(String accountNum) {
         String sentence =
                 "SELECT value FROM " + type.getReadyMainChainViewName()
-                + " WHERE id = " + accountNum;
+                + " WHERE id = '" + accountNum + "'";
         return Integer.valueOf(
                 (String) Dispatcher.query(new QueryDTO(type, sentence)).get(0).get("value")
         );
@@ -42,8 +54,10 @@ public class CreditChainImpl implements CreditChain {
     @Override
     public List<Map<String, Object>> getCompanyCreditList(String accountNum) {
         return DatabaseOperator.SELECT(
-                "SELECT DISTINCT * FROM " + type.getReadyMainChainViewName()
-                + " WHERE id = " + accountNum
+                "SELECT DISTINCT * FROM "
+                        + type.getChainTableName() + " JOIN " + type.getDataTableName()
+                        + " ON this_hash = block_hash"
+                        + " WHERE id = '" + accountNum + "'"
         );
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
  * 分离开发，不需要依赖别人的部分
  */
 @RestController
-@RequestMapping("/sample")
+@RequestMapping("/api/sample")
 /* 这里是指 通过这个类处理的所有请求都会有的请求URL的开头部分
  * 标注/sample意思是这个类专门用来处理/sample/*类型的请求，如/sample/test/ -POST这样的请求
  */

@@ -4,44 +4,26 @@ import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import cn.ssyram.blockchain.impls.CreditChainImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
-public class creditInfoService extends BaseService {
+public class creditInfoService extends BaseService{
+private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 
     public List<creditInfoVO> getCompanyCredit(String user_id_token) {
+        CreditChainImpl creditChain=new CreditChainImpl();
         List<Map<String, Object>> mm = mapper.SELECT("Select * from Company where Token =" + user_id_token);
         if (mm.size() > 0) {
-            String CompanytNum = mm.get(0).get("AccountNum").toString();
+            String CompanyNum = mm.get(0).get("AccountNum").toString();
 
             List<creditInfoVO> cinfoList = new ArrayList<>();
 
 
-            List<Map<String, Object>> creditinfo = mapper.SELECT("Select * from Credit where AccountNum=" + CompanytNum);
+            List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(CompanyNum);
 
-
-            for (Map<String, Object> m : creditinfo) {
-                String accountid = " ", reportId = " ", guarantyId = " ", type = " ", duetime = " ", guarantyName = " ";
-//credit 通过区块链查看
-
-                accountid = m.get("AccountNum").toString();
-                reportId = m.get("ReportId").toString();
-                guarantyId = m.get("GuarantyId").toString();
-                type = m.get("Type").toString();
-                List<Map<String, Object>> reportinfo = mapper.SELECT("Select * from Report where ReportId=" + reportId);
-                duetime = reportinfo.get(0).get("Date").toString();
-                List<Map<String, Object>> guarantyInfo = mapper.SELECT("Select * from Guaranty where GuarantyId=" + guarantyId);
-                guarantyName = guarantyInfo.get(0).get("Name").toString();
-
-
-                creditInfoVO cinfo = new creditInfoVO(accountid, guarantyId, reportId, type, duetime, guarantyName);
-                cinfoList.add(cinfo);
-            }
-
+           cinfoList=getCompanyCreditList(CompanyNum);
             return cinfoList;
         }
         else
@@ -49,13 +31,74 @@ public class creditInfoService extends BaseService {
             return null;
         }
         }
+        public List<creditInfoVO> getCompanyCreditList(String CompanyNum)
+        {
+            CreditChainImpl creditChain=new CreditChainImpl();
+            List<creditInfoVO> cinfoList = new ArrayList<>();
 
 
+            List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(CompanyNum);
 
-    public  List<creditInfoVO> getCompanyCredit2Pages(String user_id_token, int pages)
-    {
+            for (Map<String, Object> m : creditinfo) {
+                String accountid = " ", reportId = " ", guarantyId = " ", type = " ", duetime = " ", guarantyName = " ",credit=" ",
+                        variation=" ",name=" ";
+
+                List<Map<String,Object>> mm=mapper.SELECT("select * from company where AccountNum = '"+CompanyNum+" '");
+                name=mm.get(0).get("Name").toString();
+                accountid = m.get("id").toString();
+                credit=m.get("value").toString();
+                variation=m.get("variation").toString();
+                String date=m.get("remarks").toString().split("-")[0];
+                duetime = simpleDateFormat.format(Long.valueOf(m.get("remarks").toString().split("-")[0]));
+                type=m.get("remarks").toString().split("-")[1];
+                creditInfoVO cinfo = new creditInfoVO(accountid, guarantyId, reportId, guarantyName, duetime,type, credit,variation,name);
+                cinfoList.add(cinfo);
+            }
+
+            return cinfoList;
+        }
+
+
+    public  List<creditInfoVO> getCompanyCredit2Pages(String user_id_token, int pages) {
+
         List<creditInfoVO> creditInfoVOS=getCompanyCredit(user_id_token);
-        return creditInfoVOS;
+        int maxpages=creditInfoVOS.size()/21+1;
+        if(pages>maxpages)
+        {
+            return null;
+        }
+        else
+        {
+            if(pages==maxpages)
+            {
+                return creditInfoVOS.subList((pages-1)*20,creditInfoVOS.size());
+            }
+            else
+            {
+                return creditInfoVOS.subList((pages-1)*20,pages*20);
+            }
+        }
+
+    }
+    public List<creditInfoVO> getComapanyCreditList2Pages(String accountNum,int pages)
+    {
+        List<creditInfoVO> creditInfoVOS=getCompanyCreditList(accountNum);
+        int maxpages=creditInfoVOS.size()/21+1;
+        if(pages>maxpages)
+        {
+            return null;
+        }
+        else
+        {
+            if(pages==maxpages)
+            {
+                return creditInfoVOS.subList((pages-1)*20,creditInfoVOS.size());
+            }
+            else
+            {
+                return creditInfoVOS.subList((pages-1)*20,pages*20);
+            }
+        }
     }
 
 

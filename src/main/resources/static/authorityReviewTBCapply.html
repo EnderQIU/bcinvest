@@ -69,7 +69,7 @@
                 //deal with parameter
                 $.ajax({
                     method: "GET" ,
-                    url: "/Authorization/reviewInfo/getChainInfo",
+                    url: "/api/Authorization/reviewInfo/getChainInfo",
                     async: false,
 
                     beforeSend: function (request) {
@@ -94,7 +94,7 @@
                     //deal with parameter
                     $.ajax({
                         method: "PUT",
-                        url: "/Authorization/reviewInfo/updateGuarantyValue",
+                        url: "/api/Authorization/reviewInfo/updateGuarantyValue",
                         async: false,
                         data: {
                             "guaranty_id": guarantyid,

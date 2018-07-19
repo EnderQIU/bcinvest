@@ -52,8 +52,9 @@
                     //deal with parameter
                     $.ajax({
                         method: "GET" ,
-                        url: "/Authorization/reviewInfo/getComoanyInfo",
+                        url: "/api/Authorization/reviewInfo/getComoanyInfo",
                         async: false,
+
 
                         beforeSend: function (request) {
                             request.setRequestHeader("user_id_token", "12345");

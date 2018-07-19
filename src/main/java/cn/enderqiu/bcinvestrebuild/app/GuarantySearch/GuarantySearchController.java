@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/guarantySearch")
+@RequestMapping("/api/user/guarantySearch")
 @Api("抵押物查询")
 @RequiredPermissions("company")
 public class GuarantySearchController extends BaseController {

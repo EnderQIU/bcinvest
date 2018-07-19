@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>查看企业信用记录</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/JQuery.js"></script>
+
+</head>
+<body>
+<div class="content_container">
+
+    <div id="company_credit_info">
+        <div>
+            <h2>当前信用值：{{companycredit}}</h2>
+        </div>
+        <table style="width :100%;">
+            <tbody>
+            <tr>
+                <td class="table_head">
+                    企业名称
+                </td>
+                <td class="table_head">
+                    信用变化原因
+                </td>
+                <td>
+                    信用变化时间
+                </td>
+                <td class="table_head">
+                    信用变化值
+                </td>
+
+            </tr>
+
+            <tr v-for ="item in credit">
+                <td>{{ item['name'] }}</td>
+                <td>{{ item['type'] }}</td>
+                <td>{{item['dueTime']}}</td>
+                <td>{{ item['variation'] }}</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <p style="text-align:center;"><label>当前页：{{currentPage}}</label><label v-on:click="change_pages">下一页</label></p>
+        <button v-on:click="button_click_listener()">获取企业的信用列表</button>
+
+    </div>
+    <script>
+        new Vue({
+            el: '#company_credit_info',
+            data :{
+                credit:[],
+                companycredit: '',
+                currentPage: 1,
+            },
+            methods:{
+                getData: function (pages) {
+                    var result =' ';
+                    //deal with parameter
+                    $.ajax({
+                        method: "GET" ,
+                        url: "/api/credit/bank/companyCreditList",
+                        async: false,
+                        data:{
+                            accountNum:"123",
+                            page: pages,
+                        },
+
+                        beforeSend: function (request) {
+                            request.setRequestHeader("user_id_token", "12345");
+                        },
+                        success : function(data)
+                        {
+
+                            result=data;
+
+                        }
+
+
+                    });
+
+                    return result;
+
+                },
+                button_click_listener: function () {
+                    result = this.getData(1);
+                    this.companycredit=result[0]['credit'];
+                    this.credit= result;
+                },
+                change_pages:function () {
+
+                this.currentPage = this.currentPage + 1;
+                result = this.getData(this.currentPage);
+                this.credit = result;
+
+
+                }
+
+            }
+        })
+    </script>
+</div>
+
+</body>
+</html>
