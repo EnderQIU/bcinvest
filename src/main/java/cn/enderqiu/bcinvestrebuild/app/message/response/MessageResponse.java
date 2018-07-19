@@ -14,7 +14,7 @@ public class MessageResponse {
 
     private String content;
 
-    private Byte status;
+    private String status;
 
     public String getMessage() {
         return message;
@@ -40,14 +40,6 @@ public class MessageResponse {
         this.content = content;
     }
 
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
     public String getFromUserNum() {
         return fromUserNum;
     }
@@ -62,5 +54,13 @@ public class MessageResponse {
 
     public void setTousernum(String tousernum) {
         this.tousernum = tousernum;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

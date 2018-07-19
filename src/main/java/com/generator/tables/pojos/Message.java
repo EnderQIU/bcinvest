@@ -22,13 +22,13 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Message implements Serializable {
 
-    private static final long serialVersionUID = 1918101541;
+    private static final long serialVersionUID = 1499568357;
 
     private Integer id;
     private String  content;
     private String  fromusernum;
     private String  tousernum;
-    private Byte    status;
+    private String  status;
 
     public Message() {}
 
@@ -45,7 +45,7 @@ public class Message implements Serializable {
         String  content,
         String  fromusernum,
         String  tousernum,
-        Byte    status
+        String  status
     ) {
         this.id = id;
         this.content = content;
@@ -86,11 +86,11 @@ public class Message implements Serializable {
         this.tousernum = tousernum;
     }
 
-    public Byte getStatus() {
+    public String getStatus() {
         return this.status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

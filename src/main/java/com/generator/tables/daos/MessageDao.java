@@ -88,7 +88,7 @@ public class MessageDao extends DAOImpl<MessageRecord, com.generator.tables.pojo
     /**
      * Fetch records that have <code>status IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Message> fetchByStatus(Byte... values) {
+    public List<com.generator.tables.pojos.Message> fetchByStatus(String... values) {
         return fetch(Message.MESSAGE.STATUS, values);
     }
 }
