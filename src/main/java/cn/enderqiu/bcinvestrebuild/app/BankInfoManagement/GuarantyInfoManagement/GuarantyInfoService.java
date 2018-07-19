@@ -32,7 +32,7 @@ public class GuarantyInfoService extends BaseService {
 
         List<Map<String, Object>> list = mapper.SELECT(sql);
 
-        List<GuarantyInfoVO> voList = new ArrayList<>();
+        List<GuarantyInfoVO> voList;
 
         voList = autoFill(list);
 
@@ -61,7 +61,7 @@ public class GuarantyInfoService extends BaseService {
             whereClause = whereClause+"AND Type = "+guarantyType+" ";
         }
         if(guarantyName!=null) {
-            whereClause = whereClause+"AND Name LIKE \'%"+guarantyName+"\' ";
+            whereClause = whereClause+"AND Name LIKE \'%"+guarantyName+"%\' ";
         }
         if(guarantyState!=-1) {
             whereClause = whereClause+"AND State = "+guarantyState+" ";
@@ -76,7 +76,7 @@ public class GuarantyInfoService extends BaseService {
                      "LIMIT " + startIndex + ", " + ITEM_PER_PAGE;
 
         List<Map<String, Object>> list = mapper.SELECT(sql);
-        List<GuarantyInfoVO> voList = new ArrayList<>();
+        List<GuarantyInfoVO> voList;
 
         voList = autoFill(list);
 
@@ -95,7 +95,26 @@ public class GuarantyInfoService extends BaseService {
 
         Map<String, Object> map = list.get(0);
         GuarantyInfoDetailVO vo = new GuarantyInfoDetailVO();
-        extract(vo,map);
+        if(map.containsKey("GuarantyId"))
+            vo.setGuarantyId((int)map.get("GuarantyId"));
+        if(map.containsKey("State"))
+            vo.setPropertyState((int)map.get("State"));
+        if(map.containsKey("ScopeOfRight"))
+            vo.setScopeOfRight((int)map.get("ScopeOfRight"));
+        if(map.containsKey("OwnerName"))
+            vo.setOwnerName((String)map.get("OwnerName"));
+        if(map.containsKey("EvaluateValue"))
+            vo.setEvaluateValue((int)map.get("EvaluateValue"));
+        if(map.containsKey("GuarantyName"))
+            vo.setName((String)map.get("GuarantyName"));
+        if(map.containsKey("CompanyName"))
+            vo.setCompanyName((String)map.get("CompanyName"));
+        if(map.containsKey("CompanyId"))
+            vo.setCompanyId((String)map.get("CompanyId"));
+        if(map.containsKey("TelNum"))
+            vo.setCompanyTelNum((String)map.get("TelNum"));
+        if(map.containsKey("EmailAddress"))
+            vo.setCompanyEmailAddress((String)map.get("EmailAddress"));
 
         return vo;
     }
@@ -145,11 +164,16 @@ public class GuarantyInfoService extends BaseService {
         for(Map<String, Object> item : list) {
             GuarantyInfoVO vo = new GuarantyInfoVO();
 
-            vo.setGuarantyId((int)item.get("GuarantyId"));
-            vo.setEvaluateValue((int)item.get("EvaluateValue"));
-            vo.setName((String)item.get("Name"));
-            vo.setOwnerName((String)item.get("OwnerName"));
-            vo.setScopeOfRight((int)item.get("ScopeOfRight"));
+            if(item.containsKey("GuarantyId"))
+                vo.setGuarantyId((int)item.get("GuarantyId"));
+            if(item.containsKey("EvaluateValue"))
+                vo.setEvaluateValue((int)item.get("EvaluateValue"));
+            if(item.containsKey("Name"))
+                vo.setName((String)item.get("Name"));
+            if(item.containsKey("OwnerName"))
+                vo.setOwnerName((String)item.get("OwnerName"));
+            if(item.containsKey("ScopeOfRight"))
+                vo.setScopeOfRight((int)item.get("ScopeOfRight"));
 
             voList.add(vo);
         }
