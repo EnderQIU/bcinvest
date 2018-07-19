@@ -1,6 +1,7 @@
 package cn.enderqiu.bcinvestrebuild;
 
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
+import cn.ssyram.blockchain.GlobalInfo;
 import cn.ssyram.blockchain.impls.GurantyChainImpl;
 import cn.ssyram.blockchain.innerlogic.Dispatcher;
 import cn.ssyram.blockchain.interfaces.GuarantyChain;
@@ -55,7 +56,7 @@ public class BcinvestRebuildApplicationTests extends BaseService {
     }
 
     private void tryBlockChain() {
-        Dispatcher.startMining(0.001);
+        Dispatcher.startMining(GlobalInfo.MINING_WAIT_TIME);
 //        outputLine(GuarantyChain.chain.getGuarantyState(123).toString());
         GuarantyChain.chain.deleteGuaranty(456);
         Object monitor = new Object();

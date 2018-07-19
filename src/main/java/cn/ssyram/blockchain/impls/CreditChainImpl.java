@@ -45,7 +45,7 @@ public class CreditChainImpl implements CreditChain {
     public Integer getCreditOfCompany(String accountNum) {
         String sentence =
                 "SELECT value FROM " + type.getReadyMainChainViewName()
-                + " WHERE id = " + accountNum;
+                + " WHERE id = '" + accountNum + "'";
         return Integer.valueOf(
                 (String) Dispatcher.query(new QueryDTO(type, sentence)).get(0).get("value")
         );
@@ -54,8 +54,10 @@ public class CreditChainImpl implements CreditChain {
     @Override
     public List<Map<String, Object>> getCompanyCreditList(String accountNum) {
         return DatabaseOperator.SELECT(
-                "SELECT DISTINCT * FROM " + type.getReadyMainChainViewName()
-                + " WHERE id = " + accountNum
+                "SELECT DISTINCT * FROM "
+                        + type.getChainTableName() + " JOIN " + type.getDataTableName()
+                        + " ON this_hash = block_hash"
+                        + " WHERE id = '" + accountNum + "'"
         );
     }
 }

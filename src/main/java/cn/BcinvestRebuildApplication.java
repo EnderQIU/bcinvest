@@ -1,5 +1,6 @@
 package cn;
 
+import cn.ssyram.blockchain.GlobalInfo;
 import cn.ssyram.blockchain.innerlogic.Dispatcher;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +16,6 @@ public class BcinvestRebuildApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BcinvestRebuildApplication.class, args);
-        Dispatcher.startMining(0.001);
+        Dispatcher.startMining(GlobalInfo.MINING_WAIT_TIME);
     }
 }
