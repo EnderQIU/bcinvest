@@ -98,4 +98,46 @@ return null;
 
     }
 
+    List<ReviewCompanyInfoVO> getCompanyStateUnapplied2pages(int page)
+    {
+        List<ReviewCompanyInfoVO> reviewCompanyInfoVOS=getCompanyStateUnapplied();
+        int maxpages=reviewCompanyInfoVOS.size()/21+1;
+        if(page>maxpages)
+        {
+            return null;
+        }
+        else
+        {
+            if(page==maxpages)
+            {
+                return reviewCompanyInfoVOS.subList((page-1)*20,reviewCompanyInfoVOS.size());
+            }
+            else
+            {
+                return reviewCompanyInfoVOS.subList((page-1)*20,page*20);
+            }
+        }
+    }
+
+    List<ReviewChainInfoVO> getGuarantyTBCInfo2pages(String user_id_token,int page)
+    {
+        List<ReviewChainInfoVO> list=getGuarantyTBCInfo(user_id_token);
+        int maxpages=list.size()/21+1;
+        if(page>maxpages)
+        {
+            return null;
+        }
+        else
+        {
+            if(page==maxpages)
+            {
+                return list.subList((page-1)*20,list.size());
+            }
+            else
+            {
+                return list.subList((page-1)*20,page*20);
+            }
+        }
+    }
+
 }

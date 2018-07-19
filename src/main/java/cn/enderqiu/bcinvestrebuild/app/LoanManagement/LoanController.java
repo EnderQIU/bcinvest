@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("user/loanManagement")
+@RequestMapping("/api/user/loanManagement")
 @Api("贷款管理")
 @RequiredPermissions("company")
 public class LoanController extends BaseController {

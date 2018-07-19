@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Api("银行及权威机构操作人员账号相关接口")
-@RequestMapping(value = "/user/bankOrAuthority")
+@RequestMapping(value = "/api/user/bankOrAuthority")
 public class BankController  extends BaseController {
 
     @Autowired

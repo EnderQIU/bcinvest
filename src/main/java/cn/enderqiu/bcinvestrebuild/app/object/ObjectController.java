@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Api("区块链数据传输")
 @RestController
-@RequestMapping("/bc")
+@RequestMapping("/api/bc")
 public class ObjectController {
 
     @Autowired
