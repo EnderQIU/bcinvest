@@ -11,6 +11,7 @@ public class creditInfoVO {
     private String Type;
     private String Credit;
     private String Variation;
+    private String Name;
 
     public creditInfoVO(String accountId, String guarantyId, String reportId, String gurantyName, String dueTime, String type, String credit, String variation) {
         AccountId = accountId;
@@ -21,6 +22,18 @@ public class creditInfoVO {
         Type = type;
         this.Credit = credit;
         this.Variation = variation;
+    }
+
+    public creditInfoVO(String accountId, String guarantyId, String reportId, String gurantyName, String dueTime, String type, String credit, String variation, String name) {
+        AccountId = accountId;
+        GuarantyId = guarantyId;
+        ReportId = reportId;
+        GurantyName = gurantyName;
+        DueTime = dueTime;
+        Type = type;
+        Credit = credit;
+        Variation = variation;
+        Name = name;
     }
 
     public void setAccountId(String accountId)
@@ -89,5 +102,13 @@ public class creditInfoVO {
 
     public void setVariation(String variation) {
         this.Variation = variation;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
     }
 }
