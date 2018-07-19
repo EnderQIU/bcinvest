@@ -26,13 +26,23 @@ public class CreditChainUtil {
 
     /**
      * 共有函数，对指定企业修改信用信息
-     * @param accountnum
-     * @param creditNeedToBeUpdated
+     * @param accountnum  企业账号记录主键值
+     * @param creditNeedToBeUpdated 信用值变化量，可正可负
+     * @param reason 信用信息更改的原因
+     *
+     * @return String 执行结果:
+     *   "locked"  企业信用被锁定，更改无效
+     *   "submitted"  任务已提交，等待更新结果
      */
-    public static void updateCredit(String accountnum, int creditNeedToBeUpdated) {
+    public static String updateCredit(String accountnum, int creditNeedToBeUpdated, String reason) {
+        Byte locked = new Byte("1");
         CompanyRecord record = dsl.fetchOne(Company.COMPANY, Company.COMPANY.ACCOUNTNUM.eq(accountnum));
+        if (record.getLock().equals(locked)){
+            return "locked";
+        }
         Long previousCredit = record.getCredit();
-        CreditChainUtil.addTask(accountnum, previousCredit, creditNeedToBeUpdated);
+        CreditChainUtil.addTask(accountnum, previousCredit, creditNeedToBeUpdated, reason);
+        return "submitted";
     }
 
     /**
@@ -40,14 +50,19 @@ public class CreditChainUtil {
      * @param accountnum
      * @param previousCredit
      * @param creditNeedToBeUpdated
+     * @param reason
      */
-    private static void addTask(String accountnum, Long previousCredit, int creditNeedToBeUpdated) {
+    private static void addTask(String accountnum, Long previousCredit, int creditNeedToBeUpdated, String reason) {
         Byte locked = new Byte("1");
+        long timeStamp = System.currentTimeMillis();
+        String timeStampStr = String.valueOf(timeStamp);
         dsl.insertInto(Creditupdatetask.CREDITUPDATETASK)
                 .set(Creditupdatetask.CREDITUPDATETASK.ACCOUNTNUM, accountnum)
                 .set(Creditupdatetask.CREDITUPDATETASK.PREVIOUSCREDIT, previousCredit.intValue())
                 .set(Creditupdatetask.CREDITUPDATETASK.DELTA, creditNeedToBeUpdated)
                 .set(Creditupdatetask.CREDITUPDATETASK.STATE, "waiting")
+                .set(Creditupdatetask.CREDITUPDATETASK.TIMESTAMP, timeStampStr)
+                .set(Creditupdatetask.CREDITUPDATETASK.REASON, reason)
                 .execute();
         dsl.update(Company.COMPANY)
                 .set(Company.COMPANY.LOCK, locked);
@@ -79,7 +94,7 @@ public class CreditChainUtil {
                 CreditupdatetaskRecord record = dsl.fetchOne(T, T.ID.eq(task));
                 record.setState("pending");
                 record.store();
-                CreditChain.chain.updateGuarantyState(record.getAccountnum(), record.getPreviouscredit(), record.getDelta());
+                CreditChain.chain.updateGuarantyState(record.getAccountnum(), record.getPreviouscredit(), record.getDelta(), record.getTimestamp(), record.getReason());
             }
 
         }

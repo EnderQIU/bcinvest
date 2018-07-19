@@ -15,6 +15,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -38,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Companyaddress extends TableImpl<CompanyaddressRecord> {
 
-    private static final long serialVersionUID = -979231791;
+    private static final long serialVersionUID = 94450226;
 
     /**
-     * The reference instance of <code>bcinvest.companyaddress</code>
+     * The reference instance of <code>bcinvest.CompanyAddress</code>
      */
     public static final Companyaddress COMPANYADDRESS = new Companyaddress();
 
@@ -54,31 +55,31 @@ public class Companyaddress extends TableImpl<CompanyaddressRecord> {
     }
 
     /**
-     * The column <code>bcinvest.companyaddress.AccountNum</code>.
+     * The column <code>bcinvest.CompanyAddress.AccountNum</code>.
      */
     public final TableField<CompanyaddressRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.companyaddress.Addr</code>.
+     * The column <code>bcinvest.CompanyAddress.Addr</code>.
      */
     public final TableField<CompanyaddressRecord, String> ADDR = createField("Addr", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * Create a <code>bcinvest.companyaddress</code> table reference
+     * Create a <code>bcinvest.CompanyAddress</code> table reference
      */
     public Companyaddress() {
-        this(DSL.name("companyaddress"), null);
+        this(DSL.name("CompanyAddress"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.companyaddress</code> table reference
+     * Create an aliased <code>bcinvest.CompanyAddress</code> table reference
      */
     public Companyaddress(String alias) {
         this(DSL.name(alias), COMPANYADDRESS);
     }
 
     /**
-     * Create an aliased <code>bcinvest.companyaddress</code> table reference
+     * Create an aliased <code>bcinvest.CompanyAddress</code> table reference
      */
     public Companyaddress(Name alias) {
         this(alias, COMPANYADDRESS);
@@ -122,6 +123,14 @@ public class Companyaddress extends TableImpl<CompanyaddressRecord> {
     @Override
     public List<UniqueKey<CompanyaddressRecord>> getKeys() {
         return Arrays.<UniqueKey<CompanyaddressRecord>>asList(Keys.KEY_COMPANYADDRESS_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<CompanyaddressRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<CompanyaddressRecord, ?>>asList(Keys.COMPANYADDRESS_IBFK_1);
     }
 
     /**

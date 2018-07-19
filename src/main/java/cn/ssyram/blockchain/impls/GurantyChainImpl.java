@@ -39,7 +39,7 @@ public class GurantyChainImpl implements GuarantyChain {
     public Integer getGuarantyState(Integer guarantyId) {
         ChainType type = ChainType.guaranty;
         String sentence =
-                "SELECT id, value" +
+                "SELECT id, value " +
                         "FROM " + type.getReadyMainChainViewName() +
                         " WHERE id = " + guarantyId.toString();
 

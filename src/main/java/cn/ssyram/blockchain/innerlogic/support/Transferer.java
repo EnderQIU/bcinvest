@@ -14,6 +14,12 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.Request;
+import org.asynchttpclient.Response;
+import org.asynchttpclient.request.body.multipart.ByteArrayPart;
+import org.asynchttpclient.request.body.multipart.FilePart;
+import org.asynchttpclient.request.body.multipart.Part;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.Result;
@@ -25,6 +31,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.Future;
+
+import static org.asynchttpclient.Dsl.asyncHttpClient;
+import static org.asynchttpclient.Dsl.post;
 
 @Component
 public class Transferer {
@@ -62,35 +72,19 @@ public class Transferer {
 
         byte[] data = byt.toByteArray();
 
-        CloseableHttpClient httpClient = null;
-        CloseableHttpResponse response = null;
+        AsyncHttpClient httpClient = null;
 
         for (String address: targets.getValues(0, String.class)){
 
             try{
-                httpClient = HttpClients.createDefault();
-                // 把一个普通参数和文件上传给下面这个地址 是一个servlet
-                HttpPost httpPost = new HttpPost(address);
-                StringBody _type = new StringBody(type, ContentType.create(
-                        "text/plain", Consts.UTF_8));
-                HttpEntity reqEntity = MultipartEntityBuilder.create()
-                        .addPart("type", _type)
-                        .addBinaryBody("data", data)
-                        .build();
-                httpPost.setEntity(reqEntity);
-                response = httpClient.execute(httpPost);
+                httpClient = asyncHttpClient();
+                ByteArrayPart byteArrayPart = new ByteArrayPart("data", data);
+                Request request = post(address).addBodyPart(byteArrayPart).addFormParam("type", type).build();
+                Future<Response> whenResponse = httpClient.executeRequest(request);
             }
             catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                try {
-                    if (response != null) {
-                        response.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
                 try {
                     if (httpClient != null) {
                         httpClient.close();

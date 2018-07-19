@@ -40,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Fundamentalcertificate extends TableImpl<FundamentalcertificateRecord> {
 
-    private static final long serialVersionUID = -1611099614;
+    private static final long serialVersionUID = -1363003870;
 
     /**
-     * The reference instance of <code>bcinvest.fundamentalcertificate</code>
+     * The reference instance of <code>bcinvest.FundamentalCertificate</code>
      */
     public static final Fundamentalcertificate FUNDAMENTALCERTIFICATE = new Fundamentalcertificate();
 
@@ -56,61 +56,61 @@ public class Fundamentalcertificate extends TableImpl<FundamentalcertificateReco
     }
 
     /**
-     * The column <code>bcinvest.fundamentalcertificate.BusinessLicenceNum</code>.
+     * The column <code>bcinvest.FundamentalCertificate.BusinessLicenceNum</code>.
      */
     public final TableField<FundamentalcertificateRecord, String> BUSINESSLICENCENUM = createField("BusinessLicenceNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.fundamentalcertificate.StartDate</code>.
+     * The column <code>bcinvest.FundamentalCertificate.StartDate</code>.
      */
     public final TableField<FundamentalcertificateRecord, LocalDateTime> STARTDATE = createField("StartDate", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
 
     /**
-     * The column <code>bcinvest.fundamentalcertificate.EndDate</code>.
+     * The column <code>bcinvest.FundamentalCertificate.EndDate</code>.
      */
     public final TableField<FundamentalcertificateRecord, LocalDateTime> ENDDATE = createField("EndDate", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
 
     /**
-     * The column <code>bcinvest.fundamentalcertificate.BusinessRegistrationNo</code>.
+     * The column <code>bcinvest.FundamentalCertificate.BusinessRegistrationNo</code>.
      */
     public final TableField<FundamentalcertificateRecord, String> BUSINESSREGISTRATIONNO = createField("BusinessRegistrationNo", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.fundamentalcertificate.RegisteredCapital</code>.
+     * The column <code>bcinvest.FundamentalCertificate.RegisteredCapital</code>.
      */
     public final TableField<FundamentalcertificateRecord, Long> REGISTEREDCAPITAL = createField("RegisteredCapital", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>bcinvest.fundamentalcertificate.MainBusinessScope</code>.
+     * The column <code>bcinvest.FundamentalCertificate.MainBusinessScope</code>.
      */
     public final TableField<FundamentalcertificateRecord, String> MAINBUSINESSSCOPE = createField("MainBusinessScope", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.fundamentalcertificate.OperationType</code>.
+     * The column <code>bcinvest.FundamentalCertificate.OperationType</code>.
      */
     public final TableField<FundamentalcertificateRecord, Integer> OPERATIONTYPE = createField("OperationType", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.fundamentalcertificate.AccountNum</code>.
+     * The column <code>bcinvest.FundamentalCertificate.AccountNum</code>.
      */
     public final TableField<FundamentalcertificateRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
-     * Create a <code>bcinvest.fundamentalcertificate</code> table reference
+     * Create a <code>bcinvest.FundamentalCertificate</code> table reference
      */
     public Fundamentalcertificate() {
-        this(DSL.name("fundamentalcertificate"), null);
+        this(DSL.name("FundamentalCertificate"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.fundamentalcertificate</code> table reference
+     * Create an aliased <code>bcinvest.FundamentalCertificate</code> table reference
      */
     public Fundamentalcertificate(String alias) {
         this(DSL.name(alias), FUNDAMENTALCERTIFICATE);
     }
 
     /**
-     * Create an aliased <code>bcinvest.fundamentalcertificate</code> table reference
+     * Create an aliased <code>bcinvest.FundamentalCertificate</code> table reference
      */
     public Fundamentalcertificate(Name alias) {
         this(alias, FUNDAMENTALCERTIFICATE);

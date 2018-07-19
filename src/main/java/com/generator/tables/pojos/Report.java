@@ -23,40 +23,44 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Report implements Serializable {
 
-    private static final long serialVersionUID = 1241850845;
+    private static final long serialVersionUID = 253970053;
 
-    private String        authname;
+    private String        accountnum;
     private Integer       reportid;
     private LocalDateTime date;
     private String        duration;
+    private String        type;
 
     public Report() {}
 
     public Report(Report value) {
-        this.authname = value.authname;
+        this.accountnum = value.accountnum;
         this.reportid = value.reportid;
         this.date = value.date;
         this.duration = value.duration;
+        this.type = value.type;
     }
 
     public Report(
-        String        authname,
+        String        accountnum,
         Integer       reportid,
         LocalDateTime date,
-        String        duration
+        String        duration,
+        String        type
     ) {
-        this.authname = authname;
+        this.accountnum = accountnum;
         this.reportid = reportid;
         this.date = date;
         this.duration = duration;
+        this.type = type;
     }
 
-    public String getAuthname() {
-        return this.authname;
+    public String getAccountnum() {
+        return this.accountnum;
     }
 
-    public void setAuthname(String authname) {
-        this.authname = authname;
+    public void setAccountnum(String accountnum) {
+        this.accountnum = accountnum;
     }
 
     public Integer getReportid() {
@@ -83,14 +87,23 @@ public class Report implements Serializable {
         this.duration = duration;
     }
 
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Report (");
 
-        sb.append(authname);
+        sb.append(accountnum);
         sb.append(", ").append(reportid);
         sb.append(", ").append(date);
         sb.append(", ").append(duration);
+        sb.append(", ").append(type);
 
         sb.append(")");
         return sb.toString();

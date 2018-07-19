@@ -30,115 +30,115 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FundamentalcertificateRecord extends UpdatableRecordImpl<FundamentalcertificateRecord> implements Record8<String, LocalDateTime, LocalDateTime, String, Long, String, Integer, String> {
 
-    private static final long serialVersionUID = -933722164;
+    private static final long serialVersionUID = 279293900;
 
     /**
-     * Setter for <code>bcinvest.fundamentalcertificate.BusinessLicenceNum</code>.
+     * Setter for <code>bcinvest.FundamentalCertificate.BusinessLicenceNum</code>.
      */
     public void setBusinesslicencenum(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.fundamentalcertificate.BusinessLicenceNum</code>.
+     * Getter for <code>bcinvest.FundamentalCertificate.BusinessLicenceNum</code>.
      */
     public String getBusinesslicencenum() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.fundamentalcertificate.StartDate</code>.
+     * Setter for <code>bcinvest.FundamentalCertificate.StartDate</code>.
      */
     public void setStartdate(LocalDateTime value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.fundamentalcertificate.StartDate</code>.
+     * Getter for <code>bcinvest.FundamentalCertificate.StartDate</code>.
      */
     public LocalDateTime getStartdate() {
         return (LocalDateTime) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.fundamentalcertificate.EndDate</code>.
+     * Setter for <code>bcinvest.FundamentalCertificate.EndDate</code>.
      */
     public void setEnddate(LocalDateTime value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.fundamentalcertificate.EndDate</code>.
+     * Getter for <code>bcinvest.FundamentalCertificate.EndDate</code>.
      */
     public LocalDateTime getEnddate() {
         return (LocalDateTime) get(2);
     }
 
     /**
-     * Setter for <code>bcinvest.fundamentalcertificate.BusinessRegistrationNo</code>.
+     * Setter for <code>bcinvest.FundamentalCertificate.BusinessRegistrationNo</code>.
      */
     public void setBusinessregistrationno(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>bcinvest.fundamentalcertificate.BusinessRegistrationNo</code>.
+     * Getter for <code>bcinvest.FundamentalCertificate.BusinessRegistrationNo</code>.
      */
     public String getBusinessregistrationno() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>bcinvest.fundamentalcertificate.RegisteredCapital</code>.
+     * Setter for <code>bcinvest.FundamentalCertificate.RegisteredCapital</code>.
      */
     public void setRegisteredcapital(Long value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>bcinvest.fundamentalcertificate.RegisteredCapital</code>.
+     * Getter for <code>bcinvest.FundamentalCertificate.RegisteredCapital</code>.
      */
     public Long getRegisteredcapital() {
         return (Long) get(4);
     }
 
     /**
-     * Setter for <code>bcinvest.fundamentalcertificate.MainBusinessScope</code>.
+     * Setter for <code>bcinvest.FundamentalCertificate.MainBusinessScope</code>.
      */
     public void setMainbusinessscope(String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>bcinvest.fundamentalcertificate.MainBusinessScope</code>.
+     * Getter for <code>bcinvest.FundamentalCertificate.MainBusinessScope</code>.
      */
     public String getMainbusinessscope() {
         return (String) get(5);
     }
 
     /**
-     * Setter for <code>bcinvest.fundamentalcertificate.OperationType</code>.
+     * Setter for <code>bcinvest.FundamentalCertificate.OperationType</code>.
      */
     public void setOperationtype(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>bcinvest.fundamentalcertificate.OperationType</code>.
+     * Getter for <code>bcinvest.FundamentalCertificate.OperationType</code>.
      */
     public Integer getOperationtype() {
         return (Integer) get(6);
     }
 
     /**
-     * Setter for <code>bcinvest.fundamentalcertificate.AccountNum</code>.
+     * Setter for <code>bcinvest.FundamentalCertificate.AccountNum</code>.
      */
     public void setAccountnum(String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>bcinvest.fundamentalcertificate.AccountNum</code>.
+     * Getter for <code>bcinvest.FundamentalCertificate.AccountNum</code>.
      */
     public String getAccountnum() {
         return (String) get(7);

@@ -15,6 +15,8 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -38,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guaranty extends TableImpl<GuarantyRecord> {
 
-    private static final long serialVersionUID = 1917199917;
+    private static final long serialVersionUID = -1497502227;
 
     /**
-     * The reference instance of <code>bcinvest.guaranty</code>
+     * The reference instance of <code>bcinvest.Guaranty</code>
      */
     public static final Guaranty GUARANTY = new Guaranty();
 
@@ -54,71 +56,71 @@ public class Guaranty extends TableImpl<GuarantyRecord> {
     }
 
     /**
-     * The column <code>bcinvest.guaranty.GuarantyId</code>.
+     * The column <code>bcinvest.Guaranty.GuarantyId</code>.
      */
-    public final TableField<GuarantyRecord, Integer> GUARANTYID = createField("GuarantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<GuarantyRecord, Integer> GUARANTYID = createField("GuarantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>bcinvest.guaranty.AccountNum</code>.
+     * The column <code>bcinvest.Guaranty.AccountNum</code>.
      */
     public final TableField<GuarantyRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.guaranty.State</code>.
+     * The column <code>bcinvest.Guaranty.State</code>.
      */
     public final TableField<GuarantyRecord, Integer> STATE = createField("State", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.guaranty.ScopeOfRight</code>.
+     * The column <code>bcinvest.Guaranty.ScopeOfRight</code>.
      */
     public final TableField<GuarantyRecord, Integer> SCOPEOFRIGHT = createField("ScopeOfRight", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.guaranty.OwnerName</code>.
+     * The column <code>bcinvest.Guaranty.OwnerName</code>.
      */
     public final TableField<GuarantyRecord, String> OWNERNAME = createField("OwnerName", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.guaranty.ReportId</code>.
+     * The column <code>bcinvest.Guaranty.ReportId</code>.
      */
     public final TableField<GuarantyRecord, Integer> REPORTID = createField("ReportId", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.guaranty.EvaluateValue</code>.
+     * The column <code>bcinvest.Guaranty.Type</code>.
+     */
+    public final TableField<GuarantyRecord, Integer> TYPE = createField("Type", org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>bcinvest.Guaranty.EvaluateValue</code>.
      */
     public final TableField<GuarantyRecord, Integer> EVALUATEVALUE = createField("EvaluateValue", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.guaranty.Name</code>.
+     * The column <code>bcinvest.Guaranty.Name</code>.
      */
     public final TableField<GuarantyRecord, String> NAME = createField("Name", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.guaranty.Type</code>.
-     */
-    public final TableField<GuarantyRecord, String> TYPE = createField("Type", org.jooq.impl.SQLDataType.VARCHAR(32).defaultValue(org.jooq.impl.DSL.inline("House", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
-
-    /**
-     * The column <code>bcinvest.guaranty.Lock</code>.
+     * The column <code>bcinvest.Guaranty.Lock</code>.
      */
     public final TableField<GuarantyRecord, Byte> LOCK = createField("Lock", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
-     * Create a <code>bcinvest.guaranty</code> table reference
+     * Create a <code>bcinvest.Guaranty</code> table reference
      */
     public Guaranty() {
-        this(DSL.name("guaranty"), null);
+        this(DSL.name("Guaranty"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.guaranty</code> table reference
+     * Create an aliased <code>bcinvest.Guaranty</code> table reference
      */
     public Guaranty(String alias) {
         this(DSL.name(alias), GUARANTY);
     }
 
     /**
-     * Create an aliased <code>bcinvest.guaranty</code> table reference
+     * Create an aliased <code>bcinvest.Guaranty</code> table reference
      */
     public Guaranty(Name alias) {
         this(alias, GUARANTY);
@@ -152,6 +154,14 @@ public class Guaranty extends TableImpl<GuarantyRecord> {
      * {@inheritDoc}
      */
     @Override
+    public Identity<GuarantyRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_GUARANTY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public UniqueKey<GuarantyRecord> getPrimaryKey() {
         return Keys.KEY_GUARANTY_PRIMARY;
     }
@@ -162,6 +172,14 @@ public class Guaranty extends TableImpl<GuarantyRecord> {
     @Override
     public List<UniqueKey<GuarantyRecord>> getKeys() {
         return Arrays.<UniqueKey<GuarantyRecord>>asList(Keys.KEY_GUARANTY_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<GuarantyRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<GuarantyRecord, ?>>asList(Keys.GUARANTY_FK_REPORT);
     }
 
     /**

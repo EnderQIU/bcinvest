@@ -22,7 +22,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Guaranty implements Serializable {
 
-    private static final long serialVersionUID = 1642343896;
+    private static final long serialVersionUID = -941590678;
 
     private Integer guarantyid;
     private String  accountnum;
@@ -30,9 +30,9 @@ public class Guaranty implements Serializable {
     private Integer scopeofright;
     private String  ownername;
     private Integer reportid;
+    private Integer type;
     private Integer evaluatevalue;
     private String  name;
-    private String  type;
     private Byte    lock;
 
     public Guaranty() {}
@@ -44,9 +44,9 @@ public class Guaranty implements Serializable {
         this.scopeofright = value.scopeofright;
         this.ownername = value.ownername;
         this.reportid = value.reportid;
+        this.type = value.type;
         this.evaluatevalue = value.evaluatevalue;
         this.name = value.name;
-        this.type = value.type;
         this.lock = value.lock;
     }
 
@@ -57,9 +57,9 @@ public class Guaranty implements Serializable {
         Integer scopeofright,
         String  ownername,
         Integer reportid,
+        Integer type,
         Integer evaluatevalue,
         String  name,
-        String  type,
         Byte    lock
     ) {
         this.guarantyid = guarantyid;
@@ -68,9 +68,9 @@ public class Guaranty implements Serializable {
         this.scopeofright = scopeofright;
         this.ownername = ownername;
         this.reportid = reportid;
+        this.type = type;
         this.evaluatevalue = evaluatevalue;
         this.name = name;
-        this.type = type;
         this.lock = lock;
     }
 
@@ -122,6 +122,14 @@ public class Guaranty implements Serializable {
         this.reportid = reportid;
     }
 
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Integer getEvaluatevalue() {
         return this.evaluatevalue;
     }
@@ -136,14 +144,6 @@ public class Guaranty implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Byte getLock() {
@@ -164,9 +164,9 @@ public class Guaranty implements Serializable {
         sb.append(", ").append(scopeofright);
         sb.append(", ").append(ownername);
         sb.append(", ").append(reportid);
+        sb.append(", ").append(type);
         sb.append(", ").append(evaluatevalue);
         sb.append(", ").append(name);
-        sb.append(", ").append(type);
         sb.append(", ").append(lock);
 
         sb.append(")");

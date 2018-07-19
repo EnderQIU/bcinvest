@@ -1,24 +1,29 @@
 package cn.enderqiu.bcinvestrebuild;
 
-import cn.enderqiu.bcinvestrebuild.samples.SampleVO;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
-import cn.enderqiu.bcinvestrebuild.util.MapExtracter;
-//import com.sun.javafx.collections.MappingChange;
+import cn.ssyram.blockchain.impls.GurantyChainImpl;
+import cn.ssyram.blockchain.innerlogic.Dispatcher;
+import cn.ssyram.blockchain.interfaces.GuarantyChain;
+import com.generator.tables.Guaranty;
+import org.jooq.util.derby.sys.Sys;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+//import com.sun.javafx.collections.MappingChange;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BcinvestRebuildApplicationTests extends BaseService {
+
+    private void outputLine(String line) {
+        System.out.println(line);
+    }
 
     @Test
     public void contextLoads() {
@@ -42,10 +47,27 @@ public class BcinvestRebuildApplicationTests extends BaseService {
 
 //        testEnum();
 
-        testEmptyDatabase();
+//        testEmptyDatabase();
 
 //        tryNewDataBase();
 
+        tryBlockChain();
+    }
+
+    private void tryBlockChain() {
+        Dispatcher.startMining(0.001);
+//        outputLine(GuarantyChain.chain.getGuarantyState(123).toString());
+        GuarantyChain.chain.deleteGuaranty(456);
+        Object monitor = new Object();
+        synchronized (monitor) {
+            try {
+                monitor.wait(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        outputLine(GuarantyChain.chain.getGuarantyState(456).toString());
+//        GuarantyChain.chain.updateGuarantyState(123, 1);
     }
 
     private void testEmptyDatabase() {

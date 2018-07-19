@@ -1,15 +1,12 @@
 package cn.ssyram.blockchain.innerlogic.operator;
 
 import cn.ssyram.blockchain.innerlogic.entity.Block;
-import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.entity.BufferBlock;
-import cn.ssyram.blockchain.innerlogic.support.GlobalInfo;
 import cn.ssyram.blockchain.innerlogic.test.Logger;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 public class Miner {
     /**

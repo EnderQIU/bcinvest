@@ -38,10 +38,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Authorization extends TableImpl<AuthorizationRecord> {
 
-    private static final long serialVersionUID = 287931801;
+    private static final long serialVersionUID = -193346841;
 
     /**
-     * The reference instance of <code>bcinvest.authorization</code>
+     * The reference instance of <code>bcinvest.Authorization</code>
      */
     public static final Authorization AUTHORIZATION = new Authorization();
 
@@ -54,46 +54,46 @@ public class Authorization extends TableImpl<AuthorizationRecord> {
     }
 
     /**
-     * The column <code>bcinvest.authorization.Name</code>.
+     * The column <code>bcinvest.Authorization.Name</code>.
      */
     public final TableField<AuthorizationRecord, String> NAME = createField("Name", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.authorization.Type</code>.
+     * The column <code>bcinvest.Authorization.Type</code>.
      */
     public final TableField<AuthorizationRecord, Integer> TYPE = createField("Type", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.authorization.AccountNum</code>.
+     * The column <code>bcinvest.Authorization.AccountNum</code>.
      */
     public final TableField<AuthorizationRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.authorization.Password</code>.
-     */
-    public final TableField<AuthorizationRecord, String> PASSWORD = createField("Password", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
-
-    /**
-     * The column <code>bcinvest.authorization.Token</code>.
+     * The column <code>bcinvest.Authorization.Token</code>.
      */
     public final TableField<AuthorizationRecord, String> TOKEN = createField("Token", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * Create a <code>bcinvest.authorization</code> table reference
+     * The column <code>bcinvest.Authorization.Password</code>.
+     */
+    public final TableField<AuthorizationRecord, String> PASSWORD = createField("Password", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+
+    /**
+     * Create a <code>bcinvest.Authorization</code> table reference
      */
     public Authorization() {
-        this(DSL.name("authorization"), null);
+        this(DSL.name("Authorization"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.authorization</code> table reference
+     * Create an aliased <code>bcinvest.Authorization</code> table reference
      */
     public Authorization(String alias) {
         this(DSL.name(alias), AUTHORIZATION);
     }
 
     /**
-     * Create an aliased <code>bcinvest.authorization</code> table reference
+     * Create an aliased <code>bcinvest.Authorization</code> table reference
      */
     public Authorization(Name alias) {
         this(alias, AUTHORIZATION);

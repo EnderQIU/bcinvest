@@ -22,13 +22,13 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Authorization implements Serializable {
 
-    private static final long serialVersionUID = -1855588286;
+    private static final long serialVersionUID = 474796284;
 
     private String  name;
     private Integer type;
     private String  accountnum;
-    private String  password;
     private String  token;
+    private String  password;
 
     public Authorization() {}
 
@@ -36,22 +36,22 @@ public class Authorization implements Serializable {
         this.name = value.name;
         this.type = value.type;
         this.accountnum = value.accountnum;
-        this.password = value.password;
         this.token = value.token;
+        this.password = value.password;
     }
 
     public Authorization(
         String  name,
         Integer type,
         String  accountnum,
-        String  password,
-        String  token
+        String  token,
+        String  password
     ) {
         this.name = name;
         this.type = type;
         this.accountnum = accountnum;
-        this.password = password;
         this.token = token;
+        this.password = password;
     }
 
     public String getName() {
@@ -78,20 +78,20 @@ public class Authorization implements Serializable {
         this.accountnum = accountnum;
     }
 
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getToken() {
         return this.token;
     }
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -101,8 +101,8 @@ public class Authorization implements Serializable {
         sb.append(name);
         sb.append(", ").append(type);
         sb.append(", ").append(accountnum);
-        sb.append(", ").append(password);
         sb.append(", ").append(token);
+        sb.append(", ").append(password);
 
         sb.append(")");
         return sb.toString();

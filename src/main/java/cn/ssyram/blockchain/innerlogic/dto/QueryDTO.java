@@ -33,6 +33,7 @@ public class QueryDTO implements Serializable {
     }
 
     public QueryDTO(ChainType type, String querySentence) {
+        this.type = type;
         this.querySentence = querySentence;
     }
 

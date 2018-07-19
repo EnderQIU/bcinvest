@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class House extends TableImpl<HouseRecord> {
 
-    private static final long serialVersionUID = -2022661595;
+    private static final long serialVersionUID = -2011346299;
 
     /**
-     * The reference instance of <code>bcinvest.house</code>
+     * The reference instance of <code>bcinvest.House</code>
      */
     public static final House HOUSE = new House();
 
@@ -55,41 +55,41 @@ public class House extends TableImpl<HouseRecord> {
     }
 
     /**
-     * The column <code>bcinvest.house.Addr</code>.
+     * The column <code>bcinvest.House.Addr</code>.
      */
     public final TableField<HouseRecord, String> ADDR = createField("Addr", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.house.Zip</code>.
+     * The column <code>bcinvest.House.Zip</code>.
      */
     public final TableField<HouseRecord, String> ZIP = createField("Zip", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.house.HousingCertificatedId</code>.
+     * The column <code>bcinvest.House.HousingCertificatedId</code>.
      */
     public final TableField<HouseRecord, String> HOUSINGCERTIFICATEDID = createField("HousingCertificatedId", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.house.GuarantyId</code>.
+     * The column <code>bcinvest.House.GuarantyId</code>.
      */
     public final TableField<HouseRecord, Integer> GUARANTYID = createField("GuarantyId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>bcinvest.house</code> table reference
+     * Create a <code>bcinvest.House</code> table reference
      */
     public House() {
-        this(DSL.name("house"), null);
+        this(DSL.name("House"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.house</code> table reference
+     * Create an aliased <code>bcinvest.House</code> table reference
      */
     public House(String alias) {
         this(DSL.name(alias), HOUSE);
     }
 
     /**
-     * Create an aliased <code>bcinvest.house</code> table reference
+     * Create an aliased <code>bcinvest.House</code> table reference
      */
     public House(Name alias) {
         this(alias, HOUSE);

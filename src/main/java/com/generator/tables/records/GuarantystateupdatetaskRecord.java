@@ -28,87 +28,87 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GuarantystateupdatetaskRecord extends UpdatableRecordImpl<GuarantystateupdatetaskRecord> implements Record6<Integer, Integer, Integer, Integer, String, Integer> {
 
-    private static final long serialVersionUID = 622458336;
+    private static final long serialVersionUID = 920368608;
 
     /**
-     * Setter for <code>bcinvest.guarantystateupdatetask.taskId</code>.
+     * Setter for <code>bcinvest.GuarantyStateUpdateTask.taskId</code>.
      */
     public void setTaskid(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.guarantystateupdatetask.taskId</code>.
+     * Getter for <code>bcinvest.GuarantyStateUpdateTask.taskId</code>.
      */
     public Integer getTaskid() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.guarantystateupdatetask.guarantyId</code>.
+     * Setter for <code>bcinvest.GuarantyStateUpdateTask.guarantyId</code>.
      */
     public void setGuarantyid(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.guarantystateupdatetask.guarantyId</code>.
+     * Getter for <code>bcinvest.GuarantyStateUpdateTask.guarantyId</code>.
      */
     public Integer getGuarantyid() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.guarantystateupdatetask.previousState</code>.
+     * Setter for <code>bcinvest.GuarantyStateUpdateTask.previousState</code>.
      */
     public void setPreviousstate(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.guarantystateupdatetask.previousState</code>.
+     * Getter for <code>bcinvest.GuarantyStateUpdateTask.previousState</code>.
      */
     public Integer getPreviousstate() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>bcinvest.guarantystateupdatetask.stateWillUpdateTo</code>.
+     * Setter for <code>bcinvest.GuarantyStateUpdateTask.stateWillUpdateTo</code>.
      */
     public void setStatewillupdateto(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>bcinvest.guarantystateupdatetask.stateWillUpdateTo</code>.
+     * Getter for <code>bcinvest.GuarantyStateUpdateTask.stateWillUpdateTo</code>.
      */
     public Integer getStatewillupdateto() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>bcinvest.guarantystateupdatetask.taskState</code>.
+     * Setter for <code>bcinvest.GuarantyStateUpdateTask.taskState</code>.
      */
     public void setTaskstate(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>bcinvest.guarantystateupdatetask.taskState</code>.
+     * Getter for <code>bcinvest.GuarantyStateUpdateTask.taskState</code>.
      */
     public String getTaskstate() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>bcinvest.guarantystateupdatetask.count</code>.
+     * Setter for <code>bcinvest.GuarantyStateUpdateTask.count</code>.
      */
     public void setCount(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>bcinvest.guarantystateupdatetask.count</code>.
+     * Getter for <code>bcinvest.GuarantyStateUpdateTask.count</code>.
      */
     public Integer getCount() {
         return (Integer) get(5);

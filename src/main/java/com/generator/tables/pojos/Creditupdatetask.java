@@ -22,13 +22,15 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Creditupdatetask implements Serializable {
 
-    private static final long serialVersionUID = 884737455;
+    private static final long serialVersionUID = 1266305575;
 
     private Integer id;
     private String  accountnum;
     private Integer previouscredit;
     private Integer delta;
     private String  state;
+    private String  timestamp;
+    private String  reason;
 
     public Creditupdatetask() {}
 
@@ -38,6 +40,8 @@ public class Creditupdatetask implements Serializable {
         this.previouscredit = value.previouscredit;
         this.delta = value.delta;
         this.state = value.state;
+        this.timestamp = value.timestamp;
+        this.reason = value.reason;
     }
 
     public Creditupdatetask(
@@ -45,13 +49,17 @@ public class Creditupdatetask implements Serializable {
         String  accountnum,
         Integer previouscredit,
         Integer delta,
-        String  state
+        String  state,
+        String  timestamp,
+        String  reason
     ) {
         this.id = id;
         this.accountnum = accountnum;
         this.previouscredit = previouscredit;
         this.delta = delta;
         this.state = state;
+        this.timestamp = timestamp;
+        this.reason = reason;
     }
 
     public Integer getId() {
@@ -94,6 +102,22 @@ public class Creditupdatetask implements Serializable {
         this.state = state;
     }
 
+    public String getTimestamp() {
+        return this.timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getReason() {
+        return this.reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Creditupdatetask (");
@@ -103,6 +127,8 @@ public class Creditupdatetask implements Serializable {
         sb.append(", ").append(previouscredit);
         sb.append(", ").append(delta);
         sb.append(", ").append(state);
+        sb.append(", ").append(timestamp);
+        sb.append(", ").append(reason);
 
         sb.append(")");
         return sb.toString();

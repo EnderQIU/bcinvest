@@ -90,35 +90,42 @@ public class GuarantyChainUtil {
      * 若任务是需要等待的，则加锁，并调用`添加任务到队列中`的私有函数
      * @param guarantyId
      * @param stateWillUpdateTo
+     * @return String :
+     *  "no record"  Guaranty 不存在，更改无效
+     *  "locked"  Guaranty 被锁定，不允许更改
+     *  "invalid target"  目标状态非法
+     *  "ok"  状态立即更新完成
+     *  "submitted"  任务已成功提交，等待更新
      */
-    public static void updateState(Integer guarantyId, Integer stateWillUpdateTo){
+    public static String updateState(Integer guarantyId, Integer stateWillUpdateTo){
         Guaranty T = Guaranty.GUARANTY;
         GuarantyRecord record = dsl.fetchOne(T, T.GUARANTYID.eq(guarantyId));
         Byte locked = 1;
         Byte unlocked = 0;
         if (record == null){
             // 记录不存在，不允许更改
-            return;
+            return "no record";
         }
         if (record.getLock().equals(locked)){
             // 锁有效，不允许更改
-            return;
+            return "locked";
         }
         Integer presentState = record.getState();
         if (!GuarantyChainUtil.checkUpdateIllegal(record.getState(), stateWillUpdateTo)){
             // 无效的状态更改
-            return;
+            return "invalid target";
         }
         if (GuarantyChainUtil.checkUpdateimmediately(record.getState(), stateWillUpdateTo)){
             // 有效的立即的状态更改，立即更改状态
             record.setState(stateWillUpdateTo);
             record.store();
-            return;
+            return "ok";
         }
         // 接下来处理有效的非立即的状态转换
         addTask(guarantyId, record.getState(), stateWillUpdateTo);
         record.setLock(locked);  // 加锁
         record.store();
+        return "submitted";
     }
 
     /**
@@ -134,13 +141,6 @@ public class GuarantyChainUtil {
                 .set(T.PREVIOUSSTATE, previousState)
                 .set(T.STATEWILLUPDATETO, stateWillUpdateTo)
                 .set(T.TASKSTATE, "pending").execute();
-    }
-
-    /**
-     * 检查是否超时未还款，若超时则更改状态为 Overdue(6)
-     */
-    private void checkOverdue(){
-
     }
 
     /**
