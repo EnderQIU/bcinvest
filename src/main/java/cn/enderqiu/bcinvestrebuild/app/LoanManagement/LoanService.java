@@ -7,7 +7,6 @@ package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
-import com.bcgenerator.tables.GuarantyChain;
 import com.generator.tables.Guaranty;
 import org.jooq.DSLContext;
 import org.jooq.Record;

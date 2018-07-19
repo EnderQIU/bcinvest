@@ -25,6 +25,11 @@ public interface CreditChain extends BlockChain {
 
     /**
      * 获取指定企业的信用值变化列表
+     * @return
+     *     "id": 企业id
+     *     "value": 当时信用值
+     *     "variation": 信用值变化
+     *     "remarks": ”时间-事件“ 的组合字符串
      */
     List<Map<String, Object>> getCompanyCreditList(String accountNum);
 }
