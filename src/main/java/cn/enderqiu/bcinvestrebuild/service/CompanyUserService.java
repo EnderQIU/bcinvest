@@ -86,7 +86,7 @@ public class CompanyUserService extends BaseService {
     public CompanyUserVO getUserData(String token) {
         CompanyUserDTO dto = new CompanyUserDTO();
         try {
-            extract(dto, mapper.SELECT("SELECT AccountNum, Name, TelNum, EmailAddress, Status FROM " + "Company WHERE Token = " + token).get(0));
+            extract(dto, mapper.SELECT("SELECT AccountNum, Name, TelNum, EmailAddress, Status FROM " + "Company WHERE Token = '" + token + "'").get(0));
         }
         catch (Exception e) {
             return null;
