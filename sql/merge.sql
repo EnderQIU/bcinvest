@@ -452,8 +452,8 @@ CREATE TABLE `Protocol` (
   `Message` mediumtext,
   `State` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ProtocolId`),
-  KEY `fk_protocol_to_guranty` (`GurantyId`),
-  CONSTRAINT `fk_protocol_to_guranty` FOREIGN KEY (`GurantyId`) REFERENCES `guaranty` (`guarantyid`)
+  KEY `fk_protocol_to_guaranty` (`GuarantyId`),
+  CONSTRAINT `fk_protocol_to_guaranty` FOREIGN KEY (`GuarantyId`) REFERENCES `guaranty` (`guarantyid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
