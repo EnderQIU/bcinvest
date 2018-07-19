@@ -18,13 +18,25 @@ public class CreditChainImpl implements CreditChain {
         return null;
     }
 
+//    @Override
+//    public void updateGuarantyState(String accountNum, Integer previousCredit, Integer delta) {
+//        BlockData data = new BlockData();
+//        data.setId(accountNum);
+//        data.setVariation(delta.toString());
+//        Integer value = previousCredit + delta;
+//        data.setValue(value.toString());
+//
+//        Dispatcher.collect(new CollectDTO(type, data));
+//    }
+
     @Override
-    public void updateGuarantyState(String accountNum, Integer previousCredit, Integer delta) {
+    public void updateGuarantyState(String accountNum, Integer previousCredit, Integer delta, String timestamp, String reason) {
         BlockData data = new BlockData();
         data.setId(accountNum);
         data.setVariation(delta.toString());
         Integer value = previousCredit + delta;
         data.setValue(value.toString());
+        data.setRemarks(timestamp + "-" + reason);
 
         Dispatcher.collect(new CollectDTO(type, data));
     }
