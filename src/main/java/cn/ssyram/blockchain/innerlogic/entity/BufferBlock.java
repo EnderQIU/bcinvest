@@ -1,9 +1,8 @@
 package cn.ssyram.blockchain.innerlogic.entity;
 
 import cn.ssyram.blockchain.innerlogic.operator.BlockChainOperator;
-import cn.ssyram.blockchain.innerlogic.operator.Miner;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
-import cn.ssyram.blockchain.innerlogic.support.GlobalInfo;
+import cn.ssyram.blockchain.innerlogic.GlobalInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

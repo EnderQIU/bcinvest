@@ -4,11 +4,10 @@ import cn.ssyram.blockchain.innerlogic.CurrentBlocks;
 import cn.ssyram.blockchain.innerlogic.entity.Block;
 import cn.ssyram.blockchain.innerlogic.entity.BlockData;
 import cn.ssyram.blockchain.innerlogic.support.ChainType;
-import cn.ssyram.blockchain.innerlogic.support.GlobalInfo;
 
 import java.util.List;
 
-import static cn.ssyram.blockchain.innerlogic.support.GlobalInfo.DIFFICULTY;
+import static cn.ssyram.blockchain.innerlogic.GlobalInfo.DIFFICULTY;
 
 public class BlockOperator {
     public static boolean hasValidThis_Hash(Block block) {
@@ -39,7 +38,7 @@ public class BlockOperator {
      * @return 是否合法值
      */
     private static boolean isValidHash(String hash) {
-        for (int i = 0; i < DIFFICULTY * 2; ++i)
+        for (int i = 0; i < DIFFICULTY; ++i)
             if (hash.charAt(i) != '0')
                 return false;
         return true;
