@@ -7,7 +7,7 @@ import cn.ssyram.blockchain.innerlogic.support.ChainType;
 
 import java.util.List;
 
-import static cn.ssyram.blockchain.innerlogic.GlobalInfo.DIFFICULTY;
+import static cn.ssyram.blockchain.GlobalInfo.DIFFICULTY;
 
 public class BlockOperator {
     public static boolean hasValidThis_Hash(Block block) {

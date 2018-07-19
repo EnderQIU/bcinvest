@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @Api("消息服务")
-@RequestMapping("/message")
+@RequestMapping("/api/message")
 @RestController
 public class MessageController extends BaseController {
 

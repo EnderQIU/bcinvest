@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user/company")
+@RequestMapping("/api/user/company")
 @Api("企业注册登录信息")
 public class CompanyController extends BaseController {
     @Autowired //自动装载Impl对象

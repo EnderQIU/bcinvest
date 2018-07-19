@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/bank/companyRequest")
+@RequestMapping("/api/user/bank/companyRequest")
 @Api("银行处理公司请求")
 @RequiredPermissions("bank")
 

@@ -16,12 +16,28 @@ private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-d
         CreditChainImpl creditChain=new CreditChainImpl();
         List<Map<String, Object>> mm = mapper.SELECT("Select * from Company where Token =" + user_id_token);
         if (mm.size() > 0) {
-            String CompanytNum = mm.get(0).get("AccountNum").toString();
+            String CompanyNum = mm.get(0).get("AccountNum").toString();
 
             List<creditInfoVO> cinfoList = new ArrayList<>();
 
 
-            List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(CompanytNum);
+            List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(CompanyNum);
+
+           cinfoList=getCompanyCreditList(CompanyNum);
+            return cinfoList;
+        }
+        else
+        {
+            return null;
+        }
+        }
+        public List<creditInfoVO> getCompanyCreditList(String CompanyNum)
+        {
+            CreditChainImpl creditChain=new CreditChainImpl();
+            List<creditInfoVO> cinfoList = new ArrayList<>();
+
+
+            List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(CompanyNum);
 
             for (Map<String, Object> m : creditinfo) {
                 String accountid = " ", reportId = " ", guarantyId = " ", type = " ", duetime = " ", guarantyName = " ",credit=" ",
@@ -31,7 +47,7 @@ private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-d
                 accountid = m.get("id").toString();
                 credit=m.get("value").toString();
                 variation=m.get("variation").toString();
-String date=m.get("remarks").toString().split("-")[0];
+                String date=m.get("remarks").toString().split("-")[0];
                 duetime = simpleDateFormat.format(Long.valueOf(m.get("remarks").toString().split("-")[0]));
                 type=m.get("remarks").toString().split("-")[1];
                 creditInfoVO cinfo = new creditInfoVO(accountid, guarantyId, reportId, guarantyName, duetime,type, credit,variation);
@@ -40,18 +56,29 @@ String date=m.get("remarks").toString().split("-")[0];
 
             return cinfoList;
         }
-        else
-        {
-            return null;
-        }
-        }
-
 
 
     public  List<creditInfoVO> getCompanyCredit2Pages(String user_id_token, int pages)
     {
+
         List<creditInfoVO> creditInfoVOS=getCompanyCredit(user_id_token);
-        return creditInfoVOS;
+        int maxpages=creditInfoVOS.size()/21+1;
+        if(pages>maxpages)
+        {
+            return null;
+        }
+        else
+        {
+            if(pages==maxpages)
+            {
+                return creditInfoVOS.subList((pages-1)*20,creditInfoVOS.size());
+            }
+            else
+            {
+                return creditInfoVOS.subList((pages-1)*20,pages*20);
+            }
+        }
+
     }
 
 
