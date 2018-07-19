@@ -28,75 +28,75 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord> implements Record5<String, Integer, String, String, String> {
 
-    private static final long serialVersionUID = -565461377;
+    private static final long serialVersionUID = -132534657;
 
     /**
-     * Setter for <code>bcinvest.authorization.Name</code>.
+     * Setter for <code>bcinvest.Authorization.Name</code>.
      */
     public void setName(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>bcinvest.authorization.Name</code>.
+     * Getter for <code>bcinvest.Authorization.Name</code>.
      */
     public String getName() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>bcinvest.authorization.Type</code>.
+     * Setter for <code>bcinvest.Authorization.Type</code>.
      */
     public void setType(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>bcinvest.authorization.Type</code>.
+     * Getter for <code>bcinvest.Authorization.Type</code>.
      */
     public Integer getType() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>bcinvest.authorization.AccountNum</code>.
+     * Setter for <code>bcinvest.Authorization.AccountNum</code>.
      */
     public void setAccountnum(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>bcinvest.authorization.AccountNum</code>.
+     * Getter for <code>bcinvest.Authorization.AccountNum</code>.
      */
     public String getAccountnum() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>bcinvest.authorization.Password</code>.
+     * Setter for <code>bcinvest.Authorization.Token</code>.
      */
-    public void setPassword(String value) {
+    public void setToken(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>bcinvest.authorization.Password</code>.
+     * Getter for <code>bcinvest.Authorization.Token</code>.
      */
-    public String getPassword() {
+    public String getToken() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>bcinvest.authorization.Token</code>.
+     * Setter for <code>bcinvest.Authorization.Password</code>.
      */
-    public void setToken(String value) {
+    public void setPassword(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>bcinvest.authorization.Token</code>.
+     * Getter for <code>bcinvest.Authorization.Password</code>.
      */
-    public String getToken() {
+    public String getPassword() {
         return (String) get(4);
     }
 
@@ -161,7 +161,7 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
      */
     @Override
     public Field<String> field4() {
-        return Authorization.AUTHORIZATION.PASSWORD;
+        return Authorization.AUTHORIZATION.TOKEN;
     }
 
     /**
@@ -169,7 +169,7 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
      */
     @Override
     public Field<String> field5() {
-        return Authorization.AUTHORIZATION.TOKEN;
+        return Authorization.AUTHORIZATION.PASSWORD;
     }
 
     /**
@@ -201,7 +201,7 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
      */
     @Override
     public String component4() {
-        return getPassword();
+        return getToken();
     }
 
     /**
@@ -209,7 +209,7 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
      */
     @Override
     public String component5() {
-        return getToken();
+        return getPassword();
     }
 
     /**
@@ -241,7 +241,7 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
      */
     @Override
     public String value4() {
-        return getPassword();
+        return getToken();
     }
 
     /**
@@ -249,7 +249,7 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
      */
     @Override
     public String value5() {
-        return getToken();
+        return getPassword();
     }
 
     /**
@@ -284,7 +284,7 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
      */
     @Override
     public AuthorizationRecord value4(String value) {
-        setPassword(value);
+        setToken(value);
         return this;
     }
 
@@ -293,7 +293,7 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
      */
     @Override
     public AuthorizationRecord value5(String value) {
-        setToken(value);
+        setPassword(value);
         return this;
     }
 
@@ -324,13 +324,13 @@ public class AuthorizationRecord extends UpdatableRecordImpl<AuthorizationRecord
     /**
      * Create a detached, initialised AuthorizationRecord
      */
-    public AuthorizationRecord(String name, Integer type, String accountnum, String password, String token) {
+    public AuthorizationRecord(String name, Integer type, String accountnum, String token, String password) {
         super(Authorization.AUTHORIZATION);
 
         set(0, name);
         set(1, type);
         set(2, accountnum);
-        set(3, password);
-        set(4, token);
+        set(3, token);
+        set(4, password);
     }
 }

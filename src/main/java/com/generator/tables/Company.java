@@ -38,10 +38,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Company extends TableImpl<CompanyRecord> {
 
-    private static final long serialVersionUID = -1115741165;
+    private static final long serialVersionUID = -398346944;
 
     /**
-     * The reference instance of <code>bcinvest.company</code>
+     * The reference instance of <code>bcinvest.Company</code>
      */
     public static final Company COMPANY = new Company();
 
@@ -54,61 +54,61 @@ public class Company extends TableImpl<CompanyRecord> {
     }
 
     /**
-     * The column <code>bcinvest.company.AccountNum</code>.
+     * The column <code>bcinvest.Company.AccountNum</code>.
      */
     public final TableField<CompanyRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.company.Name</code>.
+     * The column <code>bcinvest.Company.Name</code>.
      */
     public final TableField<CompanyRecord, String> NAME = createField("Name", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.company.TelNum</code>.
+     * The column <code>bcinvest.Company.TelNum</code>.
      */
     public final TableField<CompanyRecord, String> TELNUM = createField("TelNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.company.EmailAddress</code>.
+     * The column <code>bcinvest.Company.EmailAddress</code>.
      */
     public final TableField<CompanyRecord, String> EMAILADDRESS = createField("EmailAddress", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.company.Token</code>.
+     * The column <code>bcinvest.Company.Token</code>.
      */
     public final TableField<CompanyRecord, String> TOKEN = createField("Token", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.company.Credit</code>.
+     * The column <code>bcinvest.Company.Credit</code>.
      */
     public final TableField<CompanyRecord, Long> CREDIT = createField("Credit", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>bcinvest.company.Status</code>.
+     * The column <code>bcinvest.Company.Status</code>.
      */
-    public final TableField<CompanyRecord, String> STATUS = createField("Status", org.jooq.impl.SQLDataType.VARCHAR(16).defaultValue(org.jooq.impl.DSL.inline("unapplied", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<CompanyRecord, String> STATUS = createField("Status", org.jooq.impl.SQLDataType.VARCHAR(128).defaultValue(org.jooq.impl.DSL.inline("unapplied", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
-     * The column <code>bcinvest.company.Lock</code>.
+     * The column <code>bcinvest.Company.Lock</code>.
      */
-    public final TableField<CompanyRecord, Byte> LOCK = createField("Lock", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+    public final TableField<CompanyRecord, Byte> LOCK = createField("Lock", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
     /**
-     * Create a <code>bcinvest.company</code> table reference
+     * Create a <code>bcinvest.Company</code> table reference
      */
     public Company() {
-        this(DSL.name("company"), null);
+        this(DSL.name("Company"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.company</code> table reference
+     * Create an aliased <code>bcinvest.Company</code> table reference
      */
     public Company(String alias) {
         this(DSL.name(alias), COMPANY);
     }
 
     /**
-     * Create an aliased <code>bcinvest.company</code> table reference
+     * Create an aliased <code>bcinvest.Company</code> table reference
      */
     public Company(Name alias) {
         this(alias, COMPANY);

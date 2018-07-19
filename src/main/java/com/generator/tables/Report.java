@@ -16,6 +16,8 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -39,10 +41,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Report extends TableImpl<ReportRecord> {
 
-    private static final long serialVersionUID = 1005453366;
+    private static final long serialVersionUID = 1363714864;
 
     /**
-     * The reference instance of <code>bcinvest.report</code>
+     * The reference instance of <code>bcinvest.Report</code>
      */
     public static final Report REPORT = new Report();
 
@@ -55,41 +57,46 @@ public class Report extends TableImpl<ReportRecord> {
     }
 
     /**
-     * The column <code>bcinvest.report.AuthName</code>.
+     * The column <code>bcinvest.Report.AccountNum</code>.
      */
-    public final TableField<ReportRecord, String> AUTHNAME = createField("AuthName", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+    public final TableField<ReportRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.report.ReportId</code>.
+     * The column <code>bcinvest.Report.ReportId</code>.
      */
-    public final TableField<ReportRecord, Integer> REPORTID = createField("ReportId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ReportRecord, Integer> REPORTID = createField("ReportId", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>bcinvest.report.Date</code>.
+     * The column <code>bcinvest.Report.Date</code>.
      */
     public final TableField<ReportRecord, LocalDateTime> DATE = createField("Date", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
 
     /**
-     * The column <code>bcinvest.report.Duration</code>.
+     * The column <code>bcinvest.Report.Duration</code>.
      */
     public final TableField<ReportRecord, String> DURATION = createField("Duration", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * Create a <code>bcinvest.report</code> table reference
+     * The column <code>bcinvest.Report.type</code>.
+     */
+    public final TableField<ReportRecord, String> TYPE = createField("type", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
+
+    /**
+     * Create a <code>bcinvest.Report</code> table reference
      */
     public Report() {
-        this(DSL.name("report"), null);
+        this(DSL.name("Report"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.report</code> table reference
+     * Create an aliased <code>bcinvest.Report</code> table reference
      */
     public Report(String alias) {
         this(DSL.name(alias), REPORT);
     }
 
     /**
-     * Create an aliased <code>bcinvest.report</code> table reference
+     * Create an aliased <code>bcinvest.Report</code> table reference
      */
     public Report(Name alias) {
         this(alias, REPORT);
@@ -116,7 +123,15 @@ public class Report extends TableImpl<ReportRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.REPORT_AUTHNAME, Indexes.REPORT_PRIMARY);
+        return Arrays.<Index>asList(Indexes.REPORT_ACCOUNTNUM, Indexes.REPORT_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<ReportRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_REPORT;
     }
 
     /**
@@ -133,6 +148,14 @@ public class Report extends TableImpl<ReportRecord> {
     @Override
     public List<UniqueKey<ReportRecord>> getKeys() {
         return Arrays.<UniqueKey<ReportRecord>>asList(Keys.KEY_REPORT_PRIMARY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<ReportRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<ReportRecord, ?>>asList(Keys.REPORT_IBFK_1);
     }
 
     /**

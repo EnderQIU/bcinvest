@@ -52,10 +52,10 @@ public class ReportDao extends DAOImpl<ReportRecord, com.generator.tables.pojos.
     }
 
     /**
-     * Fetch records that have <code>AuthName IN (values)</code>
+     * Fetch records that have <code>AccountNum IN (values)</code>
      */
-    public List<com.generator.tables.pojos.Report> fetchByAuthname(String... values) {
-        return fetch(Report.REPORT.AUTHNAME, values);
+    public List<com.generator.tables.pojos.Report> fetchByAccountnum(String... values) {
+        return fetch(Report.REPORT.ACCOUNTNUM, values);
     }
 
     /**
@@ -84,5 +84,12 @@ public class ReportDao extends DAOImpl<ReportRecord, com.generator.tables.pojos.
      */
     public List<com.generator.tables.pojos.Report> fetchByDuration(String... values) {
         return fetch(Report.REPORT.DURATION, values);
+    }
+
+    /**
+     * Fetch records that have <code>type IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Report> fetchByType(String... values) {
+        return fetch(Report.REPORT.TYPE, values);
     }
 }

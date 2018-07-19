@@ -40,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Securitiesinformation extends TableImpl<SecuritiesinformationRecord> {
 
-    private static final long serialVersionUID = -1682059282;
+    private static final long serialVersionUID = 626990990;
 
     /**
-     * The reference instance of <code>bcinvest.securitiesinformation</code>
+     * The reference instance of <code>bcinvest.Securitiesinformation</code>
      */
     public static final Securitiesinformation SECURITIESINFORMATION = new Securitiesinformation();
 
@@ -56,71 +56,71 @@ public class Securitiesinformation extends TableImpl<SecuritiesinformationRecord
     }
 
     /**
-     * The column <code>bcinvest.securitiesinformation.AccountNum</code>.
+     * The column <code>bcinvest.Securitiesinformation.AccountNum</code>.
      */
     public final TableField<SecuritiesinformationRecord, String> ACCOUNTNUM = createField("AccountNum", org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.StockCode</code>.
+     * The column <code>bcinvest.Securitiesinformation.StockCode</code>.
      */
     public final TableField<SecuritiesinformationRecord, String> STOCKCODE = createField("StockCode", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.ListedApproval</code>.
+     * The column <code>bcinvest.Securitiesinformation.ListedApproval</code>.
      */
     public final TableField<SecuritiesinformationRecord, String> LISTEDAPPROVAL = createField("ListedApproval", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.StockAbbr</code>.
+     * The column <code>bcinvest.Securitiesinformation.StockAbbr</code>.
      */
     public final TableField<SecuritiesinformationRecord, String> STOCKABBR = createField("StockAbbr", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.IssuePrice</code>.
+     * The column <code>bcinvest.Securitiesinformation.IssuePrice</code>.
      */
     public final TableField<SecuritiesinformationRecord, Long> ISSUEPRICE = createField("IssuePrice", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.StockType</code>.
+     * The column <code>bcinvest.Securitiesinformation.StockType</code>.
      */
     public final TableField<SecuritiesinformationRecord, Integer> STOCKTYPE = createField("StockType", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.LaunchDate</code>.
+     * The column <code>bcinvest.Securitiesinformation.LaunchDate</code>.
      */
     public final TableField<SecuritiesinformationRecord, LocalDateTime> LAUNCHDATE = createField("LaunchDate", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.Circulation</code>.
+     * The column <code>bcinvest.Securitiesinformation.Circulation</code>.
      */
     public final TableField<SecuritiesinformationRecord, Long> CIRCULATION = createField("Circulation", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.IsValid</code>.
+     * The column <code>bcinvest.Securitiesinformation.IsValid</code>.
      */
     public final TableField<SecuritiesinformationRecord, Byte> ISVALID = createField("IsValid", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
     /**
-     * The column <code>bcinvest.securitiesinformation.Remark</code>.
+     * The column <code>bcinvest.Securitiesinformation.Remark</code>.
      */
     public final TableField<SecuritiesinformationRecord, String> REMARK = createField("Remark", org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * Create a <code>bcinvest.securitiesinformation</code> table reference
+     * Create a <code>bcinvest.Securitiesinformation</code> table reference
      */
     public Securitiesinformation() {
-        this(DSL.name("securitiesinformation"), null);
+        this(DSL.name("Securitiesinformation"), null);
     }
 
     /**
-     * Create an aliased <code>bcinvest.securitiesinformation</code> table reference
+     * Create an aliased <code>bcinvest.Securitiesinformation</code> table reference
      */
     public Securitiesinformation(String alias) {
         this(DSL.name(alias), SECURITIESINFORMATION);
     }
 
     /**
-     * Create an aliased <code>bcinvest.securitiesinformation</code> table reference
+     * Create an aliased <code>bcinvest.Securitiesinformation</code> table reference
      */
     public Securitiesinformation(Name alias) {
         this(alias, SECURITIESINFORMATION);

@@ -91,4 +91,18 @@ public class CreditupdatetaskDao extends DAOImpl<CreditupdatetaskRecord, com.gen
     public List<com.generator.tables.pojos.Creditupdatetask> fetchByState(String... values) {
         return fetch(Creditupdatetask.CREDITUPDATETASK.STATE, values);
     }
+
+    /**
+     * Fetch records that have <code>timestamp IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Creditupdatetask> fetchByTimestamp(String... values) {
+        return fetch(Creditupdatetask.CREDITUPDATETASK.TIMESTAMP, values);
+    }
+
+    /**
+     * Fetch records that have <code>reason IN (values)</code>
+     */
+    public List<com.generator.tables.pojos.Creditupdatetask> fetchByReason(String... values) {
+        return fetch(Creditupdatetask.CREDITUPDATETASK.REASON, values);
+    }
 }
