@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 
 <head>
@@ -25,7 +26,7 @@
                             <div class="basic_info_left">
                                 <div class="info_item" v-for="item in str_left" v-if="info_item_list[item].type=='text_input'">
                                     <input class="item_text_input" v-model="info_item_list[item].bindData" v-bind:placeholder="info_item_list[item].placeholder"/>
-                                    <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-if="info_item_list[item].need">{{ info_item_list[item].label_text }}*&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                    <label v-:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-if="info_item_list[item].need">{{ info_item_list[item].label_text }}*&nbsp;&nbsp;:&nbsp;&nbsp;</label>
                                     <label v-bind:class="[isNormal(info_item_list[item]) ? normal_label : high_light_label]" class="item_label" v-else>{{ info_item_list[item].label_text }}&nbsp;&nbsp;:&nbsp;&nbsp;</label>
                                 </div>
                                 <div class="info_item" v-else-if="info_item_list[item].type=='radio_input'">

@@ -9,6 +9,19 @@ public class creditInfoVO {
     private String DueTime;
 
     private String Type;
+    private String Credit;
+    private String Variation;
+
+    public creditInfoVO(String accountId, String guarantyId, String reportId, String gurantyName, String dueTime, String type, String credit, String variation) {
+        AccountId = accountId;
+        GuarantyId = guarantyId;
+        ReportId = reportId;
+        GurantyName = gurantyName;
+        DueTime = dueTime;
+        Type = type;
+        this.Credit = credit;
+        this.Variation = variation;
+    }
 
     public void setAccountId(String accountId)
     {
@@ -52,14 +65,29 @@ public class creditInfoVO {
     public String getType() {
         return Type;
     }
-    public creditInfoVO(String accountId, String guarantyId, String reportId, String type,String duetime,String gurantyName
-                        )
-    {
-        AccountId=accountId;
-        GuarantyId=guarantyId;
-        ReportId=reportId;
-        Type=type;
-        DueTime=duetime;
-        GurantyName=gurantyName;
+
+
+    public void setGurantyName(String gurantyName) {
+        GurantyName = gurantyName;
+    }
+
+    public void setDueTime(String dueTime) {
+        DueTime = dueTime;
+    }
+
+    public String getCredit() {
+        return Credit;
+    }
+
+    public void setCredit(String credit) {
+        this.Credit = credit;
+    }
+
+    public String getVariation() {
+        return Variation;
+    }
+
+    public void setVariation(String variation) {
+        this.Variation = variation;
     }
 }

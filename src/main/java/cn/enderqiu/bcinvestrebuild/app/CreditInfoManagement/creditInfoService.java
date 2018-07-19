@@ -4,16 +4,16 @@ import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import cn.ssyram.blockchain.impls.CreditChainImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
-public class creditInfoService extends BaseService {
+public class creditInfoService extends BaseService{
+private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 
     public List<creditInfoVO> getCompanyCredit(String user_id_token) {
+        CreditChainImpl creditChain=new CreditChainImpl();
         List<Map<String, Object>> mm = mapper.SELECT("Select * from Company where Token =" + user_id_token);
         if (mm.size() > 0) {
             String CompanytNum = mm.get(0).get("AccountNum").toString();
@@ -21,24 +21,20 @@ public class creditInfoService extends BaseService {
             List<creditInfoVO> cinfoList = new ArrayList<>();
 
 
-            List<Map<String, Object>> creditinfo = mapper.SELECT("Select * from Credit where AccountNum=" + CompanytNum);
-
+            List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(CompanytNum);
 
             for (Map<String, Object> m : creditinfo) {
-                String accountid = " ", reportId = " ", guarantyId = " ", type = " ", duetime = " ", guarantyName = " ";
+                String accountid = " ", reportId = " ", guarantyId = " ", type = " ", duetime = " ", guarantyName = " ",credit=" ",
+                        variation=" ";
 //credit 通过区块链查看
 
-                accountid = m.get("AccountNum").toString();
-                reportId = m.get("ReportId").toString();
-                guarantyId = m.get("GuarantyId").toString();
-                type = m.get("Type").toString();
-                List<Map<String, Object>> reportinfo = mapper.SELECT("Select * from Report where ReportId=" + reportId);
-                duetime = reportinfo.get(0).get("Date").toString();
-                List<Map<String, Object>> guarantyInfo = mapper.SELECT("Select * from Guaranty where GuarantyId=" + guarantyId);
-                guarantyName = guarantyInfo.get(0).get("Name").toString();
-
-
-                creditInfoVO cinfo = new creditInfoVO(accountid, guarantyId, reportId, type, duetime, guarantyName);
+                accountid = m.get("id").toString();
+                credit=m.get("value").toString();
+                variation=m.get("variation").toString();
+String date=m.get("remarks").toString().split("-")[0];
+                duetime = simpleDateFormat.format(Long.valueOf(m.get("remarks").toString().split("-")[0]));
+                type=m.get("remarks").toString().split("-")[1];
+                creditInfoVO cinfo = new creditInfoVO(accountid, guarantyId, reportId, guarantyName, duetime,type, credit,variation);
                 cinfoList.add(cinfo);
             }
 
