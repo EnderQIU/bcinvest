@@ -38,13 +38,13 @@ public class BlockChainOperator {
             DatabaseOperator.INSERT("INSERT INTO "
                     + dataTableName
                     + "(block_hash, id, variation, value, remarks)"
-                    + "VALUES ("
-                    + hash + ", "
-                    + data.getId() + ", "
-                    + data.getVariation() + ", "
-                    + data.getValue() + ", "
+                    + "VALUES ('"
+                    + hash + "', '"
+                    + data.getId() + "', '"
+                    + data.getVariation() + "', '"
+                    + data.getValue() + "', '"
                     + data.getRemarks()
-                    + ");"
+                    + "');"
             );
     }
 
@@ -100,18 +100,23 @@ public class BlockChainOperator {
     }
 
     public static void blockContentTrim(Block block, boolean is_main) {
-        if (block.getDataList().size() == 0)
-            return;
+        if (block.getDataList().size() == 0) return;
 
         Map<String, String> id_value = getPreviousConditionOnMainChainFor(block);
 
-        for (BlockData data:block.getDataList())
+        List<BlockData> dataList = block.getDataList();
+
+        for (int i = 0; i < block.getDataList().size(); ++i) {
             if (!validChange(
                     block.getType(),
-                    id_value.get(data.getId()),
-                    data
+                    id_value.get(dataList.get(i).getId()),
+                    dataList.get(i)
             ))
-                block.getDataList().remove(data);
+            {
+                block.getDataList().remove(i);
+                --i;
+            }
+        }
     }
 
     private static boolean validChange(ChainType type, String originValue, BlockData data) {
