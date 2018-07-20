@@ -143,29 +143,34 @@ var basic_info = new Vue({
             this.show_more = true;
         },
         submitInfo() {
-            isFinished = true;
-            dataInfo = new Object();
-            for (var key in this.info_item_list) {
-                if (this.info_item_list[key].need == true && this.info_item_list[key].bindData == "") {
-                    this.info_item_list[key].color = 'hight_light';
-                    isFinished = false;
-                } else {
-                    dataInfo[key] = this.info_item_list[key].bindData;
-                }
-            }
-            if (!isFinished) {
-                return;
-            }
+            // isFinished = true;
+            // dataInfo = new Object();
+            // for (var key in this.info_item_list) {
+            //     if (this.info_item_list[key].need == true && this.info_item_list[key].bindData == "") {
+            //         this.info_item_list[key].color = 'hight_light';
+            //         isFinished = false;
+            //     } else {
+            //         dataInfo[key] = this.info_item_list[key].bindData;
+            //     }
+            // }
+            // if (!isFinished) {
+            //     return;
+            // }
             $.ajax({
-                url: "/user/company/authorize",
-                data: dataInfo,
-                type: "POST",
+                url: "/api/user/company/info",
+                // data: dataInfo,
+                type: "PUT",
                 async: false,
+                data: {
+                    'LocalName': this.info_item_list.name.bindData,
+                    'TelephoneNumber': this.info_item_list.telNum.bindData,
+                },
+                headers: {
+                    'user_id_token': getCookie('user_id_token'),
+                },
                 success: function(returnData) {
                     if (returnData.status != null && returnData != "") {
-                        if (returnData.status.toLowerCase() == 'ok') {
-                            location.reload();
-                        }
+                        window.location.href = 'fillInfo.html';
                     }
                 }
             });
@@ -176,7 +181,11 @@ var basic_info = new Vue({
             } else {
                 return false;
             }
-        }
+        },
+        log_out: function () {
+            setCookie('user_id_token', '', -1);
+            location.href = 'introduction.html';
+        },
     },
     computed: {
     }

@@ -2,9 +2,9 @@
     <head>
         <meta charset="UTF-8">
         <title>企业中心</title>
+        <script type="text/javascript" src="js/JQuery.js"></script>
         <script type="text/javascript" src="js/company_authority.js"></script>
         <script type="text/javascript" src="js/vue.js"></script>
-        <script type="text/javascript" src="js/JQuery.js"></script>
         <style>
             * {
                 box-sizing: border-box;
@@ -295,10 +295,25 @@
                         </div>
                     </div>
                     <div v-else-if="list_selected_index == 3">
-                        third
+                        <label>公司邮箱&nbsp;:&nbsp;</label>
+                        <input disabled="disabled" v-model="list_data.manage_company_info.emailAddress"/>
+                        <br />
+                        <label>公司名称&nbsp;:&nbsp;</label>
+                        <input v-if="list_data.manage_company_info.able == 'disabled'" v-model="list_data.manage_company_info.name" disabled="disabled"/>
+                        <input v-else v-model="list_data.manage_company_info.name"/>
+                        <br />
+                        <label>公司电话&nbsp;:&nbsp;</label>
+                        <input v-if="list_data.manage_company_info.able == 'disabled'" v-model="list_data.manage_company_info.telNum" disabled="disabled"/>
+                        <input v-else v-model="list_data.manage_company_info.telNum"/>
+                        <div>
+                            <button v-if="list_data.manage_company_info.able == 'disabled'" v-on:click="able_change_company_info()">修改</button>
+                            <button v-if="list_data.manage_company_info.able == ''" v-on:click="submit_change_company_info()">确认</button>
+                            <button v-if="list_data.manage_company_info.able == ''" v-on:click="cancle_change_company_info()">取消</button>
+                        </div>
                     </div>
                     <div v-else-if="list_selected_index == 4">
                         <div>
+                            检索&nbsp;:&nbsp;
                             <select v-model="manage_choosed_state">
                                 <option v-for="item in states_word">{{ item }}</option>
                             </select>
@@ -308,11 +323,42 @@
                                 <td class="table_head">抵押物名称</td>
                                 <td class="table_head">状态</td>
                                 <td class="table_head">估值</td>
+                                <td class="table_head">操作</td>
                             </tr>
                             <tr v-for="item in company_mortgage">
                                 <td class="table_cell mortgage_detailable" v-on:click="show_guaranty_detail(item)">{{ item.抵押物名称 }}</td>
                                 <td class="table_cell">{{ item.抵押物状态 }}</td>
                                 <td class="table_cell">{{ item.评估价值 }}</td>
+                                <td class="table_cell">
+                                    <template v-if="item.抵押物状态 == '鉴定中'">
+                                        无
+                                    </template>
+                                    <template v-if="item.抵押物状态 == '不合格'">
+                                        <label v-on:click="reappraise_click(item)" style="cursor: pointer; text-decoration: underline;">重新鉴定</label>&nbsp;&nbsp;
+                                    </template>
+                                    <template v-if="item.抵押物状态 == '合格'">
+                                        无
+                                    </template>
+                                    <template v-if="item.抵押物状态 == '待确认'">
+                                        <label v-on:click="unconfirmed_to_confirmed_click(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
+                                        <label v-on:click="unconfirmed_to_giveup_click(item)" style="cursor: pointer; text-decoration: underline;">放弃</label>
+                                    </template>
+                                    <template v-if="item.抵押物状态 == '可抵押'">
+                                        <label v-on:click="apply_mortgage_click(item)" style="cursor: pointer; text-decoration: underline;">抵押</label>&nbsp;&nbsp;
+                                    </template>
+                                    <template v-if="item.抵押物状态 == '申请抵押中'">
+                                        无
+                                    </template>
+                                    <template v-if="item.抵押物状态 == '申请已通过'">
+                                        无
+                                    </template>
+                                    <template v-if="item.抵押物状态 == '申请还款中'">
+                                        无
+                                    </template>
+                                    <template v-if="item.抵押物状态 == '逾期'">
+                                        无
+                                    </template>
+                                </td>
                             </tr>
                         </table>
                         <div class="page_change_container" v-if="max_page > 0">
@@ -383,6 +429,18 @@
                     </p>
                 </div>
             </div>
+            <div class="popup_window_container" v-else-if="apply_mortgage_box_show">
+                <div class="popup_window_content_container">
+                    <div style="position: relative; padding: 20px;">
+                        您确定要将&nbsp;<strong>{{ choosed_item.抵押物名称 }}</strong>&nbsp;进行抵押吗?<br />
+                        估值&nbsp;:&nbsp;{{ choosed_item.评估价值 }}
+                    </div>
+                    <div style="position: absolute; padding: 20px; bottom: 0; width: 100%;">
+                        <button style="float: left;" v-on:click="apply_mortgage_box_sure">确定</button>
+                        <button style="float: right;"  v-on:click="apply_mortgage_box_cancle">取消</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <script>
             function createTextInput(label, need, placeholder) {
@@ -445,6 +503,12 @@
                         },
                         'manage_company_info': {
                             label: "管理企业资料",
+                            able: '',
+                            name: '',
+                            telNum: '',
+                            emailAddress: '',
+                            name_copy: '',
+                            telNum_copy: '',
                         },
                         'manage_mortgage': {
                             label: "抵押物管理",
@@ -485,11 +549,11 @@
                         '鉴定中': [0],
                         '不合格': [1],
                         '合格': [2],
-                        '待确认': [3],
-                        '可抵押': [4],
-                        '申请抵押中': [5],
-                        '申请已通过': [6],
-                        '申请还款中': [7],
+                        '待确认(待确认上链)': [3],
+                        '可抵押(已上链)': [4],
+                        '申请抵押中(审核中)': [5],
+                        '申请已通过(抵押中)': [6],
+                        // '申请还款中': [7],
                         '逾期': [8],
                     },
                     'message':[],
@@ -508,6 +572,9 @@
                     'message_unread_class': 'message_unread',
                     'detail_box_show': false,
                     'detail_item': null,
+
+
+                    'apply_mortgage_box_show': false,
                 },
                 computed: {
                     apply_mortgage_choosed: function() {
@@ -640,13 +707,13 @@
                         var url = '';
                         switch (item.抵押物类型) {
                             case '房产':
-                                url = '/user/guaranty/houseDetail';
+                                url = '/api/user/guaranty/houseDetail';
                                 break;
                             case '地产':
-                                url = '/user/guaranty/landDetail'
+                                url = '/api/user/guaranty/landDetail'
                                 break;
                             case '机器':
-                                url = '/user/guaranty/machineDetail'
+                                url = '/api/user/guaranty/machineDetail'
                                 break;
                         }
                         var result = null;
@@ -681,13 +748,10 @@
                     },
                     abandon_guaranty() {
                         var result = null;
-                        var query_para = '?guarantyId=' + this.choosed_item.guarantyId.toString();
+                        var query_para = '?guarantyId=' + this.choosed_item.抵押物编号.toString();
                         $.ajax({
-                            'url': '/user/guaranty/abandon' + query_para,
-                            'type': 'POST',
-                            'data': {
-                                '_method': 'DELETE',
-                            },
+                            'url': 'api//user/guaranty/abandon' + query_para,
+                            'type': 'DELETE',
                             'async': false,
                             'success': function(data) {
                                 result = data;
@@ -698,11 +762,25 @@
                         });
                         return result;
                     },
+
                     get_guaranty(page, states) {
+                        if (states.indexOf(3) > -1 || states.indexOf(5) > -1) {
+                            $.ajax({
+                                url: '/api/schedule/guaranty',
+                                type: 'GET',
+                                async: false,
+                                success: function (data) {
+
+                                },
+                                headers: {
+                                    'user_id_token': getCookie('user_id_token'),
+                                }
+                            });
+                        }
                         var query_para = '?' + this.get_states_parameter_string() + "&page=" + page.toString();
                         var result = null;
                         $.ajax({
-                            'url': '/user/guaranty/guaranties' + query_para,
+                            'url': '/api/user/guaranty/guaranties' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -719,7 +797,7 @@
                         var query_para = '?' + this.get_states_parameter_string();
                         var result = null;
                         $.ajax({
-                            'url': '/user/guaranty/maxPage' + query_para,
+                            'url': '/api/user/guaranty/maxPage' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -734,11 +812,10 @@
                     to_be_comfirmed() {
                         var result = null;
                         $.ajax({
-                            'url': '/user/guaranty/toBC',
-                            'type': 'POST',
+                            'url': '/api/user/guaranty/toBC',
+                            'type': 'PUT',
                             'data': {
-                                '_method': 'PUT',
-                                'states': states,
+                                'guarantyId': this.choosed_item.抵押物编号,
                             },
                             'headers': {
                                 'user_id_token': getCookie('user_id_token'),
@@ -761,7 +838,7 @@
                     get_message() {
                         var result = null;
                         $.ajax({
-                            'url': '/message/',
+                            'url': '/api/message/',
                             'type': 'GET',
                             'headers': {
                                 'user_id_token': getCookie('user_id_token'),
@@ -808,6 +885,9 @@
                                 break;
                             case 'manage_mortgage':
                                 break;
+                            case 'manage_company_info':
+                                this.show_company_info();
+                                break;
                             case 'watch_message':
                                 var tempMessage = this.get_message();
                                 this.message = tempMessage;
@@ -819,13 +899,13 @@
                         var url = null;
                         switch (this.list_data.apply_mortgage.type) {
                             case '房产':
-                                url = '/user/guaranty/applyHouseEvaluation'
+                                url = '/api/user/guaranty/applyHouseEvaluation'
                                 break;
                             case '地产':
-                                url = '/user/guaranty/applyLandEvaluation'
+                                url = '/api/user/guaranty/applyLandEvaluation'
                                 break;
                             case '机器':
-                                url = '/user/guaranty/applyMachineEvaluation'
+                                url = '/api/user/guaranty/applyMachineEvaluation'
                                 break;
                         }
                         var formData = new Object();
@@ -876,9 +956,26 @@
                     },
                     unconfirmed_to_confirmed_box_sure: function() {
                         var returnData = this.to_be_comfirmed();
+                        switch (returnData.message) {
+                            case 'ok':
+                                alert('操作执行中, 请稍等');
+                                break;
+                            case 'submmited':
+                                alert('操作成功.');
+                                break;
+                            case 'locked':
+                                alert('该抵押物处于锁定状态,不允许更改');
+                                break;
+                            case 'invalid target':
+                                alert('目标状态非法');
+                                break;
+                            case 'no record':
+                                alert('不存在该抵押物, 更改无效');
+                                break;
+                        }
                         var tempGuaranty = this.get_guaranty(this.current_page, this.current_states);
                         this.company_mortgage = tempGuaranty;
-                        this.select_item = null;
+                        this.choosed_item = null;
                         this.unconfirmed_to_confirmed_box_show = false;
                     },
                     unconfirmed_to_giveup_click: function(item) {
@@ -886,27 +983,133 @@
                         this.unconfirmed_to_give_up_box_show = true;
                     },
                     unconfirmed_to_give_up_box_sure: function() {
-                        // var returnData = this.abandon_guaranty();
-                        //模拟用
-                        var returnData = 1;
-                        if (returnData == 1) {
-                            alert(this.choosed_item.guarantyId);
-                            this.choosed_item = null;
+                        var returnData = this.abandon_guaranty();
+                        switch (returnData.message) {
+                            case 'ok':
+                                alert('操作成功, 请稍等');
+                                break;
+                            case 'submmited':
+                                alert('操作成功, 请稍等');
+                                break;
+                            case 'locked':
+                                alert('该抵押物处于锁定状态,不允许更改');
+                                break;
+                            case 'invalid target':
+                                alert('目标状态非法');
+                                break;
+                            case 'no record':
+                                alert('不存在该抵押物, 更改无效');
+                                break;
                         }
-                        // var tempGuaranty = this.get_guaranty(this.current_page, this.current_states);
-                        //模拟用
-                        var tempGuaranty = [];
+                        var tempGuaranty = this.get_guaranty(this.current_page, this.current_states);
                         this.company_mortgage = tempGuaranty;
+                        this.choosed_item = null;
                         this.unconfirmed_to_give_up_box_show = false;
                     },
                     unconfirmed_to_give_up_box_cancle: function() {
                         this.choosed_item = null;
                         this.unconfirmed_to_give_up_box_show = false;
+                    },
+
+
+
+                    show_company_info() {
+                        this.list_data.manage_company_info.able = 'disabled';
+                        $.ajax({
+                            url: '/api/user/company/info',
+                            type: 'GET',
+                            async: true,
+                            headers: {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            success: function (data) {
+                                whole_company.show_company_info_callback(data);
+                            }
+                        });
+                    },
+                    show_company_info_callback(data) {
+                        this.list_data.manage_company_info.emailAddress = data.emailAddress;
+                        this.list_data.manage_company_info.name = data.name;
+                        this.list_data.manage_company_info.telNum = data.telNum;
+                        this.list_data.manage_company_info.name_copy = data.name;
+                        this.list_data.manage_company_info.telNum_copy = data.telNum;
+                    },
+                    able_change_company_info: function () {
+                        this.list_data.manage_company_info.able = '';
+                    },
+                    submit_change_company_info: function () {
+                        $.ajax({
+                            url: '/api/user/company/info',
+                            type: 'PUT',
+                            async: true,
+                            data: {
+                                'LocalName': this.list_data.manage_company_info.name,
+                                'TelephoneNumber': this.list_data.manage_company_info.telNum,
+                            },
+                            headers: {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            success: function (data) {
+                                whole_company.show_company_info();
+                            }
+                        });
+
+                    },
+                    cancle_change_company_info: function () {
+                        this.list_data.manage_company_info.able = 'disabled';
+                        this.list_data.manage_company_info.name = this.list_data.manage_company_info.name_copy;
+                        this.list_data.manage_company_info.telNum = this.list_data.manage_company_info.telNum_copy;
+                    },
+                    apply_mortgage_click: function(item) {
+                        this.choosed_item = item;
+                        this.apply_mortgage_box_show = true;
+                    },
+                    apply_mortgage_box_sure: function () {
+
+                        $.ajax({
+                            url: '/api/user/loanManagement/applyMortgage',
+                            type: 'PUT',
+                            async: false,
+                            data: {
+                                'guarantyId': whole_company.choosed_item.抵押物编号,
+                            },
+                            headers: {
+                                'user_id_token': getCookie('user_id_token'),
+                            },
+                            success: function (data) {
+                                switch (data.message) {
+                                    case 'ok':
+                                        alert('操作成功, 请稍等');
+                                        break;
+                                    case 'submmited':
+                                        alert('操作成功, 请稍等');
+                                        break;
+                                    case 'locked':
+                                        alert('该抵押物处于锁定状态,不允许更改');
+                                        break;
+                                    case 'invalid target':
+                                        alert('目标状态非法');
+                                        break;
+                                    case 'no record':
+                                        alert('不存在该抵押物, 更改无效');
+                                        break;
+                                }
+                            }
+                        });
+
+                        this.choosed_item = null;
+                        this.apply_mortgage_box_show = false;
+                    },
+                    apply_mortgage_box_cancle: function () {
+                        this.choosed_item = null;
+                        this.apply_mortgage_box_show = false;
                     }
                 },
                 watch: {
                     manage_choosed_state: function (newValue, oldValue) {
                         this.current_states = this.states_word_to_array[newValue];
+                        this.current_page = 0;
+                        this.max_page = 0;
                         var max_page_data = this.get_max_page(this.current_states);
                         if (!isEmptyValue(max_page_data) && max_page_data.maxPage > 0) {
                             this.max_page = max_page_data.maxPage;
