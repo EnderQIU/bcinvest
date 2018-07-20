@@ -4,6 +4,7 @@ package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
  * Created by EvanChoo on 7/11/18.
  */
 
+import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.ReturnVO;
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
 import cn.enderqiu.bcinvestrebuild.util.GuarantyChainUtil;
@@ -164,5 +165,15 @@ public class LoanService extends BaseService {
         List<Map<String, Object>> list = mapper.SELECT(sql);
 
         return list.get(0).get("AccountNum").toString();
+    }
+
+    public ReturnVO applyMortgage(int guarantyId){
+        ReturnVO returnVO = new ReturnVO();
+        String message = GuarantyChainUtil.updateState(guarantyId,5);
+        returnVO.setMessage(message);
+        if(message.equals("ok")||message.equals("submitted")){
+            returnVO.setInfluence(1);
+        }
+        return returnVO;
     }
 }

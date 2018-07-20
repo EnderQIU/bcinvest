@@ -4,6 +4,7 @@ package cn.enderqiu.bcinvestrebuild.app.LoanManagement;
  * Created by EvanChoo on 7/11/18.
  */
 
+import cn.enderqiu.bcinvestrebuild.app.GuarantyManagement.entity.vo.ReturnVO;
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
 import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
@@ -71,5 +72,13 @@ public class LoanController extends BaseController {
     })
     BaseResponseVO cancleLoanRequest(int guarantyId) {
         return loanService.cancleLoanRequest(getCompanyUserDTO().getToken(), guarantyId);
+    }
+    @RequestMapping(value = "/applyMortgage", method = RequestMethod.PUT)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "guarantyId", value = "抵押物唯一标识符",
+                    required = true,  dataType = "int"),
+    })
+    ReturnVO mortgage(int guarantyId) {
+        return loanService.applyMortgage(guarantyId);
     }
 }

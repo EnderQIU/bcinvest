@@ -113,6 +113,9 @@ public class AuthorityRequestService extends BaseService{
         ReturnVO returnVO = new ReturnVO();
         String message = GuarantyChainUtil.updateState(guarantyId,3);
         returnVO.setMessage(message);
+        if(message.equals("ok")||message.equals("submitted")){
+            returnVO.setInfluence(1);
+        }
         return returnVO;
     }
 }
