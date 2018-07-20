@@ -1,20 +1,30 @@
 package cn.enderqiu.bcinvestrebuild.app.ReviewInfoManagement;
 
 public class ReviewChainInfoVO {
+    public String getCredit() {
+        return credit;
+    }
+
+    public void setCredit(String credit) {
+        this.credit = credit;
+    }
+
     private ReviewCompanyInfoVO reviewCompanyInfoVO;
     private String guarantyId;
     private String reportId;
     private String authorityId;
     private String guarantyName;
     private String evaluateValue;
+    private String credit;
 
-    public ReviewChainInfoVO(ReviewCompanyInfoVO reviewCompanyInfoVO, String guarantyId, String reportId, String authorityId, String guarantyName, String evaluateValue) {
+    public ReviewChainInfoVO(ReviewCompanyInfoVO reviewCompanyInfoVO, String guarantyId, String reportId, String authorityId, String guarantyName, String evaluateValue,String credit) {
         this.reviewCompanyInfoVO = reviewCompanyInfoVO;
         this.guarantyId = guarantyId;
         this.reportId = reportId;
         this.authorityId = authorityId;
         this.guarantyName = guarantyName;
         this.evaluateValue = evaluateValue;
+        this.credit=credit;
     }
 
     public ReviewCompanyInfoVO getReviewCompanyInfoVO() {
