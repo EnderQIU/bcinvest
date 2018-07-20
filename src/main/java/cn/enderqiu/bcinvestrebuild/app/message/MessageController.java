@@ -1,8 +1,10 @@
 package cn.enderqiu.bcinvestrebuild.app.message;
 
 import cn.enderqiu.bcinvestrebuild.app.message.response.MessageResponse;
+import cn.enderqiu.bcinvestrebuild.app.message.serializer.MarkMessageSerializer;
 import cn.enderqiu.bcinvestrebuild.app.message.serializer.MessageDataFromSerializer;
 import cn.enderqiu.bcinvestrebuild.controller.BaseController;
+import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.permission.RequiredPermissions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,5 +41,15 @@ public class MessageController extends BaseController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<MessageResponse> retrieveMessage() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         return view.retrieveMessage(getBankUserDTO(), getCompanyUserDTO());
+    }
+
+    @ApiOperation(value = "设置消息为已读或删除", notes = "state有两个值：read(已读), deleted(已删除)")
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", dataType = "Integer", required = true, name = "messageId", value = "消息Id"),
+            @ApiImplicitParam(paramType = "form", dataType = "String", required = true, name = "status", value = "消息状态"),
+    })
+    public BaseResponseVO markMessage(MarkMessageSerializer serializer) {
+        return view.markMessage(serializer);
     }
 }

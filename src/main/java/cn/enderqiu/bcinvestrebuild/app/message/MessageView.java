@@ -1,9 +1,11 @@
 package cn.enderqiu.bcinvestrebuild.app.message;
 
 import cn.enderqiu.bcinvestrebuild.app.message.response.MessageResponse;
+import cn.enderqiu.bcinvestrebuild.app.message.serializer.MarkMessageSerializer;
 import cn.enderqiu.bcinvestrebuild.app.message.serializer.MessageDataFromSerializer;
 import cn.enderqiu.bcinvestrebuild.entity.dto.BankUserDTO;
 import cn.enderqiu.bcinvestrebuild.entity.dto.CompanyUserDTO;
+import cn.enderqiu.bcinvestrebuild.entity.vo.BaseResponseVO;
 import cn.enderqiu.bcinvestrebuild.util.MyBeanUtils;
 import com.generator.tables.Message;
 import com.generator.tables.records.MessageRecord;
@@ -28,7 +30,7 @@ public class MessageView {
 
 
     public MessageResponse postMessage(BankUserDTO bankUserDTO, MessageDataFromSerializer serializer) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Byte status = new Byte("0");
+        String unreadStatus = "unread";
         MessageResponse response = new MessageResponse();
         Message m = Message.MESSAGE;
         Record record =
@@ -42,7 +44,7 @@ public class MessageView {
                                 bankUserDTO.getAccountNum(),
                                 serializer.getToUserId(),
                                 serializer.getContent(),
-                                status)
+                                unreadStatus)
                         .returning(
                                 m.FROMUSERNUM,
                                 m.TOUSERNUM,
@@ -59,7 +61,7 @@ public class MessageView {
             // 公司查看收到的消息
             Result<MessageRecord> result = dsl
                     .selectFrom(Message.MESSAGE)
-                    .where(Message.MESSAGE.TOUSERNUM.eq(companyUserDTO.getAccountNum()))
+                    .where(Message.MESSAGE.TOUSERNUM.eq(companyUserDTO.getAccountNum()).and(Message.MESSAGE.STATUS.ne("deleted")))
                     .fetch();
             for (MessageRecord record: result){
                 MessageResponse response = new MessageResponse();
@@ -74,8 +76,8 @@ public class MessageView {
             // 银行和机构查看发出的消息和机构查看收到的消息
             Result<MessageRecord> result = dsl
                     .selectFrom(Message.MESSAGE)
-                    .where(Message.MESSAGE.TOUSERNUM.eq(bankUserDTO.getAccountNum()))
-                    .or(Message.MESSAGE.FROMUSERNUM.eq(bankUserDTO.getAccountNum()))
+                    .where(Message.MESSAGE.TOUSERNUM.eq(bankUserDTO.getAccountNum()).and(Message.MESSAGE.STATUS.ne("deleted")))
+                    .or(Message.MESSAGE.FROMUSERNUM.eq(bankUserDTO.getAccountNum()).and(Message.MESSAGE.STATUS.ne("deleted")))
                     .fetch();
             for (MessageRecord record: result){
 
@@ -84,9 +86,24 @@ public class MessageView {
                 response.setContent(record.getContent());
                 response.setFromUserNum(record.getFromusernum());
                 response.setTousernum(record.getTousernum());
-                response.setStatus(record.getStatus());                responses.add(response);
+                response.setStatus(record.getStatus());
+                responses.add(response);
             }
         }
         return responses;
+    }
+
+    public BaseResponseVO markMessage(MarkMessageSerializer serializer) {
+        BaseResponseVO responseVO = new BaseResponseVO();
+        Integer messageId = serializer.getMessageId();
+        String status = serializer.getStatus();
+        if (!status.equals("read") && !status.equals("deleted")){
+            responseVO.setMessage("invalid status");
+            return responseVO;
+        }
+        Message T = Message.MESSAGE;
+        int result = dsl.update(T).set(T.STATUS, status).where(T.ID.eq(messageId)).execute();
+        responseVO.setMessage(String.valueOf(result));
+        return responseVO;
     }
 }

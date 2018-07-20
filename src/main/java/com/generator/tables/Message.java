@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Message extends TableImpl<MessageRecord> {
 
-    private static final long serialVersionUID = 2049253917;
+    private static final long serialVersionUID = -1695885622;
 
     /**
      * The reference instance of <code>bcinvest.Message</code>
@@ -77,7 +77,7 @@ public class Message extends TableImpl<MessageRecord> {
     /**
      * The column <code>bcinvest.Message.status</code>.
      */
-    public final TableField<MessageRecord, Byte> STATUS = createField("status", org.jooq.impl.SQLDataType.TINYINT, this, "");
+    public final TableField<MessageRecord, String> STATUS = createField("status", org.jooq.impl.SQLDataType.VARCHAR(128).defaultValue(org.jooq.impl.DSL.inline("unread", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
      * Create a <code>bcinvest.Message</code> table reference

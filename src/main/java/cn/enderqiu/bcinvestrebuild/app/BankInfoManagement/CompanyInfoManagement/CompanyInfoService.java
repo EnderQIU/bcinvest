@@ -35,10 +35,17 @@ public class CompanyInfoService extends BaseService {
         for(Map<String, Object> item : list) {
             CompanyInfoVO vo = new CompanyInfoVO();
 
-            vo.setAccountNum((String) item.get("AccountNum"));
-            vo.setName((String)item.get("Name"));
-            vo.setTelNum((String)item.get("TelNum"));
-            vo.setEmailAddress((String)item.get("EmailAddress"));
+            if(item.containsKey("AccountNum"))
+                vo.setAccountNum((String) item.get("AccountNum"));
+
+            if(item.containsKey("Name"))
+                vo.setName((String)item.get("Name"));
+
+            if(item.containsKey("TelNum"))
+                vo.setTelNum((String)item.get("TelNum"));
+
+            if(item.containsKey("EmailAddress"))
+                vo.setEmailAddress((String)item.get("EmailAddress"));
 
             voList.add(vo);
         }
@@ -75,10 +82,17 @@ public class CompanyInfoService extends BaseService {
         for(Map<String, Object> item : list) {
             CompanyInfoVO vo = new CompanyInfoVO();
 
-            vo.setAccountNum((String) item.get("AccountNum"));
-            vo.setName((String)item.get("Name"));
-            vo.setTelNum((String)item.get("TelNum"));
-            vo.setEmailAddress((String)item.get("EmailAddress"));
+            if(item.containsKey("AccountNum"))
+                vo.setAccountNum((String) item.get("AccountNum"));
+
+            if(item.containsKey("Name"))
+                vo.setName((String)item.get("Name"));
+
+            if(item.containsKey("TelNum"))
+                vo.setTelNum((String)item.get("TelNum"));
+
+            if(item.containsKey("EmailAddress"))
+                vo.setEmailAddress((String)item.get("EmailAddress"));
 
             voList.add(vo);
         }
@@ -117,10 +131,14 @@ public class CompanyInfoService extends BaseService {
         //todo: fix this
         //EvanGuarantyChainInterface.queryCompanyCredit(accountNum);
 
-        vo.setCompanyAccountNum((String) item.get("AccountNum"));
-        vo.setCompanyName((String)item.get("Name"));
-        vo.setCompanyTelNum((String)item.get("TelNum"));
-        vo.setCompanyEmailAddress((String)item.get("EmailAddress"));
+        if(item.containsKey("AccountNum"))
+            vo.setCompanyAccountNum((String) item.get("AccountNum"));
+        if(item.containsKey("Name"))
+            vo.setCompanyName((String)item.get("Name"));
+        if(item.containsKey("TelNum"))
+            vo.setCompanyTelNum((String)item.get("TelNum"));
+        if(item.containsKey("EmailAddress"))
+            vo.setCompanyEmailAddress((String)item.get("EmailAddress"));
         //vo.setCompanyCredit();
 
         return vo;
@@ -145,10 +163,14 @@ public class CompanyInfoService extends BaseService {
             List<Map<String, Object>> guaList = mapper.SELECT(query);
 
             CompanyCreditInfoVO vo = new CompanyCreditInfoVO();
-            vo.setGuarantyId((int)map.get("GuarantyId"));
-            vo.setGuarantyName((String)guaList.get(0).get("Name"));
-            vo.setOwnerName((String)guaList.get(0).get("OwnerName"));
-            vo.setType((boolean)map.get("Type"));
+            if(map.containsKey("GuarantyId"))
+                vo.setGuarantyId((int)map.get("GuarantyId"));
+            if(map.containsKey("Name"))
+                vo.setGuarantyName((String)guaList.get(0).get("Name"));
+            if(map.containsKey("OwnerName"))
+                vo.setOwnerName((String)guaList.get(0).get("OwnerName"));
+            if(map.containsKey("Type"))
+                vo.setType((boolean)map.get("Type"));
 
             voList.add(vo);
         }
@@ -188,12 +210,18 @@ public class CompanyInfoService extends BaseService {
         for(Map<String, Object> map : list) {
             GuarantyInfoVO vo = new GuarantyInfoVO();
 
-            vo.setGuarantyId((int)map.get("GuarantyId"));
-            vo.setScopeOfRight((int)map.get("ScopeOfRight"));
-            vo.setOwnerName((String)map.get("OwnerName"));
-            vo.setEvaluateValue((int)map.get("EvaluateValue"));
-            vo.setName((String)map.get("Name"));
-            vo.setState((int)map.get("State"));
+            if(map.containsKey("GuarantyId"))
+                vo.setGuarantyId((int)map.get("GuarantyId"));
+            if(map.containsKey("ScopeOfRight"))
+                vo.setScopeOfRight((int)map.get("ScopeOfRight"));
+            if(map.containsKey("OwnerName"))
+                vo.setOwnerName((String)map.get("OwnerName"));
+            if(map.containsKey("EvaluateValue"))
+                vo.setEvaluateValue((int)map.get("EvaluateValue"));
+            if(map.containsKey("Name"))
+                vo.setName((String)map.get("Name"));
+            if(map.containsKey("State"))
+                vo.setState((int)map.get("State"));
 
             voList.add(vo);
         }

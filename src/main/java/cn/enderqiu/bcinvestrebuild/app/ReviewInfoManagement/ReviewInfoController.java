@@ -22,26 +22,39 @@ public class ReviewInfoController extends BaseController {
     private ReviewInfoService ReviewInfoService;
 
     @RequestMapping(value = "/getComoanyInfo", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query",
+                    /* 来源分为form, header, query
+                      * 分别对应 表单，请求头， 请求体
+                      */
+                    name = "pages", //和参数列表的参数名对应
+                    required = true, //如果不可或缺填写true，否则可以不写这一栏或者写false
+                    value = "页面",
+                    dataType = "int"
+            )
+    })
 
-    List<ReviewCompanyInfoVO> getCompanyInfo()
+    List<ReviewCompanyInfoVO> getCompanyInfo(int pages)
     {
-        return ReviewInfoService.getCompanyStateUnapplied();
+        return ReviewInfoService.getCompanyStateUnapplied2pages(pages);
     }
+
+
     @RequestMapping(value = "/getChainInfo", method = RequestMethod.GET)
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(paramType = "query",
-//                    /* 来源分为form, header, query
-//                      * 分别对应 表单，请求头， 请求体
-//                      */
-//                    name = "company_id", //和参数列表的参数名对应
-//                    required = true, //如果不可或缺填写true，否则可以不写这一栏或者写false
-//                    value = "公司唯一标识符",
-//                    dataType = "String"
-//            )
-//    })
-    List<ReviewChainInfoVO> getGuarantyTBCInfo()
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query",
+                    /* 来源分为form, header, query
+                      * 分别对应 表单，请求头， 请求体
+                      */
+                    name = "pages", //和参数列表的参数名对应
+                    required = true, //如果不可或缺填写true，否则可以不写这一栏或者写false
+                    value = "页面",
+                    dataType = "int"
+            )
+    })
+    List<ReviewChainInfoVO> getGuarantyTBCInfo(int pages)
     {
-        return ReviewInfoService.getGuarantyTBCInfo(getBankUserDTO().getToken());
+        return ReviewInfoService.getGuarantyTBCInfo2pages(getBankUserDTO().getToken(),pages);
     }
 
 
@@ -72,18 +85,5 @@ public class ReviewInfoController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/getComoanyInfo/Maxpage", method = RequestMethod.GET)
-    @ApiImplicitParam(paramType = "query",
-            /* 来源分为form, header, query
-              * 分别对应 表单，请求头， 请求体
-              */
-            name = "pages", //和参数列表的参数名对应
-            required = true, //如果不可或缺填写true，否则可以不写这一栏或者写false
-            value = "页面",
-            dataType = "String"
-    )
-    List<ReviewCompanyInfoVO> getCompanyInfoMaxPage(int pages)
-    {
-        return ReviewInfoService.getCompanyStateUnapplied2pages(pages);
-    }
+
 }

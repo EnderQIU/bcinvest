@@ -1,0 +1,1 @@
+ALTER TABLE Message MODIFY status varchar(128) DEFAULT "unread";
