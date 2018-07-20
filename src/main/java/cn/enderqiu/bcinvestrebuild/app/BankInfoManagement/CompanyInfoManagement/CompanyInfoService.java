@@ -253,13 +253,13 @@ public class CompanyInfoService extends BaseService {
                      "WHERE AccountNum = \'"+accountNum+"\' ";
 
         int result = mapper.DELETE(sql);
-        int chainResult=-1;
-        //todo: fix this
-        //int chainResult = EvanGuarantyChainInterface.deleteCompany(accountNum);
+
+
+
 
         BaseResponseVO vo = new BaseResponseVO();
 
-        if(result==1&&chainResult==1) {
+        if(result==1) {
             vo.setMessage("OK");
         } else {
             vo.setMessage("Error");

@@ -53,7 +53,9 @@
 
             </tbody>
         </table>
+        <p style="text-align:center;"><label v-on:click="">上一页</label><label>当前页：{{currentPage}}</label><label v-on:click="next_pages">下一页</label></p>
         <button v-on:click="click_listener">更新数据</button>
+
     </div>
 </div>
 <script>
@@ -61,17 +63,20 @@
         el: '#company_credit_info',
         data :{
 
-            GuarantyCompanyInfo :[]
+            GuarantyCompanyInfo :[],
+            currentPage:1,
         },
         methods:{
-            getData: function () {
+            getData: function (page) {
                 var result =' ';
                 //deal with parameter
                 $.ajax({
                     method: "GET" ,
                     url: "/api/Authorization/reviewInfo/getChainInfo",
                     async: false,
-
+                    data:{
+                        pages:page,
+                    },
                     beforeSend: function (request) {
                         request.setRequestHeader("user_id_token", "12345");
                     },
@@ -116,7 +121,7 @@
                 }
             },
             click_listener: function () {
-                result = this.getData();
+                result = this.getData(this.currentPage);
 
                 this.GuarantyCompanyInfo= result;
             },
@@ -125,6 +130,20 @@
             alert(result['message']);
             this.click_listener();
             },
+            next_pages:function () {
+
+                this.currentPage = this.currentPage + 1;
+                result = this.getData(this.currentPage);
+                this.GuarantyCompanyInfo = result;
+
+
+            },
+            last_pages:function () {
+                this.currentPage = this.currentPage - 1;
+                result = this.getData(this.currentPage);
+                this.GuarantyCompanyInfo = result;
+
+            }
 
 
         }
