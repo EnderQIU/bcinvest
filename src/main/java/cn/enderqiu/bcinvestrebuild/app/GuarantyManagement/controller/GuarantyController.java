@@ -59,7 +59,7 @@ public class GuarantyController extends BaseController{
                     required = true,  dataType = "int"),
     })
     ReturnVO downBC(int guarantyId) {
-        return service.deleteGuaranty(guarantyId);
+        return service.downBC(guarantyId);
     }
 
     @RequestMapping(value = "/abandon", method = RequestMethod.DELETE)

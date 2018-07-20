@@ -7,6 +7,8 @@ import cn.ssyram.blockchain.impls.CCGuarantyChainInterfaceImpl;
 import cn.ssyram.blockchain.impls.GurantyChainImpl;
 import cn.ssyram.blockchain.interfaces.CCGuarantyChainInerface;
 import cn.ssyram.blockchain.interfaces.GuarantyChain;
+import com.sun.org.apache.bcel.internal.generic.RET;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,11 +35,15 @@ public class GuarantyManagementService extends BaseService{
         returnVO.setMessage(message);
         return returnVO;
     }
-    public ReturnVO deleteGuaranty(int guarantyId){
+    public ReturnVO downBC(int guarantyId){
         ReturnVO returnVO = new ReturnVO();
         String message = GuarantyChainUtil.updateState(guarantyId,1);
         returnVO.setMessage(message);
         return returnVO;
+    }
+    public ReturnVO deleteGuaranty(int guarantyId){
+        String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
+        return  intToReturnVO(mapper.DELETE(sqlSentence));
     }
     public HouseVO findHouse(int guarantyId){
         String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
