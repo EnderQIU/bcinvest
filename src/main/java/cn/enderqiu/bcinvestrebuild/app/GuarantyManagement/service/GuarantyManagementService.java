@@ -33,12 +33,18 @@ public class GuarantyManagementService extends BaseService{
         ReturnVO returnVO = new ReturnVO();
         String message = GuarantyChainUtil.updateState(guarantyId,4);
         returnVO.setMessage(message);
+        if(message.equals("ok")||message.equals("submitted")){
+            returnVO.setInfluence(1);
+        }
         return returnVO;
     }
     public ReturnVO downBC(int guarantyId){
         ReturnVO returnVO = new ReturnVO();
         String message = GuarantyChainUtil.updateState(guarantyId,1);
         returnVO.setMessage(message);
+        if(message.equals("ok")||message.equals("submitted")){
+            returnVO.setInfluence(1);
+        }
         return returnVO;
     }
     public ReturnVO deleteGuaranty(int guarantyId){
