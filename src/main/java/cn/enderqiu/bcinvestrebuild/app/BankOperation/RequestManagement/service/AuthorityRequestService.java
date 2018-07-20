@@ -111,7 +111,8 @@ public class AuthorityRequestService extends BaseService{
     }
     public ReturnVO changeGuarantyState(int guarantyId,int state){
         ReturnVO returnVO = new ReturnVO();
-        GuarantyChainUtil.updateState(guarantyId,3);
+        String message = GuarantyChainUtil.updateState(guarantyId,3);
+        returnVO.setMessage(message);
         return returnVO;
     }
 }

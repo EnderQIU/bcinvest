@@ -59,8 +59,13 @@ public class CompanyRequestService extends BaseService{
         return maxPageVO;
     }
     public ReturnVO repay(int guarantyId){
-        int isSuccess = 1;
-        GuarantyChainUtil.updateState(guarantyId,4);
+        int isSuccess = 0;
+        ReturnVO returnVO = new ReturnVO();
+        String message = GuarantyChainUtil.updateState(guarantyId,4);
+        returnVO.setMessage(message);
+        if(message.equals("ok")||message.equals("submitted")){
+            isSuccess = 1;
+        }
         if(isSuccess>0){
             Date curdate = new Date(new java.util.Date().getTime());
             String sqlSentence = "SELECT startDate,duration FROM protocol WHERE guarantyId = "+guarantyId+";";
@@ -80,22 +85,30 @@ public class CompanyRequestService extends BaseService{
             }
             protocolVO.setEndDate(curdate);
             String sqlSentence2 = "UPDATE  protocol SET endDate = '"+curdate+"',state = '"+protocolVO.getState()+"' WHERE guarantyId = "+guarantyId+";";
-            return intToReturnVO(mapper.UPDATE(sqlSentence2));
+            returnVO.setInfluence(mapper.UPDATE(sqlSentence2));
+            return returnVO;
         }
-        return intToReturnVO(0);
+        returnVO.setInfluence(0);
+        return returnVO;
     }
     public ReturnVO mortgage(int guarantyId){
-        int isSuccess = 1;
-        String sql = "select duration from guaranty inner join report on guaranty.reportId = report.reportId where guarantyId = "+guarantyId+";";
-        int duration = Integer.parseInt(mapper.SELECT(sql).get(0).get("duration").toString());
-        GuarantyChainUtil.updateState(guarantyId,6);
-        //int isSuccess = ccGuarantyChainInerface.updateState(guarantyId,6);
+        int isSuccess = 0;
+        ReturnVO returnVO = new ReturnVO();
+        String message = GuarantyChainUtil.updateState(guarantyId,6);
+        returnVO.setMessage(message);
+        if(message.equals("ok")||message.equals("submitted")){
+            isSuccess = 1;
+        }
         if(isSuccess>0){
+            String sql = "select duration from guaranty inner join report on guaranty.reportId = report.reportId where guarantyId = "+guarantyId+";";
+            int duration = Integer.parseInt(mapper.SELECT(sql).get(0).get("duration").toString());
             String sqlSentence = "INSERT INTO protocol(protocolId,guarantyId,startDate,duration,state) VALUES("+null+","+guarantyId+",CURDATE(),"+duration+",'repaying');";
             int result = mapper.INSERT(sqlSentence);
-            return intToReturnVO(result);
+            returnVO.setInfluence(result);
+            return returnVO;
         }
-        return intToReturnVO(0);
+        returnVO.setInfluence(0);
+        return returnVO;
     }
     public HouseVO findHouse(int guarantyId){
         String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";

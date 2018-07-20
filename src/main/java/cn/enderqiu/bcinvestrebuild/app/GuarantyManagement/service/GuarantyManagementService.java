@@ -29,12 +29,14 @@ public class GuarantyManagementService extends BaseService{
     }
     public ReturnVO putGuarantyToBC(int guarantyId){
         ReturnVO returnVO = new ReturnVO();
-        GuarantyChainUtil.updateState(guarantyId,4);
+        String message = GuarantyChainUtil.updateState(guarantyId,4);
+        returnVO.setMessage(message);
         return returnVO;
     }
     public ReturnVO deleteGuaranty(int guarantyId){
         ReturnVO returnVO = new ReturnVO();
-        GuarantyChainUtil.updateState(guarantyId,1);
+        String message = GuarantyChainUtil.updateState(guarantyId,1);
+        returnVO.setMessage(message);
         return returnVO;
     }
     public HouseVO findHouse(int guarantyId){
