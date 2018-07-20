@@ -44,13 +44,13 @@ public class AuthorityRequestService extends BaseService{
         List<Map<String,Object>> results = null;
         List<CompanyVO> companies = new ArrayList<>();
         int pageStartIndex = (page-1)*20;
-        String sqlSentence = "SELECT * FROM company WHERE state = '"+state+"' ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
+        String sqlSentence = "SELECT * FROM company WHERE status = '"+state+"' ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
         results = mapper.SELECT(sqlSentence);
         companies = getVOListByResult(results,CompanyVO.class);
         return companies;
     }
     public int findCompaniesCount(String state){
-        String sqlSentence = "SELECT COUNT(*) FROM company WHERE state = '"+state+"' ORDER BY accountNum;";
+        String sqlSentence = "SELECT COUNT(*) FROM company WHERE status = '"+state+"' ORDER BY accountNum;";
         List<Map<String,Object>> results = mapper.SELECT(sqlSentence);
         int count = Integer.parseInt(results.get(0).get("COUNT(*)").toString());
         return count;
@@ -106,7 +106,7 @@ public class AuthorityRequestService extends BaseService{
         return maxPageVO;
     }
     public ReturnVO changeCompanyState(String accountNum,String state){
-        String sqlSentence = "UPDATE company SET state = '"+state+"' WHERE accountNum = '"+accountNum+"';";
+        String sqlSentence = "UPDATE company SET status = '"+state+"' WHERE accountNum = '"+accountNum+"';";
         return intToReturnVO(mapper.UPDATE(sqlSentence));
     }
     public ReturnVO changeGuarantyState(int guarantyId,int state){

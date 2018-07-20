@@ -20,7 +20,7 @@ public class CompanyVO {
     @ApiModelProperty(value = "信用" ,required = true)
     private long credit;
     @ApiModelProperty(value = "状态" ,required = true)
-    private String state;
+    private String status;
 
     public void setName(String name) {
         this.name = name;
@@ -70,11 +70,11 @@ public class CompanyVO {
         return credit;
     }
 
-    public String getState() {
-        return state;
+    public String getStatus() {
+        return status;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
