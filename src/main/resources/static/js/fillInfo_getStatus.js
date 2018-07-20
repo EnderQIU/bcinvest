@@ -19,7 +19,7 @@ setCookie('user_id_token', 'testToken');
 window.requestByCode = function(code) {
     $.ajax(
         {
-            url:"/user/company/status",
+            url:"/api/user/company/status",
             async: false,
             type: "POST",
             data: {
@@ -32,7 +32,7 @@ window.requestByCode = function(code) {
 window.requestByCookie = function(cookie) {
     $.ajax(
         {
-            url:"/user/company/status",
+            url:"/api/user/company/status",
             async: false,
             type: "GET",
             headers: {
@@ -75,6 +75,7 @@ window.requestUserTokenCallBack = function(data) {
         location.href ="introduction.html";
     }
 }
+setCookie('user_id_token', 'testToken');
 var url = location.search;
 window.requestParameter = new Object();
 if (url != "") {
@@ -85,8 +86,8 @@ if (url != "") {
     }
 }
 var user_id_token = getCookie("user_id_token");
-if (user_id_token != null && user_id_token != "") {
-    window.requestByCookie(user_id_token);
-} else if (window.requestParameter.code != null && window.requestParameter.code != "") {
+if (window.requestParameter.code != null && window.requestParameter.code != "") {
     window.requestByCode(window.requestParameter.code);
+} else if (user_id_token != null && user_id_token != "") {
+    window.requestByCookie(user_id_token);
 }

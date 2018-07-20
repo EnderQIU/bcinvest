@@ -35,35 +35,43 @@ public class CompanyRequestService extends BaseService{
         extract(guarantyVO,result);
         return guarantyVO;
     }
-    public List<GuarantyVO> findGuarantiesByState(int stateNum,int page){
-        List<Map<String,Object>> results = null;
+    public List<GuarantyVO> findGuarantiesByStates(int[] stateNums,int page){
+        List<Map<String,Object>> guarantyIdList = null;
         List<GuarantyVO> guaranties = new ArrayList<>();
         int pageStartIndex = (page-1)*20;
-        switch(stateNum){
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                List<Map<String,Object>> guarantyIdList = GuarantyChain.chain.queryGuarantyIdByState(stateNum);
-                for(Map<String,Object> m:guarantyIdList){
-                    int guarantyId = Integer.parseInt(m.get("id").toString());
-                    String sqlSentence = "INSERT INTO temp values(null,"+guarantyId+");";
-                    mapper.INSERT(sqlSentence);
-                }
-                String sentence = "SELECT guarantyId FROM temp ORDER BY guarantyId LIMIT "+pageStartIndex+",20"+";";
-                List<Map<String,Object>> guarantyIdListByPage = mapper.SELECT(sentence);
-                for(Map<String,Object> m:guarantyIdListByPage){
-                    int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
-                    guaranties.add(findGuaranty(guarantyId));
-                }
-                mapper.DELETE("Delete from temp where 1=1");
-                break;
-            default:
-                String sqlSentence = "SELECT * FROM guaranty WHERE state = "+stateNum+" ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
-                results = mapper.SELECT(sqlSentence);
-                guaranties = getVOListByResult(results,GuarantyVO.class);
+        for(int stateNum :stateNums)
+        {
+            switch(stateNum){
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    guarantyIdList = GuarantyChain.chain.queryGuarantyIdByState(stateNum);
+                    for(Map<String,Object> m:guarantyIdList){
+                        int guarantyId = Integer.parseInt(m.get("id").toString());
+                        String sqlSentence = "INSERT INTO temp values(null,"+guarantyId+");";
+                        mapper.INSERT(sqlSentence);
+                    }
+                    break;
+                default:
+                    String sqlSentence = "SELECT guarantyId FROM guaranty WHERE state = "+stateNum+";";
+                    guarantyIdList = mapper.SELECT(sqlSentence);
+                    for(Map<String,Object> m:guarantyIdList){
+                        int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
+                        String sql = "INSERT INTO temp values(null,"+guarantyId+");";
+                        mapper.INSERT(sql);
+                        }
+                    }
+            }
+
+        String sentence = "SELECT guarantyId FROM temp ORDER BY guarantyId LIMIT "+pageStartIndex+",20"+";";
+        List<Map<String,Object>> guarantyIdListByPage = mapper.SELECT(sentence);
+        for(Map<String,Object> m:guarantyIdListByPage){
+            int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
+            guaranties.add(findGuaranty(guarantyId));
         }
+        mapper.DELETE("Delete from temp where 1=1");
         return guaranties;
     }
 

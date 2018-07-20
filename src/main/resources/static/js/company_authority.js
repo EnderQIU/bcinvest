@@ -24,7 +24,7 @@ function requestCompanyStatusTokenCallBack(data) {
             case "unapplied":
                 location.href= "fillInfo.html";
                 break;
-            case "checking":
+            case "checking_1":
                 location.href= "fillInfo.html";
                 break;
             case "unpassed":
@@ -41,22 +41,25 @@ function requestCompanyStatusTokenCallBack(data) {
         location.href ="";
     }
 };
-// user_id_token = getCookie("user_id_token");
-// if (user_id_token == null || user_id_token == "") {
-//     location.href = "introduction.html";
-// }
-window.requestCompanyStatusTokenCallBack({
-    'status': 'passed',
-    'user_id_token': 'testToken',
+
+//模拟用
+setCookie("user_id_token", "testToken");
+user_id_token = getCookie("user_id_token");
+if (user_id_token == null || user_id_token == "") {
+    location.href = "introduction.html";
+}
+$.ajax({
+    url: "/api/user/company/status",
+    type: "GET",
+    async: false,
+    headers: {
+        "user_id_token": user_id_token,
+    },
+    success: function(data) {
+        window.requestCompanyStatusTokenCallBack(data);
+    },
+    error: function (data) {
+        setCookie("user_id_token", "", -1);
+        window.location.href = "introduction.html"
+    }
 });
-// $.ajax({
-//     url: "/user/company/status",
-//     type: "GET",
-//     async: false,
-//     data: {
-//         "user_id_token": user_id_token,
-//     },
-//     success: function(data) {
-//         window.requestCompanyStatusTokenCallBack(data);
-//     }
-// });

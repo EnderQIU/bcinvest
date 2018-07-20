@@ -13,7 +13,7 @@ function getCookie(c_name) {
 function setCookie(c_name, value, expiredays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + expiredays);
-    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/";
 }
 function requestBankOrAuthorityInfoCallBack(data) {
     if (!isEmptyValue(data)) {
@@ -62,7 +62,7 @@ function isEmptyValue(value) {
     if (user_id_token == null || user_id_token == "") {
     } else {
         $.ajax({
-            url: "/user/bankOrAuthority/info",
+            url: "/api/user/bankOrAuthority/info",
             type: "GET",
             async: false,
             headers: {

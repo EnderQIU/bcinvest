@@ -72,11 +72,11 @@
                         var query_string = '?userName=' + this.bindData.username + "&password=" + this.bindData.password;
                         var result = null;
                         $.ajax({
-                            'url': '/user/bankOrAuthority/token' + query_string,
+                            'url': '/api/user/bankOrAuthority/token' + query_string,
                             'type': 'PUT',
                             'async':false,
                             'headers': {
-                                'user_id_token': getCookie('user_id_token'),
+                                'user_id_token': '',
                             },
                             'success': function (data) {
                                 result = data;
@@ -85,7 +85,7 @@
                         if (!isEmptyValue(result)) {
                             if (!isEmptyValue(result.message)) {
                                 if (result.message == 'ok') {
-                                    setCookie('user_id_token', result.token);
+                                    setCookie('user_id_token', result.token, 7);
                                     switch (this.bindData.account_type) {
                                         case 'bank':
                                             window.location.href = 'bank.html';

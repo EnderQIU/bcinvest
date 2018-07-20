@@ -89,6 +89,7 @@
             }
             .list_container .item_selected {
                 background-color: #CCCCCC;
+                font-weight: 600;
             }
             .searchBar{
                 display: flex;
@@ -130,12 +131,15 @@
             .content_table th:last-child {
                 border-radius: 0 6px 0 0;
             }
-            /*尾部*/
-            .content_table tfoot td:first-child {
-                border-radius: 0 0 0 6px;
-            }
-            .content_table tfoot td:last-child {
-                border-radius: 0 0 6px 0;
+            /*尾部  因为我们这里尾部只有一个td所有采用了没注销的那个  否则应该使用注销的那种*/
+            /*.content_table tfoot td:first-child {*/
+                /*border-radius: 0 0 0 6px;*/
+            /*}*/
+            /*.content_table tfoot td:last-child {*/
+                /*border-radius: 0 0 6px 0;*/
+            /*}*/
+            .content_table tfoot td {
+                border-radius: 0 0 6px 6px;
             }
             .content_table tfoot td {
                 border-bottom: 0;
@@ -406,10 +410,10 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="请输入您要查询的企业名" id = "searchText">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" v-on:click="easySearch()">查询</button>
+                                <button class="btn btn-default" type="button" v-on:click="company_info_manage_easy_search()">查询</button>
                             </span>
                         </div>
-                        <div> <button class = "btn searchbtn"data-toggle="modal" data-target="#searchModal" id = "sModal">高级检索</button></div>
+                        <div> <button class = "btn searchbtn" data-toggle="modal" data-target="#company_info_manage_search_modal" id = "sModal">高级检索</button></div>
                     </div>
                     <table class="content_table">
                         <thead>
@@ -422,15 +426,15 @@
                         <tr>
                             <td colspan="2">
                                 <div class="page_change_container" v-if="max_page > 0">
-                                    <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
-                                    <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
-                                    <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
-                                    <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                                    <label v-if="current_page > 0" class="page_change" v-on:click="company_info_manage_aimed_page(1)">首页</label>
+                                    <label v-if="current_page > 1" class="page_change" v-on:click="company_info_manage_aimed_page(current_page - 1)">上一页</label>
+                                    <label v-if="current_page > 2" class="page_change" v-on:click="company_info_manage_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                                    <label v-if="current_page > 1" class="page_change" v-on:click="company_info_manage_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
                                     <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
-                                    <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
-                                    <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
-                                    <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
-                                    <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+                                    <label v-if="current_page < max_page" class="page_change" v-on:click="company_info_manage_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                                    <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="company_info_manage_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                                    <label v-if="current_page < max_page" class="page_change" v-on:click="company_info_manage_aimed_page(current_page + 1)">下一页</label>
+                                    <label v-if="current_page > 0" class="page_change" v-on:click="company_info_manage_aimed_page(max_page)">尾页</label>
                                 </div>
                                 <div class="page_change_container" v-else>
                                     无内容
@@ -438,71 +442,71 @@
                             </td>
                         </tr>
                         </tfoot>
-                        <tr v-for="item in display_companies">
+                        <tr v-for="item in company_info_manage_companies">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
-                                <label v-on:click="view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
-                                <label v-on:click="view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看信用记录</label>
-                                <label v-on:click="view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看所有抵押物</label>
-                                <label v-on:click="view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">注销</label>
+                                <label v-on:click="company_info_manage_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                                <label v-on:click="company_info_manage_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看信用记录</label>
+                                <label v-on:click="company_info_manage_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看所有抵押物</label>
+                                <label v-on:click="company_info_manage_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">注销</label>
                             </td>
                         </tr>
                     </table>
                     <!-- 模态框（Modal） -->
                     <form id = "searchForm">
-                        <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="company_info_manage_search_modal" tabindex="-1" role="dialog" aria-labelledby="company_info_manage_highly_search_modal_label" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">高级检索</h4>
+                                        <h4 class="modal-title" id="company_info_manage_highly_search_modal_label">高级检索</h4>
                                     </div>
 
                                     <div class="modal-body">
 
                                         <div class="form-group">
                                             <label for="recipient-name" class="control-label">企业名:</label>
-                                            <input type="text" class="form-control" id="company_name" name = "name">
+                                            <input type="text" class="form-control" id="company_info_manage_highly_search_company_name" name = "name">
                                         </div>
                                         <div class="form-group">
                                             <label for="recipient-name" class="control-label">企业编号:</label>
-                                            <input type="text" class="form-control" id="company_num" name = "accountNum">
+                                            <input type="text" class="form-control" id="company_info_manage_highly_search_company_num" name = "accountNum">
                                         </div>
                                         <div class="form-group">
                                             <label for="recipient-name" class="control-label">企业电话:</label>
-                                            <input type="text" class="form-control" id="company_tel" name = "telNum">
+                                            <input type="text" class="form-control" id="company_info_manage_highly_search_company_tel" name = "telNum">
                                         </div>
                                         <div class="form-group">
                                             <label for="recipient-name" class="control-label">企业邮箱:</label>
-                                            <input type="text" class="form-control" id="company_email" name = "email">
+                                            <input type="text" class="form-control" id="company_info_manage_highly_search_company_email" name = "email">
                                         </div>
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" data-dismiss="modal" id = "searchbutton" v-on:click="search()">查询</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" id = "close">关闭</button>
+                                        <button type="submit" class="btn btn-primary" data-dismiss="modal" id = "searchbutton" v-on:click="company_info_manage_search()">查询</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" id = "company_info_manage_highly_search_close">关闭</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="company_info_manage_view_detail_detial_modal" tabindex="-1" role="dialog" aria-labelledby="company_info_manage_view_detail" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" id="myModalLabel">企业详情</h4>
+                                    <h4 class="modal-title" id="company_info_manage_view_detail">企业详情</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="input-group" id = "company_detail">
-                                        <label>名称：</label><span id = "company_name"></span><br>
-                                        <label>电话：</label><span id = "company_tel"></span><br>
-                                        <label>邮件:</label><span id = "company_email"></span><br>
-                                        <label>信用:</label><span id = "company_credit"></span><br>
+                                    <div class="input-group" id = "company_info_manage_view_detail_company_detail">
+                                        <label>名称：</label><span id = "company_info_manage_view_detail_company_name"></span><br>
+                                        <label>电话：</label><span id = "company_info_manage_view_detail_company_tel"></span><br>
+                                        <label>邮件:</label><span id = "company_info_manage_view_detail_company_email"></span><br>
+                                        <label>信用:</label><span id = "company_info_manage_view_detail_company_credit"></span><br>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" id = "close">关闭</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id = "company_info_manage_view_detail_close">关闭</button>
                                 </div>
                             </div>
                         </div>
@@ -610,6 +614,10 @@
                                 this.display_guaranty_to_tbc_table();
                                 break;
                             case 'company_info_manage':
+                                this.company_info_manage_type = 'all';
+                                this.company_info_manage_companies = [];
+                                this.company_info_manage_search_data = '';
+                                this.company_info_manage_display_table();
                                 break;
                             case 'test':
                                 alert('123');
@@ -633,7 +641,7 @@
                         var query_para = '?' + this.login_apply_company_states_to_string() + "&page=" + page.toString();
                         var result = null;
                         $.ajax({
-                            'url': '/user/bank/authorityRequest/companies' + query_para,
+                            'url': '/api/user/bank/authorityRequest/companies' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -649,7 +657,7 @@
                         var query_para = '?' + this.login_apply_company_states_to_string();
                         var result = null;
                         $.ajax({
-                            'url': '/user/bank/authorityRequest/companyMaxPage' + query_para,
+                            'url': '/api/user/bank/authorityRequest/companyMaxPage' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -686,7 +694,7 @@
                         var query_para = '?accountNum=' + item.accountNum.toString();
                         var result = null;
                         $.ajax({
-                            'url': '/user/bank/authorityRequest/companyDetail' + query_para,
+                            'url': '/api/user/bank/authorityRequest/companyDetail' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -721,7 +729,7 @@
                                 if(result){
                                     var influence = null;
                                     $.ajax({
-                                        'url': '/user/bank/authorityRequest/approve',
+                                        'url': '/api/user/bank/authorityRequest/approve',
                                         'type': 'PUT',
                                         'data':{
                                             'accountNum':item.accountNum,
@@ -760,7 +768,7 @@
                                 if(result){
                                     var influence = null;
                                     $.ajax({
-                                        'url': '/user/bank/authorityRequest/reject',
+                                        'url': '/api/user/bank/authorityRequest/reject',
                                         'type': 'PUT',
                                         'data':{
                                             'accountNum':item.accountNum,
@@ -800,7 +808,7 @@
                         var query_para = '?' + this.to_tbc_qualified_guaranty_states_to_string() + "&page=" + page.toString();
                         var result = null;
                         $.ajax({
-                            'url': '/user/bank/authorityRequest/guaranties' + query_para,
+                            'url': '/api/user/bank/authorityRequest/guaranties' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -816,7 +824,7 @@
                         var query_para = '?' + this.to_tbc_qualified_guaranty_states_to_string();
                         var result = null;
                         $.ajax({
-                            'url': '/user/bank/authorityRequest/guarantyMaxPage' + query_para,
+                            'url': '/api/user/bank/authorityRequest/guarantyMaxPage' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -855,13 +863,13 @@
                         var url = null;
                         switch(item.type){
                             case 0:
-                                url = '/user/bank/companyRequest/houseDetail'
+                                url = '/api/user/bank/companyRequest/houseDetail'
                                 break;
                             case 1:
-                                url = '/user/bank/companyRequest/landDetail'
+                                url = '/api/user/bank/companyRequest/landDetail'
                                 break;
                             case 2:
-                                url = '/user/bank/companyRequest/machineDetail'
+                                url = '/api/user/bank/companyRequest/machineDetail'
                                 break;
                         }
                         var query_para = '?guarantyId='+ item.guarantyId.toString();
@@ -923,7 +931,7 @@
                                 if(result){
                                     var influence = null;
                                     $.ajax({
-                                        'url': '/user/bank/authorityRequest/toTBCList',
+                                        'url': '/api/user/bank/authorityRequest/toTBCList',
                                         'type': 'PUT',
                                         'data':{
                                             'guarantyId':item.guarantyId,
@@ -963,7 +971,7 @@
                         var query_para = '?' + this.repay_confirm_guaranty_states_to_string() + "&page=" + page.toString();
                         var result = null;
                         $.ajax({
-                            'url': '/user/bank/companyRequest/guaranties' + query_para,
+                            'url': '/api/user/bank/companyRequest/guaranties' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -979,7 +987,7 @@
                         var query_para = '?' + this.repay_confirm_guaranty_states_to_string();
                         var result = null;
                         $.ajax({
-                            'url': '/user/bank/companyRequest/maxPage' + query_para,
+                            'url': '/api/user/bank/companyRequest/maxPage' + query_para,
                             'type': 'GET',
                             'async': false,
                             'success': function(data) {
@@ -1017,13 +1025,13 @@
                         var url = null;
                         switch(item.type){
                             case 0:
-                                url = '/user/bank/companyRequest/houseDetail'
+                                url = '/api/user/bank/companyRequest/houseDetail'
                                 break;
                             case 1:
-                                url = '/user/bank/companyRequest/landDetail'
+                                url = '/api/user/bank/companyRequest/landDetail'
                                 break;
                             case 2:
-                                url = '/user/bank/companyRequest/machineDetail'
+                                url = '/api/user/bank/companyRequest/machineDetail'
                                 break;
                         }
                         var query_para = '?guarantyId=' + item.guarantyId.toString();
@@ -1085,7 +1093,7 @@
                                 if(result){
                                     var influence = null;
                                     $.ajax({
-                                        'url': '/user/bank/companyRequest/repay',
+                                        'url': '/api/user/bank/companyRequest/repay',
                                         'type': 'PUT',
                                         'data':{
                                             'guarantyId':item.guarantyId,
@@ -1114,10 +1122,10 @@
                         var url = null;
                         if (this.company_info_manage_type == 'all') {
                             var query_para = "?currentPage=" + page.toString();
-                            url = '/bank/infoManagement/company/allCompanyInfo' + query_para;
+                            url = '/api/bank/infoManagement/company/allCompanyInfo' + query_para;
                         } else if (this.company_info_manage_type == 'search') {
                             var query_para = "?" + this.company_info_manage_search_data + "&currentPage=" + page.toString();
-                            url = '/bank/infoManagement/company/allCompanyInfo/search' + query_para;
+                            url = '/api/bank/infoManagement/company/allCompanyInfo/search' + query_para;
                         }
                         var result = null;
                         $.ajax({
@@ -1136,10 +1144,10 @@
                     company_info_manage_get_max_page() {
                         var url = null;
                         if (this.company_info_manage_type == 'all') {
-                            url = '/bank/infoManagement/company/getMaxPage'
+                            url = '/api/bank/infoManagement/company/getMaxPage'
                         } else if(this.company_info_manage_type == 'search'){
                             var query_para = "?"+this.company_info_manage_search_data;
-                            url = '/bank/infoManagement/company/allCompanyInfo/search/getMaxPage' + query_para;
+                            url = '/api/bank/infoManagement/company/allCompanyInfo/search/getMaxPage' + query_para;
                         }
                         var result = null;
                         $.ajax({
@@ -1161,6 +1169,59 @@
                             this.current_page = page;
                             this.company_info_manage_companies = companies;
                         }
+                    },
+                    company_info_manage_search(){
+                        this.company_info_manage_type = 'search';
+                        this.company_info_manage_search_data = $('form').serialize();
+                        if (this.company_info_manage_search_data == "name=&accountNum=&telNum=&email=") {
+                            bootbox.alert("请至少输入一项查询内容");
+                            return false;
+                        }
+                        $('#searchForm input').val("");
+                        this.company_info_manage_display_table();
+                    },
+                    company_info_manage_easy_search(){
+                        this.company_info_manage_type = 'search';
+                        var searchValue = $('#searchText').val();
+                        if (searchValue==""){
+                            bootbox.alert("请输入您要查询的企业名");
+                            return false;
+                        }
+                        this.company_info_manage_search_data = 'name=' + searchValue;
+                        this.company_info_manage_display_table();
+                    },
+                    company_info_manage_display_table(){
+                        var max_page_data = this.company_info_manage_get_max_page();
+                        if (!isEmptyValue(max_page_data) && max_page_data.maxPage > 0) {
+                            this.max_page = max_page_data.maxPage;
+                            this.company_info_manage_companies = this.company_info_manage_get_company(1);
+                            this.current_page = 1;
+                        } else {
+                            this.company_info_manage_companies = [];
+                            this.max_page = 0;
+                        }
+                    },
+                    company_info_manage_view_detail_click(item){
+                        var query_para = '?accountNum=' + item.accountNum.toString();
+                        var result = null;
+                        $.ajax({
+                            'url': '/api/user/bank/authorityRequest/companyDetail' + query_para,
+                            'type': 'GET',
+                            'async': false,
+                            'success': function(data) {
+                                result = data;
+                            },
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            }
+                        });
+                        var company = result;
+                        var modal = $('#company_info_manage_view_detail_detial_modal');
+                        modal.find('#company_info_manage_view_detail_company_name').html(company.name);
+                        modal.find('#company_info_manage_view_detail_company_tel').html(company.telNum);
+                        modal.find('#company_info_manage_view_detail_company_email').html(company.emailAddress);
+                        modal.find('#company_info_manage_view_detail_company_credit').html(company.credit);
+                        modal.modal('show');
                     },
                 }
             });

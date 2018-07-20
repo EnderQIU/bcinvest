@@ -13,7 +13,7 @@ function getCookie(c_name) {
 function setCookie(c_name, value, expiredays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + expiredays);
-    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/";
 }
 function requestBankOrAuthorityInfoCallBack(data) {
     if (!isEmptyValue(data)) {
@@ -59,21 +59,18 @@ function isEmptyValue(value) {
             return true;
     }
 }
-{
-    var user_id_token = getCookie('user_id_token');
-    if (user_id_token == null || user_id_token == "") {
-        location.href = "login-in.html";
-    } else {
-        $.ajax({
-            url: "/user/bankOrAuthority/info",
-            type: "GET",
-            async: false,
-            headers: {
-                "user_id_token": user_id_token,
-            },
-            success: function (data) {
-                window.requestBankOrAuthorityInfoCallBack(data);
-            }
-        });
-    }
+if (getCookie('user_id_token') == null || getCookie('user_id_token') == "") {
+    location.href = "login-in.html";
+} else {
+    $.ajax({
+        url: "/api/user/bankOrAuthority/info",
+        type: "GET",
+        async: false,
+        headers: {
+            "user_id_token": getCookie('user_id_token'),
+        },
+        success: function(data) {
+            window.requestBankOrAuthorityInfoCallBack(data);
+        }
+    });
 }
