@@ -84,17 +84,19 @@ public class CreditChainUtil {
      * 3. 解锁。查询队列中 accountNum 相同的记录中是否存在状态全为 finished 的情况，若存在，则将指定的企业信用值解锁，并将所有状态为 finished 的记录删除
      */
     // @Scheduled(fixedRate = 120)
-    private static void updateCreditSchedule(){
+    public static void updateCreditSchedule(){
         Byte unlocked = new Byte("0");
         // 提交事务
         Creditupdatetask T = Creditupdatetask.CREDITUPDATETASK;
-        List<Integer> tasks = dsl.select().distinctOn(T.ACCOUNTNUM).where(T.STATE.ne("pending")).fetch(T.ID);
+        List<Integer> tasks = dsl.select().from(T).where(T.STATE.eq("waiting")).fetch(T.ID);
         if (!tasks.isEmpty()){
             for (Integer task: tasks){
                 CreditupdatetaskRecord record = dsl.fetchOne(T, T.ID.eq(task));
-                record.setState("pending");
-                record.store();
-                CreditChain.chain.updateGuarantyState(record.getAccountnum(), record.getPreviouscredit(), record.getDelta(), record.getTimestamp(), record.getReason());
+                if (!dsl.fetchExists(T, T.ACCOUNTNUM.eq(record.getAccountnum()).and(T.STATE.eq("pending")))) {
+                    record.setState("pending");
+                    record.store();
+                    CreditChain.chain.updateGuarantyState(record.getAccountnum(), record.getPreviouscredit(), record.getDelta(), record.getTimestamp(), record.getReason());
+                }
             }
 
         }
@@ -117,7 +119,7 @@ public class CreditChainUtil {
             }
         }
         // 解锁
-        Result<Record2<Integer, String>> result1 = dsl.select(T.ID, T.ACCOUNTNUM).distinctOn(T.ACCOUNTNUM).where(T.STATE.eq("finished")).fetch();
+        Result<Record2<Integer, String>> result1 = dsl.select(T.ID, T.ACCOUNTNUM).from(T).where(T.STATE.eq("finished")).fetch();
         if (result1 != null){
             for (Record2<Integer, String> record2: result1){
                 dsl.update(Company.COMPANY)
