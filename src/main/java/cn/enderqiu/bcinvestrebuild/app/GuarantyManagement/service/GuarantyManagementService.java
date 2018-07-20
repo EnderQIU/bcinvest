@@ -7,6 +7,8 @@ import cn.ssyram.blockchain.impls.CCGuarantyChainInterfaceImpl;
 import cn.ssyram.blockchain.impls.GurantyChainImpl;
 import cn.ssyram.blockchain.interfaces.CCGuarantyChainInerface;
 import cn.ssyram.blockchain.interfaces.GuarantyChain;
+import com.sun.org.apache.bcel.internal.generic.RET;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,13 +31,19 @@ public class GuarantyManagementService extends BaseService{
     }
     public ReturnVO putGuarantyToBC(int guarantyId){
         ReturnVO returnVO = new ReturnVO();
-        GuarantyChainUtil.updateState(guarantyId,4);
+        String message = GuarantyChainUtil.updateState(guarantyId,4);
+        returnVO.setMessage(message);
+        return returnVO;
+    }
+    public ReturnVO downBC(int guarantyId){
+        ReturnVO returnVO = new ReturnVO();
+        String message = GuarantyChainUtil.updateState(guarantyId,1);
+        returnVO.setMessage(message);
         return returnVO;
     }
     public ReturnVO deleteGuaranty(int guarantyId){
-        ReturnVO returnVO = new ReturnVO();
-        GuarantyChainUtil.updateState(guarantyId,1);
-        return returnVO;
+        String sqlSentence = "DELETE FROM guaranty WHERE guarantyId = "+guarantyId+";";
+        return  intToReturnVO(mapper.DELETE(sqlSentence));
     }
     public HouseVO findHouse(int guarantyId){
         String sqlSentence1 = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
@@ -74,24 +82,40 @@ public class GuarantyManagementService extends BaseService{
         extract(guarantyVO,result);
         return guarantyVO;
     }
+    public String getCompany(int guarantyId){
+        String sql = "SELECT accountNum FROM guaranty WHERE guarantyId = "+guarantyId+";";
+        List<Map<String,Object>> result = mapper.SELECT(sql);
+        String accountNum = result.get(0).get("accountNum").toString();
+        return accountNum;
+    }
     public List<GuarantyVO> findGuarantiesByState(String user_id_token,int stateNum,int page){
         List<Map<String,Object>> results = null;
         List<GuarantyVO> guaranties = new ArrayList<>();
         String accountNum = TokenToAccountNum(user_id_token);
+        int pageStartIndex = (page-1)*20;
         switch(stateNum){
             case 4:
             case 5:
             case 6:
             case 7:
             case 8:
-                //List<Map<String,Object>> guarantyIdList = ccGuarantyChainInerface.queryGuarantyIdByState(stateNum);
-                //for(Map<String,Object> m:guarantyIdList){
-                //    int guarantyId = Integer.parseInt(m.get(0).toString());
-               //     guaranties.add(findGuarantyByCompany(accountNum,guarantyId));
-               // }
-               // break;
+                List<Map<String,Object>> guarantyIdList = GuarantyChain.chain.queryGuarantyIdByState(stateNum);
+                for(Map<String,Object> m:guarantyIdList){
+                    int guarantyId = Integer.parseInt(m.get("id").toString());
+                    if(getCompany(guarantyId).equals(accountNum)){
+                        String sqlSentence = "INSERT INTO temp values(null,"+guarantyId+");";
+                        mapper.INSERT(sqlSentence);
+                    }
+                }
+                String sentence = "SELECT guarantyId FROM temp ORDER BY guarantyId LIMIT "+pageStartIndex+",20"+";";
+                List<Map<String,Object>> guarantyIdListByPage = mapper.SELECT(sentence);
+                for(Map<String,Object> m:guarantyIdListByPage){
+                    int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
+                    guaranties.add(findGuarantyByCompany(accountNum,guarantyId));
+                }
+                mapper.DELETE("Delete from temp where 1=1");
+                break;
             default:
-                int pageStartIndex = (page-1)*20;
                 String sqlSentence = "SELECT * FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+" ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
                 results = mapper.SELECT(sqlSentence);
                 guaranties = getVOListByResult(results,GuarantyVO.class);

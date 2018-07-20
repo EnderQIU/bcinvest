@@ -1,6 +1,8 @@
 package cn.enderqiu.bcinvestrebuild.app.ReviewInfoManagement;
 
 import cn.enderqiu.bcinvestrebuild.service.BaseService;
+import cn.ssyram.blockchain.impls.CreditChainImpl;
+import com.generator.tables.CreditChain;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 @Service
 public class ReviewInfoService extends BaseService {
+    private static CreditChainImpl creditChain=new CreditChainImpl();
+
     ReviewCompanyInfoVO getCompanyInfo(String company_id)
     {
 
@@ -41,7 +45,14 @@ public class ReviewInfoService extends BaseService {
                 String Name = m.get("Name").toString();
                 String telNum = m.get("TelNum").toString();
                 String emailAddress = m.get("EmailAddress").toString();
-                String credit = " ";
+
+                List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(CompanytNum);
+                String credit="";
+                if(creditinfo.size()>0) {
+                    credit = creditinfo.get(0).get("value").toString();
+                }
+
+
                 ReviewCompanyInfoVO rinfo = new ReviewCompanyInfoVO(CompanytNum, credit, Name, telNum, emailAddress);
                 rcInfos.add(rinfo);
             }
@@ -72,7 +83,10 @@ public class ReviewInfoService extends BaseService {
                 String guarantyId=mm.get("guarantyId").toString();
                 String reportId=mm.get("ReportId").toString();
 
-                ReviewChainInfoVO reviewChainInfoVO=new ReviewChainInfoVO(reviewCompanyInfoVO,  guarantyId,  reportId,  authorityId,  guarantyName,  evaluateValue);
+                List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(mm.get("CompanyId").toString());
+                String credit =creditinfo.get(0).get("value").toString();
+
+                ReviewChainInfoVO reviewChainInfoVO=new ReviewChainInfoVO(reviewCompanyInfoVO,  guarantyId,  reportId,  authorityId,  guarantyName,  evaluateValue,credit);
                 guarantyTBCinfos.add(reviewChainInfoVO);
             }
             return  guarantyTBCinfos;
@@ -139,5 +153,6 @@ return null;
             }
         }
     }
+
 
 }

@@ -34,9 +34,17 @@ public class ReviewInfoController extends BaseController {
             )
     })
 
+
     List<ReviewCompanyInfoVO> getCompanyInfo(int pages)
     {
         return ReviewInfoService.getCompanyStateUnapplied2pages(pages);
+    }
+    @RequestMapping(value = "/getComoanyInfo/maxpage", method = RequestMethod.GET)
+
+    MaxPageVO getCOmpanyInfoMaxpage()
+    {
+        int size=ReviewInfoService.getCompanyStateUnapplied().size();
+        return new MaxPageVO(size/21+1);
     }
 
 
@@ -57,6 +65,12 @@ public class ReviewInfoController extends BaseController {
         return ReviewInfoService.getGuarantyTBCInfo2pages(getBankUserDTO().getToken(),pages);
     }
 
+    @RequestMapping(value = "/getChainInfo/maxpages", method = RequestMethod.GET)
+    MaxPageVO getGuarantyTBCInfoMaxpages()
+    {
+        int size=ReviewInfoService.getGuarantyTBCInfo(getBankUserDTO().getToken()).size();
+        return new MaxPageVO(size/21+1);
+    }
 
     @RequestMapping(value = "/updateGuarantyValue", method = RequestMethod.PUT)
     @ApiImplicitParams({

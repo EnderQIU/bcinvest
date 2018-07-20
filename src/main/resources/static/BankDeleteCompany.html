@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/JQuery.js"></script>
+</head>
+<body>
+<div id=delete_info>
+<button v-on:click="delete_company_info(companyId)">删除企业</button>
+</div>
+<script>
+new Vue({
+    el:"#delete_info",
+    methods:{
+        delete_company_info:function (companyId) {
+
+            var result =' ';
+            var r=confirm("是否确定修改");
+            if(r==true) {
+                //deal with parameter
+                $.ajax({
+                    method: "PUT",
+                    url: "/api/bank/infoManagement/company/allCompanyInfo/cancleCompanyAccount",
+                    async: false,
+                    data: {
+                        "accountNum": companyId,
+                    },
+                    beforeSend: function (request) {
+                        //记得修改user_id_token
+                        //
+                        //
+                        request.setRequestHeader("user_id_token", "12345");
+                    },
+                    success: function (data) {
+
+                        result = data;
+
+                    }
+
+
+                });
+
+                alert(result["message"])
+
+
+                return result;
+            }
+        }
+    }
+})
+</script>
+</body>
+</html>

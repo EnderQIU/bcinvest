@@ -42,7 +42,7 @@
             </tbody>
         </table>
 
-        <p style="text-align:center;"><label>当前页：{{currentPage}}</label><label v-on:click="change_pages">下一页</label></p>
+        <p style="text-align:center;"><label v-on:click="">上一页</label><label>当前页：{{currentPage}}</label><label v-on:click="next_pages">下一页</label></p>
         <button v-on:click="button_click_listener()">获取企业的信用列表</button>
 
     </div>
@@ -88,16 +88,55 @@
                     this.companycredit=result[0]['credit'];
                     this.credit= result;
                 },
-                change_pages:function () {
 
-                this.currentPage = this.currentPage + 1;
-                result = this.getData(this.currentPage);
-                this.credit = result;
+                delete_company_info:function (companyId) {
+
+                        var result =' ';
+                        var r=confirm("是否确定修改");
+                        if(r==true) {
+                            //deal with parameter
+                            $.ajax({
+                                method: "PUT",
+                                url: "/api/bank/infoManagement/company/allCompanyInfo/cancleCompanyAccount",
+                                async: false,
+                                data: {
+                                    "accountNum": "987",
+                                },
+                                beforeSend: function (request) {
+                                    request.setRequestHeader("user_id_token", "12345");
+                                },
+                                success: function (data) {
+
+                                    result = data;
+
+                                }
 
 
+                            });
+
+                                alert(result["message"])
+
+
+                            return result;
+                        }
+                    },
+                next_pages:function () {
+
+                    this.currentPage = this.currentPage + 1;
+                    result = this.getData(this.currentPage);
+                    this.credit = result;
+
+
+                },
+                    last_pages:function () {
+                        this.currentPage = this.currentPage - 1;
+                        result = this.getData(this.currentPage);
+                        this.credit = result;
+
+                    }
                 }
 
-            }
+
         })
     </script>
 </div>

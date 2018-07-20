@@ -12,7 +12,8 @@ public class creditInfoService extends BaseService{
 private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 
-    public List<creditInfoVO> getCompanyCredit(String user_id_token) {
+    public List<creditInfoVO> getCompanyCredit(String user_id_token)
+    {
         CreditChainImpl creditChain=new CreditChainImpl();
         List<Map<String, Object>> mm = mapper.SELECT("Select * from Company where Token =" + user_id_token);
         if (mm.size() > 0) {
@@ -31,8 +32,12 @@ private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-d
             return null;
         }
         }
-        public List<creditInfoVO> getCompanyCreditList(String CompanyNum)
-        {
+
+
+
+
+    public List<creditInfoVO> getCompanyCreditList(String CompanyNum)
+    {
             CreditChainImpl creditChain=new CreditChainImpl();
             List<creditInfoVO> cinfoList = new ArrayList<>();
 
@@ -59,7 +64,9 @@ private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-d
         }
 
 
-    public  List<creditInfoVO> getCompanyCredit2Pages(String user_id_token, int pages) {
+
+    public  List<creditInfoVO> getCompanyCredit2Pages(String user_id_token, int pages)
+    {
 
         List<creditInfoVO> creditInfoVOS=getCompanyCredit(user_id_token);
         int maxpages=creditInfoVOS.size()/21+1;
@@ -80,6 +87,9 @@ private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-d
         }
 
     }
+
+
+
     public List<creditInfoVO> getComapanyCreditList2Pages(String accountNum,int pages)
     {
         List<creditInfoVO> creditInfoVOS=getCompanyCreditList(accountNum);
