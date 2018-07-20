@@ -43,10 +43,14 @@ public class GurantyChainImpl implements GuarantyChain {
                         "FROM " + type.getReadyMainChainViewName() +
                         " WHERE id = " + guarantyId.toString();
 
+        List<Map<String, Object>> l = Dispatcher.query(
+                new QueryDTO(type, sentence)
+        );
+        if (l.size() == 0)
+            return -1;
+
         return Integer.valueOf(
-                (String) Dispatcher.query(
-                        new QueryDTO(type, sentence)
-                ).get(0).get("value")
+                (String) l.get(0).get("value")
         );
     }
 

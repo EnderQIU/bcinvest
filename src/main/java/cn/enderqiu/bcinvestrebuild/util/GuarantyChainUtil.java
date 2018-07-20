@@ -4,10 +4,13 @@ import cn.ssyram.blockchain.interfaces.GuarantyChain;
 import com.generator.tables.Guaranty;
 import com.generator.tables.Guarantystateupdatetask;
 import com.generator.tables.records.GuarantyRecord;
+import com.generator.tables.records.GuarantystateupdatetaskRecord;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import static org.jooq.impl.DSL.field;
 
 @Component
 public class GuarantyChainUtil {
@@ -136,6 +139,7 @@ public class GuarantyChainUtil {
      */
     private static void addTask(Integer guarantyId, Integer previousState, Integer stateWillUpdateTo){
         Guarantystateupdatetask T = Guarantystateupdatetask.GUARANTYSTATEUPDATETASK;
+        GuarantyChain.chain.updateGuarantyState(guarantyId, stateWillUpdateTo);
         dsl.insertInto(T)
                 .set(T.GUARANTYID, guarantyId)
                 .set(T.PREVIOUSSTATE, previousState)
@@ -153,14 +157,14 @@ public class GuarantyChainUtil {
      * 2. 遍历队列中任务状态为 failure 的任务，调用 addTask() 重新提交处理，然后将这些记录删除。
      */
     //@Scheduled(fixedRate = 10)
-    public void checkStateWhetherUpdate(){
+    public static void checkStateWhetherUpdate(){
         Byte locked = 1;
         Byte unlocked = 0;
         Guarantystateupdatetask T = Guarantystateupdatetask.GUARANTYSTATEUPDATETASK;
         Result result = dsl.fetch(T, T.TASKSTATE.eq("pending"));
         for (Object o: result){
-            Record record = (Record) result;
-            Integer presentStateFromBlockChain = GuarantyChain.chain.getGuarantyState(record.getValue("guarantyId", Integer.class));
+            Record record = (Record) o;
+            Integer presentStateFromBlockChain = GuarantyChain.chain.getGuarantyState(record.getValue("guarantyId", Integer.class));  // 此函数没查到数据就会返回 -1
             Integer stateWillUpdateTo = record.getValue("stateWillUpdateTo", Integer.class);
             if (presentStateFromBlockChain.equals(stateWillUpdateTo)){
                 // 状态装换完成，更新状态，解锁
