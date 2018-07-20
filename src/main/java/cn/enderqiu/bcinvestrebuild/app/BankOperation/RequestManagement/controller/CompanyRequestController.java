@@ -30,12 +30,10 @@ public class CompanyRequestController extends BaseController{
                     required = true,  dataType = "int"),
     })
     List<GuarantyVO> getGuaranties(int page,int[] states) {
-        List<GuarantyVO> all = new ArrayList<>();
-        for(int state:states){
-            List<GuarantyVO> guaranties = service.findGuarantiesByState(state,page);
-            all.addAll(guaranties);
+        return service.findGuarantiesByStates(states,page);
+
         }
-        return all; }
+
     @RequestMapping(value = "/maxPage", method = RequestMethod.GET)
     @ApiImplicitParams({
     })

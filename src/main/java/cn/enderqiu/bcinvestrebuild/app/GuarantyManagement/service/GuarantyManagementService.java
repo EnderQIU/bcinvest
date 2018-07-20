@@ -94,38 +94,48 @@ public class GuarantyManagementService extends BaseService{
         String accountNum = result.get(0).get("accountNum").toString();
         return accountNum;
     }
-    public List<GuarantyVO> findGuarantiesByState(String user_id_token,int stateNum,int page){
-        List<Map<String,Object>> results = null;
+    public List<GuarantyVO> findGuarantiesByStates(String user_id_token,int[] stateNums,int page){
+        List<Map<String,Object>> guarantyIdList = null;
         List<GuarantyVO> guaranties = new ArrayList<>();
         String accountNum = TokenToAccountNum(user_id_token);
         int pageStartIndex = (page-1)*20;
-        switch(stateNum){
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                List<Map<String,Object>> guarantyIdList = GuarantyChain.chain.queryGuarantyIdByState(stateNum);
-                for(Map<String,Object> m:guarantyIdList){
-                    int guarantyId = Integer.parseInt(m.get("id").toString());
-                    if(getCompany(guarantyId).equals(accountNum)){
-                        String sqlSentence = "INSERT INTO temp values(null,"+guarantyId+");";
-                        mapper.INSERT(sqlSentence);
+        for(int stateNum :stateNums)
+        {
+            switch(stateNum){
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    guarantyIdList = GuarantyChain.chain.queryGuarantyIdByState(stateNum);
+                    for(Map<String,Object> m:guarantyIdList){
+                        int guarantyId = Integer.parseInt(m.get("id").toString());
+                        if(getCompany(guarantyId).equals(accountNum)){
+                            String sqlSentence = "INSERT INTO temp values(null,"+guarantyId+");";
+                            mapper.INSERT(sqlSentence);
+                        }
                     }
-                }
-                String sentence = "SELECT guarantyId FROM temp ORDER BY guarantyId LIMIT "+pageStartIndex+",20"+";";
-                List<Map<String,Object>> guarantyIdListByPage = mapper.SELECT(sentence);
-                for(Map<String,Object> m:guarantyIdListByPage){
-                    int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
-                    guaranties.add(findGuarantyByCompany(accountNum,guarantyId));
-                }
-                mapper.DELETE("Delete from temp where 1=1");
-                break;
-            default:
-                String sqlSentence = "SELECT * FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+" ORDER BY accountNum LIMIT "+pageStartIndex+",20"+";";
-                results = mapper.SELECT(sqlSentence);
-                guaranties = getVOListByResult(results,GuarantyVO.class);
+                    break;
+                default:
+                    String sqlSentence = "SELECT guarantyId FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+";";
+                    guarantyIdList = mapper.SELECT(sqlSentence);
+                    for(Map<String,Object> m:guarantyIdList){
+                        int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
+                        if(getCompany(guarantyId).equals(accountNum)){
+                            String sql = "INSERT INTO temp values(null,"+guarantyId+");";
+                            mapper.INSERT(sql);
+                        }
+                    }
+            }
+
         }
+        String sentence = "SELECT guarantyId FROM temp ORDER BY guarantyId LIMIT "+pageStartIndex+",20"+";";
+        List<Map<String,Object>> guarantyIdListByPage = mapper.SELECT(sentence);
+        for(Map<String,Object> m:guarantyIdListByPage){
+            int guarantyId = Integer.parseInt(m.get("guarantyId").toString());
+            guaranties.add(findGuarantyByCompany(accountNum,guarantyId));
+        }
+        mapper.DELETE("Delete from temp where 1=1");
         return guaranties;
     }
     public int findGuarantiesCount(String user_id_token,int stateNum){

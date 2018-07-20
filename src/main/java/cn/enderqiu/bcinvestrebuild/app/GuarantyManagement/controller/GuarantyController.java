@@ -31,12 +31,7 @@ public class GuarantyController extends BaseController{
                     required = true,  dataType = "int"),
     })
     List<GuarantyVO> getGuaranties(String user_id_token,int page,int[] states) {
-        List<GuarantyVO> all = new ArrayList<>();
-        for(int state:states){
-            List<GuarantyVO> guaranties = service.findGuarantiesByState(getCompanyUserDTO().getToken(),state,page);
-            all.addAll(guaranties);
-        }
-        return all; }
+        return service.findGuarantiesByStates(getCompanyUserDTO().getToken(),states,page); }
     @RequestMapping(value = "/maxPage", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "user_id_token", value = "用户唯一标识符",
