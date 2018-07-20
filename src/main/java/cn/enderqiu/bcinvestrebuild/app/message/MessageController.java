@@ -1,5 +1,6 @@
 package cn.enderqiu.bcinvestrebuild.app.message;
 
+import cn.enderqiu.bcinvestrebuild.app.message.response.CompanyIdAndNameResponse;
 import cn.enderqiu.bcinvestrebuild.app.message.response.MessageResponse;
 import cn.enderqiu.bcinvestrebuild.app.message.serializer.MarkMessageSerializer;
 import cn.enderqiu.bcinvestrebuild.app.message.serializer.MessageDataFromSerializer;
@@ -33,13 +34,13 @@ public class MessageController extends BaseController {
             @ApiImplicitParam(paramType = "form", dataType = "String", required = true, name = "content", value = "消息内容"),
             @ApiImplicitParam(paramType = "form", dataType = "String", required = true, name = "toUserId", value = "消息内容"),
             })
-    public MessageResponse postMessage(MessageDataFromSerializer serializer) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public MessageResponse postMessage(MessageDataFromSerializer serializer) {
         return view.postMessage(getBankUserDTO(), serializer);
     }
 
     @ApiOperation(value = "查看消息", notes = "机构能够收到来自银行的消息，企业能够收到来自机构和银行的消息")
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<MessageResponse> retrieveMessage() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public List<MessageResponse> retrieveMessage() {
         return view.retrieveMessage(getBankUserDTO(), getCompanyUserDTO());
     }
 
@@ -51,5 +52,11 @@ public class MessageController extends BaseController {
     })
     public BaseResponseVO markMessage(MarkMessageSerializer serializer) {
         return view.markMessage(serializer);
+    }
+
+    @ApiOperation(value = "列出所有企业的Id、用户名")
+    @RequestMapping(value = "/company_name", method = RequestMethod.GET)
+    public List<CompanyIdAndNameResponse> retrieveCompanyIdAndName() {
+        return view.retrieveCompanyIdAndName();
     }
 }
