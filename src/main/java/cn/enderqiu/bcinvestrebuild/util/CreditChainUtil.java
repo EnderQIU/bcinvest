@@ -115,6 +115,10 @@ public class CreditChainUtil {
                             .set(T.STATE, "finished")
                             .where(T.ID.eq(taskId))
                             .execute();
+                    dsl.update(Company.COMPANY)
+                            .set(Company.COMPANY.CREDIT, Long.valueOf(presentCredit))
+                            .where(Company.COMPANY.ACCOUNTNUM.eq(accountNum))
+                            .execute();
                 }
             }
         }

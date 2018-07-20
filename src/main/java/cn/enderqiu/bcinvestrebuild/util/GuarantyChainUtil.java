@@ -171,7 +171,8 @@ public class GuarantyChainUtil {
                 dsl.update(T).set(T.TASKSTATE, "success").where(T.TASKID.eq(record.getValue("taskId", Integer.class))).execute();
                 dsl.update(Guaranty.GUARANTY)
                         .set(Guaranty.GUARANTY.STATE, record.getValue("stateWillUpdateTo", Integer.class))
-                        .set(Guaranty.GUARANTY.LOCK, unlocked).execute();
+                        .set(Guaranty.GUARANTY.LOCK, unlocked)
+                        .where(Guaranty.GUARANTY.GUARANTYID.eq(record.getValue("guarantyid", Integer.class))).execute();
                 // 判断是否需要更新信用信息，若需要，则调用 CreditChainUtil.updateCredit()
                 int creditNeedToBeUpdated = GuarantyChainUtil.checkHowMuchCreditNeedToBeUpdated(record.getValue("previousState", Integer.class), stateWillUpdateTo);
                 if ( creditNeedToBeUpdated != 0){
