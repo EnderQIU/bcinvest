@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/credit")
 @Api("查看企业用户信用记录 ")
-@RequiredPermissions("company，bank")
+@RequiredPermissions("company，bank,authority")
 
 public class creditInfoController extends BaseController {
     @Autowired
@@ -45,6 +45,11 @@ public class creditInfoController extends BaseController {
         return creditInfoService.getCompanyCredit2Pages(getCompanyUserDTO().getToken(), page);
     }
 
+    MaxPageVO creditInfoMaxPage()
+    {
+        int size=creditInfoService.getCompanyCredit(getCompanyUserDTO().getToken()).size();
+        return new MaxPageVO(size/21+1);
+    }
 
 
 //    @RequestMapping(value = "/bank/companyCreditList", method = RequestMethod.GET)
@@ -87,6 +92,12 @@ public class creditInfoController extends BaseController {
     })
     List<creditInfoVO> companyCreditInfoToPages(String accountNum,int page) {
         return creditInfoService.getComapanyCreditList2Pages(accountNum, page);
+    }
+
+    MaxPageVO companyCreditInfoMaxPages(String accountNum)
+    {
+        int size=creditInfoService.getCompanyCreditList(accountNum).size();
+        return new MaxPageVO(size);
     }
 
 
