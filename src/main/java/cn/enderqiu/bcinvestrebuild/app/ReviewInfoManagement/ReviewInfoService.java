@@ -15,12 +15,19 @@ public class ReviewInfoService extends BaseService {
     ReviewCompanyInfoVO getCompanyInfo(String company_id)
     {
 
-        List<Map<String,Object>> mm=mapper.SELECT("Select * from Company where AccountNum ="+company_id);
+        List<Map<String,Object>> mm=mapper.SELECT("Select * from Company where AccountNum ="+"'"+company_id+"'");
         if(mm.size()>0) {
+
             String CompanytNum = mm.get(0).get("AccountNum").toString();
+            String telNum="";
+            String emailAddress="";
             String Name = mm.get(0).get("Name").toString();
-            String telNum=mm.get(0).get("TelNum").toString();
-            String emailAddress=mm.get(0).get("EmailAddress").toString();
+            if(mm.get(0).get("TelNum")!=null) {
+                telNum = mm.get(0).get("TelNum").toString();
+            }
+            if(mm.get(0).get("EmailAddress")!=null) {
+                emailAddress = mm.get(0).get("EmailAddress").toString();
+            }
             String credit=" ";
             ReviewCompanyInfoVO rinfo=new ReviewCompanyInfoVO(CompanytNum,Name,telNum,emailAddress);
             return rinfo;
@@ -63,7 +70,7 @@ public class ReviewInfoService extends BaseService {
     List<ReviewChainInfoVO> getGuarantyTBCInfo(String user_id_token)
     {
         List<ReviewChainInfoVO> guarantyTBCinfos=new ArrayList<>();
-        List<Map<String, Object>> bankUser = mapper.SELECT("Select * from Authorization where Token =" +"'" +user_id_token+"'");
+//        List<Map<String, Object>> bankUser = mapper.SELECT("Select * from Authorization where Token =" +"'" +user_id_token+"'");
 //        List<Map<String,Object>> m=mapper.SELECT("Select g.AccountNum as CompanyId,r.ReportId,a.AccountNum as AuthorityId," +
 //                "g.Name,g.EvaluateValue,g.guarantyId"+
 //                " from Guaranty g,Report r,Authorization a where g.Type = 1 and r.reportId= g.reportId and r.AccountNum = a.AccountNum " +
@@ -77,7 +84,7 @@ public class ReviewInfoService extends BaseService {
 
                 String guarantyName = mm.get("Name").toString();
                 String guarantyId = mm.get("GuarantyId").toString();
-                String type=mm.get("Type").toString();
+                String type=mm.get("State").toString();
 
 
                 ReviewChainInfoVO reviewChainInfoVO = new ReviewChainInfoVO(reviewCompanyInfoVO, guarantyId, guarantyName,type);
@@ -92,7 +99,7 @@ public class ReviewInfoService extends BaseService {
     {
         String update="update Guaranty set EvaluateValue =" +"'"+ value+"'"+" where guarantyId =" +"'"+guarantyId+"'";
         int m=mapper.UPDATE(update);
-        int n=mapper.UPDATE("update Guaranty set Type = '2' "+" where guarantyId =" +"'"+guarantyId+"'");
+        int n=mapper.UPDATE("update Guaranty set State = '2' "+" where guarantyId =" +"'"+guarantyId+"'");
         if(m==1&&n==1)
         {
             return new UpdateGuarantyValueVO("success");
