@@ -63,11 +63,18 @@ public class MessageView {
                     .where(Message.MESSAGE.TOUSERNUM.eq(companyUserDTO.getAccountNum()))
                     .fetch();
         }else if (bankUserDTO != null && bankUserDTO.getAccountNum() != null){
-            // 银行和机构查看发出的消息和机构查看收到的消息
-            result = dsl
-                    .select().from(Message.MESSAGE).join(Authorization.AUTHORIZATION).on(Message.MESSAGE.FROMUSERNUM.eq(Authorization.AUTHORIZATION.ACCOUNTNUM))
-                    .where(Message.MESSAGE.TOUSERNUM.eq(bankUserDTO.getAccountNum()).or(Message.MESSAGE.FROMUSERNUM.eq(bankUserDTO.getAccountNum())).and(Message.MESSAGE.STATUS.ne("deleted")))
-                    .fetch();
+            if (bankUserDTO.getUserType() > 0){
+                // 机构查看收到的消息
+                result = dsl.select().from(Message.MESSAGE).join(Authorization.AUTHORIZATION).on(Message.MESSAGE.TOUSERNUM.eq(Authorization.AUTHORIZATION.ACCOUNTNUM)).where(Authorization.AUTHORIZATION.ACCOUNTNUM.eq(bankUserDTO.getAccountNum())).fetch();
+            }
+            else {
+                return responses;
+            }
+//            // 银行和机构查看发出的消息和机构查看收到的消息
+//            result = dsl
+//                    .select().from(Message.MESSAGE).join(Authorization.AUTHORIZATION).on(Message.MESSAGE.FROMUSERNUM.eq(Authorization.AUTHORIZATION.ACCOUNTNUM))
+//                    .where(Message.MESSAGE.TOUSERNUM.eq(bankUserDTO.getAccountNum()).or(Message.MESSAGE.FROMUSERNUM.eq(bankUserDTO.getAccountNum())).and(Message.MESSAGE.STATUS.ne("deleted")))
+//                    .fetch();
         }else {
             return responses;
         }
