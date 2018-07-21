@@ -434,6 +434,10 @@
         .page_change_container .current_page {
             color: darkorange;
         }
+        .page_change_container{
+            position: relative;
+            top:20px;
+        }
         .confirm_button{
             padding: 8px 30px;
             font-size: 20px;
@@ -562,8 +566,8 @@
                             <td>{{ item['reviewCompanyInfoVO']['telNum'] }}</td>
                             <td>{{ item['reviewCompanyInfoVO']['emailAddress'] }}</td>
 
-                            <td><input id="evaluate" ></input></td>
-                            <td><button class="confirm_button" v-on:click="update_listener(item,this.evaluate.value)">提交修改</button></td>
+                            <td><input v-model="item.bind_data"></input></td>
+                            <td><button class="confirm_button" v-on:click="update_listener(item)">提交修改</button></td>
 
 
                         </tr>
@@ -901,12 +905,16 @@
                     }
                 },
 
-                update_listener:function (item,value) {
+                update_listener:function (item) {
+                    var value = item.bind_data;
                     result=this.updateGuaranty(item["guarantyId"],value);
                     alert(result['message']);
                     result = this.getCompanyData(this.current_page);
                     this.max_page=this.get_max_page()['maxpages'];
                     this.GuarantyCompanyInfo= result;
+                    for (var i = 0; i < this.GuarantyCompanyInfo.length; i++) {
+                        this.GuarantyCompanyInfo[i].bind_data = '';
+                    }
 
                 },
 
@@ -915,6 +923,9 @@
                     this.current_page=page;
                     result = this.getCompanyData(page);
                     this.GuarantyCompanyInfo = result;
+                    for (var i = 0; i < this.GuarantyCompanyInfo.length; i++) {
+                        this.GuarantyCompanyInfo[i].bind_data = '';
+                    }
                 },
                 get_max_page:function()
                 {
@@ -947,6 +958,9 @@
                         result = this.getCompanyData(this.current_page);
                         this.max_page = this.get_max_page()['maxpages'];
                         this.GuarantyCompanyInfo = result;
+                        for (var i = 0; i < this.GuarantyCompanyInfo.length; i++) {
+                            this.GuarantyCompanyInfo[i].bind_data = '';
+                        }
                         this.state='true';
                     }
                 },
