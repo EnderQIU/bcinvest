@@ -17,10 +17,17 @@ public class ReviewInfoService extends BaseService {
 
         List<Map<String,Object>> mm=mapper.SELECT("Select * from Company where AccountNum ="+company_id);
         if(mm.size()>0) {
+
             String CompanytNum = mm.get(0).get("AccountNum").toString();
+            String telNum="";
+            String emailAddress="";
             String Name = mm.get(0).get("Name").toString();
-            String telNum=mm.get(0).get("TelNum").toString();
-            String emailAddress=mm.get(0).get("EmailAddress").toString();
+            if(mm.get(0).get("TelNum")!=null) {
+                telNum = mm.get(0).get("TelNum").toString();
+            }
+            if(mm.get(0).get("EmailAddress")!=null) {
+                emailAddress = mm.get(0).get("EmailAddress").toString();
+            }
             String credit=" ";
             ReviewCompanyInfoVO rinfo=new ReviewCompanyInfoVO(CompanytNum,Name,telNum,emailAddress);
             return rinfo;
