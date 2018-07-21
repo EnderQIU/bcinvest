@@ -67,7 +67,7 @@ public class BufferBlock extends Block{
 //        List<BlockData> dl = getDataList();
 //        for (BlockData data:dl)
 //            data.setBlock_hash(getThis_hash());
-        System.out.println(BlockChainOperator.getLatestMainBlockInfo(getType()).get("this_hash"));
+//        System.out.println(BlockChainOperator.getLatestMainBlockInfo(getType()).get("this_hash"));
         return new Block(
                 getType(),
                 format.format(Calendar.getInstance().getTime()),
