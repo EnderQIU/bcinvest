@@ -240,6 +240,7 @@
        }
 
        .table_cell {
+           position: relative;
            cursor: pointer;
            display: block;
            box-sizing: border-box;
@@ -639,8 +640,8 @@
             var tempMessage = message[$(cell).attr("ordernum")];
             var from = tempMessage.fromUserName;
             var content = tempMessage.content;
-            $("#sender").html = from;
-            $("#syobun").html = content;
+            $("#sender").text(function () { return from; });
+            $("#syobun").text(function () { return content; });
         }
         function getCookie(c_name) {
             if (document.cookie.length > 0) {
@@ -680,13 +681,13 @@
                     xhr.setRequestHeader("user_id_token", user_id_token);
                 },
                 data: {
-                    content: $("#content").text(),
-                    toUserId: $("receiver").val()
+                    content: $("#content").val(),
+                    toUserId: $("#receiver").val()
                 }
             });
         });
         function insertMessage() {
-            for (var i = 0; i < message.count; ++i) {
+            for (var i = 0; i < message.length; ++i) {
                 var tc = $("<div class = \"table_cell\">");
                 tc.attr({
                     ordernum: i,
@@ -695,14 +696,23 @@
                 var from = $("<div class=\"from\">");
                 var reviewContent = $("<div class=\"reviewContent\">");
                 var hbr = $("<div class=\"hasBeenRead\">");
-                from.html = message[i].fromUserName;
+                from.text(function() {return message[i].fromUserName;});
                 tc.append(from);
                 var content = message[i].content;
-                reviewContent.text = (content.length <= 27 ? content : content.substr(0, 24) + "...");
+                reviewContent.text(function ()
+                { return (content.length <= 27 ? content : content.substr(0, 24) + "..."); });
                 tc.append(reviewContent);
                 tc.append(hbr);
                 $("#list").append(tc);
             }
+            $(".table_cell").click(function () {
+                fillMessageContent(this);
+                if ($(this).attr("read") == "no") {
+                    $(this).attr({ read: "yes" });
+                    callIsRead(this);
+                }
+                showMessageContent();
+            });
         }
 
         function fillMessage() {
