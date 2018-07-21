@@ -15,7 +15,6 @@ function getCookie(c_name) {
     }
     return "";
 };
-setCookie('user_id_token', 'testToken');
 window.requestByCode = function(code) {
     $.ajax(
         {
@@ -25,7 +24,9 @@ window.requestByCode = function(code) {
             data: {
                 "code": code
             },
-            success: window.requestUserTokenCallBack,
+            success: function (data) {
+                window.requestUserTokenCallBack(data);
+            }
         }
     )
 };
@@ -39,14 +40,16 @@ window.requestByCookie = function(cookie) {
                 "user_id_token": cookie
             },
             success: function(data) {
-                window.requestUserTokenCallBack(data)
+                setCookie('user_id_token', '', -1);
+                window.requestUserTokenCallBack(data);
             },
         }
     )
 };
 window.requestUserTokenCallBack = function(data) {
-    if (data.user_id_token != null && data.user_id_token != "") {
-        setCookie("user_id_token", data.user_id_token, 7);
+    visited = true;
+    if (data.token != null && data.token != "") {
+        setCookie("user_id_token", data.token, 7);
     }
     if (data.status != null && data.status != "") {
         switch (data.status) {
@@ -75,7 +78,7 @@ window.requestUserTokenCallBack = function(data) {
         location.href ="introduction.html";
     }
 }
-setCookie('user_id_token', 'testToken');
+
 var url = location.search;
 window.requestParameter = new Object();
 if (url != "") {
@@ -85,9 +88,14 @@ if (url != "") {
         requestParameter[requestParameterString[i].split("=")[0]] = unescape(requestParameterString[i].split("=")[1]);
     }
 }
+
 var user_id_token = getCookie("user_id_token");
-if (window.requestParameter.code != null && window.requestParameter.code != "") {
-    window.requestByCode(window.requestParameter.code);
-} else if (user_id_token != null && user_id_token != "") {
+var visited = false;
+if (user_id_token != null && user_id_token != "") {
     window.requestByCookie(user_id_token);
+}
+if (!visited) {
+    if (window.requestParameter.code != null && window.requestParameter.code != "") {
+        window.requestByCode(window.requestParameter.code);
+    }
 }

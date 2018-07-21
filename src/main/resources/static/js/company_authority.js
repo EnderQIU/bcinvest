@@ -63,3 +63,18 @@ $.ajax({
         window.location.href = "introduction.html"
     }
 });
+$.ajax({
+    url: '/api/user/company/info',
+    type: 'GET',
+    async: false,
+    headers: {
+        'user_id_token': getCookie('user_id_token')
+    },
+    success: function (data) {
+        window.company_name = data.name;
+    },
+    error: function (data) {
+        setCookie('user_id_token', '', -1);
+        window.location.href = 'introduction.html';
+    }
+});
