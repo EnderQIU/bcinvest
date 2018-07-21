@@ -64,12 +64,12 @@ public class ReviewInfoService extends BaseService {
     List<ReviewChainInfoVO> getGuarantyTBCInfo(String user_id_token)
     {
         List<ReviewChainInfoVO> guarantyTBCinfos=new ArrayList<>();
-        List<Map<String, Object>> bankUser = mapper.SELECT("Select * from Authorization where Token =" + user_id_token);
+        List<Map<String, Object>> bankUser = mapper.SELECT("Select * from Authorization where Token =" +"'" +user_id_token+"'");
         List<Map<String,Object>> m=mapper.SELECT("Select g.AccountNum as CompanyId,r.ReportId,a.AccountNum as AuthorityId," +
                 "g.Name,g.EvaluateValue,g.guarantyId"+
                 " from Guaranty g,Report r,Authorization a where g.Type = 1 and r.reportId= g.reportId and r.AccountNum = a.AccountNum " +
-                "and a.AccountNum ="+
-        bankUser.get(0).get("AccountNum"));
+                "and a.AccountNum ="+"'"+
+        bankUser.get(0).get("AccountNum")+"'");
         if(m.size()>0) {
             for (Map<String, Object> mm : m) {
 
@@ -96,7 +96,7 @@ return null;
     }
     UpdateGuarantyValueVO updateGuarantyValueVO(String guarantyId,String value)
     {
-        String update="update Guaranty set EvaluateValue =" + value+" where guarantyId =" +guarantyId;
+        String update="update Guaranty set EvaluateValue =" +"'"+ value+"'"+" where guarantyId =" +"'"+guarantyId+"'";
         int m=mapper.UPDATE(update);
         if(m==0)
         {
