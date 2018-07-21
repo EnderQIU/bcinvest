@@ -35,10 +35,9 @@ public class CompanyRequestService extends BaseService{
         extract(guarantyVO,result);
         return guarantyVO;
     }
-    public List<GuarantyVO> findGuarantiesByStates(int[] stateNums,int page){
+    public void putGuarantiesToTemp(int[] stateNums){
         List<Map<String,Object>> guarantyIdList = null;
-        List<GuarantyVO> guaranties = new ArrayList<>();
-        int pageStartIndex = (page-1)*20;
+
         for(int stateNum :stateNums)
         {
             switch(stateNum){
@@ -64,7 +63,11 @@ public class CompanyRequestService extends BaseService{
                         }
                     }
             }
-
+        }
+    public List<GuarantyVO> findGuarantiesByStates(int[] stateNums,int page){
+        putGuarantiesToTemp(stateNums);
+        List<GuarantyVO> guaranties = new ArrayList<>();
+        int pageStartIndex = (page-1)*20;
         String sentence = "SELECT guarantyId FROM temp ORDER BY guarantyId LIMIT "+pageStartIndex+",20"+";";
         List<Map<String,Object>> guarantyIdListByPage = mapper.SELECT(sentence);
         for(Map<String,Object> m:guarantyIdListByPage){
@@ -76,11 +79,12 @@ public class CompanyRequestService extends BaseService{
     }
 
     public MaxPageVO findMaxPage(int[] stateNums){
-        int count = 0;
+        putGuarantiesToTemp(stateNums);
+        String sqlSentence = "SELECT COUNT(*) FROM temp;";
+        List<Map<String,Object>> results = mapper.SELECT(sqlSentence);
+        int count = Integer.parseInt(results.get(0).get("COUNT(*)").toString());
+        mapper.DELETE("Delete from temp where 1=1");
         int maxPage = 0;
-        for(int stateNum :stateNums){
-            count+=GuarantyChain.chain.queryGuarantyIdByState(stateNum).size();
-        }
         if(count>0){
             maxPage = count/21+1;
         }
