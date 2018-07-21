@@ -15,7 +15,7 @@ public class ReviewInfoService extends BaseService {
     ReviewCompanyInfoVO getCompanyInfo(String company_id)
     {
 
-        List<Map<String,Object>> mm=mapper.SELECT("Select * from Company where AccountNum ="+company_id);
+        List<Map<String,Object>> mm=mapper.SELECT("Select * from Company where AccountNum ="+"'"+company_id+"'");
         if(mm.size()>0) {
 
             String CompanytNum = mm.get(0).get("AccountNum").toString();
