@@ -53,13 +53,12 @@ public class ReviewInfoService extends BaseService {
                 ReviewCompanyInfoVO rinfo = new ReviewCompanyInfoVO(CompanytNum, Name, telNum, emailAddress);
                 rcInfos.add(rinfo);
             }
-            return  rcInfos;
+
 
         }
-        else
-        {
-            return null;
-        }
+
+            return rcInfos;
+
     }
     List<ReviewChainInfoVO> getGuarantyTBCInfo(String user_id_token)
     {
@@ -74,24 +73,25 @@ public class ReviewInfoService extends BaseService {
             for (Map<String, Object> mm : m) {
 
                 ReviewCompanyInfoVO reviewCompanyInfoVO = getCompanyInfo(mm.get("CompanyId").toString());
-                String authorityId=mm.get("AuthorityId").toString();
-                String guarantyName=mm.get("Name").toString();
-                String evaluateValue=mm.get("EvaluateValue").toString();
-                String guarantyId=mm.get("guarantyId").toString();
-                String reportId=mm.get("ReportId").toString();
+                String authorityId = mm.get("AuthorityId").toString();
+                String guarantyName = mm.get("Name").toString();
+                String evaluateValue = mm.get("EvaluateValue").toString();
+                String guarantyId = mm.get("guarantyId").toString();
+                String reportId = mm.get("ReportId").toString();
 
                 List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(mm.get("CompanyId").toString());
-                String credit =creditinfo.get(0).get("value").toString();
+                String credit = " ";
+                if (creditinfo.size() > 0) {
+                    credit = creditinfo.get(0).get("value").toString();
+                }
 
-                ReviewChainInfoVO reviewChainInfoVO=new ReviewChainInfoVO(reviewCompanyInfoVO,  guarantyId,  reportId,  authorityId,  guarantyName,  evaluateValue,credit);
+
+                ReviewChainInfoVO reviewChainInfoVO = new ReviewChainInfoVO(reviewCompanyInfoVO, guarantyId, reportId, authorityId, guarantyName, evaluateValue, credit);
                 guarantyTBCinfos.add(reviewChainInfoVO);
             }
-            return  guarantyTBCinfos;
+
         }
-        else
-        {
-return null;
-        }
+        return guarantyTBCinfos;
 
     }
     UpdateGuarantyValueVO updateGuarantyValueVO(String guarantyId,String value)
@@ -112,43 +112,38 @@ return null;
     List<ReviewCompanyInfoVO> getCompanyStateUnapplied2pages(int page)
     {
         List<ReviewCompanyInfoVO> reviewCompanyInfoVOS=getCompanyStateUnapplied();
-        int maxpages=reviewCompanyInfoVOS.size()/21+1;
-        if(page>maxpages)
-        {
-            return null;
-        }
-        else
-        {
-            if(page==maxpages)
-            {
-                return reviewCompanyInfoVOS.subList((page-1)*20,reviewCompanyInfoVOS.size());
+        List<ReviewCompanyInfoVO> pageInfo=new ArrayList<>();
+
+            int maxpages = reviewCompanyInfoVOS.size() / 21 + 1;
+            if (page > maxpages) {
+
+            } else {
+                if (page == maxpages) {
+                    pageInfo= reviewCompanyInfoVOS.subList((page - 1) * 20, reviewCompanyInfoVOS.size());
+                } else {
+                    pageInfo= reviewCompanyInfoVOS.subList((page - 1) * 20, page * 20);
+                }
             }
-            else
-            {
-                return reviewCompanyInfoVOS.subList((page-1)*20,page*20);
-            }
+            return pageInfo;
         }
-    }
+
+
 
     List<ReviewChainInfoVO> getGuarantyTBCInfo2pages(String user_id_token,int page)
     {
         List<ReviewChainInfoVO> list=getGuarantyTBCInfo(user_id_token);
-        int maxpages=list.size()/21+1;
-        if(page>maxpages)
-        {
-            return null;
-        }
-        else
-        {
-            if(page==maxpages)
-            {
-                return list.subList((page-1)*20,list.size());
-            }
-            else
-            {
-                return list.subList((page-1)*20,page*20);
+        List<ReviewChainInfoVO> pageInfo=new ArrayList<>();
+        int maxpages = list.size() / 21 + 1;
+        if (page > maxpages) {
+
+        } else {
+            if (page == maxpages) {
+                pageInfo= list.subList((page - 1) * 20, list.size());
+            } else {
+                pageInfo=  list.subList((page - 1) * 20, page * 20);
             }
         }
+        return pageInfo;
     }
     UpdateGuarantyValueVO updateCompanyState(String company_id)
     {
