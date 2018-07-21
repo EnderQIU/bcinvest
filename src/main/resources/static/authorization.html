@@ -1,0 +1,965 @@
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/JQuery.js"></script>
+
+    <title>希福融资平台-机构端操作界面</title>
+    <style>
+        .page_change_container {
+            text-align: center;
+        }
+        .page_change_container .page_change {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .page_change_container .current_page {
+            color: darkorange;
+        }
+    </style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: rgb(0, 47, 104);
+            color: white;
+        }
+
+        header {
+            width: 100%;
+            height: 150px;
+            font-size: 60px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 150px;
+            color: white;
+            position: relative;
+        }
+
+        .linearBackground {
+            background: linear-gradient(to bottom, rgb(0, 22, 60), rgb(0, 47, 104));
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 500px;
+        }
+
+        .letter {
+            border: 2px solid rgb(179, 230, 255);
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 5px;
+            width: 300px;
+            height: 200px;
+            position: absolute;
+            top: -180px;
+            left: 100px;
+            transform: rotate(135deg);
+            transition: all 0.3s linear;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .letter[withmessage="yes"] {
+            box-shadow: rgb(179, 230, 255) 0 0 20px 2px, rgb(179, 230, 255) 0 0 5px 2px inset;
+        }
+
+        .letter[withmessage="yes"]:hover {
+            top: -50px;
+            transition: all 0.5s ease-out;
+            transform: rotate(150deg);
+            box-shadow: rgb(179, 230, 255) 0 0 30px 3px, rgb(179, 230, 255) 0 0 5px 2px inset;
+        }
+
+        .openPage {
+            left: 50%;
+            transform: translate(-50%, 0);
+            position: absolute;
+            border: 2px solid rgb(179, 230, 255);
+            height: 400px;
+            width: 400px;
+            border-radius: 50%;
+            top: -320px;
+            transition: box-shadow 0.3s linear;
+        }
+        .letter[withmessage="yes"] > .openPage {
+            box-shadow: rgb(179, 230, 255) 0 0 10px 1px, rgb(179, 230, 255) 0 0 10px 1px inset;
+        }
+
+        .middleCircle {
+            position: absolute;
+            top: 55px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+        }
+
+        .backgroundCircle {
+            background-color: rgb(0, 23, 62);
+        }
+
+        .whiteCircle {
+            background: rgba(179, 230, 255, 0.8);
+            box-shadow: rgba(179, 230, 255, 0.8) 0 0 20px 3px;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .whiteCircle:hover {
+            background: rgba(179, 230, 255, 1);
+            box-shadow: rgba(179, 230, 255, 1) 0 0 30px 5px;
+        }
+
+        .contentContainer {
+            position: absolute;
+            height: 600px;
+            top: 200px;
+            border-radius: 10px;
+            transition: left 1s, background 1s, box-shadow 1s;
+        }
+
+        .contentContainer[mode="middle"] {
+            left: 50% !important;
+            transform: translate(-50%, 0);
+            box-shadow: rgb(179, 230, 255) 0 0 20px 2px, rgb(179, 230, 255) 0 0 10px 2px inset;
+        }
+
+        .contentContainer[mode="side"] {
+            cursor: pointer;
+            background-color: rgba(179, 230, 255, 0.5);
+            box-shadow: rgba(179, 230, 255, 0.5) 0 0 20px 2px;
+            transition: background 0.5s, box-shadow 0.5s;
+        }
+        .contentContainer:hover[mode="side"] {
+            background-color: rgba(179, 230, 255, 0.9);
+            box-shadow: rgba(179, 230, 255, 0.9) 0 0 20px 2px;
+        }
+
+        @media(max-width: 1280px) {
+            .contentContainer {
+                width: 720px;
+            }
+        }
+
+        @media(min-width: 1280px) {
+            .contentContainer {
+                width: 56.25%;
+            }
+        }
+
+        .sideBar {
+            width: 100px;
+            color: black;
+            position: absolute;
+            font-size: 40px;
+            writing-mode: vertical-lr;
+            vertical-align: middle;
+            height: 100%;
+            line-height: 100px;
+            text-align: center;
+            letter-spacing: 10px;
+        }
+        .rightSideBar {
+            right: 0;
+        }
+        [mode="middle"] > .sideBar {
+            opacity: 0;
+        }
+
+        #messageBackground {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(210, 210, 210, 0.6);
+            transition: background 0.5s;
+            z-index: 5;
+        }
+
+        #messagePage {
+            position: absolute;
+            width: 500px;
+            height: 600px;
+            left: 50%;
+            top: -50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 47, 104, 0.9);
+            border-radius: 10px;
+            box-shadow: rgb(0, 22, 60) 0 0 20px 5px, rgb(0, 22, 60) 0 0 10px 2px inset;
+            transition: top 1s;
+            padding: 10px 10px;
+        }
+        #messagePage.showMessage {
+            top: 50%;
+        }
+        #closeButton {
+            position: absolute;
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            right: -80px;
+            top: -80px;
+            background-color: rgba(235, 25, 0, 0.6);
+            transition: box-shadow 0.3s, opacity 0.3s ease-in-out 1s;
+            opacity: 0;
+        }
+        #closeButton:hover {
+            box-shadow: white 0 0 10px 2px;
+        }
+        #closeButton::before {
+            position: absolute;
+            content: "";
+            left: 22px;
+            top: 10px;
+            transform: rotate(45deg);
+            border: 3px solid white;
+            height: 26px;
+            background: white;
+            width: 0;
+        }
+        #closeButton::after {
+            position: absolute;
+            content: "";
+            left: 22px;
+            top: 10px;
+            transform: rotate(-45deg);
+            border: 3px solid white;
+            background: white;
+            height: 26px;
+            width: 0;
+        }
+        #messagePage.showMessage > #closeButton {
+            opacity: 1;
+        }
+
+        #messageContent {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #messageList {
+            overflow: scroll;
+            width: 517px;
+            height: 618px;
+        }
+
+        .table_cell {
+            cursor: pointer;
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            height: 60px;
+            border-radius: 5px;
+            border: 2px solid rgb(179, 230, 255);
+            /*box-shadow: rgb(179, 230, 255) 0 0 10px 2px, rgb(179, 230, 255) 0 0 5px 1px inset;*/
+            transition: box-shadow 0.3s;
+            margin-bottom: 10px;
+        }
+        .table_cell[read="no"] {
+            background-color: rgb(0, 22, 60);
+        }
+        .table_cell:hover {
+            box-shadow: rgb(179, 230, 255) 0 0 10px 1px inset;
+        }
+        .table_cell:active {
+            box-shadow: rgb(179, 230, 255) 0 0 20px 2px inset;
+        }
+        .table_cell:hover > .from {
+            box-shadow: rgb(179, 230, 255) -1px -2px 10px 0 inset, rgb(179, 230, 255) 1px -2px 10px 0;
+        }
+        .table_cell:active > .from {
+            box-shadow: rgb(179, 230, 255) -2px -4px 20px 0 inset, rgb(179, 230, 255) 2px -4px 20px 0;
+        }
+        .from::before {
+            content: "from:";
+            font-size: 10px;
+            position: absolute;
+            top: -20px;
+            left: 10px;
+        }
+        .from {
+            position: relative;
+            transition: box-shadow 0.3s;
+            display: inline-block;
+            color: white;
+            font-size: 20px;
+            line-height: 58px;
+            vertical-align: bottom;
+            padding-left: 20px;
+            width: 120px;
+            border-right: 2px solid rgb(179, 230, 255);
+        }
+        .reviewContent {
+            display: inline-block;
+            color: white;
+            line-height: 58px;
+            vertical-align: middle;
+            font-size: 20px;
+            padding: 0 20px;
+        }
+        .hasBeenRead {
+            position:absolute;
+            top: 25px;
+            right: 25px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(210, 25, 0, 0.9);
+            display: none;
+        }
+        .hasBeenRead::after {
+            content: "未";
+            position: absolute;
+            color: white;
+            font-size: 10px;
+            left: 50%;
+            top: 0px;
+            transform: translate(-50%, 0);
+        }
+        .table_cell[read="no"] > .hasBeenRead {
+            display: block;
+        }
+        .messageContentPage {
+        }
+        .fullPageContainer {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: 500px;
+            height: 510px;
+            background: rgb(12, 56, 110);
+            border: 2px solid rgb(179, 230, 255);
+            box-sizing: border-box;
+            border-radius: 5px;
+            text-align: center;
+        }
+        #sender::before {
+            position: absolute;
+            content: "From: ";
+            top: 50%;
+            transform: translate(0, -50%);
+            left: 15px;
+        }
+        #sender {
+            text-align: left;
+            position: relative;
+            margin: 0 0 10px;
+            font-size: 20px;
+            padding: 20px 0 20px 100px;
+            border-bottom: 2px solid rgb(179, 230, 255);
+        }
+        .messageContentContainer {
+            width: 450px;
+            height: 400px;
+            margin: auto;
+            overflow: hidden;
+        }
+        .messageContentContainer > p {
+            margin: 0;
+            font-size: 18px;
+            text-align: left;
+            width: 467px;
+            height: 400px;
+            overflow-y: scroll;
+        }
+        button {
+            padding: 10px 50px;
+            font-size: 28px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            border: 2px solid rgb(179, 230, 255);
+            box-shadow: rgb(179, 230, 255) 0 0 10px 2px, rgb(179, 230, 255) 0 0 5px 1px inset;
+            background: transparent;
+        }
+        .returnButton {
+        }
+        button:hover {
+            color: rgb(0, 22, 60);
+            background-color: rgb(179, 230, 255);
+            box-shadow: rgb(179, 230, 255) 0 0 20px 3px, rgb(179, 230, 255) 0 0 10px 2px inset;
+        }
+        .sendMessageButton {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+        .receiver > label {
+            color: white;
+            font-size: 28px;
+            text-align: left;
+            padding: 20px;
+            display: block;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgb(179, 230, 255);
+        }
+
+        .receiver > label > input {
+            margin-left: 20px;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 28px;
+            padding: 5px 10px;
+            width: 300px;
+            box-sizing: border-box;
+            border-bottom: 2px solid rgb(179, 230, 255);
+        }
+
+        #content {
+            resize: none;
+            display: block;
+            width: 450px;
+            height: 380px;
+            margin: auto;
+            margin-bottom: 40px;
+            font-size: 24px;
+            background: rgba(0, 22, 60, 0.5);
+            color: white;
+            box-shadow: rgb(0, 22, 60) 0 0 100px 20px inset;
+            border: none;
+            border-radius: 20px;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body mode="registerInfo">
+<div class="linearBackground"></div>
+<div class="letter">
+    <div class="openPage"></div>
+    <div class="middleCircle backgroundCircle"></div>
+    <a href="javascript:;" class="middleCircle whiteCircle"></a>
+</div>
+<header>
+    机构
+</header>
+<div id="root">
+    <div id="registerInfo" mode="middle" class="contentContainer">
+        <div class="sideBar rightSideBar">注册信息审核</div>
+        <div class="mainContent">
+            <div id="company_credit_info">
+                <table style="width :100%;">
+                    <tbody>
+                    <tr>
+                        <td class="table_head">
+                            申请企业
+                        </td>
+                        <td class="table_head">
+                            电话
+                        </td>
+                        <td class="table_head">
+                            email
+                        </td>
+                        <td class="table_head">
+                            信用值
+                        </td>
+                    </tr>
+
+                    <tr v-for ="item in GuarantyCompanyInfo">
+                        <td>{{ item['name'] }}</td>
+                        <td>{{ item['telNum'] }}</td>
+                        <td>{{ item['emailAddress'] }}</td>
+                        <td>{{ item['credit']}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="page_change_container" v-if="max_page > 0">
+                    <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(1)">首页</label>
+                    <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">上一页</label>
+                    <label v-if="current_page > 2" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                    <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                    <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                    <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                    <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                    <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">下一页</label>
+                    <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(max_page)">尾页</label>
+                </div>
+                <button v-on:click="click_listener()">开始</button>
+
+
+            </div>
+        </div>
+
+        <div id="onChainApply" mode="side" class="contentContainer">
+            <div class="sideBar">上链信息审核</div>
+            <div class="mainContent">
+
+                    <div id="guaranty_company_info">
+                        <table style="width :100%;">
+                            <tbody>
+                            <tr>
+                                <td class="table_head">
+                                    抵押物名称
+                                </td>
+
+                                <td class="table_head">
+                                    申请企业
+                                </td>
+                                <td class="table_head">
+                                    电话
+                                </td>
+                                <td class="table_head">
+                                    email
+                                </td>
+                                <td class="table_head">
+                                    信用值
+                                </td>
+                                <td class="table_head">
+                                    估值
+                                </td>
+                                <td>修改估值</td>
+                                <td>
+                                    提交
+                                </td>
+
+                            <tr v-for ="item in GuarantyCompanyInfo">
+                                <td>{{ item['guarantyName'] }}</td>
+                                <td>{{ item['reviewCompanyInfoVO']['name'] }}</td>
+                                <td>{{ item['reviewCompanyInfoVO']['telNum'] }}</td>
+                                <td>{{ item['reviewCompanyInfoVO']['emailAddress'] }}</td>
+                                <td>{{ item['credit']}}</td>
+                                <td>{{ item['evaluateValue']}}</td>
+                                <td><input id="evaluate" ></input></td>
+                                <td><button v-on:click="update_listener(item,this.evaluate.value)">修改估值</button></td>
+
+
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                        <div class="page_change_container" v-if="max_page > 0">
+                            <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(1)">首页</label>
+                            <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">上一页</label>
+                            <label v-if="current_page > 2" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                            <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                            <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                            <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                            <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                            <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">下一页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(max_page)">尾页</label>
+                        </div>
+                        <button v-on:click="click_listener">开始</button>
+
+                    </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="messageBackground">
+    <div id="messagePage">
+        <div id="messageContent">
+            <div id="messageList">
+                <div id="list"></div>
+                <!-- 24个字符加三个点 -->
+                <!--<div ordernum="1" read="no" class="table_cell">
+                    <div class="from">City Bank</div>
+                    <div class="reviewContent">asbasdgasdgasdgasdgsagda...</div>
+                    <div class="hasBeenRead"></div>
+                </div>
+                <div ordernum="2" read="yes" class="table_cell">
+                    <div class="from">City Bank</div>
+                    <div class="reviewContent">asbasdgasdgasdgasdgsagda...</div>
+                    <div class="hasBeenRead"></div>
+                </div>-->
+                <button class="sendMessageButton">发送</button>
+            </div>
+            <div id="detail" class="messageContentPage fullPageContainer">
+                <p id="sender">City Bank</p>
+                <div class="messageContentContainer" style="margin-bottom: 46px;">
+                    <p id="syobun">nanika wo kaku</p>
+                </div>
+                <button class="returnButton">返回</button>
+            </div>
+            <div class="sendMessage fullPageContainer">
+                <div class="receiver">
+                    <label>Send To: <input id="receiver" type="text" /></label>
+                    <textarea id="content"></textarea>
+                    <button id="send" class="returnButton">发送</button>
+                    <button class="returnButton">取消</button>
+                </div>
+            </div>
+        </div>
+        <a href="javascript:;" id="closeButton"></a>
+    </div>
+</div>
+<script>
+    var message = {};
+    function showMessageContent() {
+        $("#messageList").fadeOut(300);
+        $(".messageContentPage").fadeIn(300);
+        $(".sendMessage").fadeOut(300);
+    };
+    function hideMessageContent() {
+        $("#messageList").fadeIn(300);
+        $(".messageContentPage").fadeOut(300);
+        $(".sendMessage").fadeOut(300);
+    };
+    function showSendMessage() {
+        $("#messageList").fadeOut(300);
+        $(".messageContentPage").fadeOut(300);
+        $(".sendMessage").fadeIn(300);
+    }
+    $(".sendMessageButton").click(showSendMessage);
+    function fillMessageContent(cell) {
+        var tempMessage = message[$(cell).attr("ordernum")];
+        var from = tempMessage.fromUserName;
+        var content = tempMessage.content;
+        $("#sender").html = from;
+        $("#syobun").html = content;
+    }
+    function getCookie(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=")
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start, c_end));
+            }
+        }
+        return "";
+    };
+    $("#send").click(function () {
+        $.ajax({
+            url: "/api/message/",
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("user_id_token", user_id_token);
+            },
+            data: {
+                content: $("#content").text(),
+                toUserId: $("receiver").val()
+            }
+        });
+    });
+    function insertMessage() {
+        for (var i = 0; i < message.count; ++i) {
+            var tc = $("<div class = \"table_cell\">");
+            tc.attr({
+                ordernum: i,
+                read: (message[i].status == "read" ? "yes" : "no")
+            });
+            var from = $("<div class=\"from\">");
+            var reviewContent = $("<div class=\"reviewContent\">");
+            var hbr = $("<div class=\"hasBeenRead\">");
+            from.html = message[i].fromUserName;
+            tc.append(from);
+            var content = message[i].content;
+            reviewContent.text = (content.length <= 27 ? content : content.substr(0, 24) + "...");
+            tc.append(reviewContent);
+            tc.append(hbr);
+            $("#list").append(tc);
+        }
+    }
+
+    function fillMessage() {
+        $(".letter").attr({
+            withmessage: "yes"
+        });
+        user_id_token = getCookie("user_id_token");
+        if (user_id_token == "")
+            return;
+
+        $.ajax({
+            async: false,
+            url: "/api/message/",
+            type: "GET",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("user_id_token", user_id_token);
+            },
+            success: function (data) {
+                try {
+                    message = JSON.parse(data);
+                } catch (e) {
+                    message = data;
+                }
+                insertMessage();
+            }
+        });
+    }
+    var companyList;
+    function fillCompanyName() {
+        $.ajax({
+            url: "/api/message/company_name",
+            type: "GET",
+            success: function (data) {
+                try {
+                    companyList = JSON.parse(data);
+                } catch (e) {
+                    companyList = data;
+                }
+            }
+        });
+    }
+    function callIsRead(cell) {
+        var mid = message[$(cell).attr("ordernum")].messageId;
+        $.ajax({
+            url: "/api/message/",
+            type: "PUT",
+            data: {
+                messageId: mid,
+                status: "read"
+            }
+        });
+    }
+    $(".table_cell").click(function () {
+        fillMessageContent(this);
+        if ($(this).attr("read") == "no") {
+            $(this).attr({ read: "yes" });
+            callIsRead(this);
+        }
+        showMessageContent();
+    });
+    $(".returnButton").click(hideMessageContent);
+    function showMessagePage() {
+        $("#messagePage").toggleClass("showMessage");
+    }
+    function showMessageBox() {
+        $("#messageBackground").fadeIn(300);
+        $("#messageBackground").fadeTo(300, showMessagePage());
+    }
+    $(".whiteCircle").click(function () {
+        showMessageBox();
+    });
+    function closeMessageBox() {
+        $("#messageBackground").fadeOut(300);
+        $("#messagePage").toggleClass("showMessage");
+    }
+    $("#closeButton").click(function () {
+        closeMessageBox();
+    });
+    var staticNum = 100;
+    var hoverNum = 150;
+    function goWithWindow() {
+        $(".totalContainer").width($(window).width() * 2);
+        $("#registerInfo").attr({ style: "left: " + (-$("#registerInfo").width() + staticNum) + "px" });
+        $("#onChainApply").attr({ style: "left: " + ($(window).width() - staticNum) + "px" });
+    }
+    //$("#registerInfo[mode=\"side\"]").click(function () {
+    //    $("#registerInfo").attr({ mode: "middle" });
+    //    $("#onChainApply").attr({ mode: "side" });
+    //});
+    $("#onChainApply").click(function () {
+        $("#registerInfo").attr({ mode: "side" });
+        $("#onChainApply").attr({ mode: "middle" });
+    });
+    $("#registerInfo").click(function () {
+        $("#registerInfo").attr({ mode: "middle" });
+        $("#onChainApply").attr({ mode: "side" });
+    });
+    $(window).load(function () {
+        $("#messageBackground").fadeOut(0);
+        hideMessageContent();
+        goWithWindow();
+        fillCompanyName();
+        fillMessage();
+    });
+    $(window).resize(function () {
+        goWithWindow();
+    });
+</script>
+<script>
+    new Vue({
+        el: '#guaranty_company_info',
+        data :{
+
+            GuarantyCompanyInfo :[],
+            current_page:1,
+            max_page:0,
+        },
+        methods:{
+            getCompanyData: function (page) {
+                var result =' ';
+                //deal with parameter
+                $.ajax({
+                    method: "GET" ,
+                    url: "/api/Authorization/reviewInfo/getChainInfo",
+                    async: false,
+                    data:{
+                        pages:page,
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("user_id_token", "12345");
+                    },
+                    success : function(data)
+                    {
+                        result=data;
+
+                    }
+
+
+                });
+
+                return result;
+
+            },
+
+            updateGuaranty: function(guarantyid,value){
+                var result =' ';
+                var r=confirm("是否确定修改");
+                if(r==true) {
+                    //deal with parameter
+                    $.ajax({
+                        method: "PUT",
+                        url: "/api/Authorization/reviewInfo/updateGuarantyValue",
+                        async: false,
+                        data: {
+                            "guaranty_id": guarantyid,
+                            "value": value,
+                        },
+                        beforeSend: function (request) {
+                            request.setRequestHeader("user_id_token", "12345");
+                        },
+                        success: function (data) {
+
+                            result = data;
+
+                        }
+
+
+                    });
+
+                    return result;
+                }
+            },
+
+            update_listener:function (item,value) {
+                result=this.updateGuaranty(item["guarantyId"],value);
+                alert(result['message']);
+                this.click_listener();
+            },
+
+            repay_confirm_aimed_page:function(page)
+            {
+                this.current_page=page;
+                result = this.getCompanyData(page);
+                this.GuarantyCompanyInfo = result;
+            },
+            get_max_page:function()
+            {
+                var result =' ';
+                //deal with parameter
+                $.ajax({
+                    method: "GET" ,
+                    url: "/api/Authorization/reviewInfo/getChainInfo/maxpages",
+                    async: false,
+
+                    beforeSend: function (request) {
+                        request.setRequestHeader("user_id_token", "12345");
+                    },
+                    success : function(data)
+                    {
+                        result=data;
+
+                    }
+
+
+                });
+
+
+
+                return result;
+
+            },
+            click_listener: function () {
+                result = this.getCompanyData(this.current_page);
+                this.max_page=this.get_max_page()['maxpages'];
+                this.GuarantyCompanyInfo= result;
+            },
+        }
+    })
+</script>
+<script>
+    new Vue({
+        el: '#company_credit_info',
+        data :{
+
+            GuarantyCompanyInfo :[],
+            current_page:1,
+            max_page:0
+        },
+        methods:{
+            getData: function (page) {
+                var result =' ';
+                //deal with parameter
+                $.ajax({
+                    method: "GET" ,
+                    url: "/api/Authorization/reviewInfo/getComoanyInfo",
+                    async: false,
+                    data:{
+                        pages:page,
+                    },
+
+                    beforeSend: function (request) {
+                        request.setRequestHeader("user_id_token", "12345");
+                    },
+                    success : function(data)
+                    {
+
+                        result=data;
+
+                    }
+
+
+                });
+
+                return result;
+
+            },
+            repay_confirm_aimed_page:function(page)
+            {
+                this.current_page=page;
+                result = this.getData(page);
+                this.GuarantyCompanyInfo = result;
+            },
+            get_max_page:function()
+            {
+                var result =' ';
+                //deal with parameter
+                $.ajax({
+                    method: "GET" ,
+                    url: "/api/Authorization/reviewInfo/getComoanyInfo/maxpage",
+                    async: false,
+
+                    beforeSend: function (request) {
+                        request.setRequestHeader("user_id_token", "12345");
+                    },
+                    success : function(data)
+                    {
+                        result=data;
+
+                    }
+
+                });
+
+                return result;
+
+            },
+            click_listener: function () {
+                result = this.getData(this.current_page);
+                this.max_page=this.get_max_page()['maxpages'];
+                this.GuarantyCompanyInfo= result;
+            },
+
+
+        }
+    })
+</script>
+
+</body>
