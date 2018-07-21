@@ -822,9 +822,9 @@
                     },
 
                     get_guaranty(page, states) {
-                        if (states.indexOf(3) > -1 || states.indexOf(5) > -1) {
+                        if (states.indexOf(3) > -1 || states.indexOf(5) > -1 || states.indexOf(4) > -1) {
                             $.ajax({
-                                url: '/api/schedule/guaranty',
+                                url: '/api/schedule/guaranty',s
                                 type: 'GET',
                                 async: false,
                                 success: function (data) {

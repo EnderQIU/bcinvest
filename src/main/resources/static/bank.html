@@ -181,8 +181,8 @@
         <div class="body_header" id="body_header">
             <label class="header_title">银行中心</label>
             <div class="right_button">
-                <label class="bank_name">{{ bank_name }}</label>
-                <a href="" class="log_out">
+                <label class="bank_name" v-on:click="reload_page()">{{ bank_name }}</label>
+                <a class="log_out" v-on:click="log_out()">
                     登出
                 </a>
             </div>
@@ -659,6 +659,15 @@
                 el: '#body_header',
                 data: {
                     'bank_name': window.bank_name,
+                },
+                methods: {
+                    reload_page: function () {
+                        window.location.reload();
+                    },
+                    log_out: function () {
+                        setCookie('user_id_token', '', -1);
+                        window.location.reload();
+                    }
                 }
             });
             var main_body = new Vue({
