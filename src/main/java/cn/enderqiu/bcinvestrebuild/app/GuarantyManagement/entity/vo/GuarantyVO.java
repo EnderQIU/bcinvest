@@ -23,6 +23,16 @@ public class GuarantyVO {
     private int reportId;
     @ApiModelProperty(value = "类型",required = true)
     private int type;
+    @ApiModelProperty(value = "锁",required = true)
+    private boolean lock;
+
+    public boolean getLock() {
+        return lock;
+    }
+
+    public void setLock(boolean lock) {
+        this.lock = lock;
+    }
 
     public String getAccountNum() {
         return accountNum;
