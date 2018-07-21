@@ -536,13 +536,11 @@
                             <td class="table_head">
                                 email
                             </td>
-                            <td class="table_head">
-                                信用值
-                            </td>
+
+
                             <td class="table_head">
                                 估值
                             </td>
-                            <td class="table_head">修改估值</td>
                             <td class="table_head">
                                 提交
                             </td>
@@ -552,10 +550,9 @@
                             <td>{{ item['reviewCompanyInfoVO']['name'] }}</td>
                             <td>{{ item['reviewCompanyInfoVO']['telNum'] }}</td>
                             <td>{{ item['reviewCompanyInfoVO']['emailAddress'] }}</td>
-                            <td>{{ item['credit']}}</td>
-                            <td>{{ item['evaluateValue']}}</td>
+
                             <td><input id="evaluate" ></input></td>
-                            <td><button class="confirm_button" v-on:click="update_listener(item,this.evaluate.value)">修改估值</button></td>
+                            <td><button class="confirm_button" v-on:click="update_listener(item,this.evaluate.value)">提交修改</button></td>
 
 
                         </tr>

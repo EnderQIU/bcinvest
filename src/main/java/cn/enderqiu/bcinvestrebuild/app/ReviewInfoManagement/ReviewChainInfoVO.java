@@ -5,6 +5,14 @@ public class ReviewChainInfoVO {
         return credit;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public void setCredit(String credit) {
         this.credit = credit;
     }
@@ -16,14 +24,14 @@ public class ReviewChainInfoVO {
     private String guarantyName;
     private String evaluateValue;
     private String credit;
+    private String type;
 
-    public ReviewChainInfoVO(ReviewCompanyInfoVO reviewCompanyInfoVO, String guarantyId, String reportId, String authorityId, String guarantyName, String evaluateValue,String credit) {
+    public ReviewChainInfoVO(ReviewCompanyInfoVO reviewCompanyInfoVO, String guarantyId , String guarantyName,String type) {
         this.reviewCompanyInfoVO = reviewCompanyInfoVO;
         this.guarantyId = guarantyId;
-        this.reportId = reportId;
-        this.authorityId = authorityId;
+
+        this.type=type;
         this.guarantyName = guarantyName;
-        this.evaluateValue = evaluateValue;
         this.credit=credit;
     }
 
