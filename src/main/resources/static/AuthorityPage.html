@@ -448,6 +448,13 @@
             font-size: 20px;
         }
 
+        .mainContent {
+            display: none;
+        }
+        .contentContainer[mode="middle"] > .mainContent {
+            display: block;
+        }
+
     </style>
 </head>
 <body mode="registerInfo">
@@ -602,7 +609,7 @@
                     <div class="receiver">
                         <label>Send To: <input id="receiver" type="text" /></label>
                         <textarea id="content"></textarea>
-                        <button id="send" class="returnButton">发送</button>
+                        <button id="send">发送</button>
                         <button class="returnButton">取消</button>
                     </div>
                 </div>
@@ -654,7 +661,18 @@
             document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/";
         }
         setCookie('user_id_token', '12345');
+        function checkContent() {
+            if ($("#receiver").val() == "" || $("#content").val() == "")
+                return false;
+
+            return true;
+        }
         $("#send").click(function () {
+            if (!checkContent())
+                return;
+
+            hideMessageContent();
+
             $.ajax({
                 url: "/api/message/",
                 type: "POST",
