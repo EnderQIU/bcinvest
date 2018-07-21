@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>富强文明融资平台</title>
+    <link rel="stylesheet" href="css/jquery.fullPage.css">
+    <style>
+        .section2 {
+            background: white;
+            text-align: center;
+            font: 40px "Helvetica";
+            color: grey;
+        }
+
+        .section3 {
+            background: beige;
+            text-align: center;
+            font: 40px "Helvetica";
+            color: grey;
+        }
+
+        .section4 {
+            background: bisque;
+            text-align: center;
+            font: 40px "Helvetica";
+            color: grey;
+        }
+    </style>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.fullPage.min.js"></script>
+    <script>
+        $(function () {
+            $('#dowebok').fullpage();
+        });
+    </script>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 50px;
+            font-size: 30px;
+            text-align: right;
+            transition: all 0.4s linear;
+            padding-right: 200px;
+        }
+
+            header.large {
+                height: 200px;
+                background-color: rgba(255, 255, 255, 0.7);
+                top: 50%;
+                transform: translate(0, -50%);
+            }
+
+        .login {
+            display: inline-block;
+            position: absolute;
+            right: 300px;
+            transition: all 0.4s linear;
+        }
+
+            .login.large {
+                font-size: 4vw;
+                right: 50%;
+                top: 50%;
+                transform: translate(50%, -50%);
+            }
+
+            .login a {
+                display: inline-block;
+                padding: 8px 30px;
+                border-width: 3px;
+                border-style: solid;
+                border-radius: 16px;
+                border-color: cornflowerblue;
+                transition: color 0.2s, background 0.2s;
+            }
+
+        #entrepiseLogin {
+            border-color: cornflowerblue;
+            color: cornflowerblue;
+        }
+
+        #bg_video {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        #maku {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            content: "";
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="dowebok">
+        <div class="section section1" align="center">
+            <video id="bg_video" src="video/reeight.mp4" preload="auto" loop="loop">
+            </video>
+            <div id="maku"></div>
+        </div>
+        <div class="section section2">
+            <p>了解BCInvest如何工作</p>
+            <img src="images/overallLogic.png" style="width: 80%;">
+        </div>
+        <div class="section section3">
+            <div class="slide">
+                <p>我们提供的企业业务</p>
+                <img src="images/companyBussiness.png" style="width: 90%;">
+            </div>
+            <div class="slide">
+                <p>企业登录流程</p>
+                <img src="images/companyLogin.png" style="width: 40%;">
+            </div>
+        </div>
+        <div class="section section4">
+            <div class="slide">
+                <p>抵押品上链流程</p>
+                <img src="images/upToBC.png" style="width: 40%;">
+            </div>
+            <div class="slide">
+                <p>抵押品的状态转换流程</p>
+                <img src="images/stateTransitionOfGuaranty.png" style="width: 90%;">
+            </div>
+        </div>
+    </div>
+    <header class="withLarge large">
+        <div class="withLarge login large">
+            <div id="entrepiseLogin" class="withLarge large">希福集群融资平台</div>
+        </div>
+    </header>
+    <script>
+        $(window).load(function () {
+            setTimeout("$('video').trigger('play')", 100);
+            setTimeout("$('video').trigger('play')", 2000);
+            setTimeout("$('video').trigger('play')", 5000);
+        });
+        $("#entrepiseLogin").click(function(){
+
+        });
+        $("#manageLogin").click(function(){
+
+        });
+    </script>
+</body>
+</html>
