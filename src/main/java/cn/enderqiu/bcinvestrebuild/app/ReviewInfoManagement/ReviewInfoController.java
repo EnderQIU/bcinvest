@@ -44,7 +44,7 @@ public class ReviewInfoController extends BaseController {
     MaxPageVO getCOmpanyInfoMaxpage()
     {
         int size=ReviewInfoService.getCompanyStateUnapplied().size();
-        return new MaxPageVO(size/21+1);
+        return new MaxPageVO(size/11+1);
     }
 
 
@@ -69,7 +69,7 @@ public class ReviewInfoController extends BaseController {
     MaxPageVO getGuarantyTBCInfoMaxpages()
     {
         int size=ReviewInfoService.getGuarantyTBCInfo(getBankUserDTO().getToken()).size();
-        return new MaxPageVO(size/21+1);
+        return new MaxPageVO(size/11+1);
     }
 
     @RequestMapping(value = "/updateGuarantyValue", method = RequestMethod.PUT)

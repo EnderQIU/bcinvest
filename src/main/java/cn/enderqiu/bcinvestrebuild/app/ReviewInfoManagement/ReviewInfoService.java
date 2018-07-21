@@ -117,14 +117,14 @@ public class ReviewInfoService extends BaseService {
         List<ReviewCompanyInfoVO> reviewCompanyInfoVOS=getCompanyStateUnapplied();
         List<ReviewCompanyInfoVO> pageInfo=new ArrayList<>();
 
-            int maxpages = reviewCompanyInfoVOS.size() / 21 + 1;
+            int maxpages = reviewCompanyInfoVOS.size() / 11 + 1;
             if (page > maxpages) {
 
             } else {
                 if (page == maxpages) {
-                    pageInfo= reviewCompanyInfoVOS.subList((page - 1) * 20, reviewCompanyInfoVOS.size());
+                    pageInfo= reviewCompanyInfoVOS.subList((page - 1) * 10, reviewCompanyInfoVOS.size());
                 } else {
-                    pageInfo= reviewCompanyInfoVOS.subList((page - 1) * 20, page * 20);
+                    pageInfo= reviewCompanyInfoVOS.subList((page - 1) * 10, page * 10);
                 }
             }
             return pageInfo;
@@ -136,14 +136,14 @@ public class ReviewInfoService extends BaseService {
     {
         List<ReviewChainInfoVO> list=getGuarantyTBCInfo(user_id_token);
         List<ReviewChainInfoVO> pageInfo=new ArrayList<>();
-        int maxpages = list.size() / 21 + 1;
+        int maxpages = list.size() / 11 + 1;
         if (page > maxpages) {
 
         } else {
             if (page == maxpages) {
-                pageInfo= list.subList((page - 1) * 20, list.size());
+                pageInfo= list.subList((page - 1) * 10, list.size());
             } else {
-                pageInfo=  list.subList((page - 1) * 20, page * 20);
+                pageInfo=  list.subList((page - 1) * 10, page * 10);
             }
         }
         return pageInfo;
