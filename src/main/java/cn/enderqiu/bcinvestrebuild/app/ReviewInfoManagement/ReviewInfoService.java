@@ -22,7 +22,7 @@ public class ReviewInfoService extends BaseService {
             String telNum=mm.get(0).get("TelNum").toString();
             String emailAddress=mm.get(0).get("EmailAddress").toString();
             String credit=" ";
-            ReviewCompanyInfoVO rinfo=new ReviewCompanyInfoVO(CompanytNum,credit,Name,telNum,emailAddress);
+            ReviewCompanyInfoVO rinfo=new ReviewCompanyInfoVO(CompanytNum,Name,telNum,emailAddress);
             return rinfo;
 
         }
@@ -38,7 +38,7 @@ public class ReviewInfoService extends BaseService {
     {
         List<ReviewCompanyInfoVO> rcInfos=new ArrayList<>();
 
-        List<Map<String,Object>> mm=mapper.SELECT("Select * from Company where status = 'unapplied' ");
+        List<Map<String,Object>> mm=mapper.SELECT("Select * from Company where status = 'checking_1' ");
         if(mm.size()>0) {
             for(Map<String,Object> m:mm) {
                 String CompanytNum = m.get("AccountNum").toString();
@@ -47,13 +47,10 @@ public class ReviewInfoService extends BaseService {
                 String emailAddress = m.get("EmailAddress").toString();
 
                 List<Map<String, Object>> creditinfo = creditChain.getCompanyCreditList(CompanytNum);
-                String credit="";
-                if(creditinfo.size()>0) {
-                    credit = creditinfo.get(0).get("value").toString();
-                }
 
 
-                ReviewCompanyInfoVO rinfo = new ReviewCompanyInfoVO(CompanytNum, credit, Name, telNum, emailAddress);
+
+                ReviewCompanyInfoVO rinfo = new ReviewCompanyInfoVO(CompanytNum, Name, telNum, emailAddress);
                 rcInfos.add(rinfo);
             }
             return  rcInfos;
@@ -151,6 +148,19 @@ return null;
             {
                 return list.subList((page-1)*20,page*20);
             }
+        }
+    }
+    UpdateGuarantyValueVO updateCompanyState(String company_id)
+    {
+        String update="UPDATE Company SET Status ='checking_2' WHERE AccountNum='"+company_id+"'";
+        int m=mapper.UPDATE(update);
+        if(m==0)
+        {
+            return new UpdateGuarantyValueVO("error");
+        }
+        else
+        {
+            return new UpdateGuarantyValueVO("success");
         }
     }
 

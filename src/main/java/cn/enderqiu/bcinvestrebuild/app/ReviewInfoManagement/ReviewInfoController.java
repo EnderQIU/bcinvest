@@ -21,7 +21,7 @@ public class ReviewInfoController extends BaseController {
     @Autowired
     private ReviewInfoService ReviewInfoService;
 
-    @RequestMapping(value = "/getComoanyInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCompanyInfo", method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query",
                     /* 来源分为form, header, query
@@ -39,7 +39,7 @@ public class ReviewInfoController extends BaseController {
     {
         return ReviewInfoService.getCompanyStateUnapplied2pages(pages);
     }
-    @RequestMapping(value = "/getComoanyInfo/maxpage", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCompanyInfo/maxpage", method = RequestMethod.GET)
 
     MaxPageVO getCOmpanyInfoMaxpage()
     {
@@ -97,7 +97,22 @@ public class ReviewInfoController extends BaseController {
     {
         return ReviewInfoService.updateGuarantyValueVO(guaranty_id,value);
     }
-
+    @RequestMapping(value = "/updateCompanyState", method = RequestMethod.PUT)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query",
+                    /* 来源分为form, header, query
+                      * 分别对应 表单，请求头， 请求体
+                      */
+                    name = "company_id", //和参数列表的参数名对应
+                    required = true, //如果不可或缺填写true，否则可以不写这一栏或者写false
+                    value = "公司的id",
+                    dataType = "String"
+            ),
+    })
+    UpdateGuarantyValueVO updateCompanyState(String company_id)
+    {
+return ReviewInfoService.updateCompanyState(company_id);
+    }
 
 
 }

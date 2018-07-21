@@ -47,10 +47,9 @@ public class ReviewCompanyInfoVO {
     public void setTelNum(String telNum) {
         TelNum = telNum;
     }
-    public ReviewCompanyInfoVO(String accountId, String credit, String name, String telnum, String emailaddress )
+    public ReviewCompanyInfoVO(String accountId, String name, String telnum, String emailaddress )
     {
         AccountId=accountId;
-        Credit=credit;
         Name=name;
         TelNum=telnum;
         EmailAddress=emailaddress;
