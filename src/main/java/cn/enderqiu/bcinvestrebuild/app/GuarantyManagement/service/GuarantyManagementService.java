@@ -94,11 +94,9 @@ public class GuarantyManagementService extends BaseService{
         String accountNum = result.get(0).get("accountNum").toString();
         return accountNum;
     }
-    public List<GuarantyVO> findGuarantiesByStates(String user_id_token,int[] stateNums,int page){
+    public void putGuarantiesToTemp(String user_id_token,int[] stateNums){
         List<Map<String,Object>> guarantyIdList = null;
-        List<GuarantyVO> guaranties = new ArrayList<>();
         String accountNum = TokenToAccountNum(user_id_token);
-        int pageStartIndex = (page-1)*20;
         for(int stateNum :stateNums)
         {
             switch(stateNum){
@@ -127,8 +125,13 @@ public class GuarantyManagementService extends BaseService{
                         }
                     }
             }
-
         }
+    }
+    public List<GuarantyVO> findGuarantiesByStates(String user_id_token,int[] stateNums,int page){
+        putGuarantiesToTemp(user_id_token,stateNums);
+        List<GuarantyVO> guaranties = new ArrayList<>();
+        String accountNum = TokenToAccountNum(user_id_token);
+        int pageStartIndex = (page-1)*20;
         String sentence = "SELECT guarantyId FROM temp ORDER BY guarantyId LIMIT "+pageStartIndex+",20"+";";
         List<Map<String,Object>> guarantyIdListByPage = mapper.SELECT(sentence);
         for(Map<String,Object> m:guarantyIdListByPage){
@@ -138,29 +141,14 @@ public class GuarantyManagementService extends BaseService{
         mapper.DELETE("Delete from temp where 1=1");
         return guaranties;
     }
-    public int findGuarantiesCount(String user_id_token,int stateNum){
-        String accountNum = TokenToAccountNum(user_id_token);
-        String sqlSentence = "SELECT COUNT(*) FROM guaranty WHERE accountNum = '"+accountNum+"' AND state = "+stateNum+" ORDER BY accountNum;";
+
+    public MaxPageVO findMaxPage(String user_id_token, int[] stateNums){
+        putGuarantiesToTemp(user_id_token,stateNums);
+        String sqlSentence = "SELECT COUNT(*) FROM temp;";
         List<Map<String,Object>> results = mapper.SELECT(sqlSentence);
         int count = Integer.parseInt(results.get(0).get("COUNT(*)").toString());
-        return count;
-    }
-    public MaxPageVO findMaxPage(String user_id_token, int[] stateNums){
-        int count = 0;
+        mapper.DELETE("Delete from temp where 1=1");
         int maxPage = 0;
-        for(int stateNum :stateNums){
-            switch (stateNum){
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                    String accountNum = TokenToAccountNum(user_id_token);
-                   // count+=ccGuarantyChainInerface.queryGuarantyIdByState(stateNum).size();break;
-                default:
-                    count+=findGuarantiesCount(user_id_token,stateNum);
-            }
-        }
         if(count>0){
             maxPage = count/21+1;
         }
