@@ -63,7 +63,7 @@ public class ReviewInfoService extends BaseService {
     List<ReviewChainInfoVO> getGuarantyTBCInfo(String user_id_token)
     {
         List<ReviewChainInfoVO> guarantyTBCinfos=new ArrayList<>();
-        List<Map<String, Object>> bankUser = mapper.SELECT("Select * from Authorization where Token =" +"'" +user_id_token+"'");
+//        List<Map<String, Object>> bankUser = mapper.SELECT("Select * from Authorization where Token =" +"'" +user_id_token+"'");
 //        List<Map<String,Object>> m=mapper.SELECT("Select g.AccountNum as CompanyId,r.ReportId,a.AccountNum as AuthorityId," +
 //                "g.Name,g.EvaluateValue,g.guarantyId"+
 //                " from Guaranty g,Report r,Authorization a where g.Type = 1 and r.reportId= g.reportId and r.AccountNum = a.AccountNum " +
@@ -77,7 +77,7 @@ public class ReviewInfoService extends BaseService {
 
                 String guarantyName = mm.get("Name").toString();
                 String guarantyId = mm.get("GuarantyId").toString();
-                String type=mm.get("Type").toString();
+                String type=mm.get("State").toString();
 
 
                 ReviewChainInfoVO reviewChainInfoVO = new ReviewChainInfoVO(reviewCompanyInfoVO, guarantyId, guarantyName,type);
@@ -92,7 +92,7 @@ public class ReviewInfoService extends BaseService {
     {
         String update="update Guaranty set EvaluateValue =" +"'"+ value+"'"+" where guarantyId =" +"'"+guarantyId+"'";
         int m=mapper.UPDATE(update);
-        int n=mapper.UPDATE("update Guaranty set Type = '2' "+" where guarantyId =" +"'"+guarantyId+"'");
+        int n=mapper.UPDATE("update Guaranty set State = '2' "+" where guarantyId =" +"'"+guarantyId+"'");
         if(m==1&&n==1)
         {
             return new UpdateGuarantyValueVO("success");
