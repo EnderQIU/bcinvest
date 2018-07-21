@@ -1,28 +1,25 @@
 package cn.enderqiu.bcinvestrebuild.app.message.response;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel
 public class MessageResponse {
-    private String message;
 
+    @ApiModelProperty("消息Id")
     private Integer messageid;
 
-    private String fromUserNum;
+    @ApiModelProperty("来源用户名")
+    private String fromUserName;
 
-    private String tousernum;
+    @ApiModelProperty("接受用户Id")
+    private String toUserNum;
 
+    @ApiModelProperty("消息内容")
     private String content;
 
+    @ApiModelProperty("消息状态")
     private String status;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public Integer getMessageid() {
         return messageid;
@@ -30,6 +27,14 @@ public class MessageResponse {
 
     public void setMessageid(Integer messageid) {
         this.messageid = messageid;
+    }
+
+    public String getFromUserName() {
+        return fromUserName;
+    }
+
+    public void setFromUserName(String fromUserName) {
+        this.fromUserName = fromUserName;
     }
 
     public String getContent() {
@@ -40,27 +45,19 @@ public class MessageResponse {
         this.content = content;
     }
 
-    public String getFromUserNum() {
-        return fromUserNum;
-    }
-
-    public void setFromUserNum(String fromUserNum) {
-        this.fromUserNum = fromUserNum;
-    }
-
-    public String getTousernum() {
-        return tousernum;
-    }
-
-    public void setTousernum(String tousernum) {
-        this.tousernum = tousernum;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getToUserNum() {
+        return toUserNum;
+    }
+
+    public void setToUserNum(String toUserNum) {
+        this.toUserNum = toUserNum;
     }
 }
