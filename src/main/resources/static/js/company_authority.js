@@ -42,8 +42,6 @@ function requestCompanyStatusTokenCallBack(data) {
     }
 };
 
-//模拟用
-setCookie("user_id_token", "testToken");
 user_id_token = getCookie("user_id_token");
 if (user_id_token == null || user_id_token == "") {
     location.href = "introduction.html";

@@ -198,11 +198,33 @@
             </div>
             <div class="content_container">
                 <div style="width: 100%" v-if="list_item_str[list_selected_index] == 'repay_confirm'">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td class="table_head">抵押物名称</td>
-                            <td class="table_head">操作</td>
-                        </tr>
+                    <table class="content_table">
+                        <thead>
+                            <tr>
+                                <th class="table_head">抵押物名称</th>
+                                <th class="table_head">操作</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="page_change_container" v-if="max_page > 0">
+                                        <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(1)">首页</label>
+                                        <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">上一页</label>
+                                        <label v-if="current_page > 2" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
+                                        <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
+                                        <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                                        <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
+                                        <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
+                                        <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">下一页</label>
+                                        <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(max_page)">尾页</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        <div class="page_change_container" v-else>
+                            无内容
+                        </div>
+                        </tfoot>
                         <tr v-for="item in repay_confirm_guaranty">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
@@ -211,20 +233,6 @@
                             </td>
                         </tr>
                     </table>
-                    <div class="page_change_container" v-if="max_page > 0">
-                        <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(1)">首页</label>
-                        <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">上一页</label>
-                        <label v-if="current_page > 2" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
-                        <label v-if="current_page > 1" class="page_change" v-on:click="repay_confirm_aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
-                        <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
-                        <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
-                        <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
-                        <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">下一页</label>
-                        <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(max_page)">尾页</label>
-                    </div>
-                    <div class="page_change_container" v-else>
-                        无内容
-                    </div>
                     <!-- 模态框（Modal） -->
                     <div class="modal fade" id="repay_confirm_detail_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -1137,7 +1145,15 @@
                         }
                     },
                     display_repay_confirm_table: function () {
-                        this.repay_confirm_guaranty_state = [0];
+                        $.ajax({
+                            'url': '/api/schedule/guaranty',
+                            'type': 'GET',
+                            'async': false,
+                            'headers': {
+                                'user_id_token': getCookie('user_id_token'),
+                            }
+                        });
+                        this.repay_confirm_guaranty_state = [6];
                         this.repay_confirm_guaranty = [];
                         this.max_page = 0;
                         this.current_page = 0;
