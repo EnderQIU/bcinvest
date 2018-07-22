@@ -23,7 +23,7 @@ function requestBankOrAuthorityInfoCallBack(data) {
                     window.location.href = 'bank.html'
                     break;
                 case 'authority':
-                    window.location.href = 'authorization.html';
+                    window.location.href = 'authority.html';
                     break;
             }
         } else {

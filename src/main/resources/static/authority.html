@@ -439,7 +439,7 @@
         }
         .page_change_container{
             position: relative;
-            top:20px;
+            top:30px;
         }
         .confirm_button{
             padding: 8px 30px;
@@ -490,7 +490,7 @@
         <div id="registerInfo" mode="middle" class="contentContainer">
             <div class="sideBar rightSideBar">注册信息审核</div>
             <div class="mainContent">
-                <div id="company_credit_info">
+                <div id="company_credit_info" style="position:relative;">
                     <table class="data_table1" style="width :100%;" >
                         <tbody>
                         <tr>
@@ -676,7 +676,7 @@
             exdate.setDate(exdate.getDate() + expiredays);
             document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/";
         }
-        setCookie('user_id_token', '12345');
+
         function checkContent() {
             if ($("#receiver").val() == "" || $("#content").val() == "")
                 return false;
@@ -711,7 +711,7 @@
                 var from = $("<div class=\"from\">");
                 var reviewContent = $("<div class=\"reviewContent\">");
                 var hbr = $("<div class=\"hasBeenRead\">");
-                from.text(function() {return message[i].fromUserName;});
+                from.text(function() {return (message[i].fromUserName.length <= 10 ? message[i].fromUserName : message[i].fromUserName.substr(0, 7) + "...");});
                 tc.append(from);
                 var content = message[i].content;
                 reviewContent.text(function ()
@@ -736,7 +736,7 @@
             });
             user_id_token = getCookie("user_id_token");
             if (user_id_token == "")
-                return;
+                window.location.href = 'login-in.html';
 
             $.ajax({
                 async: false,
@@ -770,7 +770,7 @@
             });
         }
         function callIsRead(cell) {
-            var mid = message[$(cell).attr("ordernum")].messageId;
+            var mid = message[$(cell).attr("ordernum")].messageid;
             $.ajax({
                 url: "/api/message/",
                 type: "PUT",
