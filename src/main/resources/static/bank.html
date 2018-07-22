@@ -219,11 +219,11 @@
                                         <label v-if="current_page < max_page" class="page_change" v-on:click="repay_confirm_aimed_page(current_page + 1)">下一页</label>
                                         <label v-if="current_page > 0" class="page_change" v-on:click="repay_confirm_aimed_page(max_page)">尾页</label>
                                     </div>
+                                    <div class="page_change_container" v-else>
+                                        无内容
+                                    </div>
                                 </td>
                             </tr>
-                        <div class="page_change_container" v-else>
-                            无内容
-                        </div>
                         </tfoot>
                         <tr v-for="item in repay_confirm_guaranty">
                             <td class="table_cell">{{ item.name }}</td>
@@ -479,19 +479,19 @@
                                     <div class="modal-body">
 
                                         <div class="form-group">
-                                            <label for="recipient-name" class="control-label">企业名:</label>
+                                            <label for="company_info_manage_highly_search_company_name" class="control-label">企业名:</label>
                                             <input type="text" class="form-control" id="company_info_manage_highly_search_company_name" name = "name">
                                         </div>
                                         <div class="form-group">
-                                            <label for="recipient-name" class="control-label">企业编号:</label>
+                                            <label for="company_info_manage_highly_search_company_num" class="control-label">企业编号:</label>
                                             <input type="text" class="form-control" id="company_info_manage_highly_search_company_num" name = "accountNum">
                                         </div>
                                         <div class="form-group">
-                                            <label for="recipient-name" class="control-label">企业电话:</label>
+                                            <label for="company_info_manage_highly_search_company_tel" class="control-label">企业电话:</label>
                                             <input type="text" class="form-control" id="company_info_manage_highly_search_company_tel" name = "telNum">
                                         </div>
                                         <div class="form-group">
-                                            <label for="recipient-name" class="control-label">企业邮箱:</label>
+                                            <label for="company_info_manage_highly_search_company_email" class="control-label">企业邮箱:</label>
                                             <input type="text" class="form-control" id="company_info_manage_highly_search_company_email" name = "email">
                                         </div>
 
@@ -1025,7 +1025,7 @@
                         var guaranty = result;
                         var modal = $('#guaranty_detail_modal');
                         modal.find('#guaranty_name').html(guaranty.name);
-                        modal.find('#guaranty_value').html(guaranty.evaluationValue);
+                        modal.find('#guaranty_value').html(guaranty.evaluateValue);
                         modal.find('#guaranty_owner').html(guaranty.ownerName);
                         modal.find('#guaranty_scope').html(this.scope_of_right_word[guaranty.scopeOfRight]);
                         modal.find('#guaranty_state').html(this.states_word[guaranty.state]);
@@ -1195,7 +1195,7 @@
                         var guaranty = result;
                         var modal = $('#repay_confirm_detail_modal');
                         modal.find('#repay_confirm_guaranty_name').html(guaranty.name);
-                        modal.find('#repay_confirm_guaranty_value').html(guaranty.evaluationValue);
+                        modal.find('#repay_confirm_guaranty_value').html(guaranty.evaluateValue);
                         modal.find('#repay_confirm_guaranty_owner').html(guaranty.ownerName);
                         modal.find('#repay_confirm_guaranty_scope').html(this.scope_of_right_word[guaranty.scopeOfRight]);
                         modal.find('#repay_confirm_guaranty_state').html(this.states_word[guaranty.state]);
@@ -1500,7 +1500,7 @@
                         var guaranty = result;
                         var modal = $('#guaranty_to_mortgaging_detail_modal');
                         modal.find('#guaranty_to_mortgaging_guaranty_name').html(guaranty.name);
-                        modal.find('#guaranty_to_mortgaging_guaranty_value').html(guaranty.evaluationValue);
+                        modal.find('#guaranty_to_mortgaging_guaranty_value').html(guaranty.evaluateValue);
                         modal.find('#guaranty_to_mortgaging_guaranty_owner').html(guaranty.ownerName);
                         modal.find('#guaranty_to_mortgaging_guaranty_scope').html(this.scope_of_right_word[guaranty.scopeOfRight]);
                         modal.find('#guaranty_to_mortgaging_guaranty_state').html(this.states_word[guaranty.state]);

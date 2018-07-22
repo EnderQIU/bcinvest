@@ -259,7 +259,7 @@
                                         <option v-for="item in list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].choices">{{ item }}</option>
                                     </select>
                                 </li>
-                                <button v-on:click="apply_submit_click" style="background-color: rgba(124, 255, 0, 0.6); border: 1px solid rgba(127, 255, 0, 1); border-radius: 12px; margin-top: 16px; position: relative; left: 132px; padding: 8px; font-size: 18px;">确认提交</button>
+                                <button v-on:click="apply_submit_click" style="background-color: rgba(216, 216, 216, 0.6); border: 1px solid rgba(216, 216, 216, 1); border-radius: 12px; margin-top: 16px; position: relative; left: 132px; padding: 8px; font-size: 18px;">确认提交</button>
                             </template>
                         </ul>
                     </div>
@@ -440,7 +440,21 @@
                         </div>
                     </div>
                     <div v-else-if="list_selected_index == 6">
-                        暂无
+                        <table style="width: 100%;">
+                            <thead>
+                                <th class="table_head">抵押物名称</th>
+                                <th class="table_head">信用变化</th>
+                                <th class="table_head">变化之后信用分</th>
+                                <th class="table_head">时间</th>
+                            </thead>
+                            <tr>
+                                <td>国软教学楼</td>
+                                <td>+5</td>
+                                <td>65</td>
+                                <td>{{ open_time }}</td>
+                            </tr>
+                        </table>
+                        <hr />
                     </div>
                     <div v-else-if="list_selected_index == 7">
                         <table style="width: 100%; border-collapse: collapse;">
@@ -459,7 +473,7 @@
             <div class="popup_window_container" v-if="unconfirmed_to_confirmed_box_show">
                 <div class="popup_window_content_container">
                     <div style="position: relative; padding: 20px;">
-                        名称:{{ choosed_item.name }}<br />
+                        名称:{{ choosed_item.抵押物名称 }}<br />
                         状态:&nbsp;&nbsp;待确认&nbsp;->确认
                     </div>
                     <div style="position: absolute; padding: 20px; bottom: 0; width: 100%;">
@@ -471,7 +485,7 @@
             <div class="popup_window_container" v-else-if="unconfirmed_to_give_up_box_show">
                 <div class="popup_window_content_container">
                     <div style="position: relative; padding: 20px;">
-                        名称:{{ choosed_item.name }}<br />
+                        名称:{{ choosed_item.抵押物名称 }}<br />
                         状态:&nbsp;&nbsp;待确认&nbsp;->放弃
                     </div>
                     <div style="position: absolute; padding: 20px; bottom: 0; width: 100%;">
@@ -529,7 +543,8 @@
                             type_choice: ['房产', '机器', '地产'],
                             inputs: {
                                 '房产': {
-                                    'input_name': ['addr', 'zip', 'housingCertificatedId', 'area', 'scopeOfRight', 'ownerName'],
+                                    'input_name': ['name', 'addr', 'zip', 'housingCertificatedId', 'area', 'scopeOfRight', 'ownerName'],
+                                    'name': new createTextInput("名称", true, ''),
                                     'addr': new createTextInput("地址", true, ''),
                                     'zip': new createTextInput("邮编", false, ''),
                                     'housingCertificatedId': new createTextInput("房产证编号", true, ''),
@@ -604,16 +619,16 @@
                         '6': 'overdue',
                     },
                     'current_states': [],
-                    'states_word': ['所有', '鉴定中', '不合格', '合格', '待确认', '可抵押', '申请抵押中', '申请已通过', '申请还款中', '逾期'],
+                    'states_word': ['所有', '鉴定中', '不合格', '合格', '待确认', '可抵押', '申请抵押中', '申请已通过', '逾期'],
                     'states_word_to_array': {
                         '所有': [0, 1, 2, 3, 4, 5, 6, 7, 8],
                         '鉴定中': [0],
                         '不合格': [1],
                         '合格': [2],
-                        '待确认(待确认上链)': [3],
-                        '可抵押(已上链)': [4],
-                        '申请抵押中(审核中)': [5],
-                        '申请已通过(抵押中)': [6],
+                        '待确认': [3],
+                        '可抵押': [4],
+                        '申请抵押中': [5],
+                        '申请已通过': [6],
                         // '申请还款中': [7],
                         '逾期': [8],
                     },
@@ -627,7 +642,7 @@
                     'message_unread_class': 'message_unread',
                     'detail_box_show': false,
                     'detail_item': null,
-
+                    'open_time': (new Date()).toLocaleDateString(),
 
                     'apply_mortgage_box_show': false,
                 },

@@ -29,10 +29,14 @@ public class CompanyRequestService extends BaseService{
     }
 
     public GuarantyVO findGuaranty(int guarantyId){
-        String sqlSentence = "SELECT * FROM guaranty WHERE guarantyId = "+guarantyId+";";
-        Map<String, Object> result = mapper.SELECT(sqlSentence).get(0);
+        String sqlSentence = "SELECT * FROM guaranty WHERE guarantyId = '"+guarantyId+"';";
+        Map<String, Object> result = null;
+        List<Map<String, Object>> l = mapper.SELECT(sqlSentence);
         GuarantyVO guarantyVO = new GuarantyVO();
-        extract(guarantyVO,result);
+        if (l.size() != 0) {
+            result = l.get(0);
+            extract(guarantyVO,result);
+        }
         return guarantyVO;
     }
     public void putGuarantiesToTemp(int[] stateNums){
@@ -120,6 +124,9 @@ public class CompanyRequestService extends BaseService{
             protocolVO.setEndDate(curdate);
             String sqlSentence2 = "UPDATE  protocol SET endDate = '"+curdate+"',state = '"+protocolVO.getState()+"' WHERE guarantyId = "+guarantyId+";";
             returnVO.setInfluence(mapper.UPDATE(sqlSentence2));
+
+
+
             return returnVO;
         }
         returnVO.setInfluence(0);

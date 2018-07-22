@@ -15,7 +15,7 @@ private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-d
     public List<creditInfoVO> getCompanyCredit(String user_id_token)
     {
         CreditChainImpl creditChain=new CreditChainImpl();
-        List<Map<String, Object>> mm = mapper.SELECT("Select * from Company where Token =" + user_id_token);
+        List<Map<String, Object>> mm = mapper.SELECT("Select * from Company where Token ='" + user_id_token + "'");
         if (mm.size() > 0) {
             String CompanyNum = mm.get(0).get("AccountNum").toString();
 
