@@ -28,20 +28,19 @@
             }
             .head_bar {
                 width: 100%;
-                height: 80px;
+                height: 65px;
                 float: left;
-                background-color: rgba(36, 36, 36, 0.6);
-                color: #FFFFFF;
+                background-color: rgba(0, 0, 0, 0.8);
             }
             .head_bar .title {
                 position: absolute;
                 left: 50%;
                 transform: translateX(-50%);
                 font-family:'Courier New', Courier, monospace;
-                font-size: 200%;
-                line-height: 250%;
+                line-height: 29px;
                 margin: 0;
-                padding: 0;
+                padding: 18px 0 18px 0;
+                color: #FFFFFF;
             }
             .head_bar .right_button {
                 margin: 0;
@@ -50,23 +49,32 @@
                 float: right;
                 position: relative;
                 top: 50%;
-                transform: translateY(-52%);
+                transform: translateY(-50%);
                 display: flex;
                 flex-direction: row;
                 align-items: center;
             }
             .head_bar .company_name {
-                padding-right: 24px;
-                font-size: 18px;
-                text-decoration: underline;
+                vertical-align: middle;
+                text-decoration: none;
+                line-height: 25px;
+                padding: 20px 20px 20px 20px;
+                color: #CCCCCC;
                 cursor: pointer;
             }
+            .head_bar .company_name:hover {
+                background: #99999999;
+                color: #FFFFFF;
+            }
             .head_bar .log_out {
+                vertical-align: middle;
                 text-decoration: none;
-                font-size: 18px;
-                padding: 6px 16px 8px 16px;
-                border: 1px solid black;
-                border-radius: 50px;
+                line-height: 25px;
+                padding: 20px 12px 20px 12px;
+                color: #CCCCCC;
+            }
+            .head_bar .log_out:hover {
+                background: #99999999;
                 color: #FFFFFF;
             }
             .main_body {
@@ -97,18 +105,32 @@
                 flex-grow: 1;
             }
             .content_container .apply_mortgage_type_choice_label {
-                font-size: 24px;
-                margin-right: 21px;
-                width: 180px;
-                text-align: right;
+                max-width: 100%;
+                display: inline-block;
+                margin-bottom: 9px;
+                font-size: 16px;
+                color: #333333;
+                font-weight: 700;
+            }
+            .content_container .apply_mortgage_type_choice_input {
+                display: block;
+                margin-bottom: 6px;
+                font-size: 16px;
+                color: #555555;
+                background-color: #FFFFFF;
+                border: 1px solid #d0d0d0;
+                height: 36px;
+                padding: 6px 12px;
+                width: 100%;
             }
             .content_container .apply_mortgage_type_choice {
-                width: 200px;
-                height: 36px;
-                line-height: 100%;
-                border-radius: 4px;
-                padding-left: 6px;
-                font-size: 21px;
+                padding: 6px 12px;
+                border: 1px solid #d0d0d0;
+                box-shadow: none;
+                font-size: 15px;
+                color: #555555;
+                background-color: #FFFFFF;
+                min-width: 268px;
             }
             .apply_mortgage_outer_ul {
                 list-style: none;
@@ -116,17 +138,25 @@
                 position: relative;
             }
             .apply_mortgage_outer_ul .apply_mortgage_li {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
                 margin-top: 12px;
             }
-            /*.table_head {*/
-                /*text-align: center;*/
-            /*}*/
-            /*.table_cell {*/
-                /*text-align: center;*/
-            /*}*/
+            .apply_mortgage_submit {
+                background-color: #3c8dbc;
+                border: 1px solid #367fa9;
+                border-radius: 3px;
+                padding: 6px 12px;
+                color: #FFFFFF;
+                box-shadow: none;
+                margin: 6px 0 0 0;
+                font-size: 14px;
+                font-weight: 400;
+                text-align: center;
+                vertical-align: middle;
+            }
+            .apply_mortgage_submit:hover {
+                background-color: #367fa9;
+                border-color: #204d74;
+            }
             table
             {
                 border-collapse: collapse;
@@ -135,14 +165,12 @@
             }
             table td, table th
             {
-                border: 1px solid #cad9ea;
+                border-top: 1px solid #f4f4f4;
                 color: #666;
-                height: 30px;
-            }
-            table thead th
-            {
-                background-color: #CCE8EB;
-                width: 100px;
+                padding: 8px;
+                vertical-align: top;
+                text-align: left;
+                display: table-cell;
             }
             table tr:nth-child(odd)
             {
@@ -162,7 +190,7 @@
                 display: flex; 
                 justify-content: center; 
                 align-items: center; 
-                background: rgba(204, 204, 204, 0.8)
+                background: rgba(204, 204, 204, 0.8);
             }
             .popup_window_container .popup_window_content_container {
                 position:relative;
@@ -171,13 +199,34 @@
                 background: rgba(204, 204, 204, 0.9); 
                 border: 1px #CCCCCC solid; 
                 border-radius: 12px;
+                padding: 20px;
             }
             .page_change_container {
-                text-align: center;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .page_change_container label:first-child {
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+            }
+            .page_change_container label:last-child {
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
             }
             .page_change_container .page_change {
-                text-decoration: underline;
                 cursor: pointer;
+                font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+                font-size: 14px;
+                line-height: 1.5;
+                background: #fafafa;
+                color: #666666;
+                font-weight: 400;
+                border: 1px solid #ddd;
+                display: inline-block;
+                padding: 5px 10px;
+                margin-left: -1px;
+                float: left;
             }
             .page_change_container .current_page {
                 color: darkorange;
@@ -195,6 +244,54 @@
             .mortgage_detailable {
                 cursor: pointer;
                 text-decoration: underline;
+            }
+            .detail_box_close_button {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                height: 30px;
+                width: 30px;
+                border-radius: 15px;
+                text-align: center;
+                vertical-align: center;
+                line-height: 30px;
+                background: #FFFFFF;
+                color: #000;
+            }
+            .detail_box_close_button:hover {
+                color: #FFF;
+                background: #666;
+            }
+            .manage_company_info_button {
+                font-size: 16px;
+                background: #3c8dbc;
+                border: 1px solid #2E6DA4;
+                color: #ffffff;
+                cursor: pointer;
+                padding: 6px 12px;
+                box-shadow: none;
+                border-radius: 4px;
+            }
+            .manage_company_info_button:hover {
+                background: #286090;
+                border-color: #204d74;
+            }
+            .btn_sure {
+                background: #5cb85c;
+                border: 1px solid #4cae4c;
+            }
+            .btn_sure:hover {
+                background: #00a65a;
+                border-color: #008d4c;
+            }
+            .btn_cancel {
+                background: #f4f4f4;
+                border-color: #ddd;
+                color: #777777;
+            }
+            .btn_cancel:hover {
+                background: #EEEEEE;
+                border-color: #CCCCCC;
             }
         </style>
         <script>
@@ -246,20 +343,23 @@
                 <div class="content_container">
                     <div v-if="list_selected_index == 0">
                         <ul class="apply_mortgage_outer_ul">
-                                 <label class="apply_mortgage_type_choice_label">选择抵押物类型</label>
+                            <li>
+                                <label class="apply_mortgage_type_choice_label">选择抵押物类型</label>
                                 <select class="apply_mortgage_type_choice" v-model="list_data.apply_mortgage.type">
                                     <option v-for="item in list_data.apply_mortgage.type_choice">{{ item }}</option>
                                 </select>
                             </li>
+                            <hr />
                             <template v-if="apply_mortgage_choosed">
                                 <li class="apply_mortgage_li" v-for='item in list_data.apply_mortgage.inputs[list_data.apply_mortgage.type].input_name'>
                                     <label class="apply_mortgage_type_choice_label">{{ list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].label }}</label>
-                                    <input v-if="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].type == 'text_input'" v-model="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].bindData"/>
-                                    <select v-else-if="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].type == 'select_input'" v-model="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].bindData" style="width: 173px;">
+                                    <input class="apply_mortgage_type_choice_input" v-if="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].type == 'text_input'" v-model="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].bindData"/>
+                                    <select v-else-if="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].type == 'select_input'" v-model="list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].bindData" class="apply_mortgage_type_choice" style="display: block; width: 100%">
                                         <option v-for="item in list_data.apply_mortgage.inputs[list_data.apply_mortgage.type][item].choices">{{ item }}</option>
                                     </select>
                                 </li>
-                                <button v-on:click="apply_submit_click" style="background-color: rgba(216, 216, 216, 0.6); border: 1px solid rgba(216, 216, 216, 1); border-radius: 12px; margin-top: 16px; position: relative; left: 132px; padding: 8px; font-size: 18px;">确认提交</button>
+                                <hr />
+                                <button v-on:click="apply_submit_click" class="apply_mortgage_submit">确认提交</button>
                             </template>
                         </ul>
                     </div>
@@ -283,15 +383,15 @@
                         </table>
                         <hr />
                         <div class="page_change_container" v-if="max_page > 0">
-                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">«</label>
                             <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
                             <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
                             <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
-                            <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                            <label class="page_change current_page" v-if="current_page > 0">{{ current_page }}</label>
                             <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
                             <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
                             <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
-                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">»</label>
                         </div>
                         <div class="page_change_container" v-else>
                             无
@@ -299,11 +399,11 @@
                     </div>
                     <div v-else-if="list_selected_index == 2">
                         <table style="width: 100%;">
-                            <tr>
-                                <td class="table_head">抵押物名称</td>
-                                <td class="table_head">状态</td>
-                                <td class="table_head">估值</td>
-                            </tr>
+                            <thead>
+                                <th class="table_head">抵押物名称</th>
+                                <th class="table_head">状态</th>
+                                <th class="table_head">估值</th>
+                            </thead>
                             <tr v-for="item in company_mortgage">
                                 <td class="table_cell mortgage_detailable" v-on:click="show_guaranty_detail(item)">{{ item.抵押物名称 }}</td>
                                 <td class="table_cell">{{ item.抵押物状态 }}</td>
@@ -312,15 +412,15 @@
                         </table>
                         <hr />
                         <div class="page_change_container" v-if="max_page > 0">
-                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">«</label>
                             <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
                             <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
                             <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
-                            <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                            <label class="page_change current_page" v-if="current_page > 0">{{ current_page }}</label>
                             <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
                             <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
                             <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
-                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">»</label>
                         </div>
                         <div class="page_change_container" v-else>
                             无
@@ -340,10 +440,10 @@
                         <input v-if="list_data.manage_company_info.able == 'disabled'" v-model="list_data.manage_company_info.telNum" disabled="disabled"/>
                         <input v-else v-model="list_data.manage_company_info.telNum"/>
                         <br />
-                        <div>
-                            <button v-if="list_data.manage_company_info.able == 'disabled'" v-on:click="able_change_company_info()">修改</button>
-                            <button v-if="list_data.manage_company_info.able == ''" v-on:click="submit_change_company_info()">确认</button>
-                            <button v-if="list_data.manage_company_info.able == ''" v-on:click="cancle_change_company_info()">取消</button>
+                        <div style="margin-top: 12px">
+                            <button v-if="list_data.manage_company_info.able == 'disabled'" v-on:click="able_change_company_info()" class="manage_company_info_button">修改</button>
+                            <button v-if="list_data.manage_company_info.able == ''" v-on:click="submit_change_company_info()" class="manage_company_info_button btn_sure">确认</button>
+                            <button v-if="list_data.manage_company_info.able == ''" v-on:click="cancle_change_company_info()" class="manage_company_info_button btn_cancel">取消</button>
                         </div>
                     </div>
                     <div v-else-if="list_selected_index == 4">
@@ -355,12 +455,12 @@
                         </div>
                         <hr />
                         <table style="width: 100%;">
-                            <tr>
-                                <td class="table_head">抵押物名称</td>
-                                <td class="table_head">状态</td>
-                                <td class="table_head">估值</td>
-                                <td class="table_head">操作</td>
-                            </tr>
+                            <thead>
+                                <th class="table_head">抵押物名称</th>
+                                <th class="table_head">状态</th>
+                                <th class="table_head">估值</th>
+                                <th class="table_head">操作</th>
+                            </thead>
                             <tr v-for="item in company_mortgage">
                                 <td class="table_cell mortgage_detailable" v-on:click="show_guaranty_detail(item)">{{ item.抵押物名称 }}</td>
                                 <td class="table_cell">{{ item.抵押物状态 }}</td>
@@ -399,15 +499,15 @@
                         </table>
                         <hr />
                         <div class="page_change_container" v-if="max_page > 0">
-                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">«</label>
                             <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
                             <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
                             <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
-                            <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                            <label class="page_change current_page" v-if="current_page > 0">{{ current_page }}</label>
                             <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
                             <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
                             <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
-                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">»</label>
                         </div>
                         <div class="page_change_container" v-else>
                             无
@@ -415,25 +515,25 @@
                     </div>
                     <div v-else-if="list_selected_index == 5">
                         <table style="width: 100%;">
-                            <tr>
-                                <td class="table_head">抵押物名称</td>
-                                <td class="table_head">状态</td>
-                            </tr>
+                            <thead>
+                                <th class="table_head">抵押物名称</th>
+                                <th class="table_head">状态</th>
+                            </thead>
                             <tr v-for="item in company_mortgage">
                                 <td class="table_cell mortgage_detailable" v-on:click="show_guaranty_detail(item)">{{ item.抵押物名称 }}</td>
                                 <td class="table_cell">{{ item.抵押物状态 }}</td>
                             </tr>
                         </table>
                         <div class="page_change_container" v-if="max_page > 0">
-                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">首页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(1)">«</label>
                             <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">上一页</label>
                             <label v-if="current_page > 2" class="page_change" v-on:click="aimed_page(current_page - 2)">{{ current_page - 2 }}</label>
                             <label v-if="current_page > 1" class="page_change" v-on:click="aimed_page(current_page - 1)">{{ current_page - 1 }}</label>
-                            <label class="current_page" v-if="current_page > 0">{{ current_page }}</label>
+                            <label class="page_change current_page" v-if="current_page > 0">{{ current_page }}</label>
                             <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">{{ current_page + 1 }}</label>
                             <label v-if="current_page + 1 < max_page" class="page_change" v-on:click="aimed_page(current_page + 2)">{{ current_page + 2 }}</label>
                             <label v-if="current_page < max_page" class="page_change" v-on:click="aimed_page(current_page + 1)">下一页</label>
-                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">尾页</label>
+                            <label v-if="current_page > 0" class="page_change" v-on:click="aimed_page(max_page)">»</label>
                         </div>
                         <div class="page_change_container" v-else>
                             无
@@ -458,10 +558,10 @@
                     </div>
                     <div v-else-if="list_selected_index == 7">
                         <table style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                                <td>来自</td>
-                                <td>内容</td>
-                            </tr>
+                            <thead>
+                                <th>来自</th>
+                                <th>内容</th>
+                            </thead>
                             <tr v-for="item in message" class="message_box" v-bind:class="[item.status == 0 ? message_unread_class : message_read_class]">
                                 <td>{{ item.fromUserName }}</td>
                                 <td>{{ item.content }}</td>
@@ -496,7 +596,7 @@
             </div>
             <div class="popup_window_container" v-else-if="detail_box_show">
                 <div class="popup_window_content_container">
-                    <label style="position: absolute; top: 20px; right: 20px;"  v-on:click="detail_box_disappear()">x</label>
+                    <label class="detail_box_close_button"  v-on:click="detail_box_disappear()">×</label>
                     <p v-for="item in Object.keys(detail_item)">
                         {{ item }}&nbsp;:&nbsp;
                         {{ detail_item[item] }}

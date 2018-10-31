@@ -31,7 +31,7 @@
             .body_header {
                 width: 100%;
                 height: 80px;
-                background: rgba(36, 36, 36, 0.6);
+                background: rgba(0, 0, 0, 0.8);
                 color: white;
                 position: relative;
             }
@@ -41,27 +41,32 @@
                 font-size: 32px;
                 top: 50%;
                 transform: translate(-50%, -50%);
+                color: #CCCCCC;
             }
             .body_header .right_button {
                 margin: 0;
                 padding: 0;
-                right: 30px;
                 float: right;
                 position: relative;
-                top: 50%;
-                transform: translateY(-52%);
+                height: 100%;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
             }
-            .body_header .bank_name {
-                padding-right: 24px;
-                font-size: 18px;
-                text-decoration: underline;
-                cursor: pointer;
-            }
-            .body_header .log_out {
+            .body_header .right_button_item {
+                font-size: 21px;
+                padding: 25px 32px 25px 32px;
+                height: 100%;
                 color: white;
+                vertical-align: middle;
+                line-height: 30px;
+                color: #CCCCCC;
+            }
+            .body_header .right_button_item:hover {
+                background: #99999999;
+                cursor: pointer;
+                text-decoration: none;
+                color: #FFFFFF;
             }
             .main_body {
                 width: 100%;
@@ -79,8 +84,13 @@
             }
             .list_container .list_item {
                 padding: 10px 20px 10px 20px;
-                margin: 0 0 6px 0;
+                margin: 16px 0 0 0;
                 cursor: pointer;
+                font-size: 16px;
+                text-align:center;
+            }
+            .list_item:hover {
+                background-color: #EEEEEE;
             }
             .content_container {
                 flex-grow: 5;
@@ -115,10 +125,11 @@
                 font-size: 16px;
                 color: #444444;
                 font-family: 'Microsoft YaHei UI',serif;
+                text-align: center;
             }
             /*头部*/
             .content_table th {
-                text-align: left;
+                text-align: center;
                 text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
                 border-bottom: 1px solid #CCCCCC;
                 background: #EEEEEE;
@@ -175,14 +186,19 @@
             .machine_detail{
                 display: none;
             }
+            .operate_label {
+                cursor: pointer;
+                text-decoration: underline;
+                margin: 0 6px 0 6px;
+            }
         </style>
     </head>
     <body>
         <div class="body_header" id="body_header">
             <label class="header_title">银行中心</label>
             <div class="right_button">
-                <label class="bank_name" v-on:click="reload_page()">{{ bank_name }}</label>
-                <a class="log_out" v-on:click="log_out()">
+                <label class="bank_name right_button_item" v-on:click="reload_page()">{{ bank_name }}</label>
+                <a class="log_out right_button_item" v-on:click="log_out()">
                     登出
                 </a>
             </div>
@@ -228,8 +244,8 @@
                         <tr v-for="item in repay_confirm_guaranty">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
-                                <label v-on:click="repay_confirm_confirm_repay_click(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
-                                <label v-on:click="repay_confirm_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                                <label v-on:click="repay_confirm_confirm_repay_click(item)" class="operate_label">确认</label>&nbsp;&nbsp;
+                                <label v-on:click="repay_confirm_view_detail_click(item)" class="operate_label">查看详情</label>
                             </td>
                         </tr>
                     </table>
@@ -307,9 +323,9 @@
                         <tr v-for="item in login_apply_company">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
-                                <label v-on:click="login_apply_company_pass_login_click(item)" style="cursor: pointer; text-decoration: underline;">通过</label>&nbsp;&nbsp;
-                                <label v-on:click="login_apply_company_unpass_login_click(item)" style="cursor: pointer; text-decoration: underline;">拒绝</label>&nbsp;&nbsp;
-                                <label v-on:click="login_apply_view_company_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                                <label v-on:click="login_apply_company_pass_login_click(item)" class="operate_label">通过</label>&nbsp;&nbsp;
+                                <label v-on:click="login_apply_company_unpass_login_click(item)" class="operate_label">拒绝</label>&nbsp;&nbsp;
+                                <label v-on:click="login_apply_view_company_detail_click(item)" class="operate_label">查看详情</label>
                             </td>
                         </tr>
                     </table>
@@ -369,8 +385,8 @@
                         <tr v-for="item in qualified_guaranties">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
-                                <label v-on:click="guaranty_to_tbc_confirm_to_tbc(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
-                                <label v-on:click="guaranty_to_tbc_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                                <label v-on:click="guaranty_to_tbc_confirm_to_tbc(item)" class="operate_label">确认</label>&nbsp;&nbsp;
+                                <label v-on:click="guaranty_to_tbc_view_detail_click(item)" class="operate_label">查看详情</label>
                             </td>
                     </table>
 
@@ -458,8 +474,8 @@
                         <tr v-for="item in company_info_manage_companies">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
-                                <label v-on:click="company_info_manage_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
-                                <label v-on:click="company_info_manage_send_message_click(item)" style="cursor: pointer; text-decoration: underline;">发送消息</label>
+                                <label v-on:click="company_info_manage_view_detail_click(item)" class="operate_label">查看详情</label>
+                                <label v-on:click="company_info_manage_send_message_click(item)" class="operate_label">发送消息</label>
                                 <!--<label v-on:click="company_info_manage_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看信用记录</label>-->
                                 <!--<label v-on:click="company_info_manage_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看所有抵押物</label>-->
                                 <!--<label v-on:click="company_info_manage_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">注销</label>-->
@@ -581,8 +597,8 @@
                         <tr v-for="item in guaranty_to_mortgaging_guaranty">
                             <td class="table_cell">{{ item.name }}</td>
                             <td class="table_cell">
-                                <label v-on:click="guaranty_to_mortgaging_confirm_to_mortgage(item)" style="cursor: pointer; text-decoration: underline;">确认</label>&nbsp;&nbsp;
-                                <label v-on:click="guaranty_to_mortgaging_view_detail_click(item)" style="cursor: pointer; text-decoration: underline;">查看详情</label>
+                                <label v-on:click="guaranty_to_mortgaging_confirm_to_mortgage(item)" class="operate_label">确认</label>&nbsp;&nbsp;
+                                <label v-on:click="guaranty_to_mortgaging_view_detail_click(item)" class="operate_label">查看详情</label>
                             </td>
                     </table>
 
@@ -1385,23 +1401,27 @@
                         // var company = result;
                         var modal = $('#company_info_manage_send_message_modal');
                         modal.find('#company_info_manage_send_message_header').html('To ' + item.name);
-                        modal.find('#company_info_send_message_send').click(function () {
-                            $.ajax({
-                                url: '/api/message/',
-                                type: 'POST',
-                                async: false,
-                                data: {
-                                    content: modal.find('#company_info_manage_send_message_content').val(),
-                                    toUserId: item.accountNum,
-                                },
-                                headers: {
-                                    user_id_token: getCookie('user_id_token'),
-                                },
-                                success: function(data) {
-                                    alert("发送成功");
-                                }
+                        if (!window.my_times) {
+
+                            modal.find('#company_info_send_message_send').click(function () {
+                                $.ajax({
+                                    url: '/api/message/',
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        content: modal.find('#company_info_manage_send_message_content').val(),
+                                        toUserId: item.accountNum,
+                                    },
+                                    headers: {
+                                        user_id_token: getCookie('user_id_token'),
+                                    },
+                                    success: function(data) {
+                                        alert("发送成功");
+                                    }
+                                });
                             });
-                        });
+                            window.my_times = true;
+                        }
                         modal.modal('show');
                     },
 

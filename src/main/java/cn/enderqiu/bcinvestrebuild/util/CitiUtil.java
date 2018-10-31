@@ -28,7 +28,7 @@ public class CitiUtil {
 
         String grant_info= "grant_type=authorization_code";
         String code_info="code="+code;
-        String redirect_info="redirect_uri=http://zhushen.chinanorth.cloudapp.chinacloudapi.cn/fillInfo.html";
+        String redirect_info="redirect_uri=http://localhost:8080/fillInfo.html";
         RequestBody body=RequestBody.create(mediaType,grant_info+"&"+code_info+"&"+redirect_info);
 
         String s="92c684d7-e3b2-468f-ad34-afeedc941858:S3kL6yG1aS1lI6qC7mQ1cI5xN3dJ7sS5yG2iL2bF2uT7tJ6vW6";
